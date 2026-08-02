@@ -1,1 +1,1427 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FGRP // Command Deck</title>
+<style>
+:root{
+  --void:#06070c;
+  --hull:#0d1018;
+  --panel:#11141d;
+  --panel2:#161a26;
+  --line:#1f2433;
+  --line-bright:#2c3247;
+  --text:#dfe3ee;
+  --muted:#6b7286;
+  --muted2:#8f96ab;
+  --signal:#ff5a3c;
+  --signal-dim:#a83f2b;
+  --ok:#3ecf8e;
+  --warn:#ffb547;
+  --crit:#ff4d6a;
+  --info:#4ea1ff;
+  --mono:'JetBrains Mono','Consolas',monospace;
+  --sans:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--void);
+  color:var(--text);
+  font-family:var(--sans);
+  min-height:100vh;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size:64px 64px;
+  background-position:-1px -1px;
+}
+::selection{background:var(--signal);color:#0a0a0a;}
+::-webkit-scrollbar{width:10px;height:10px;}
+::-webkit-scrollbar-track{background:var(--hull);}
+::-webkit-scrollbar-thumb{background:var(--line-bright);border-radius:8px;}
+::-webkit-scrollbar-thumb:hover{background:var(--signal-dim);}
+a{color:inherit;}
+button{font-family:inherit;}
+input,select,textarea{font-family:var(--sans);}
 
+.topbar{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 26px;
+  background:rgba(9,11,17,0.86);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-mark{
+  width:34px;height:34px;border-radius:8px;
+  background:linear-gradient(135deg,var(--signal),#7a2a1c);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-weight:700;font-size:15px;color:#0a0a0a;
+  box-shadow:0 0 22px rgba(255,90,60,.35);
+}
+.brand-text{display:flex;flex-direction:column;line-height:1.15;}
+.brand-text b{font-size:15px;letter-spacing:.02em;}
+.brand-text span{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.08em;}
+.topbar-right{display:flex;align-items:center;gap:16px;}
+.status-pill{
+  display:flex;align-items:center;gap:7px;
+  font-family:var(--mono);font-size:11px;color:var(--muted2);
+  border:1px solid var(--line);border-radius:20px;padding:6px 12px;
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);animation:pulse 2s infinite;}
+.dot.off{background:var(--crit);box-shadow:0 0 8px var(--crit);animation:none;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.user-chip{display:flex;align-items:center;gap:10px;cursor:pointer;padding:5px 10px 5px 5px;border-radius:20px;border:1px solid var(--line);}
+.user-chip:hover{border-color:var(--line-bright);}
+.user-chip img{width:26px;height:26px;border-radius:50%;}
+.user-chip span{font-size:13px;font-weight:600;}
+.master-tag{font-family:var(--mono);font-size:9px;background:var(--signal);color:#0a0a0a;padding:2px 6px;border-radius:4px;font-weight:700;letter-spacing:.05em;}
+
+.shell{display:flex;min-height:calc(100vh - 63px);}
+.sidebar{
+  width:230px;flex-shrink:0;
+  border-right:1px solid var(--line);
+  background:rgba(11,13,20,.5);
+  padding:18px 12px;
+  position:sticky;top:63px;height:calc(100vh - 63px);overflow-y:auto;
+}
+.server-select{margin-bottom:18px;position:relative;}
+.server-select label{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.1em;padding:0 8px;display:block;margin-bottom:6px;}
+.server-btn{
+  width:100%;display:flex;align-items:center;gap:10px;
+  background:var(--panel);border:1px solid var(--line);border-radius:10px;
+  padding:9px 10px;cursor:pointer;color:var(--text);text-align:left;
+}
+.server-btn img{width:26px;height:26px;border-radius:6px;background:var(--panel2);}
+.server-btn .sname{font-size:13px;font-weight:600;}
+.server-btn .smembers{font-size:10px;color:var(--muted);font-family:var(--mono);}
+.server-btn:hover{border-color:var(--signal-dim);}
+.server-dropdown{
+  position:absolute;left:12px;right:12px;margin-top:6px;
+  background:var(--panel2);border:1px solid var(--line-bright);border-radius:10px;
+  max-height:280px;overflow-y:auto;z-index:40;
+  box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+.server-dropdown .server-item{display:flex;align-items:center;gap:10px;padding:10px;cursor:pointer;border-bottom:1px solid var(--line);}
+.server-dropdown .server-item:last-child{border-bottom:none;}
+.server-dropdown .server-item:hover{background:var(--panel);}
+.server-dropdown img{width:24px;height:24px;border-radius:6px;}
+
+nav.navlist{display:flex;flex-direction:column;gap:2px;}
+.navlist .navlabel{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.1em;padding:14px 10px 6px;}
+.navlist button{
+  display:flex;align-items:center;gap:10px;
+  background:transparent;border:none;color:var(--muted2);
+  padding:9px 10px;border-radius:8px;cursor:pointer;font-size:13px;text-align:left;width:100%;
+  border-left:2px solid transparent;
+}
+.navlist button:hover{background:var(--panel);color:var(--text);}
+.navlist button.active{background:var(--panel2);color:var(--text);border-left:2px solid var(--signal);}
+.navlist button .ic{width:16px;text-align:center;font-size:14px;opacity:.85;}
+.navlist button .count{margin-left:auto;font-family:var(--mono);font-size:10px;background:var(--panel);padding:1px 6px;border-radius:8px;color:var(--muted);}
+
+.main{flex:1;min-width:0;padding:28px 34px 80px;}
+.main-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:12px;}
+.main-head h1{font-size:22px;margin:0 0 4px;letter-spacing:-.01em;}
+.main-head .sub{color:var(--muted);font-size:13px;font-family:var(--mono);}
+.head-actions{display:flex;gap:10px;flex-wrap:wrap;}
+
+.btn{
+  background:var(--panel2);border:1px solid var(--line-bright);color:var(--text);
+  padding:9px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;
+  display:inline-flex;align-items:center;gap:7px;transition:transform .08s;
+}
+.btn:hover{border-color:var(--signal);}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:linear-gradient(135deg,var(--signal),#c94429);border:none;color:#0a0a0a;}
+.btn-primary:hover{filter:brightness(1.1);}
+.btn-danger{background:transparent;border:1px solid var(--crit);color:var(--crit);}
+.btn-danger:hover{background:rgba(255,77,106,.1);}
+.btn-ghost{background:transparent;border:1px solid var(--line);color:var(--muted2);}
+.btn-ghost:hover{border-color:var(--line-bright);color:var(--text);}
+.btn-sm{padding:6px 11px;font-size:12px;border-radius:7px;}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+.icon-btn{background:var(--panel2);border:1px solid var(--line);width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted2);}
+.icon-btn:hover{color:var(--text);border-color:var(--line-bright);}
+
+.grid{display:grid;gap:16px;}
+.grid-2{grid-template-columns:repeat(2,1fr);}
+.grid-3{grid-template-columns:repeat(3,1fr);}
+.grid-4{grid-template-columns:repeat(4,1fr);}
+@media(max-width:1100px){.grid-4{grid-template-columns:repeat(2,1fr);}.grid-3{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:700px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}}
+
+.card{
+  background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;
+  position:relative;overflow:hidden;
+}
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--signal-dim),transparent);
+  opacity:0;transition:opacity .2s;
+}
+.card:hover::before{opacity:1;}
+.card h3{margin:0 0 14px;font-size:13px;color:var(--muted2);font-weight:600;letter-spacing:.03em;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+
+.stat-card{display:flex;flex-direction:column;gap:6px;}
+.stat-card .num{font-family:var(--mono);font-size:32px;font-weight:700;}
+.stat-card .lbl{font-size:12px;color:var(--muted);}
+.stat-card.accent .num{color:var(--signal);}
+.stat-card.ok .num{color:var(--ok);}
+.stat-card.warn .num{color:var(--warn);}
+
+.section{margin-bottom:30px;}
+.section-title{font-size:12px;font-family:var(--mono);color:var(--muted);letter-spacing:.1em;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-title::after{content:'';flex:1;height:1px;background:var(--line);}
+
+.list{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel);}
+.list-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+.list-row:last-child{border-bottom:none;}
+.list-row:hover{background:var(--panel2);}
+.list-row .avatar{width:34px;height:34px;border-radius:8px;background:var(--panel2);object-fit:cover;flex-shrink:0;}
+.list-row .primary{font-size:13.5px;font-weight:600;}
+.list-row .secondary{font-size:11.5px;color:var(--muted);font-family:var(--mono);}
+.list-row .grow{flex:1;min-width:160px;}
+.list-row .tags{display:flex;gap:5px;flex-wrap:wrap;}
+
+.badge{font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:6px;letter-spacing:.03em;border:1px solid transparent;white-space:nowrap;}
+.badge.legal{background:rgba(78,161,255,.12);color:var(--info);border-color:rgba(78,161,255,.3);}
+.badge.illegal{background:rgba(255,77,106,.12);color:var(--crit);border-color:rgba(255,77,106,.3);}
+.badge.ok{background:rgba(62,207,142,.12);color:var(--ok);border-color:rgba(62,207,142,.3);}
+.badge.warn{background:rgba(255,181,71,.12);color:var(--warn);border-color:rgba(255,181,71,.3);}
+.badge.crit{background:rgba(255,77,106,.12);color:var(--crit);border-color:rgba(255,77,106,.3);}
+.badge.neutral{background:var(--panel2);color:var(--muted2);border-color:var(--line);}
+.badge.role{background:var(--panel2);color:var(--text);border-color:var(--line-bright);cursor:pointer;}
+.badge.role.assigned{background:rgba(255,90,60,.14);color:var(--signal);border-color:var(--signal-dim);}
+.badge.action{background:var(--panel2);color:var(--info);border-color:var(--line-bright);}
+
+.empty{padding:50px 20px;text-align:center;color:var(--muted);}
+.empty .ic{font-size:34px;margin-bottom:10px;opacity:.6;}
+.empty .t{font-size:14px;font-weight:600;color:var(--muted2);margin-bottom:4px;}
+.empty .d{font-size:12.5px;}
+
+.toolbar{display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap;}
+.search-box{
+  display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);
+  border-radius:9px;padding:8px 12px;flex:1;min-width:180px;max-width:320px;
+}
+.search-box input{background:none;border:none;outline:none;color:var(--text);font-size:13px;width:100%;}
+.search-box .ic{color:var(--muted);font-size:13px;}
+.select-box{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:8px 12px;color:var(--text);font-size:13px;outline:none;}
+.select-box option{background:var(--panel2);}
+
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:12px;color:var(--muted2);margin-bottom:6px;font-weight:600;}
+.field input,.field textarea,.field select{
+  width:100%;background:var(--hull);border:1px solid var(--line);border-radius:8px;
+  padding:10px 12px;color:var(--text);font-size:13.5px;outline:none;
+}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--signal-dim);}
+.field textarea{resize:vertical;min-height:70px;}
+.field-row{display:flex;gap:12px;}
+.field-row .field{flex:1;}
+.hint{font-size:11px;color:var(--muted);margin-top:4px;}
+
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(4,5,9,.72);backdrop-filter:blur(4px);
+  display:flex;align-items:center;justify-content:center;z-index:200;padding:20px;
+}
+.modal{
+  background:var(--panel);border:1px solid var(--line-bright);border-radius:16px;
+  width:100%;max-width:480px;max-height:88vh;overflow-y:auto;
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+}
+.modal.wide{max-width:640px;}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--panel);z-index:2;}
+.modal-head h3{margin:0;font-size:15px;}
+.modal-body{padding:22px;}
+.modal-foot{display:flex;justify-content:flex-end;gap:10px;padding:16px 22px;border-top:1px solid var(--line);position:sticky;bottom:0;background:var(--panel);}
+.close-x{background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;width:28px;height:28px;border-radius:6px;}
+.close-x:hover{background:var(--panel2);color:var(--text);}
+
+.toast-wrap{position:fixed;bottom:22px;right:22px;z-index:300;display:flex;flex-direction:column;gap:10px;align-items:flex-end;}
+.toast{
+  background:var(--panel2);border:1px solid var(--line-bright);border-left:3px solid var(--signal);
+  padding:12px 16px;border-radius:9px;font-size:13px;max-width:320px;box-shadow:0 10px 30px rgba(0,0,0,.5);
+  animation:toastin .25s ease;
+}
+.toast.ok{border-left-color:var(--ok);}
+.toast.err{border-left-color:var(--crit);}
+@keyframes toastin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.loader-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;gap:16px;}
+.spinner{width:38px;height:38px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--signal);animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loader-screen .t{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.08em;}
+
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.login-wrap::before{
+  content:'';position:absolute;width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,90,60,.14),transparent 70%);
+  top:-200px;left:50%;transform:translateX(-50%);filter:blur(30px);
+}
+.login-card{position:relative;z-index:2;text-align:center;padding:50px 44px;background:var(--panel);border:1px solid var(--line);border-radius:20px;max-width:400px;}
+.login-mark{width:64px;height:64px;border-radius:16px;margin:0 auto 22px;background:linear-gradient(135deg,var(--signal),#7a2a1c);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:26px;font-weight:700;color:#0a0a0a;box-shadow:0 0 40px rgba(255,90,60,.4);}
+.login-card h1{font-size:20px;margin:0 0 8px;}
+.login-card p{color:var(--muted);font-size:13.5px;margin:0 0 26px;line-height:1.6;}
+.login-error{background:rgba(255,77,106,.1);border:1px solid rgba(255,77,106,.35);color:var(--crit);padding:10px 14px;border-radius:9px;font-size:12.5px;margin-bottom:20px;}
+
+.toggle{position:relative;width:42px;height:23px;background:var(--hull);border-radius:24px;cursor:pointer;border:1px solid var(--line);flex-shrink:0;transition:background .15s;}
+.toggle.on{background:var(--ok);border-color:var(--ok);}
+.toggle-dot{position:absolute;top:2px;left:2px;width:17px;height:17px;background:white;border-radius:50%;transition:.15s;}
+.toggle.on .toggle-dot{left:21px;}
+
+.progress-log{background:var(--hull);border:1px solid var(--line);border-radius:9px;padding:12px;font-family:var(--mono);font-size:11.5px;color:var(--muted2);max-height:160px;overflow-y:auto;}
+
+.tabs{display:flex;gap:4px;background:var(--hull);border:1px solid var(--line);border-radius:10px;padding:4px;margin-bottom:18px;width:fit-content;flex-wrap:wrap;}
+.tabs button{background:transparent;border:none;color:var(--muted);padding:8px 16px;border-radius:7px;cursor:pointer;font-size:12.5px;font-weight:600;}
+.tabs button.active{background:var(--panel2);color:var(--text);}
+
+.log-entry{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:12.5px;flex-wrap:wrap;}
+.log-entry:last-child{border-bottom:none;}
+.log-entry .ts{font-family:var(--mono);color:var(--muted);font-size:11px;white-space:nowrap;}
+.log-entry .act{color:var(--signal);font-weight:600;font-family:var(--mono);font-size:11px;}
+.log-entry .det{color:var(--muted2);flex:1;min-width:160px;}
+.log-entry .who{color:var(--info);font-size:11px;font-family:var(--mono);}
+
+.perm-editor{display:flex;flex-wrap:wrap;gap:6px;padding:10px;background:var(--hull);border:1px solid var(--line);border-radius:9px;max-height:180px;overflow-y:auto;}
+
+.timeline{position:relative;padding-left:18px;}
+.timeline::before{content:'';position:absolute;left:5px;top:4px;bottom:4px;width:1px;background:var(--line);}
+.timeline-item{position:relative;padding-bottom:16px;}
+.timeline-item::before{content:'';position:absolute;left:-16px;top:3px;width:8px;height:8px;border-radius:50%;background:var(--signal);}
+.timeline-item:last-child{padding-bottom:0;}
+
+.crumbs{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:6px;}
+.crumbs b{color:var(--signal);}
+
+.kv{display:flex;flex-direction:column;gap:8px;font-size:12.5px;color:var(--muted2);}
+.kv div b{color:var(--text);}
+</style>
+</head>
+<body>
+
+<div id="toastWrap" class="toast-wrap"></div>
+<div id="app"></div>
+
+<script>
+const API_BASE = "https://botconfig.wisp.uno";
+
+let state = {
+  token: localStorage.getItem("session_token") || null,
+  me: null,
+  view: "overview",
+  guilds: [],
+  activeGuild: null,
+  serverDropdownOpen: false,
+  settings: {},
+  fraktionen: [],
+  members: [],
+  roles: [],
+  channels: [],
+  memberSearch: "",
+  memberRoleFilter: "",
+  teamStrafen: [],
+  buergerStrafen: [],
+  bewerbungen: [],
+  bewerbungFilter: "offen",
+  backups: [],
+  whitelist: [],
+  accessLog: [],
+  actionLog: [],
+  actionLogFilter: "",
+  modules: { status: {}, labels: {} },
+  activeModuleTab: "fraktion",
+  messageHistory: [],
+  channelMessageHistory: [],
+  loading: true,
+  connError: false,
+  modal: null,
+};
+
+// ---------------- utils ----------------
+
+function toast(msg, kind = "") {
+  const wrap = document.getElementById("toastWrap");
+  const el = document.createElement("div");
+  el.className = "toast " + kind;
+  el.textContent = msg;
+  wrap.appendChild(el);
+  setTimeout(() => el.remove(), 4200);
+}
+
+function esc(s) {
+  if (s === null || s === undefined) return "";
+  return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+function fmtDate(iso) {
+  if (!iso) return "—";
+  try {
+    const d = new Date(iso);
+    return d.toLocaleDateString("de-DE") + " " + d.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
+  } catch { return iso; }
+}
+
+async function apiFetch(path, options = {}) {
+  const res = await fetch(`${API_BASE}${path}`, {
+    ...options,
+    headers: {
+      ...(options.headers || {}),
+      "Authorization": `Bearer ${state.token}`,
+      "Content-Type": "application/json",
+    },
+  });
+  if (res.status === 401 || res.status === 403) {
+    localStorage.removeItem("session_token");
+    state.token = null;
+    state.me = null;
+    render();
+    throw new Error("Nicht autorisiert");
+  }
+  if (!res.ok) {
+    let detail = "Fehler";
+    try { detail = (await res.json()).detail || detail; } catch {}
+    throw new Error(detail);
+  }
+  try { return await res.json(); } catch { return {}; }
+}
+
+function login() { window.location.href = `${API_BASE}/auth/login`; }
+function logout() {
+  apiFetch("/auth/logout", { method: "POST" }).catch(() => {});
+  localStorage.removeItem("session_token");
+  state = { ...state, token: null, me: null };
+  render();
+}
+
+function getTokenFromUrl() {
+  const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+  const queryParams = new URLSearchParams(window.location.search);
+  const token = hashParams.get("token") || queryParams.get("token");
+  const error = hashParams.get("error") || queryParams.get("error");
+  if (token) {
+    localStorage.setItem("session_token", token);
+    state.token = token;
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+  if (error === "forbidden") {
+    state.loginError = "Keine Berechtigung. Dieser Account steht nicht auf der Whitelist.";
+  }
+}
+
+function setView(v) { state.view = v; render(); loadViewData(); }
+
+function openModal(name, payload = {}) {
+  state.modal = { name, ...payload };
+  render();
+}
+function closeModal() { state.modal = null; render(); }
+
+// ---------------- data loading ----------------
+
+async function loadInitial() {
+  state.loading = true; render();
+  try {
+    state.me = await apiFetch("/auth/me");
+    state.guilds = await apiFetch("/api/guilds");
+    if (state.guilds.length) state.activeGuild = state.guilds[0];
+    state.modules = await apiFetch("/api/modules");
+    state.connError = false;
+  } catch (e) {
+    if (e.message !== "Nicht autorisiert") state.connError = true;
+  }
+  state.loading = false;
+  render();
+  if (!state.connError && state.me) loadViewData();
+}
+
+async function loadViewData() {
+  try {
+    if (state.view === "overview") {
+      state.summary = await apiFetch("/api/dashboard_summary");
+    } else if (state.view === "members") {
+      if (state.activeGuild) {
+        state.members = await apiFetch(`/api/guilds/${state.activeGuild.guild_id}/members`);
+        state.roles = await apiFetch(`/api/guilds/${state.activeGuild.guild_id}/roles`);
+      }
+    } else if (state.view === "fraktionen") {
+      state.fraktionen = await apiFetch("/api/fraktionen");
+    } else if (state.view === "team_strafen") {
+      state.teamStrafen = await apiFetch("/api/team_strafen");
+    } else if (state.view === "buerger_strafen") {
+      state.buergerStrafen = await apiFetch("/api/buerger_strafen");
+    } else if (state.view === "bewerbungen") {
+      state.bewerbungen = await apiFetch("/api/bewerbungen");
+    } else if (state.view === "backups") {
+      if (state.activeGuild) state.backups = await apiFetch(`/api/backups/${state.activeGuild.guild_id}`);
+    } else if (state.view === "settings") {
+      state.settings = await apiFetch("/api/settings");
+      if (state.activeGuild) state.channels = await apiFetch(`/api/guilds/${state.activeGuild.guild_id}/channels`);
+    } else if (state.view === "modules") {
+      state.modules = await apiFetch("/api/modules");
+      if (state.activeGuild) state.roles = await apiFetch(`/api/guilds/${state.activeGuild.guild_id}/roles`);
+      await loadModulePerms(state.activeModuleTab);
+    } else if (state.view === "whitelist") {
+      state.whitelist = await apiFetch("/api/whitelist");
+      state.accessLog = await apiFetch("/api/access_log");
+    } else if (state.view === "actionlog") {
+      state.actionLog = await apiFetch("/api/action_log");
+    } else if (state.view === "messages") {
+      state.messageHistory = await apiFetch("/api/messages/history");
+      if (state.activeGuild) state.channels = await apiFetch(`/api/guilds/${state.activeGuild.guild_id}/channels`);
+      try { state.channelMessageHistory = await apiFetch("/api/channel_messages/history"); } catch { state.channelMessageHistory = []; }
+    }
+  } catch (e) {
+    if (e.message !== "Nicht autorisiert") toast(e.message, "err");
+  }
+  render();
+}
+
+async function loadModulePerms(mod) {
+  try {
+    state.modulePerms = state.modulePerms || {};
+    state.modulePerms[mod] = await apiFetch(`/api/modules/${mod}/permissions`);
+  } catch (e) {}
+}
+
+async function requestResync() {
+  if (!state.activeGuild) return;
+  try {
+    await apiFetch(`/api/guilds/${state.activeGuild.guild_id}/resync`, { method: "POST" });
+    toast("Sync angefordert — Bot verarbeitet das in wenigen Sekunden.", "ok");
+  } catch (e) { toast(e.message, "err"); }
+}
+
+// ---------------- render dispatcher ----------------
+
+function render() {
+  const app = document.getElementById("app");
+
+  if (!state.token || !state.me) {
+    app.innerHTML = renderLogin();
+    return;
+  }
+  if (state.loading) {
+    app.innerHTML = `<div class="loader-screen"><div class="spinner"></div><div class="t">VERBINDE MIT COMMAND DECK…</div></div>`;
+    return;
+  }
+  if (state.connError) {
+    app.innerHTML = `
+      <div class="loader-screen">
+        <div style="font-size:40px">⚠️</div>
+        <div class="t" style="color:var(--crit)">VERBINDUNG ZUR API FEHLGESCHLAGEN</div>
+        <div style="color:var(--muted);font-size:12.5px;max-width:420px;text-align:center;line-height:1.6">
+          Prüfe ob die API unter <b>${esc(API_BASE)}</b> erreichbar ist und über HTTPS läuft.
+        </div>
+        <button class="btn btn-primary" onclick="loadInitial()">Erneut versuchen</button>
+      </div>`;
+    return;
+  }
+
+  app.innerHTML = `
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark">FG</div>
+        <div class="brand-text"><b>Command Deck</b><span>FGRP CONTROL SYSTEM</span></div>
+      </div>
+      <div class="topbar-right">
+        <div class="status-pill"><span class="dot"></span>API ONLINE</div>
+        <div class="user-chip" onclick="logout()" title="Klicke zum Ausloggen">
+          <img src="${esc(state.me.avatar_url || '')}" onerror="this.style.display='none'">
+          <span>${esc(state.me.username)}</span>
+          ${state.me.is_master ? '<span class="master-tag">MASTER</span>' : ''}
+        </div>
+      </div>
+    </div>
+    <div class="shell">
+      ${renderSidebar()}
+      <div class="main">${renderView()}</div>
+    </div>
+  `;
+
+  if (state.modal) renderModalDOM();
+}
+
+function renderLogin() {
+  return `
+    <div class="login-wrap">
+      <div class="login-card">
+        <div class="login-mark">FG</div>
+        <h1>FGRP Command Deck</h1>
+        <p>Melde dich mit deinem Discord-Account an, um Zugriff auf die Serververwaltung zu erhalten.</p>
+        ${state.loginError ? `<div class="login-error">${esc(state.loginError)}</div>` : ""}
+        <button class="btn btn-primary" style="width:100%;justify-content:center;padding:12px" onclick="login()">Mit Discord anmelden</button>
+      </div>
+    </div>`;
+}
+
+function renderSidebar() {
+  const nav = [
+    { group: "Übersicht", items: [
+      ["overview", "◆", "Overview"],
+    ]},
+    { group: "Server", items: [
+      ["members", "◈", "Mitglieder"],
+      ["backups", "◇", "Backups"],
+      ["settings", "◎", "Einstellungen"],
+    ]},
+    { group: "Verwaltung", items: [
+      ["fraktionen", "▲", "Fraktionen"],
+      ["team_strafen", "■", "Team-Strafen"],
+      ["buerger_strafen", "●", "Bürger-Strafen"],
+      ["bewerbungen", "▶", "Bewerbungen"],
+      ["messages", "✉", "Nachrichten"],
+    ]},
+    { group: "System", items: [
+      ["modules", "⚙", "Module & Rechte"],
+      ["actionlog", "≡", "Aktionslog"],
+      ...(state.me.is_master ? [["whitelist", "⛊", "Whitelist"]] : []),
+    ]},
+  ];
+
+  return `
+    <div class="sidebar">
+      <div class="server-select">
+        <label>AKTIVER SERVER</label>
+        ${state.activeGuild ? `
+          <div class="server-btn" onclick="toggleServerDropdown()">
+            <img src="${esc(state.activeGuild.icon_url || '')}" onerror="this.style.display='none'">
+            <div style="flex:1;min-width:0">
+              <div class="sname">${esc(state.activeGuild.name)}</div>
+              <div class="smembers">${state.activeGuild.member_count || 0} Mitglieder</div>
+            </div>
+            <span style="color:var(--muted)">▾</span>
+          </div>
+        ` : `<div class="server-btn" onclick="toggleServerDropdown()"><span>Kein Server gefunden</span></div>`}
+        ${state.serverDropdownOpen ? `
+          <div class="server-dropdown">
+            ${state.guilds.length ? state.guilds.map(g => `
+              <div class="server-item" onclick="selectGuild(${g.guild_id})">
+                <img src="${esc(g.icon_url || '')}" onerror="this.style.display='none'">
+                <div>
+                  <div style="font-size:12.5px;font-weight:600">${esc(g.name)}</div>
+                  <div style="font-size:10.5px;color:var(--muted);font-family:var(--mono)">${g.member_count || 0} Mitglieder</div>
+                </div>
+              </div>
+            `).join("") : `<div style="padding:14px;font-size:12px;color:var(--muted)">Noch keine Server im Cache. Klicke Resync.</div>`}
+          </div>
+        ` : ""}
+      </div>
+      <nav class="navlist">
+        ${nav.map(g => `
+          <div class="navlabel">${g.group}</div>
+          ${g.items.map(([id, icon, label]) => `
+            <button class="${state.view === id ? "active" : ""}" onclick="setView('${id}')">
+              <span class="ic">${icon}</span>${label}
+            </button>
+          `).join("")}
+        `).join("")}
+      </nav>
+    </div>`;
+}
+
+function toggleServerDropdown() {
+  state.serverDropdownOpen = !state.serverDropdownOpen;
+  render();
+}
+function selectGuild(id) {
+  state.activeGuild = state.guilds.find(g => g.guild_id === id) || state.activeGuild;
+  state.serverDropdownOpen = false;
+  render();
+  loadViewData();
+}
+
+function renderView() {
+  switch (state.view) {
+    case "overview": return renderOverview();
+    case "members": return renderMembers();
+    case "backups": return renderBackups();
+    case "settings": return renderSettings();
+    case "fraktionen": return renderFraktionen();
+    case "team_strafen": return renderStrafen("team");
+    case "buerger_strafen": return renderStrafen("buerger");
+    case "bewerbungen": return renderBewerbungen();
+    case "messages": return renderMessages();
+    case "modules": return renderModules();
+    case "whitelist": return renderWhitelist();
+    case "actionlog": return renderActionLog();
+    default: return "";
+  }
+}
+
+// ---------------- OVERVIEW ----------------
+
+function renderOverview() {
+  const s = state.summary || {};
+  return `
+    <div class="main-head">
+      <div><h1>Overview</h1><div class="sub">SYSTEM STATUS · ${esc(state.activeGuild ? state.activeGuild.name : "—")}</div></div>
+      <div class="head-actions"><button class="btn btn-ghost" onclick="requestResync()">↻ Resync anfordern</button></div>
+    </div>
+    <div class="grid grid-4 section">
+      <div class="card stat-card accent"><div class="num">${s.fraktionen_count ?? "–"}</div><div class="lbl">Fraktionen registriert</div></div>
+      <div class="card stat-card warn"><div class="num">${s.offene_bewerbungen ?? "–"}</div><div class="lbl">Offene Bewerbungen</div></div>
+      <div class="card stat-card"><div class="num">${s.buerger_warn_count ?? "–"}</div><div class="lbl">Bürger mit Einträgen</div></div>
+      <div class="card stat-card"><div class="num">${s.team_warn_count ?? "–"}</div><div class="lbl">Team mit Einträgen</div></div>
+    </div>
+    <div class="section">
+      <div class="section-title">LETZTE AKTIONEN — WER HAT WAS WANN GEMACHT</div>
+      <div class="list">
+        ${(s.recent_actions || []).length ? s.recent_actions.map(a => `
+          <div class="list-row">
+            <span class="secondary" style="width:130px;flex-shrink:0">${fmtDate(a.erstellt_am)}</span>
+            <span class="badge action">${esc(a.action)}</span>
+            <span class="grow" style="font-size:12.5px;color:var(--muted2)">${esc(a.details || "")}</span>
+            <span class="secondary">von ${esc(a.username || "")}</span>
+          </div>
+        `).join("") : `<div class="empty"><div class="ic">≡</div><div class="t">Noch keine Aktionen</div><div class="d">Hier erscheinen alle Dashboard-Aktionen live.</div></div>`}
+      </div>
+    </div>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>Server im Cache</h3>
+        <div style="font-family:var(--mono);font-size:28px;font-weight:700;color:var(--info)">${s.guilds_count ?? state.guilds.length}</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px">Anzahl Server, auf denen der Bot aktiv ist</div>
+      </div>
+      <div class="card">
+        <h3>Deine Berechtigung</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">
+          ${(state.me.allowed_modules || []).map(m => `<span class="badge ok">${esc(state.modules.labels?.[m] || m)}</span>`).join("")}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ---------------- MEMBERS ----------------
+
+function renderMembers() {
+  if (!state.activeGuild) return emptyNoGuild();
+  const filtered = state.members.filter(m => {
+    const q = state.memberSearch.toLowerCase();
+    const matchesSearch = !q || (m.username || "").toLowerCase().includes(q) || (m.display_name || "").toLowerCase().includes(q);
+    const matchesRole = !state.memberRoleFilter || m.role_ids.includes(Number(state.memberRoleFilter));
+    return matchesSearch && matchesRole;
+  });
+  return `
+    <div class="main-head">
+      <div><h1>Mitglieder</h1><div class="sub">${state.members.length} GESAMT · ${filtered.length} ANGEZEIGT</div></div>
+      <div class="head-actions"><button class="btn btn-ghost" onclick="requestResync()">↻ Resync</button></div>
+    </div>
+    <div class="toolbar">
+      <div class="search-box"><span class="ic">⌕</span><input placeholder="Suche nach Name…" value="${esc(state.memberSearch)}" oninput="state.memberSearch=this.value;render()"></div>
+      <select class="select-box" onchange="state.memberRoleFilter=this.value;render()">
+        <option value="">Alle Rollen</option>
+        ${state.roles.map(r => `<option value="${r.role_id}" ${state.memberRoleFilter == r.role_id ? "selected" : ""}>${esc(r.name)} (${r.member_count})</option>`).join("")}
+      </select>
+    </div>
+    <div class="list">
+      ${filtered.length ? filtered.slice(0, 200).map(m => `
+        <div class="list-row">
+          <img class="avatar" src="${esc(m.avatar_url || '')}" onerror="this.style.visibility='hidden'">
+          <div class="grow">
+            <div class="primary">${esc(m.display_name)} ${statusDot(m.status)}</div>
+            <div class="secondary">@${esc(m.username)} · ${m.user_id}</div>
+          </div>
+          <div class="tags" style="max-width:340px">
+            ${m.role_ids.slice(0, 6).map(rid => {
+              const r = state.roles.find(x => x.role_id === rid);
+              return r ? `<span class="badge role assigned" title="Klicke zum Entfernen" onclick="toggleRole(${m.user_id}, ${rid}, 'remove')">${esc(r.name)}</span>` : "";
+            }).join("")}
+          </div>
+          <button class="icon-btn" title="Rolle hinzufügen" onclick="openModal('assignRole', {userId:${m.user_id}, name:'${esc(m.display_name)}'})">+</button>
+        </div>
+      `).join("") : `<div class="empty"><div class="ic">◈</div><div class="t">Keine Mitglieder gefunden</div><div class="d">Passe die Suche an oder starte einen Resync.</div></div>`}
+    </div>
+  `;
+}
+
+function statusDot(status) {
+  const map = { online: "🟢", idle: "🌙", dnd: "⛔" };
+  return `<span style="font-size:10px">${map[status] || "⚫"}</span>`;
+}
+
+async function toggleRole(userId, roleId, action) {
+  if (!state.activeGuild) return;
+  try {
+    await apiFetch(`/api/guilds/${state.activeGuild.guild_id}/members/${userId}/roles/${roleId}`, {
+      method: "POST", body: JSON.stringify({ action }),
+    });
+    toast(action === "add" ? "Rolle wird zugewiesen…" : "Rolle wird entfernt…", "ok");
+    const m = state.members.find(x => x.user_id === userId);
+    if (m) {
+      if (action === "add" && !m.role_ids.includes(roleId)) m.role_ids.push(roleId);
+      if (action === "remove") m.role_ids = m.role_ids.filter(r => r !== roleId);
+    }
+    render();
+  } catch (e) { toast(e.message, "err"); }
+}
+
+// ---------------- BACKUPS ----------------
+
+function renderBackups() {
+  if (!state.activeGuild) return emptyNoGuild();
+  return `
+    <div class="main-head">
+      <div><h1>Backups</h1><div class="sub">SERVER-SICHERUNGEN · ${esc(state.activeGuild.name)} · NUR AUF DEM SERVER GESPEICHERT</div></div>
+      <div class="head-actions"><button class="btn btn-primary" onclick="createBackup()">+ Neues Backup</button></div>
+    </div>
+    <div class="list">
+      ${state.backups.length ? state.backups.map(f => `
+        <div class="list-row">
+          <span style="font-size:16px">💾</span>
+          <div class="grow">
+            <div class="primary" style="font-family:var(--mono);font-size:12.5px">${esc(f)}</div>
+          </div>
+          <button class="btn btn-sm btn-ghost" onclick="viewBackup('${esc(f)}')">Ansehen</button>
+          ${state.me.is_master ? `<button class="btn btn-sm btn-danger" onclick="deleteBackup('${esc(f)}')">Löschen</button>` : ""}
+        </div>
+      `).join("") : `<div class="empty"><div class="ic">💾</div><div class="t">Keine Backups vorhanden</div><div class="d">Erstelle ein Backup, um den aktuellen Serverzustand zu sichern.</div></div>`}
+    </div>
+  `;
+}
+
+async function createBackup() {
+  if (!state.activeGuild) return;
+  try {
+    await apiFetch(`/api/backups/${state.activeGuild.guild_id}/create`, { method: "POST" });
+    toast("Backup wird erstellt — der Bot verarbeitet dies in wenigen Sekunden.", "ok");
+    setTimeout(loadViewData, 3000);
+  } catch (e) { toast(e.message, "err"); }
+}
+async function deleteBackup(filename) {
+  if (!confirm(`Backup "${filename}" wirklich löschen?`)) return;
+  try {
+    await apiFetch(`/api/backups/${state.activeGuild.guild_id}/${filename}`, { method: "DELETE" });
+    toast("Backup gelöscht.", "ok");
+    loadViewData();
+  } catch (e) { toast(e.message, "err"); }
+}
+async function viewBackup(filename) {
+  try {
+    const data = await apiFetch(`/api/backups/${state.activeGuild.guild_id}/${filename}`);
+    openModal("backupView", { filename, data });
+  } catch (e) { toast(e.message, "err"); }
+}
+
+// ---------------- SETTINGS ----------------
+
+function renderSettings() {
+  const entries = Object.entries(state.settings || {});
+  return `
+    <div class="main-head">
+      <div><h1>Einstellungen</h1><div class="sub">BOT-KONFIGURATION (KEY / VALUE)</div></div>
+      <div class="head-actions"><button class="btn btn-primary" onclick="openModal('addSetting')">+ Neuer Eintrag</button></div>
+    </div>
+    <div class="list">
+      ${entries.length ? entries.map(([k, v]) => `
+        <div class="list-row">
+          <div class="grow">
+            <div class="primary" style="font-family:var(--mono);font-size:12.5px">${esc(k)}</div>
+            <div class="secondary">${esc(v ?? "leer")}</div>
+          </div>
+          <button class="btn btn-sm btn-ghost" onclick="openModal('editSetting', {key:'${esc(k)}', value:'${esc(v || "")}'})">Bearbeiten</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteSetting('${esc(k)}')">✕</button>
+        </div>
+      `).join("") : `<div class="empty"><div class="ic">◎</div><div class="t">Keine Settings vorhanden</div></div>`}
+    </div>
+  `;
+}
+
+async function saveSetting(key, value) {
+  try {
+    await apiFetch("/api/settings", { method: "POST", body: JSON.stringify({ key, value }) });
+    toast("Gespeichert.", "ok");
+    closeModal();
+    loadViewData();
+  } catch (e) { toast(e.message, "err"); }
+}
+async function deleteSetting(key) {
+  if (!confirm(`Setting "${key}" wirklich löschen?`)) return;
+  try {
+    await apiFetch(`/api/settings/${key}`, { method: "DELETE" });
+    toast("Gelöscht.", "ok");
+    loadViewData();
+  } catch (e) { toast(e.message, "err"); }
+}
+
+// ---------------- FRAKTIONEN ----------------
+
+function renderFraktionen() {
+  const legal = state.fraktionen.filter(f => f.typ === "legal");
+  const illegal = state.fraktionen.filter(f => f.typ === "illegal");
+  const fCard = f => `
+    <div class="card">
+      <h3>${esc(f.name)} <span class="badge ${f.typ}">${f.typ === "legal" ? "Legal" : "Illegal"}</span></h3>
+      <div style="font-size:12.5px;color:var(--muted2);line-height:1.9">
+        👑 Leitung: <b>${f.leitung_id ? "ID " + f.leitung_id : "—"}</b><br>
+        ${f.zweite_leitung_id ? `👑 2. Leitung: <b>ID ${f.zweite_leitung_id}</b><br>` : ""}
+        📍 Standort: ${esc(f.standort || "—")}<br>
+        ${f.discord_invite ? `💬 <a href="${esc(f.discord_invite)}" target="_blank" style="color:var(--info)">${esc(f.discord_invite)}</a><br>` : ""}
+        ⚠️ Warnungen: <b>${f.warnungen}/${f.max_warnungen}</b>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+        <button class="btn btn-sm btn-ghost" onclick="fraktionWarn('${esc(f.name)}', 'warn')">+ Warn</button>
+        <button class="btn btn-sm btn-ghost" onclick="fraktionWarn('${esc(f.name)}', 'unwarn')">− Warn</button>
+        <button class="btn btn-sm btn-ghost" onclick='openModal("editFraktion", {f: ${JSON.stringify(f)}})'>Bearbeiten</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteFraktion('${esc(f.name)}')">Löschen</button>
+      </div>
+    </div>`;
+  return `
+    <div class="main-head">
+      <div><h1>Fraktionen</h1><div class="sub">${state.fraktionen.length} REGISTRIERT</div></div>
+      <div class="head-actions"><button class="btn btn-primary" onclick="openModal('newFraktion')">+ Neue Fraktion</button></div>
+    </div>
+    <div class="section">
+      <div class="section-title">🏛 LEGAL (${legal.length})</div>
+      <div class="grid grid-3">${legal.length ? legal.map(fCard).join("") : `<div class="empty" style="grid-column:1/-1"><div class="t">Keine legalen Fraktionen</div></div>`}</div>
+    </div>
+    <div class="section">
+      <div class="section-title">🔫 ILLEGAL (${illegal.length})</div>
+      <div class="grid grid-3">${illegal.length ? illegal.map(fCard).join("") : `<div class="empty" style="grid-column:1/-1"><div class="t">Keine illegalen Fraktionen</div></div>`}</div>
+    </div>
+  `;
+}
+
+async function fraktionWarn(name, action) {
+  try {
+    await apiFetch(`/api/fraktionen/${encodeURIComponent(name)}/${action}`, { method: "POST" });
+    toast("Aktualisiert.", "ok");
+    loadViewData();
+  } catch (e) { toast(e.message, "err"); }
+}
+async function deleteFraktion(name) {
+  if (!confirm(`Fraktion "${name}" wirklich vollständig löschen?`)) return;
+  try {
+    await apiFetch(`/api/fraktionen/${encodeURIComponent(name)}`, { method: "DELETE" });
+    toast("Fraktion gelöscht.", "ok");
+    loadViewData();
+  } catch (e) { toast(e.message, "err"); }
+}
+async function createFraktion(payload) {
+  try {
+    await apiFetch("/api/fraktionen", { method: "POST", body: JSON.stringify(payload) });
+    toast("Fraktion erstellt.", "ok");
+    closeModal();
+    loadViewData();
+  } catch (e) { toast(e.message, "err"); }
+}
+async function updateFraktion(name, payload) {
+  try {
+    await apiFetch(`/api/fraktionen/${encodeURIComponent(name)}`, { method: "PATCH", body: JSON.stringify(payload) });
+    toast("Fraktion aktualisiert.", "ok");
+    closeModal();
+    loadViewData();
+  } catch (e) { toast(e.message, "err"); }
+}
+
+// ---------------- STRAFEN (team / buerger) ----------------
+
+function renderStrafen(kind) {
+  const data = kind === "team" ? state.teamStrafen : state.buergerStrafen;
+  const label = kind === "team" ? "Team-Strafen" : "Bürger-Strafen";
+  return `
+    <div class="main-head">
+      <div><h1>${label}</h1><div class="sub">${data.length} EINTRÄGE MIT HISTORIE · WER WARN/KICK/BAN BEKOMMEN HAT</div></div>
+      <div class="head-actions"><button class="btn btn-primary" onclick="openModal('newStrafe', {kind})">+ Aktion eintragen</button></div>
+    </div>
+    <div class="list">
+      ${data.length ? data.map(row => `
+        <div class="list-row">
+          <div class="grow">
+            <div class="primary">${esc(row.roblox_username || row.discord_username || ("ID " + row.user_id))}</div>
+            <div class="secondary">${row.user_id} ${row.roblox_username && row.discord_username ? "· " + esc(row.discord_username) : ""}</div>
+          </div>
+          <span class="badge ${row.warnungen >= 2 ? "crit" : row.warnungen > 0 ? "warn" : "neutral"}">${row.warnungen}/2 Warn</span>
+          <span class="badge ${row.gekickt > 0 ? "warn" : "neutral"}">${row.gekickt} Kicks</span>
+          <span class="badge ${row.gebannt ? "crit" : "neutral"}">${row.gebannt ? (row.ban_typ === "permaban" ? "Permaban" : "1-Tag-Ban") : "Kein Ban"}</span>
+          <button class="btn btn-sm btn-ghost" onclick="viewStrafeDetail('${kind}', ${row.user_id})">Verlauf</button>
+          ${state.me.is_master ? `<button class="btn btn-sm btn-danger" onclick="resetStrafe('${kind}', ${row.user_id})">Reset</button>` : ""}
+        </div>
+      `).join("") : `<div class="empty"><div class="ic">■</div><div class="t">Keine Einträge</div><div class="d">Hier erscheinen Nutzer mit Warnungen, Kicks oder Bans.</div></div>`}
+    </div>
+  `;
+}
+
+async function viewStrafeDetail(kind, userId) {
+  try {
+    const data = await apiFetch(`/api/${kind}_strafen/${userId}`);
+    openModal("strafeDetail", { kind, userId, data });
+  } catch (e) { toast(e.message, "err"); }
+}
+async function resetStrafe(kind, userId) {
+  if (!confirm("Warnungen, Kicks und Bans wirklich zurücksetzen?")) return;
+  try {
+    await apiFetch(`/api/${kind}_strafen/${userId}/reset`, { method: "POST" });
+    toast("Zurückgesetzt.", "ok");
+    loadViewData();
+  } catch (e) { toast(e.message, "err"); }
+}
+async function submitStrafeAction(kind, userId, action, payload) {
+  try {
+    const res = await apiFetch(`/api/${kind}_strafen/${userId}/${action}`, { method: "POST", body: JSON.stringify(payload) });
+    toast(res.note || "Aktion ausgeführt.", "ok");
+    closeModal();
+    loadViewData();
+  } catch (e) { toast(e.message, "err"); }
+}
+
+// ---------------- BEWERBUNGEN ----------------
+
+function renderBewerbungen() {
+  const filtered = state.bewerbungen.filter(b => !state.bewerbungFilter || b.status === state.bewerbungFilter);
+  return `
+    <div class="main-head">
+      <div><h1>Bewerbungen</h1><div class="sub">${state.bewerbungen.length} GESAMT</div></div>
+    </div>
+    <div class="tabs">
+      ${["offen", "angenommen", "abgelehnt", ""].map(s => `
+        <button class="${state.bewerbungFilter === s ? "active" : ""}" onclick="state.bewerbungFilter='${s}';render()">${s || "Alle"}</button>
+      `).join("")}
+    </div>
+    <div class="grid grid-2">
+      ${filtered.length ? filtered.map(b => `
+        <div class="card">
+          <h3>Bewerbung #${b.id} <span class="badge ${b.status === 'angenommen' ? 'ok' : b.status === 'abgelehnt' ? 'crit' : 'warn'}">${b.status}</span></h3>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:10px;font-family:var(--mono)">User ID ${b.user_id} · ${fmtDate(b.erstellt_am)}</div>
+          <div style="font-size:12.5px;color:var(--muted2);max-height:120px;overflow-y:auto;line-height:1.7">
+            ${b.antworten.slice(0, 3).map((a, i) => `<div><b style="color:var(--text)">A${i+1}:</b> ${esc(String(a).slice(0, 80))}</div>`).join("")}
+          </div>
+          <div style="display:flex;gap:8px;margin-top:14px">
+            <button class="btn btn-sm btn-ghost" onclick='openModal("bewerbungDetail", {b: ${JSON.stringify(b)}})'>Details</button>
+            ${b.status === "offen" && state.me.is_master ? `
+              <button class="btn btn-sm" style="background:rgba(62,207,142,.14);color:var(--ok);border:1px solid var(--ok)" onclick="decideBewerbung(${b.id}, 'angenommen')">Annehmen</button>
+              <button class="btn btn-sm btn-danger" onclick="decideBewerbung(${b.id}, 'abgelehnt')">Ablehnen</button>
+            ` : ""}
+          </div>
+        </div>
+      `).join("") : `<div class="empty" style="grid-column:1/-1"><div class="ic">▶</div><div class="t">Keine Bewerbungen in dieser Kategorie</div></div>`}
+    </div>
+  `;
+}
+
+async function decideBewerbung(id, status) {
+  const grund = status === "abgelehnt" ? prompt("Grund für die Ablehnung (optional):") || "" : "";
+  try {
+    await apiFetch(`/api/bewerbungen/${id}/decide`, { method: "POST", body: JSON.stringify({ status, grund: grund || null }) });
+    toast("Bewerbung entschieden.", "ok");
+    closeModal();
+    loadViewData();
+  } catch (e) { toast(e.message, "err"); }
+}
+
+// ---------------- MESSAGES (DM + Kanal) ----------------
+
+function renderMessages() {
+  return `
+    <div class="main-head">
+      <div><h1>Nachrichten</h1><div class="sub">DIREKTNACHRICHTEN UND KANAL-POSTS ALS BOT</div></div>
+      <div class="head-actions">
+        <button class="btn btn-ghost" onclick="openModal('sendMessage')">✉ Direktnachricht</button>
+        <button class="btn btn-primary" onclick="openModal('sendChannelMessage')">＃ In Kanal senden</button>
+      </div>
+    </div>
+
+    <div class="section-title">ALS BOT IN EINEN SERVER-KANAL SENDEN</div>
+    <div class="list section">
+      ${state.channelMessageHistory.length ? state.channelMessageHistory.map(m => `
+        <div class="list-row">
+          <div class="grow">
+            <div class="primary">Kanal-ID ${m.channel_id}</div>
+            <div class="secondary">${esc((m.nachricht || "").slice(0, 90))}</div>
+          </div>
+          <span class="badge ${m.gesendet ? (m.fehler ? "crit" : "ok") : "warn"}">${m.gesendet ? (m.fehler ? "Fehler: " + esc(m.fehler) : "Gesendet") : "Ausstehend"}</span>
+          <span class="secondary" style="width:120px;text-align:right">${fmtDate(m.erstellt_am)}</span>
+          <span class="secondary">von ${esc(m.requested_username || "")}</span>
+        </div>
+      `).join("") : `<div class="empty"><div class="ic">＃</div><div class="t">Noch keine Kanal-Nachrichten gesendet</div><div class="d">Erfordert das Backend-Update aus der Anleitung (channel_messages Tabelle + Loop).</div></div>`}
+    </div>
+
+    <div class="section-title">DIREKTNACHRICHTEN AN NUTZER</div>
+    <div class="list">
+      ${state.messageHistory.length ? state.messageHistory.map(m => `
+        <div class="list-row">
+          <div class="grow">
+            <div class="primary">An ${m.user_id}</div>
+            <div class="secondary">${esc((m.nachricht || "").slice(0, 90))}</div>
+          </div>
+          <span class="badge ${m.gesendet ? (m.fehler ? "crit" : "ok") : "warn"}">${m.gesendet ? (m.fehler ? "Fehler" : "Gesendet") : "Ausstehend"}</span>
+          <span class="secondary" style="width:120px;text-align:right">${fmtDate(m.erstellt_am)}</span>
+        </div>
+      `).join("") : `<div class="empty"><div class="ic">✉</div><div class="t">Noch keine Nachrichten gesendet</div></div>`}
+    </div>
+  `;
+}
+
+async function sendMessage(userId, nachricht) {
+  try {
+    await apiFetch("/api/messages/send", { method: "POST", body: JSON.stringify({ user_id: userId, nachricht }) });
+    toast("Nachricht wird gesendet.", "ok");
+    closeModal();
+    loadViewData();
+  } catch (e) { toast(e.message, "err"); }
+}
+
+async function sendChannelMessage(channelId, nachricht) {
+  if (!state.activeGuild) return toast("Kein Server ausgewählt.", "err");
+  try {
+    await apiFetch("/api/channel_messages/send", {
+      method: "POST",
+      body: JSON.stringify({ guild_id: state.activeGuild.guild_id, channel_id: channelId, nachricht }),
+    });
+    toast("Nachricht wird im Kanal gepostet.", "ok");
+    closeModal();
+    loadViewData();
+  } catch (e) { toast(e.message, "err"); }
+}
+
+// ---------------- MODULES ----------------
+
+function renderModules() {
+  const mods = Object.keys(state.modules.labels || {});
+  const activeTab = state.activeModuleTab;
+  const perms = (state.modulePerms && state.modulePerms[activeTab]) || { roles: [], users: [] };
+  return `
+    <div class="main-head">
+      <div><h1>Module & Rechte</h1><div class="sub">STEUERE FUNKTIONEN UND ZUGRIFFSROLLEN</div></div>
+    </div>
+    <div class="grid grid-3 section">
+      ${mods.map(m => `
+        <div class="card" style="display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <div style="font-size:13.5px;font-weight:600">${esc(state.modules.labels[m])}</div>
+            <div style="font-size:11px;color:var(--muted);font-family:var(--mono)">${m}</div>
+          </div>
+          <div class="toggle ${state.modules.status[m] ? "on" : ""}" onclick="${state.me.is_master ? `toggleModule('${m}')` : ""}" style="${state.me.is_master ? "" : "opacity:.5;cursor:not-allowed"}">
+            <div class="toggle-dot"></div>
+          </div>
+        </div>
+      `).join("")}
+    </div>
+    <div class="section-title">BERECHTIGUNGEN BEARBEITEN</div>
+    <div class="tabs">
+      ${mods.map(m => `<button class="${activeTab === m ? "active" : ""}" onclick="switchModuleTab('${m}')">${esc(state.modules.labels[m])}</button>`).join("")}
+    </div>
+    <div class="card">
+      <h3>Rollen mit Zugriff auf "${esc(state.modules.labels[activeTab] || activeTab)}"</h3>
+      <div class="perm-editor">
+        ${state.roles.length ? state.roles.map(r => `
+          <span class="badge role ${perms.roles.includes(r.role_id) ? "assigned" : ""}" onclick="${state.me.is_master ? `togglePermRole('${activeTab}', ${r.role_id})` : ""}">${esc(r.name)}</span>
+        `).join("") : `<span style="color:var(--muted);font-size:12px">Keine Rollen im Cache — Resync auf der Overview-Seite ausführen.</span>`}
+      </div>
+      <div class="hint">Klicke eine Rolle an, um sie hinzuzufügen oder zu entfernen. Leer = Standard-Rollen aus dem Bot-Code greifen.</div>
+    </div>
+  `;
+}
+
+async function toggleModule(mod) {
+  try {
+    const newVal = !state.modules.status[mod];
+    await apiFetch(`/api/modules/${mod}`, { method: "POST", body: JSON.stringify({ enabled: newVal }) });
+    state.modules.status[mod] = newVal;
+    toast(`Modul ${newVal ? "aktiviert" : "deaktiviert"}.`, "ok");
+    render();
+  } catch (e) { toast(e.message, "err"); }
+}
+function switchModuleTab(mod) {
+  state.activeModuleTab = mod;
+  render();
+  loadModulePerms(mod).then(render);
+}
+async function togglePermRole(mod, roleId) {
+  const perms = state.modulePerms[mod] || { roles: [], users: [] };
+  const roles = perms.roles.includes(roleId) ? perms.roles.filter(r => r !== roleId) : [...perms.roles, roleId];
+  try {
+    await apiFetch(`/api/modules/${mod}/permissions`, { method: "POST", body: JSON.stringify({ roles, users: perms.users }) });
+    state.modulePerms[mod].roles = roles;
+    toast("Berechtigung aktualisiert.", "ok");
+    render();
+  } catch (e) { toast(e.message, "err"); }
+}
+
+// ---------------- WHITELIST ----------------
+
+function renderWhitelist() {
+  return `
+    <div class="main-head">
+      <div><h1>Whitelist</h1><div class="sub">WER DARF DAS DASHBOARD NUTZEN</div></div>
+      <div class="head-actions"><button class="btn btn-primary" onclick="openModal('addWhitelist')">+ Nutzer hinzufügen</button></div>
+    </div>
+    <div class="list section">
+      ${state.whitelist.length ? state.whitelist.map(w => `
+        <div class="list-row">
+          <div class="grow">
+            <div class="primary">${esc(w.username || "Unbekannt")}</div>
+            <div class="secondary">${w.user_id} · hinzugefügt ${fmtDate(w.added_at)}</div>
+          </div>
+          <button class="btn btn-sm btn-danger" onclick="removeWhitelist(${w.user_id})">Entfernen</button>
+        </div>
+      `).join("") : `<div class="empty"><div class="ic">⛊</div><div class="t">Nur der Master hat aktuell Zugriff</div></div>`}
+    </div>
+    <div class="section-title">ZUGRIFFSVERSUCHE</div>
+    <div class="list">
+      ${state.accessLog.slice(0, 40).map(a => `
+        <div class="list-row">
+          <span class="secondary" style="width:130px;flex-shrink:0">${fmtDate(a.erstellt_am)}</span>
+          <span class="grow">${esc(a.username || "?")} (${a.user_id})</span>
+          <span class="badge ${a.allowed ? "ok" : "crit"}">${a.allowed ? "Erlaubt" : "Blockiert"}</span>
+          <span class="secondary">${esc(a.ip || "")}</span>
+        </div>
+      `).join("") || `<div class="empty"><div class="t">Noch keine Zugriffsversuche</div></div>`}
+    </div>
+  `;
+}
+
+async function addWhitelist(userId, username) {
+  try {
+    await apiFetch("/api/whitelist", { method: "POST", body: JSON.stringify({ user_id: userId, username }) });
+    toast("Nutzer hinzugefügt.", "ok");
+    closeModal();
+    loadViewData();
+  } catch (e) { toast(e.message, "err"); }
+}
+async function removeWhitelist(userId) {
+  if (!confirm("Zugriff wirklich entfernen?")) return;
+  try {
+    await apiFetch(`/api/whitelist/${userId}`, { method: "DELETE" });
+    toast("Entfernt.", "ok");
+    loadViewData();
+  } catch (e) { toast(e.message, "err"); }
+}
+
+// ---------------- ACTION LOG (wer hat was wann gemacht) ----------------
+
+function renderActionLog() {
+  const filter = state.actionLogFilter;
+  const filtered = state.actionLog.filter(a => !filter || a.action.includes(filter));
+  const categories = ["", "warn", "kick", "ban", "fraktion", "module", "whitelist", "message"];
+  return `
+    <div class="main-head"><div><h1>Aktionslog</h1><div class="sub">ALLE DASHBOARD-AKTIONEN · WER HAT WAS WANN AUSGEFÜHRT</div></div></div>
+    <div class="tabs">
+      ${categories.map(c => `<button class="${filter === c ? "active" : ""}" onclick="state.actionLogFilter='${c}';render()">${c || "Alle"}</button>`).join("")}
+    </div>
+    <div class="list">
+      ${filtered.length ? filtered.map(a => `
+        <div class="log-entry">
+          <span class="ts">${fmtDate(a.erstellt_am)}</span>
+          <span class="act">${esc(a.action)}</span>
+          <span class="det">${esc(a.details || "")}</span>
+          <span class="who">${esc(a.username || "")}</span>
+        </div>
+      `).join("") : `<div class="empty"><div class="t">Keine Einträge in dieser Kategorie</div></div>`}
+    </div>
+  `;
+}
+
+function emptyNoGuild() {
+  return `<div class="empty"><div class="ic">◈</div><div class="t">Kein Server ausgewählt</div><div class="d">Wähle links oben einen Server aus.</div></div>`;
+}
+
+// ---------------- MODALS ----------------
+
+function renderModalDOM() {
+  const m = state.modal;
+  let html = "";
+  if (m.name === "assignRole") {
+    html = `
+      <div class="modal-head"><h3>Rolle zu ${esc(m.name || "")} hinzufügen</h3><button class="close-x" onclick="closeModal()">✕</button></div>
+      <div class="modal-body">
+        <div class="perm-editor">
+          ${state.roles.map(r => `<span class="badge role" onclick="toggleRole(${m.userId}, ${r.role_id}, 'add');closeModal()">${esc(r.name)}</span>`).join("")}
+        </div>
+      </div>`;
+  } else if (m.name === "addSetting" || m.name === "editSetting") {
+    const isEdit = m.name === "editSetting";
+    html = `
+      <div class="modal-head"><h3>${isEdit ? "Setting bearbeiten" : "Neues Setting"}</h3><button class="close-x" onclick="closeModal()">✕</button></div>
+      <div class="modal-body">
+        <div class="field"><label>Key</label><input id="mk" value="${esc(m.key || "")}" ${isEdit ? "disabled" : ""}></div>
+        <div class="field"><label>Value</label><input id="mv" value="${esc(m.value || "")}"></div>
+      </div>
+      <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Abbrechen</button>
+        <button class="btn btn-primary" onclick="saveSetting(document.getElementById('mk').value, document.getElementById('mv').value)">Speichern</button></div>`;
+  } else if (m.name === "newFraktion") {
+    html = `
+      <div class="modal-head"><h3>Neue Fraktion</h3><button class="close-x" onclick="closeModal()">✕</button></div>
+      <div class="modal-body">
+        <div class="field"><label>Name</label><input id="f_name"></div>
+        <div class="field"><label>Typ</label><select id="f_typ"><option value="legal">Legal</option><option value="illegal">Illegal</option></select></div>
+        <div class="field-row">
+          <div class="field"><label>Leitung (Discord ID)</label><input id="f_leitung"></div>
+          <div class="field"><label>2. Leitung (optional)</label><input id="f_zleitung"></div>
+        </div>
+        <div class="field"><label>Standort</label><input id="f_standort"></div>
+        <div class="field"><label>Discord-Invite</label><input id="f_invite" placeholder="https://discord.gg/..."></div>
+        <div class="field"><label>Max. Warnungen</label><input id="f_max" value="3"></div>
+      </div>
+      <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Abbrechen</button>
+        <button class="btn btn-primary" onclick="createFraktion({
+          name: document.getElementById('f_name').value,
+          typ: document.getElementById('f_typ').value,
+          leitung_id: document.getElementById('f_leitung').value || null,
+          zweite_leitung_id: document.getElementById('f_zleitung').value || null,
+          standort: document.getElementById('f_standort').value,
+          discord_invite: document.getElementById('f_invite').value || null,
+          max_warnungen: parseInt(document.getElementById('f_max').value) || 3,
+        })">Erstellen</button></div>`;
+  } else if (m.name === "editFraktion") {
+    const f = m.f;
+    html = `
+      <div class="modal-head"><h3>${esc(f.name)} bearbeiten</h3><button class="close-x" onclick="closeModal()">✕</button></div>
+      <div class="modal-body">
+        <div class="field"><label>Typ</label><select id="ef_typ"><option value="legal" ${f.typ === "legal" ? "selected" : ""}>Legal</option><option value="illegal" ${f.typ === "illegal" ? "selected" : ""}>Illegal</option></select></div>
+        <div class="field-row">
+          <div class="field"><label>Leitung (ID)</label><input id="ef_leitung" value="${f.leitung_id || ""}"></div>
+          <div class="field"><label>2. Leitung (ID)</label><input id="ef_zleitung" value="${f.zweite_leitung_id || ""}"></div>
+        </div>
+        <div class="field"><label>Standort</label><input id="ef_standort" value="${esc(f.standort || "")}"></div>
+        <div class="field"><label>Discord-Invite</label><input id="ef_invite" value="${esc(f.discord_invite || "")}"></div>
+        <div class="field-row">
+          <div class="field"><label>Warnungen</label><input id="ef_warn" value="${f.warnungen}"></div>
+          <div class="field"><label>Max. Warnungen</label><input id="ef_max" value="${f.max_warnungen}"></div>
+        </div>
+      </div>
+      <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Abbrechen</button>
+        <button class="btn btn-primary" onclick="updateFraktion('${esc(f.name)}', {
+          typ: document.getElementById('ef_typ').value,
+          leitung_id: document.getElementById('ef_leitung').value || null,
+          zweite_leitung_id: document.getElementById('ef_zleitung').value || null,
+          standort: document.getElementById('ef_standort').value,
+          discord_invite: document.getElementById('ef_invite').value || null,
+          warnungen: parseInt(document.getElementById('ef_warn').value) || 0,
+          max_warnungen: parseInt(document.getElementById('ef_max').value) || 3,
+        })">Speichern</button></div>`;
+  } else if (m.name === "newStrafe") {
+    html = `
+      <div class="modal-head"><h3>${m.kind === "team" ? "Team" : "Bürger"}-Aktion eintragen</h3><button class="close-x" onclick="closeModal()">✕</button></div>
+      <div class="modal-body">
+        <div class="field"><label>User ID</label><input id="s_uid"></div>
+        <div class="field"><label>Aktion</label><select id="s_action"><option value="warn">Verwarnen</option><option value="kick">Kicken</option><option value="ban">Bannen</option></select></div>
+        <div class="field" id="s_typwrap" style="display:none"><label>Ban-Art</label><select id="s_typ"><option value="permaban">Permanent</option><option value="baneoneday">1 Tag</option></select></div>
+        <div class="field"><label>Grund</label><textarea id="s_grund"></textarea></div>
+        <div class="field-row">
+          <div class="field"><label>Roblox Username</label><input id="s_rbx"></div>
+          <div class="field"><label>Discord Username</label><input id="s_dc"></div>
+        </div>
+        <div class="hint">Mindestens ein Username erforderlich.</div>
+      </div>
+      <div class="modal-foot"><button class="btn btn-ghost" id="s_cancel">Abbrechen</button>
+        <button class="btn btn-primary" id="s_submit">Ausführen</button></div>`;
+  } else if (m.name === "strafeDetail") {
+    const d = m.data;
+    html = `
+      <div class="modal-head"><h3>Verlauf — User ${m.userId}</h3><button class="close-x" onclick="closeModal()">✕</button></div>
+      <div class="modal-body">
+        ${d.strafe ? `<div class="kv" style="margin-bottom:14px">
+          <div>🎮 Roblox: <b>${esc(d.strafe.roblox_username || "—")}</b></div>
+          <div>💬 Discord: <b>${esc(d.strafe.discord_username || "—")}</b></div>
+          <div>⚠️ Warnungen: <b>${d.strafe.warnungen}/2</b> · 👢 Kicks: <b>${d.strafe.gekickt}</b> · 🔨 <b>${d.strafe.gebannt ? "Gebannt" : "Nicht gebannt"}</b></div>
+        </div>` : ""}
+        <div class="timeline">
+          ${d.log.length ? d.log.map(l => `
+            <div class="timeline-item">
+              <div style="font-size:12px"><b>${esc(l.aktion)}</b> — ${fmtDate(l.erstellt_am)}</div>
+              <div style="font-size:11.5px;color:var(--muted2)">von Moderator ${l.moderator_id}${l.grund ? " · " + esc(l.grund) : ""}</div>
+            </div>`).join("") : `<div style="color:var(--muted);font-size:12.5px">Keine Einträge.</div>`}
+        </div>
+      </div>`;
+  } else if (m.name === "bewerbungDetail") {
+    const b = m.b;
+    const fragen = ["Dein Alter","Was ist Frp","Was ist RDM","Was ist VDM","Was ist Meta Gaming","Was ist PowerRp","Was hast du als Admin zu Beachten","Was darfst du als Admin Nicht","Hast du schon Erfahrung als Admin Wenn ja wo?","Dein roblox username","Wann hättest du zeit für ein bewerbungsgespräch"];
+    html = `
+      <div class="modal-head"><h3>Bewerbung #${b.id}</h3><button class="close-x" onclick="closeModal()">✕</button></div>
+      <div class="modal-body">
+        ${b.antworten.map((a, i) => `<div class="field"><label>${esc(fragen[i] || ("Frage " + (i+1)))}</label><div style="font-size:13px;color:var(--muted2)">${esc(a)}</div></div>`).join("")}
+      </div>`;
+  } else if (m.name === "sendMessage") {
+    html = `
+      <div class="modal-head"><h3>Direktnachricht senden</h3><button class="close-x" onclick="closeModal()">✕</button></div>
+      <div class="modal-body">
+        <div class="field"><label>User ID</label><input id="msg_uid"></div>
+        <div class="field"><label>Nachricht</label><textarea id="msg_text"></textarea></div>
+      </div>
+      <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Abbrechen</button>
+        <button class="btn btn-primary" onclick="sendMessage(document.getElementById('msg_uid').value, document.getElementById('msg_text').value)">Senden</button></div>`;
+  } else if (m.name === "sendChannelMessage") {
+    html = `
+      <div class="modal-head"><h3>Als Bot in Kanal senden</h3><button class="close-x" onclick="closeModal()">✕</button></div>
+      <div class="modal-body">
+        ${!state.activeGuild ? `<div class="hint">Kein Server ausgewählt.</div>` : `
+        <div class="field">
+          <label>Kanal</label>
+          <select id="cm_channel">
+            ${state.channels.filter(c => c.type === "text" || c.type === "TextChannel" || c.type.includes("text")).map(c => `<option value="${c.channel_id}">#${esc(c.name)}</option>`).join("")}
+          </select>
+        </div>
+        <div class="field"><label>Nachricht</label><textarea id="cm_text" placeholder="Der Bot postet diese Nachricht direkt im gewählten Kanal."></textarea></div>
+        <div class="hint">Erfordert das Backend-Update (channel_messages Tabelle + Worker-Loop in bot2.py).</div>
+        `}
+      </div>
+      <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Abbrechen</button>
+        ${state.activeGuild ? `<button class="btn btn-primary" onclick="sendChannelMessage(document.getElementById('cm_channel').value, document.getElementById('cm_text').value)">Senden</button>` : ""}
+      </div>`;
+  } else if (m.name === "addWhitelist") {
+    html = `
+      <div class="modal-head"><h3>Nutzer zur Whitelist hinzufügen</h3><button class="close-x" onclick="closeModal()">✕</button></div>
+      <div class="modal-body">
+        <div class="field"><label>User ID</label><input id="wl_uid"></div>
+        <div class="field"><label>Username (optional)</label><input id="wl_uname"></div>
+      </div>
+      <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Abbrechen</button>
+        <button class="btn btn-primary" onclick="addWhitelist(document.getElementById('wl_uid').value, document.getElementById('wl_uname').value)">Hinzufügen</button></div>`;
+  } else if (m.name === "backupView") {
+    html = `
+      <div class="modal-head"><h3>${esc(m.filename)}</h3><button class="close-x" onclick="closeModal()">✕</button></div>
+      <div class="modal-body">
+        <div style="font-size:12.5px;color:var(--muted2);margin-bottom:10px">
+          Rollen: <b>${m.data.roles?.length || 0}</b> · Kategorien: <b>${m.data.categories?.length || 0}</b> · Erstellt: ${fmtDate(m.data.created_at)}
+        </div>
+        <div class="progress-log" style="max-height:320px">${esc(JSON.stringify(m.data, null, 2)).slice(0, 4000)}</div>
+      </div>`;
+  }
+
+  const overlay = document.createElement("div");
+  overlay.className = "modal-overlay";
+  overlay.id = "modalOverlay";
+  overlay.onclick = (e) => { if (e.target.id === "modalOverlay") closeModal(); };
+  const box = document.createElement("div");
+  box.className = "modal" + (m.name === "backupView" ? " wide" : "");
+  box.innerHTML = html;
+  overlay.appendChild(box);
+  document.getElementById("app").appendChild(overlay);
+
+  if (m.name === "newStrafe") {
+    const actionSel = document.getElementById("s_action");
+    const typWrap = document.getElementById("s_typwrap");
+    actionSel.addEventListener("change", () => {
+      typWrap.style.display = actionSel.value === "ban" ? "block" : "none";
+    });
+    document.getElementById("s_cancel").addEventListener("click", closeModal);
+    document.getElementById("s_submit").addEventListener("click", () => {
+      const action = actionSel.value;
+      const payload = {
+        grund: document.getElementById("s_grund").value,
+        roblox_username: document.getElementById("s_rbx").value || null,
+        discord_username: document.getElementById("s_dc").value || null,
+      };
+      if (action === "ban") payload.typ = document.getElementById("s_typ").value;
+      submitStrafeAction(m.kind, document.getElementById("s_uid").value, action, payload);
+    });
+  }
+}
+
+// ---------------- boot ----------------
+
+getTokenFromUrl();
+if (state.token) {
+  loadInitial();
+} else {
+  render();
+}
+</script>
+</body>
+</html>
