@@ -275,7 +275,9 @@ th{color:var(--muted);font-weight:600;}
 </div>
 
 <script>
-const API_BASE = "https://singhsamuel285-tech.github.io";
+// WICHTIG: Hier die öffentliche URL deines WispByte-Backends eintragen.
+// Beispiel: const API_BASE = "https://dein-backend.example.com";
+const API_BASE = "DEINE_WISPBYTE_BACKEND_URL";
 const DISCORD_CLIENT_ID = "1446188210794401883";
 const REDIRECT_URI = window.location.origin + window.location.pathname;
 
@@ -296,6 +298,9 @@ function showMsg(id, text, ok){
 }
 
 async function api(path, options={}){
+  if(API_BASE === "DEINE_WISPBYTE_BACKEND_URL"){
+    throw new Error("Backend-URL fehlt. Trage die öffentliche WispByte-URL ein.");
+  }
   const headers = options.headers || {};
   if(sessionToken) headers["Authorization"] = "Bearer " + sessionToken;
   if(options.body) headers["Content-Type"] = "application/json";
