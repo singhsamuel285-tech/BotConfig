@@ -260,6 +260,31 @@ tr:hover td{background:rgba(99,220,120,0.03);}
 .rblx-icon{width:15px;height:15px;fill:currentColor;flex-shrink:0;}
 
 .hidden{display:none!important;}
+
+/* AUDIT LOG */
+.audit-entry{
+  display:flex;flex-direction:column;gap:3px;
+  padding:11px 13px;border-radius:8px;
+  background:var(--bg2);border:1px solid var(--border);
+  margin-bottom:6px;
+  transition:border-color .15s;
+}
+.audit-entry:hover{border-color:rgba(99,220,120,0.2);}
+.audit-header{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+.audit-action{font-size:12px;font-weight:700;color:var(--green);}
+.audit-ts{font-size:10px;color:var(--muted);font-family:var(--mono);}
+.audit-who{font-size:12px;color:var(--text);font-family:var(--mono);}
+.audit-details{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.5;}
+.audit-list{max-height:420px;overflow-y:auto;padding-right:2px;}
+.audit-list::-webkit-scrollbar{width:4px;}
+.audit-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px;}
+.audit-empty{text-align:center;padding:24px;color:var(--muted);font-size:13px;}
+.audit-channel-hint{
+  font-size:11px;color:var(--muted);
+  background:var(--green-dim);border:1px solid var(--border-hi);
+  border-radius:8px;padding:10px 13px;margin-bottom:14px;
+  font-family:var(--mono);line-height:1.6;
+}
 </style>
 </head>
 <body>
@@ -330,6 +355,7 @@ tr:hover td{background:rgba(99,220,120,0.03);}
         <button class="tab" data-tab="admins">Admins</button>
         <button class="tab" data-tab="say">Say</button>
         <button class="tab" data-tab="dm">DM</button>
+        <button class="tab" data-tab="audit">Audit Log</button>
         <button class="tab" data-tab="entwickler">Entwickler</button>
       </div>
 
@@ -422,6 +448,29 @@ tr:hover td{background:rgba(99,220,120,0.03);}
           <div class="msg" id="dmMsg"></div>
         </div>
 
+        <!-- AUDIT LOG -->
+        <div class="tabpane" id="pane-audit">
+          <p class="card-label">Audit Log</p>
+          <div class="audit-channel-hint">
+            💡 Damit der Bot Aktionen auch direkt in einen Discord-Kanal sendet, trage unten die Kanal-ID ein und speichere. Der Bot-Kanal-Key dafür ist <code>audit_channel</code>.
+          </div>
+          <div class="field" style="margin-bottom:14px;">
+            <label>Audit-Kanal-ID (optional)</label>
+            <div style="display:flex;gap:8px;">
+              <input type="text" id="auditChannelId" placeholder="Kanal-ID eingeben…" style="flex:1;">
+              <button class="btn btn-green btn-sm" id="saveAuditChannelBtn">Speichern</button>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+            <span style="font-size:12px;color:var(--muted);">Letzte 100 Aktionen</span>
+            <button class="btn btn-ghost btn-sm" id="refreshAuditBtn">↻ Aktualisieren</button>
+          </div>
+          <div class="audit-list" id="auditList">
+            <div class="audit-empty">Lade Audit Log…</div>
+          </div>
+          <div class="msg" id="auditMsg"></div>
+        </div>
+
         <!-- ENTWICKLER -->
         <div class="tabpane" id="pane-entwickler">
           <div class="dev-hero">
@@ -467,7 +516,6 @@ tr:hover td{background:rgba(99,220,120,0.03);}
       </div>
     </div>
   </div>
-
 </div>
 
 <script>
@@ -532,7 +580,9 @@ document.querySelectorAll(".tab").forEach(tab => {
     document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
     document.querySelectorAll(".tabpane").forEach(p => p.classList.remove("active"));
     tab.classList.add("active");
-    document.getElementById("pane-" + tab.dataset.tab).classList.add("active");
+    const pane = document.getElementById("pane-" + tab.dataset.tab);
+    pane.classList.add("active");
+    if (tab.dataset.tab === "audit") loadAuditLog();
   });
 });
 
@@ -642,6 +692,10 @@ async function loadGuildArea() {
   document.getElementById("saveChannelBtn").disabled = !editable;
   document.getElementById("saveAdminBtn").disabled = !editable;
   if (editable) await loadAdmins();
+  // Audit-Kanal vorbelegen falls in Config
+  if (currentConfig.config.audit_channel_id) {
+    document.getElementById("auditChannelId").value = currentConfig.config.audit_channel_id;
+  }
 }
 
 async function loadAdmins() {
@@ -655,6 +709,61 @@ async function loadAdmins() {
   });
 }
 
+// ── AUDIT LOG ────────────────────────────────────────────────
+const ACTION_ICONS = {
+  "Modul geändert":  "🔧",
+  "Rolle gesetzt":   "🎭",
+  "Kanal gesetzt":   "📢",
+  "Rang gesetzt":    "⭐",
+  "Say gesendet":    "💬",
+  "DM gesendet":     "📨",
+};
+
+async function loadAuditLog() {
+  const list = document.getElementById("auditList");
+  list.innerHTML = '<div class="audit-empty">Lade…</div>';
+  try {
+    const entries = await api("/api/guild/" + currentGuildId + "/audit");
+    if (!entries.length) {
+      list.innerHTML = '<div class="audit-empty">Noch keine Einträge.</div>';
+      return;
+    }
+    list.innerHTML = "";
+    entries.forEach(e => {
+      const icon = ACTION_ICONS[e.action] || "📋";
+      const div = document.createElement("div");
+      div.className = "audit-entry";
+      div.innerHTML = `
+        <div class="audit-header">
+          <span class="audit-action">${icon} ${e.action}</span>
+          <span class="audit-ts">${e.timestamp}</span>
+        </div>
+        <span class="audit-who">👤 ${e.username} <span style="color:var(--muted);">(${e.user_id})</span></span>
+        <span class="audit-details">${e.details}</span>
+      `;
+      list.appendChild(div);
+    });
+  } catch (e) {
+    list.innerHTML = '<div class="audit-empty">Fehler beim Laden: ' + e.message + '</div>';
+  }
+}
+
+document.getElementById("refreshAuditBtn").addEventListener("click", loadAuditLog);
+
+document.getElementById("saveAuditChannelBtn").addEventListener("click", async () => {
+  try {
+    const channelId = document.getElementById("auditChannelId").value.trim();
+    await api("/api/guild/" + currentGuildId + "/config", {
+      method: "POST",
+      body: JSON.stringify({ audit_channel_id: channelId })
+    });
+    showMsg("auditMsg", "Audit-Kanal gespeichert.", true);
+  } catch (e) {
+    showMsg("auditMsg", e.message, false);
+  }
+});
+
+// ── REST DER BUTTONS ─────────────────────────────────────────
 document.getElementById("guildSelect").addEventListener("change", async (e) => {
   currentGuildId = e.target.value;
   await loadGuildArea();
