@@ -1183,13 +1183,34 @@ document.getElementById("supportCommentSendBtn").addEventListener("click", async
 
 // ── AUDIT LOG ────────────────────────────────────────────────
 const ACTION_ICONS = {
-  "Modul geändert":  "🔧",
-  "Befehl geändert": "🎚️",
-  "Rolle gesetzt":   "🎭",
-  "Kanal gesetzt":   "📢",
-  "Rang gesetzt":    "⭐",
-  "Say gesendet":    "💬",
-  "DM gesendet":     "📨",
+  "Modul geändert":                "🔧",
+  "Befehl geändert":               "🎚️",
+  "Rolle gesetzt":                 "🎭",
+  "Kanal gesetzt":                 "📢",
+  "Rang gesetzt":                  "⭐",
+  "Say gesendet":                  "💬",
+  "DM gesendet":                   "📨",
+  "Support-Fall abgebrochen":      "❌",
+  "Support-Fall geclaimt":         "✅",
+  "Support-Fall geschlossen":      "🔒",
+  "Support-Fall transferiert":     "🔁",
+  "Support-Ansage hochgeladen":    "🔊",
+  "Support-Ansage entfernt":       "🔇",
+  "Support-Kommentar (Dashboard)": "💬",
+  "Fraktion hinzugefügt":          "🏛️",
+  "Fraktion bearbeitet":           "✏️",
+  "Fraktion gelöscht":             "🗑️",
+  "Fraktion-Kategorie erstellt":   "📂",
+  "RP gestartet":                  "🟢",
+  "RP gestoppt":                   "🔴",
+  "RP-Kanal gesetzt":              "📺",
+  "RP-Zeitplan gesetzt":           "⏰",
+  "RP-Zeitplan aktiviert":         "▶️",
+  "RP-Zeitplan deaktiviert":       "⏸️",
+  "Audit-Kanal gesetzt":           "📋",
+  "Bot von Whitelist entfernt":    "🤖",
+  "Massen-Reinvite gesendet":      "📨",
+  "Reinvite genutzt":              "🔗",
 };
 
 async function loadAuditLog() {
@@ -1212,7 +1233,7 @@ async function loadAuditLog() {
           <span class="audit-ts">${e.timestamp}</span>
         </div>
         <span class="audit-who">👤 ${e.username} <span style="color:var(--muted);">(${e.user_id})</span></span>
-        <span class="audit-details">${e.details}</span>
+        <span class="audit-details">${e.details || "—"}</span>
       `;
       list.appendChild(div);
     });
