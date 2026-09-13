@@ -683,7 +683,7 @@ function showMsg(id, text, ok) {
 async function api(path, options = {}) {
   const headers = options.headers || {};
   if (sessionToken) headers["Authorization"] = "Bearer " + sessionToken;
-  if (options.body) headers["Content-Type"] = "application/json";
+  if (options.body && !(options.body instanceof FormData)) headers["Content-Type"] = "application/json";
   const res = await fetch(API_BASE + path, { ...options, headers });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.error || ("Fehler " + res.status));
@@ -1010,29 +1010,14 @@ if (supportAudioUploadBtn) supportAudioUploadBtn.addEventListener("click", async
     return;
   }
   try {
-    const reader = new FileReader();
-    const base64 = await new Promise((resolve, reject) => {
-      reader.onload = () => resolve(reader.result.split(",")[1]);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
+    const formData = new FormData();
+    formData.append("audio", file);
     await api("/api/guild/" + currentGuildId + "/support/audio", {
       method: "POST",
-      body: JSON.stringify({ filename: file.name, data_base64: base64 })
+      body: formData
     });
     showMsg("supportAudioMsg", "Ansage-Datei gespeichert.", true);
     fileInput.value = "";
-    await loadSupportAudioStatus();
-  } catch (e) {
-    showMsg("supportAudioMsg", e.message, false);
-  }
-});
-
-const supportAudioRemoveBtn = document.getElementById("supportAudioRemoveBtn");
-if (supportAudioRemoveBtn) supportAudioRemoveBtn.addEventListener("click", async () => {
-  try {
-    await api("/api/guild/" + currentGuildId + "/support/audio", { method: "DELETE" });
-    showMsg("supportAudioMsg", "Ansage-Datei entfernt.", true);
     await loadSupportAudioStatus();
   } catch (e) {
     showMsg("supportAudioMsg", e.message, false);
