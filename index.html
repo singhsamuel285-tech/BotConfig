@@ -382,6 +382,9 @@ tr:hover td{background:rgba(124,108,240,0.045);}
   font-size:14px;
 }
 .modal-close:hover{color:var(--text);border-color:var(--border-hi);}
+
+.aivoice-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:center;}
+.aivoice-actions input[type=file]{flex:1;min-width:150px;}
 </style>
 </head>
 <body>
@@ -400,7 +403,6 @@ tr:hover td{background:rgba(124,108,240,0.045);}
 
 <div class="shell">
 
-  <!-- LOGIN -->
   <div id="loginView" class="login-card">
     <div class="login-logo">
       <img src="logo.png" alt="Samuel Studios">
@@ -414,7 +416,6 @@ tr:hover td{background:rgba(124,108,240,0.045);}
     <div style="margin-top:12px;font-size:11px;color:var(--muted);font-family:var(--mono);">von <strong style="color:var(--text);">Samuel Studios</strong></div>
   </div>
 
-  <!-- APP VIEW -->
   <div id="appView" class="hidden" style="display:flex;flex-direction:column;gap:10px;">
 
     <div class="card topbar-card">
@@ -453,20 +454,19 @@ tr:hover td{background:rgba(124,108,240,0.045);}
         <button class="tab" data-tab="say">Say</button>
         <button class="tab" data-tab="dm">DM</button>
         <button class="tab" data-tab="support">Support</button>
+        <button class="tab" data-tab="aivoice">AI Voice</button>
         <button class="tab" data-tab="audit">Audit Log</button>
         <button class="tab" data-tab="entwickler">Entwickler</button>
       </div>
 
       <div class="card">
 
-        <!-- MODULE -->
         <div class="tabpane active" id="pane-module">
           <p class="card-label">Feature-Module</p>
           <div id="moduleList"></div>
           <div class="msg" id="moduleMsg"></div>
         </div>
 
-        <!-- ROLLEN -->
         <div class="tabpane" id="pane-rollen">
           <p class="card-label">Rolle setzen</p>
           <div class="field">
@@ -494,7 +494,6 @@ tr:hover td{background:rgba(124,108,240,0.045);}
           <div class="msg" id="rollenMsg"></div>
         </div>
 
-        <!-- ADMINS -->
         <div class="tabpane" id="pane-admins">
           <p class="card-label">Vergebene Ränge</p>
           <div class="table-wrap">
@@ -516,7 +515,6 @@ tr:hover td{background:rgba(124,108,240,0.045);}
           <div class="msg" id="adminsMsg"></div>
         </div>
 
-        <!-- SAY -->
         <div class="tabpane" id="pane-say">
           <p class="card-label">Nachricht senden</p>
           <div class="field">
@@ -531,7 +529,6 @@ tr:hover td{background:rgba(124,108,240,0.045);}
           <div class="msg" id="sayMsg"></div>
         </div>
 
-        <!-- DM -->
         <div class="tabpane" id="pane-dm">
           <p class="card-label">Direktnachricht senden</p>
           <div class="field">
@@ -546,7 +543,6 @@ tr:hover td{background:rgba(124,108,240,0.045);}
           <div class="msg" id="dmMsg"></div>
         </div>
 
-        <!-- SUPPORT -->
         <div class="tabpane" id="pane-support">
           <p class="card-label">Support-Ansage</p>
           <div class="field">
@@ -559,6 +555,25 @@ tr:hover td{background:rgba(124,108,240,0.045);}
           </div>
           <div id="supportAudioStatus" style="font-size:12px;color:var(--muted);margin-bottom:6px;">Lade…</div>
           <div class="msg" id="supportAudioMsg"></div>
+
+          <div class="sec">Support-Kanäle</div>
+          <div class="field">
+            <label>Warteraum-Kanal-ID</label>
+            <input type="text" id="supportWaitingChannelId" placeholder="Kanal-ID">
+          </div>
+          <div class="field">
+            <label>Benachrichtigungs-Kanal-ID</label>
+            <input type="text" id="supportNotifyChannelId" placeholder="Kanal-ID">
+          </div>
+          <div class="field">
+            <label>Support-Kanäle (mehrere IDs, kommagetrennt)</label>
+            <input type="text" id="supportChannelsList" placeholder="123, 456, 789">
+          </div>
+          <div class="field">
+            <label>Overflow-Kategorie-ID</label>
+            <input type="text" id="supportOverflowCategoryId" placeholder="Kategorie-ID">
+          </div>
+          <button class="btn btn-green btn-block" id="saveSupportChannelsBtn">Support-Kanäle speichern</button>
 
           <div class="sec">Support-Fälle</div>
           <div class="support-filter-row">
@@ -577,7 +592,24 @@ tr:hover td{background:rgba(124,108,240,0.045);}
           </div>
         </div>
 
-        <!-- AUDIT LOG -->
+        <div class="tabpane" id="pane-aivoice">
+          <p class="card-label">AI-Voice Kategorien</p>
+          <div id="aiVoiceList">
+            <div class="audit-empty">Lade…</div>
+          </div>
+          <div class="sec">Neue Kategorie</div>
+          <div class="field">
+            <label>Name</label>
+            <input type="text" id="aiVoiceNewName" placeholder="z.B. Willkommen">
+          </div>
+          <div class="field">
+            <label>Audio-Datei (mp3, wav, ogg)</label>
+            <input type="file" id="aiVoiceNewFile" accept=".mp3,.wav,.ogg">
+          </div>
+          <button class="btn btn-green btn-block" id="aiVoiceCreateBtn">Kategorie erstellen</button>
+          <div class="msg" id="aiVoiceMsg"></div>
+        </div>
+
         <div class="tabpane" id="pane-audit">
           <p class="card-label">Audit Log</p>
           <div class="audit-channel-hint">
@@ -600,7 +632,6 @@ tr:hover td{background:rgba(124,108,240,0.045);}
           <div class="msg" id="auditMsg"></div>
         </div>
 
-        <!-- ENTWICKLER -->
         <div class="tabpane" id="pane-entwickler">
           <div class="dev-hero">
             <div class="dev-logo">
@@ -647,7 +678,6 @@ tr:hover td{background:rgba(124,108,240,0.045);}
   </div>
 </div>
 
-<!-- SUPPORT-DETAIL MODAL -->
 <div id="supportDetailModal" class="modal-overlay hidden">
   <div class="modal-box">
     <button class="modal-close" id="supportDetailCloseX">✕</button>
@@ -670,6 +700,9 @@ let sessionToken = localStorage.getItem("session_token") || null;
 let currentUser = null, guilds = [], currentGuildId = null;
 let currentRank = 0, currentConfig = null, featureLabels = {}, commandRegistry = [];
 let expandedModules = new Set();
+let aiVoiceList = [];
+let currentSupportFilter = "";
+let openSupportCaseId = null;
 
 function showMsg(id, text, ok) {
   const el = document.getElementById(id);
@@ -728,7 +761,12 @@ document.querySelectorAll(".tab").forEach(tab => {
     const pane = document.getElementById("pane-" + tab.dataset.tab);
     pane.classList.add("active");
     if (tab.dataset.tab === "audit") loadAuditLog();
-    if (tab.dataset.tab === "support") loadSupportAudioStatus() && loadSupportCases();
+    if (tab.dataset.tab === "support") {
+      loadSupportAudioStatus();
+      loadSupportChannelConfig();
+      loadSupportCases();
+    }
+    if (tab.dataset.tab === "aivoice") loadAiVoiceList();
   });
 });
 
@@ -947,6 +985,10 @@ async function loadGuildArea() {
   const removeBtn = document.getElementById("supportAudioRemoveBtn");
   if (uploadBtn) uploadBtn.disabled = !editable;
   if (removeBtn) removeBtn.disabled = !editable;
+  const saveSupportChannelsBtnEl = document.getElementById("saveSupportChannelsBtn");
+  if (saveSupportChannelsBtnEl) saveSupportChannelsBtnEl.disabled = !editable;
+  const aiVoiceCreateBtnEl = document.getElementById("aiVoiceCreateBtn");
+  if (aiVoiceCreateBtnEl) aiVoiceCreateBtnEl.disabled = !editable;
   if (editable) await loadAdmins();
   if (currentConfig.config.audit_channel_id) {
     document.getElementById("auditChannelId").value = currentConfig.config.audit_channel_id;
@@ -964,7 +1006,6 @@ async function loadAdmins() {
   });
 }
 
-// ── SUPPORT ──────────────────────────────────────────────────
 const SUPPORT_STATUS_LABELS = {
   waiting: { text: "Wartend", color: "var(--blurple-soft)" },
   claimed: { text: "Aktiv", color: "var(--green)" },
@@ -1024,7 +1065,45 @@ if (supportAudioUploadBtn) supportAudioUploadBtn.addEventListener("click", async
   }
 });
 
-let currentSupportFilter = "";
+const supportAudioRemoveBtn = document.getElementById("supportAudioRemoveBtn");
+if (supportAudioRemoveBtn) supportAudioRemoveBtn.addEventListener("click", async () => {
+  try {
+    await api("/api/guild/" + currentGuildId + "/support/audio", { method: "DELETE" });
+    showMsg("supportAudioMsg", "Ansage-Datei entfernt.", true);
+    await loadSupportAudioStatus();
+  } catch (e) {
+    showMsg("supportAudioMsg", e.message, false);
+  }
+});
+
+async function loadSupportChannelConfig() {
+  try {
+    const cfg = await api("/api/guild/" + currentGuildId + "/support/config");
+    document.getElementById("supportWaitingChannelId").value = cfg.waiting_channel_id || "";
+    document.getElementById("supportNotifyChannelId").value = cfg.notify_channel_id || "";
+    document.getElementById("supportChannelsList").value = (cfg.support_channels || []).join(", ");
+    document.getElementById("supportOverflowCategoryId").value = cfg.overflow_category_id || "";
+  } catch (e) {}
+}
+
+const saveSupportChannelsBtn = document.getElementById("saveSupportChannelsBtn");
+if (saveSupportChannelsBtn) saveSupportChannelsBtn.addEventListener("click", async () => {
+  try {
+    const support_channels = document.getElementById("supportChannelsList").value.split(",").map(s => s.trim()).filter(Boolean);
+    await api("/api/guild/" + currentGuildId + "/support/config", {
+      method: "POST",
+      body: JSON.stringify({
+        waiting_channel_id: document.getElementById("supportWaitingChannelId").value.trim() || null,
+        notify_channel_id: document.getElementById("supportNotifyChannelId").value.trim() || null,
+        support_channels,
+        overflow_category_id: document.getElementById("supportOverflowCategoryId").value.trim() || null
+      })
+    });
+    showMsg("supportAudioMsg", "Support-Kanäle gespeichert.", true);
+  } catch (e) {
+    showMsg("supportAudioMsg", e.message, false);
+  }
+});
 
 function renderSupportCases(cases) {
   const list = document.getElementById("supportCasesList");
@@ -1075,8 +1154,6 @@ document.querySelectorAll(".support-filter-btn").forEach(btn => {
 
 const refreshSupportBtn = document.getElementById("refreshSupportBtn");
 if (refreshSupportBtn) refreshSupportBtn.addEventListener("click", loadSupportCases);
-
-let openSupportCaseId = null;
 
 async function openSupportCaseDetail(caseId) {
   openSupportCaseId = caseId;
@@ -1181,7 +1258,140 @@ document.getElementById("supportCommentSendBtn").addEventListener("click", async
   }
 });
 
-// ── AUDIT LOG ────────────────────────────────────────────────
+async function loadAiVoiceList() {
+  const list = document.getElementById("aiVoiceList");
+  list.innerHTML = '<div class="audit-empty">Lade…</div>';
+  try {
+    aiVoiceList = await api("/api/guild/" + currentGuildId + "/ai-voice");
+    renderAiVoiceList();
+  } catch (e) {
+    list.innerHTML = '<div class="audit-empty">Fehler beim Laden: ' + e.message + '</div>';
+  }
+}
+
+function renderAiVoiceList() {
+  const list = document.getElementById("aiVoiceList");
+  list.innerHTML = "";
+  const editable = currentRank >= 100;
+  if (!aiVoiceList.length) {
+    list.innerHTML = '<div class="audit-empty">Noch keine Kategorien angelegt.</div>';
+    return;
+  }
+  aiVoiceList.forEach(entry => {
+    const div = document.createElement("div");
+    div.className = "audit-entry";
+    div.innerHTML = `
+      <div class="audit-header">
+        <span class="audit-action">${entry.name}</span>
+        <span class="audit-ts">${entry.has_file ? entry.filename : "keine Datei"}</span>
+      </div>
+    `;
+
+    const actions = document.createElement("div");
+    actions.className = "aivoice-actions";
+
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = ".mp3,.wav,.ogg";
+    fileInput.disabled = !editable;
+
+    const uploadBtn = document.createElement("button");
+    uploadBtn.className = "btn btn-green btn-sm";
+    uploadBtn.textContent = "Datei setzen";
+    uploadBtn.disabled = !editable;
+    uploadBtn.addEventListener("click", async () => {
+      const file = fileInput.files[0];
+      if (!file) {
+        showMsg("aiVoiceMsg", "Bitte zuerst eine Datei auswählen.", false);
+        return;
+      }
+      const allowed = [".mp3", ".wav", ".ogg"];
+      const lower = file.name.toLowerCase();
+      if (!allowed.some(ext => lower.endsWith(ext))) {
+        showMsg("aiVoiceMsg", "Nur mp3, wav oder ogg erlaubt.", false);
+        return;
+      }
+      try {
+        const formData = new FormData();
+        formData.append("name", entry.name);
+        formData.append("audio", file);
+        await api("/api/guild/" + currentGuildId + "/ai-voice", { method: "POST", body: formData });
+        showMsg("aiVoiceMsg", "Datei gespeichert.", true);
+        await loadAiVoiceList();
+      } catch (e) {
+        showMsg("aiVoiceMsg", e.message, false);
+      }
+    });
+
+    const playBtn = document.createElement("button");
+    playBtn.className = "btn btn-discord btn-sm";
+    playBtn.textContent = "▶ Abspielen";
+    playBtn.disabled = !entry.has_file;
+    playBtn.addEventListener("click", async () => {
+      try {
+        await api("/api/guild/" + currentGuildId + "/ai-voice/" + encodeURIComponent(entry.name) + "/play", { method: "POST" });
+        showMsg("aiVoiceMsg", "Wird abgespielt.", true);
+      } catch (e) {
+        showMsg("aiVoiceMsg", e.message, false);
+      }
+    });
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "btn btn-danger btn-sm";
+    deleteBtn.textContent = "Löschen";
+    deleteBtn.disabled = !editable;
+    deleteBtn.addEventListener("click", async () => {
+      try {
+        await api("/api/guild/" + currentGuildId + "/ai-voice/" + encodeURIComponent(entry.name), { method: "DELETE" });
+        showMsg("aiVoiceMsg", "Kategorie gelöscht.", true);
+        await loadAiVoiceList();
+      } catch (e) {
+        showMsg("aiVoiceMsg", e.message, false);
+      }
+    });
+
+    actions.appendChild(fileInput);
+    actions.appendChild(uploadBtn);
+    actions.appendChild(playBtn);
+    actions.appendChild(deleteBtn);
+    div.appendChild(actions);
+    list.appendChild(div);
+  });
+}
+
+const aiVoiceCreateBtn = document.getElementById("aiVoiceCreateBtn");
+if (aiVoiceCreateBtn) aiVoiceCreateBtn.addEventListener("click", async () => {
+  const name = document.getElementById("aiVoiceNewName").value.trim();
+  const fileInput = document.getElementById("aiVoiceNewFile");
+  const file = fileInput.files[0];
+  if (!name) {
+    showMsg("aiVoiceMsg", "Bitte einen Namen eingeben.", false);
+    return;
+  }
+  if (!file) {
+    showMsg("aiVoiceMsg", "Bitte eine Datei auswählen.", false);
+    return;
+  }
+  const allowed = [".mp3", ".wav", ".ogg"];
+  const lower = file.name.toLowerCase();
+  if (!allowed.some(ext => lower.endsWith(ext))) {
+    showMsg("aiVoiceMsg", "Nur mp3, wav oder ogg erlaubt.", false);
+    return;
+  }
+  try {
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("audio", file);
+    await api("/api/guild/" + currentGuildId + "/ai-voice", { method: "POST", body: formData });
+    showMsg("aiVoiceMsg", "Kategorie erstellt.", true);
+    document.getElementById("aiVoiceNewName").value = "";
+    fileInput.value = "";
+    await loadAiVoiceList();
+  } catch (e) {
+    showMsg("aiVoiceMsg", e.message, false);
+  }
+});
+
 const ACTION_ICONS = {
   "Modul geändert":                "🔧",
   "Befehl geändert":               "🎚️",
@@ -1196,7 +1406,12 @@ const ACTION_ICONS = {
   "Support-Fall transferiert":     "🔁",
   "Support-Ansage hochgeladen":    "🔊",
   "Support-Ansage entfernt":       "🔇",
+  "Support-Kanäle geändert":       "🚪",
   "Support-Kommentar (Dashboard)": "💬",
+  "AI-Voice Kategorie erstellt":   "🎙️",
+  "AI-Voice Datei geändert":       "🎙️",
+  "AI-Voice Kategorie gelöscht":   "🗑️",
+  "AI-Voice abgespielt":           "🔊",
   "Fraktion hinzugefügt":          "🏛️",
   "Fraktion bearbeitet":           "✏️",
   "Fraktion gelöscht":             "🗑️",
@@ -1257,7 +1472,6 @@ document.getElementById("saveAuditChannelBtn").addEventListener("click", async (
   }
 });
 
-// ── REST DER BUTTONS ─────────────────────────────────────────
 document.getElementById("guildSelect").addEventListener("change", async (e) => {
   currentGuildId = e.target.value;
   await loadGuildArea();
