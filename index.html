@@ -5,41 +5,52 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Server Control · Samuel Studios</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#13152280;
-  --bg-solid:#131522;
-  --bg2:#1a1d30;
-  --surface:rgba(30,33,56,0.55);
-  --surface-solid:#1e2138;
-  --surface2:rgba(38,42,68,0.65);
-  --surface3:#2a2e4a;
+  /* ---- Neue Farbwelt: Roblox-Rot als Signalfarbe, Discord-Blurple als Systemfarbe, dunkler Baustellen-Charcoal als Basis ---- */
+  --bg-solid:#0e1016;
+  --bg2:#151822;
+  --bg3:#1b1f2c;
+  --surface:rgba(27,31,44,0.62);
+  --surface-solid:#1b1f2c;
+  --surface2:rgba(35,40,56,0.7);
+  --surface3:#2a3044;
 
-  --border:rgba(137,127,255,0.16);
-  --border-hi:rgba(137,127,255,0.4);
-  --border-strong:rgba(137,127,255,0.55);
+  --border:rgba(120,132,168,0.14);
+  --border-hi:rgba(120,132,168,0.32);
+  --border-strong:rgba(120,132,168,0.5);
 
-  --green:#5fe382;
-  --green-dim:rgba(95,227,130,0.13);
-  --green-mid:rgba(95,227,130,0.28);
+  --rbx:#e2352f;
+  --rbx-dim:rgba(226,53,47,0.14);
+  --rbx-mid:rgba(226,53,47,0.32);
+  --rbx-glow:rgba(226,53,47,0.35);
 
-  --amber:#ffc55f;
-  --amber-dim:rgba(255,197,95,0.13);
-  --amber-mid:rgba(255,197,95,0.3);
+  --dc:#5865F2;
+  --dc-soft:#8993FF;
+  --dc-dim:rgba(88,101,242,0.16);
+  --dc-mid:rgba(88,101,242,0.34);
+  --dc-glow:rgba(88,101,242,0.4);
 
-  --blurple:#7C6CF0;
-  --blurple-soft:#9C90FF;
-  --blurple-dim:rgba(124,108,240,0.16);
-  --blurple-mid:rgba(124,108,240,0.32);
-  --blurple-glow:rgba(124,108,240,0.35);
+  --gold:#f5b944;
+  --gold-dim:rgba(245,185,68,0.14);
+  --gold-mid:rgba(245,185,68,0.32);
 
-  --text:#cfd0ea;
-  --text-hi:#f4f3ff;
-  --muted:#7a7ea3;
-  --red:#ff6672;
-  --mono:'JetBrains Mono',monospace;
-  --sans:'Space Grotesk',system-ui,sans-serif;
+  --green:#3ddc84;
+  --green-dim:rgba(61,220,132,0.13);
+  --green-mid:rgba(61,220,132,0.3);
+
+  --amber:#ffb454;
+  --amber-dim:rgba(255,180,84,0.14);
+  --amber-mid:rgba(255,180,84,0.32);
+
+  --text:#c7cbdb;
+  --text-hi:#f5f6fb;
+  --muted:#767c96;
+  --red:#ff5c68;
+  --mono:'IBM Plex Mono',monospace;
+  --sans:'Manrope',system-ui,sans-serif;
+  --disp:'Sora',system-ui,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{background:var(--bg-solid);color:var(--text);font-family:var(--sans);min-height:100vh;-webkit-font-smoothing:antialiased;}
@@ -47,36 +58,104 @@ html,body{background:var(--bg-solid);color:var(--text);font-family:var(--sans);m
 body::before{
   content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
   background:
-    radial-gradient(ellipse 800px 460px at 15% -80px,rgba(124,108,240,0.16),transparent),
-    radial-gradient(ellipse 600px 420px at 100% 10%,rgba(95,227,130,0.08),transparent),
-    radial-gradient(ellipse 500px 500px at 85% 90%,rgba(124,108,240,0.10),transparent),
-    radial-gradient(ellipse 400px 400px at 0% 70%,rgba(95,227,130,0.05),transparent);
+    radial-gradient(ellipse 900px 500px at 10% -100px,rgba(88,101,242,0.14),transparent),
+    radial-gradient(ellipse 620px 440px at 100% 0%,rgba(226,53,47,0.08),transparent),
+    radial-gradient(ellipse 520px 520px at 88% 92%,rgba(88,101,242,0.09),transparent),
+    radial-gradient(ellipse 420px 420px at 0% 72%,rgba(226,53,47,0.05),transparent);
 }
 
 .site-header{
   position:sticky;top:0;z-index:200;
-  height:54px;padding:0 20px;
+  height:56px;padding:0 20px;
   display:flex;align-items:center;justify-content:space-between;
-  background:rgba(19,21,34,0.72);
+  background:rgba(14,16,22,0.78);
   backdrop-filter:blur(22px);
   -webkit-backdrop-filter:blur(22px);
   border-bottom:1px solid var(--border);
 }
 .header-brand{display:flex;align-items:center;gap:9px;text-decoration:none;}
-.header-brand img{width:26px;height:26px;border-radius:7px;object-fit:contain;border:1px solid var(--border-hi);background:var(--surface2);}
-.brand-name{font-size:14px;font-weight:800;color:var(--text-hi);letter-spacing:-.01em;}
-.brand-name em{font-style:normal;color:var(--green);}
+.header-brand img{width:27px;height:27px;border-radius:8px;object-fit:contain;border:1px solid var(--border-hi);background:var(--surface2);}
+.brand-name{font-family:var(--disp);font-size:14.5px;font-weight:800;color:var(--text-hi);letter-spacing:-.01em;}
+.brand-name em{font-style:normal;color:var(--rbx);}
 .header-dot{width:3px;height:3px;border-radius:50%;background:var(--muted);margin:0 6px;}
-.header-sub{font-size:11px;color:var(--blurple-soft);font-weight:600;display:none;font-family:var(--mono);}
+.header-sub{font-size:11px;color:var(--dc-soft);font-weight:600;display:none;font-family:var(--mono);}
 @media(min-width:480px){.header-sub{display:inline;}}
+
+.header-right{display:flex;align-items:center;gap:6px;}
 
 .header-nav a{
   font-size:12px;color:var(--muted);text-decoration:none;
-  padding:5px 11px;border-radius:7px;font-weight:600;
+  padding:6px 12px;border-radius:8px;font-weight:700;
   transition:color .15s,background .15s,border-color .15s;
   border:1px solid transparent;
 }
-.header-nav a:hover{color:var(--blurple-soft);background:var(--blurple-dim);border-color:var(--border-hi);}
+.header-nav a:hover{color:var(--dc-soft);background:var(--dc-dim);border-color:var(--border-hi);}
+
+/* ---- Glocke / Notification-Center ---- */
+.bell-wrap{position:relative;}
+.bell-btn{
+  width:36px;height:36px;border-radius:10px;
+  display:grid;place-items:center;cursor:pointer;
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);transition:border-color .15s,background .15s;
+  position:relative;
+}
+.bell-btn:hover{border-color:var(--border-hi);background:var(--surface3);}
+.bell-btn svg{width:17px;height:17px;}
+.bell-btn.ringing svg{animation:bellring .5s ease-in-out 2;}
+@keyframes bellring{
+  0%,100%{transform:rotate(0);}
+  20%{transform:rotate(14deg);}
+  40%{transform:rotate(-12deg);}
+  60%{transform:rotate(8deg);}
+  80%{transform:rotate(-6deg);}
+}
+.bell-badge{
+  position:absolute;top:-4px;right:-4px;
+  min-width:17px;height:17px;padding:0 4px;
+  border-radius:999px;background:var(--rbx);
+  color:#fff;font-size:10px;font-weight:800;font-family:var(--mono);
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--bg-solid);
+  box-shadow:0 0 10px -1px var(--rbx-glow);
+}
+.bell-badge.hidden{display:none;}
+
+.bell-panel{
+  position:absolute;top:44px;right:0;
+  width:340px;max-width:calc(100vw - 32px);
+  max-height:440px;overflow-y:auto;
+  background:var(--surface-solid);border:1px solid var(--border-strong);
+  border-radius:14px;box-shadow:0 20px 60px -18px rgba(0,0,0,0.65);
+  z-index:300;
+}
+.bell-panel-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 14px;border-bottom:1px solid var(--border);
+  position:sticky;top:0;background:var(--surface-solid);
+}
+.bell-panel-title{font-size:12.5px;font-weight:800;color:var(--text-hi);}
+.bell-mark-all{font-size:11px;color:var(--dc-soft);cursor:pointer;font-weight:700;background:none;border:none;font-family:inherit;}
+.bell-mark-all:hover{color:#fff;}
+.bell-item{
+  padding:11px 14px;border-bottom:1px solid rgba(120,132,168,0.08);
+  cursor:pointer;transition:background .12s;position:relative;
+}
+.bell-item:last-child{border-bottom:none;}
+.bell-item:hover{background:rgba(88,101,242,0.06);}
+.bell-item.unread::before{
+  content:"";position:absolute;left:5px;top:16px;width:6px;height:6px;
+  border-radius:50%;background:var(--rbx);
+}
+.bell-item-inner{padding-left:12px;}
+.bell-item-top{display:flex;align-items:center;gap:6px;margin-bottom:2px;}
+.bell-item-icon{font-size:13px;}
+.bell-item-title{font-size:12.5px;font-weight:700;color:var(--text-hi);}
+.bell-item-time{font-size:10px;color:var(--muted);font-family:var(--mono);margin-left:auto;flex-shrink:0;}
+.bell-item-detail{font-size:11.5px;color:var(--muted);line-height:1.5;padding-left:12px;}
+.bell-item-detail.expanded{color:var(--text);}
+.bell-item.error .bell-item-title{color:var(--red);}
+.bell-empty{padding:32px 14px;text-align:center;color:var(--muted);font-size:12.5px;}
 
 .shell{width:100%;max-width:820px;margin:0 auto;padding:20px 14px 80px;display:flex;flex-direction:column;gap:10px;}
 
@@ -93,15 +172,15 @@ body::before{
 }
 .card::after{
   content:"";position:absolute;top:0;left:16%;right:16%;height:1px;
-  background:linear-gradient(90deg,transparent,var(--blurple-soft),transparent);
+  background:linear-gradient(90deg,transparent,var(--dc-soft),transparent);
   opacity:0;transition:opacity .3s;
 }
 .card:hover{border-color:var(--border-hi);}
-.card:hover::after{opacity:.55;}
+.card:hover::after{opacity:.5;}
 
 .card-label{
-  font-size:10px;font-weight:700;letter-spacing:.1em;
-  color:var(--blurple-soft);text-transform:uppercase;
+  font-size:10px;font-weight:800;letter-spacing:.1em;
+  color:var(--dc-soft);text-transform:uppercase;
   margin:0 0 16px;font-family:var(--mono);
 }
 
@@ -113,20 +192,27 @@ body::before{
   border-radius:20px;padding:42px 32px 34px;
   text-align:center;margin-top:14px;
   max-width:400px;margin-left:auto;margin-right:auto;
-  box-shadow:0 0 0 1px rgba(124,108,240,0.08), 0 20px 60px -20px rgba(124,108,240,0.25), 0 10px 40px -20px rgba(0,0,0,0.6);
+  box-shadow:0 0 0 1px rgba(88,101,242,0.08), 0 20px 60px -20px rgba(88,101,242,0.22), 0 10px 40px -20px rgba(0,0,0,0.6);
+  position:relative;overflow:hidden;
 }
+.login-card::before{
+  content:"";position:absolute;top:-60%;left:-20%;width:140%;height:220%;
+  background:conic-gradient(from 120deg,transparent,rgba(226,53,47,0.05),transparent 40%,rgba(88,101,242,0.08),transparent 70%);
+  animation:loginspin 22s linear infinite;pointer-events:none;
+}
+@keyframes loginspin{to{transform:rotate(360deg);}}
 .login-logo{
-  width:74px;height:74px;
-  border-radius:18px;overflow:hidden;
+  width:76px;height:76px;
+  border-radius:19px;overflow:hidden;
   margin:0 auto 20px;
   border:1px solid var(--border-strong);
   padding:6px;background:var(--surface2);
-  display:grid;place-items:center;
-  box-shadow:0 0 24px -4px var(--blurple-glow);
+  display:grid;place-items:center;position:relative;z-index:1;
+  box-shadow:0 0 26px -4px var(--dc-glow);
 }
 .login-logo img{width:100%;height:100%;object-fit:contain;}
-.login-title{font-size:22px;font-weight:800;color:var(--text-hi);margin-bottom:8px;letter-spacing:-.02em;}
-.login-sub{font-size:13px;color:var(--muted);line-height:1.65;max-width:260px;margin:0 auto 24px;}
+.login-title{font-family:var(--disp);font-size:23px;font-weight:800;color:var(--text-hi);margin-bottom:8px;letter-spacing:-.02em;position:relative;z-index:1;}
+.login-sub{font-size:13px;color:var(--muted);line-height:1.65;max-width:270px;margin:0 auto 24px;position:relative;z-index:1;}
 
 .btn{
   display:inline-flex;align-items:center;gap:8px;
@@ -135,33 +221,37 @@ body::before{
   font-size:13px;font-weight:700;font-family:inherit;
   cursor:pointer;color:#fff;
   transition:filter .15s,transform .1s,box-shadow .15s,border-color .15s;
+  position:relative;z-index:1;
 }
 .btn:hover{filter:brightness(1.08);transform:translateY(-1px);}
 .btn:active{transform:translateY(0);}
-.btn-green{
-  background:var(--green);color:#0b1710;
-  box-shadow:0 4px 20px rgba(95,227,130,0.28);
+.btn-rbx{
+  background:var(--rbx);color:#fff;
+  box-shadow:0 4px 20px rgba(226,53,47,0.32);
 }
-.btn-green:hover{box-shadow:0 6px 26px rgba(95,227,130,0.42);}
+.btn-rbx:hover{box-shadow:0 6px 26px rgba(226,53,47,0.46);}
 .btn-discord{
-  background:rgba(124,108,240,0.14);
-  border:1.5px solid var(--blurple);
-  color:var(--blurple-soft);
-  box-shadow:0 4px 24px -6px var(--blurple-glow);
+  background:rgba(88,101,242,0.16);
+  border:1.5px solid var(--dc);
+  color:var(--dc-soft);
+  box-shadow:0 4px 24px -6px var(--dc-glow);
 }
-.btn-discord:hover{background:rgba(124,108,240,0.22);box-shadow:0 6px 30px -6px var(--blurple-glow);}
+.btn-discord:hover{background:rgba(88,101,242,0.24);box-shadow:0 6px 30px -6px var(--dc-glow);}
 .btn-ghost{background:var(--surface2);border:1px solid var(--border);color:var(--text);}
 .btn-ghost:hover{border-color:var(--border-hi);}
-.btn-danger{background:rgba(255,102,114,0.1);border:1px solid rgba(255,102,114,0.28);color:var(--red);}
+.btn-danger{background:rgba(255,92,104,0.1);border:1px solid rgba(255,92,104,0.28);color:var(--red);}
 .btn-block{width:100%;justify-content:center;}
 .btn-sm{padding:7px 12px;font-size:12px;}
 .btn:disabled{opacity:.35;cursor:not-allowed;transform:none;filter:none;box-shadow:none;}
+.btn-green{background:var(--green);color:#062615;box-shadow:0 4px 20px rgba(61,220,132,0.28);}
+.btn-green:hover{box-shadow:0 6px 26px rgba(61,220,132,0.4);}
 
 .topbar-card{display:flex;align-items:center;justify-content:space-between;gap:10px;}
 .user-chip{display:flex;align-items:center;gap:10px;}
 .user-chip img{width:34px;height:34px;border-radius:50%;background:var(--surface2);border:2px solid var(--border-strong);}
 .user-chip-name{font-size:13px;font-weight:700;color:var(--text-hi);}
-.user-chip-sub{font-size:11px;color:var(--blurple-soft);font-family:var(--mono);}
+.user-chip-sub{font-size:11px;color:var(--dc-soft);font-family:var(--mono);}
+.topbar-actions{display:flex;align-items:center;gap:8px;}
 
 .field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
 .field label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-family:var(--mono);}
@@ -171,19 +261,33 @@ select,input[type=text],input[type=file],textarea{
   padding:9px 12px;font-size:13px;font-family:inherit;outline:none;width:100%;
   transition:border-color .15s,box-shadow .15s;
 }
-select:focus,input:focus,textarea:focus{border-color:var(--blurple);box-shadow:0 0 0 3px var(--blurple-dim);}
+select:focus,input:focus,textarea:focus{border-color:var(--dc);box-shadow:0 0 0 3px var(--dc-dim);}
 textarea{resize:vertical;min-height:88px;}
 
+/* ---- Rang-Badges (neues Stufen-System) ---- */
 .rank-pill{
-  display:inline-flex;align-items:center;gap:5px;margin-top:10px;
-  background:var(--green-dim);border:1px solid var(--green-mid);
-  border-radius:999px;padding:3px 10px;
-  font-size:11px;font-weight:700;color:var(--green);font-family:var(--mono);
+  display:inline-flex;align-items:center;gap:6px;margin-top:10px;
+  border-radius:999px;padding:4px 12px 4px 4px;
+  font-size:11.5px;font-weight:800;font-family:var(--mono);
 }
-.rank-pill::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--green);}
+.rank-pill .rank-num{
+  width:20px;height:20px;border-radius:50%;
+  display:grid;place-items:center;font-size:10px;font-weight:800;
+  background:rgba(0,0,0,0.2);
+}
+.rank-pill.rank-0{background:rgba(120,132,168,0.12);border:1px solid var(--border-hi);color:var(--muted);}
+.rank-pill.rank-view{background:var(--dc-dim);border:1px solid var(--dc-mid);color:var(--dc-soft);}
+.rank-pill.rank-upload{background:var(--green-dim);border:1px solid var(--green-mid);color:var(--green);}
+.rank-pill.rank-replace{background:var(--amber-dim);border:1px solid var(--amber-mid);color:var(--amber);}
+.rank-pill.rank-owner{background:var(--gold-dim);border:1px solid var(--gold-mid);color:var(--gold);}
+
+.rank-badge-sm{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;font-family:var(--mono);
+}
 
 .empty-state{text-align:center;padding:32px 20px;color:var(--muted);font-size:13px;line-height:1.65;}
-.empty-state strong{color:var(--text-hi);display:block;font-size:15px;margin-bottom:6px;}
+.empty-state strong{color:var(--text-hi);display:block;font-family:var(--disp);font-size:15px;margin-bottom:6px;}
 
 .tabs-row{
   display:flex;gap:3px;flex-wrap:wrap;
@@ -200,8 +304,8 @@ textarea{resize:vertical;min-height:88px;}
   cursor:pointer;border:none;background:transparent;font-family:inherit;
   transition:color .15s,background .15s;white-space:nowrap;
 }
-.tab:hover{color:var(--text);background:rgba(124,108,240,0.08);}
-.tab.active{background:var(--blurple);color:#fff;box-shadow:0 2px 12px -2px var(--blurple-glow);}
+.tab:hover{color:var(--text);background:rgba(88,101,242,0.08);}
+.tab.active{background:var(--dc);color:#fff;box-shadow:0 2px 12px -2px var(--dc-glow);}
 
 .tabpane{display:none;}
 .tabpane.active{display:block;}
@@ -228,7 +332,7 @@ textarea{resize:vertical;min-height:88px;}
   color:var(--muted);border-radius:6px;
   transition:transform .2s,background .15s,color .15s;
 }
-.module-expand-btn:hover{background:var(--blurple-dim);color:var(--blurple-soft);}
+.module-expand-btn:hover{background:var(--dc-dim);color:var(--dc-soft);}
 .module-expand-btn svg{width:13px;height:13px;transition:transform .2s;}
 .module-group.expanded .module-expand-btn svg{transform:rotate(90deg);}
 
@@ -247,7 +351,7 @@ textarea{resize:vertical;min-height:88px;}
 .command-row{
   display:flex;align-items:center;justify-content:space-between;
   padding:9px 4px;gap:10px;
-  border-bottom:1px solid rgba(137,127,255,0.07);
+  border-bottom:1px solid rgba(120,132,168,0.07);
 }
 .command-row:last-child{border-bottom:none;}
 .command-label{font-size:12.5px;color:var(--text);font-family:var(--mono);}
@@ -263,7 +367,7 @@ textarea{resize:vertical;min-height:88px;}
 .slider{position:absolute;cursor:pointer;inset:0;background:rgba(255,255,255,0.08);border-radius:999px;transition:.2s;}
 .slider::before{content:"";position:absolute;height:17px;width:17px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.5);}
 .switch input:checked+.slider{background:var(--green);}
-.switch input:checked+.slider::before{transform:translateX(19px);background:#0b1710;}
+.switch input:checked+.slider::before{transform:translateX(19px);background:#062615;}
 .switch input:disabled+.slider{opacity:.3;cursor:not-allowed;}
 .switch.switch-sm{width:36px;height:20px;}
 .switch.switch-sm .slider::before{height:14px;width:14px;}
@@ -272,21 +376,21 @@ textarea{resize:vertical;min-height:88px;}
 .table-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:9px;overflow:hidden;margin-bottom:4px;}
 table{width:100%;border-collapse:collapse;font-size:13px;}
 th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--border);}
-th{color:var(--blurple-soft);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-family:var(--mono);}
+th{color:var(--dc-soft);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-family:var(--mono);}
 tr:last-child td{border-bottom:none;}
-tr:hover td{background:rgba(124,108,240,0.045);}
+tr:hover td{background:rgba(88,101,242,0.045);}
 
 .sec{
   font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
-  color:var(--blurple-soft);margin:18px 0 10px;
+  color:var(--dc-soft);margin:18px 0 10px;
   display:flex;align-items:center;gap:10px;font-family:var(--mono);
 }
 .sec::after{content:"";flex:1;height:1px;background:var(--border);}
 
 .msg{font-size:12px;font-weight:600;padding:9px 13px;border-radius:9px;margin-top:10px;display:none;align-items:center;gap:7px;font-family:var(--mono);}
-.msg.ok{display:flex;background:rgba(95,227,130,.1);color:var(--green);border:1px solid rgba(95,227,130,.3);}
+.msg.ok{display:flex;background:rgba(61,220,132,.1);color:var(--green);border:1px solid rgba(61,220,132,.3);}
 .msg.ok::before{content:"✓";}
-.msg.err{display:flex;background:rgba(255,102,114,.1);color:var(--red);border:1px solid rgba(255,102,114,.3);}
+.msg.err{display:flex;background:rgba(255,92,104,.1);color:var(--red);border:1px solid rgba(255,92,104,.3);}
 .msg.err::before{content:"✕";}
 
 .dev-hero{padding:4px 0 20px;display:flex;align-items:center;gap:18px;}
@@ -294,10 +398,10 @@ tr:hover td{background:rgba(124,108,240,0.045);}
   width:68px;height:68px;border-radius:15px;overflow:hidden;flex-shrink:0;
   background:var(--surface2);border:1px solid var(--border-strong);
   display:grid;place-items:center;padding:6px;
-  box-shadow:0 0 20px -4px var(--blurple-glow);
+  box-shadow:0 0 20px -4px var(--dc-glow);
 }
 .dev-logo img{width:100%;height:100%;object-fit:contain;}
-.dev-studio-name{font-size:24px;font-weight:800;color:var(--text-hi);letter-spacing:-.02em;line-height:1.1;}
+.dev-studio-name{font-family:var(--disp);font-size:24px;font-weight:800;color:var(--text-hi);letter-spacing:-.02em;line-height:1.1;}
 .dev-studio-sub{font-size:12px;color:var(--muted);margin-top:4px;font-family:var(--mono);}
 .dev-desc{
   background:var(--bg2);border:1px solid var(--border);
@@ -310,8 +414,8 @@ tr:hover td{background:rgba(124,108,240,0.045);}
   border-radius:999px;letter-spacing:.03em;
   display:inline-flex;align-items:center;gap:5px;
 }
-.tag-d{background:var(--blurple-dim);color:var(--blurple-soft);border:1px solid var(--blurple-mid);}
-.tag-r{background:rgba(0,162,255,.1);color:#5ec8ff;border:1px solid rgba(0,162,255,.3);}
+.tag-d{background:var(--dc-dim);color:var(--dc-soft);border:1px solid var(--dc-mid);}
+.tag-r{background:var(--rbx-dim);color:#ff8a85;border:1px solid var(--rbx-mid);}
 .tag-p{background:var(--green-dim);color:var(--green);border:1px solid var(--green-mid);}
 .tag-g{background:rgba(255,255,255,.05);color:var(--muted);border:1px solid var(--border);}
 .dev-divider{height:1px;background:var(--border);margin:16px 0;}
@@ -323,10 +427,26 @@ tr:hover td{background:rgba(124,108,240,0.045);}
   transition:filter .15s,transform .1s;
 }
 .dev-link:hover{filter:brightness(1.1);transform:translateY(-1px);}
-.dev-link-dc{background:var(--blurple);color:#fff;box-shadow:0 3px 16px -4px var(--blurple-glow);}
-.dev-link-rb{background:#0099ff;color:#fff;box-shadow:0 3px 14px rgba(0,153,255,0.3);}
+.dev-link-dc{background:var(--dc);color:#fff;box-shadow:0 3px 16px -4px var(--dc-glow);}
+.dev-link-rb{background:var(--rbx);color:#fff;box-shadow:0 3px 14px rgba(226,53,47,0.32);}
 .dev-link svg{width:15px;height:15px;fill:currentColor;flex-shrink:0;}
 .dev-footer{font-size:11px;color:var(--muted);text-align:center;margin-top:16px;font-family:var(--mono);}
+
+/* ---- Dev-Support-Infobox (neu) ---- */
+.dev-help-box{
+  display:flex;gap:12px;align-items:flex-start;
+  background:linear-gradient(135deg,rgba(88,101,242,0.1),rgba(226,53,47,0.06));
+  border:1px solid var(--border-hi);border-radius:12px;
+  padding:15px 16px;margin-bottom:18px;
+}
+.dev-help-icon{
+  width:34px;height:34px;border-radius:9px;flex-shrink:0;
+  background:var(--dc-dim);border:1px solid var(--dc-mid);
+  display:grid;place-items:center;font-size:16px;
+}
+.dev-help-title{font-size:13px;font-weight:800;color:var(--text-hi);margin-bottom:3px;}
+.dev-help-text{font-size:12.5px;color:var(--text);line-height:1.6;}
+.dev-help-text strong{color:var(--dc-soft);}
 
 .rblx-icon{width:15px;height:15px;fill:currentColor;flex-shrink:0;}
 
@@ -351,10 +471,12 @@ tr:hover td{background:rgba(124,108,240,0.045);}
 .audit-empty{text-align:center;padding:24px;color:var(--muted);font-size:13px;}
 .audit-channel-hint{
   font-size:11px;color:var(--muted);
-  background:var(--blurple-dim);border:1px solid var(--border-hi);
+  background:var(--dc-dim);border:1px solid var(--border-hi);
   border-radius:9px;padding:10px 13px;margin-bottom:14px;
   font-family:var(--mono);line-height:1.6;
 }
+.audit-source-web{color:var(--dc-soft);}
+.audit-source-bot{color:var(--rbx);}
 
 .support-filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
 .support-filter-btn{
@@ -364,11 +486,11 @@ tr:hover td{background:rgba(124,108,240,0.045);}
   transition:color .15s,background .15s,border-color .15s;
 }
 .support-filter-btn:hover{color:var(--text);}
-.support-filter-btn.active{background:var(--blurple);color:#fff;border-color:var(--blurple);}
+.support-filter-btn.active{background:var(--dc);color:#fff;border-color:var(--dc);}
 
 .modal-overlay{
   position:fixed;inset:0;z-index:500;
-  background:rgba(10,11,20,0.6);
+  background:rgba(6,7,12,0.6);
   backdrop-filter:blur(4px);
   display:flex;align-items:center;justify-content:center;
   padding:16px;
@@ -400,13 +522,13 @@ tr:hover td{background:rgba(124,108,240,0.045);}
   padding:13px 14px;cursor:pointer;transition:border-color .15s,transform .1s;
 }
 .stat-card:hover{border-color:var(--border-hi);transform:translateY(-1px);}
-.stat-num{font-size:22px;font-weight:800;color:var(--text-hi);line-height:1;}
+.stat-num{font-family:var(--disp);font-size:22px;font-weight:800;color:var(--text-hi);line-height:1;}
 .stat-num .stat-num-of{font-size:13px;color:var(--muted);font-weight:700;}
 .stat-label{font-size:11px;color:var(--muted);margin-top:5px;font-weight:600;}
 
 .status-row{
   display:flex;align-items:flex-start;justify-content:space-between;gap:10px;
-  padding:11px 0;border-bottom:1px solid rgba(137,127,255,0.09);
+  padding:11px 0;border-bottom:1px solid rgba(120,132,168,0.09);
 }
 .status-row:last-child{border-bottom:none;}
 .status-row-label{font-size:12px;color:var(--muted);font-weight:600;flex-shrink:0;min-width:120px;}
@@ -451,16 +573,29 @@ tr:hover td{background:rgba(124,108,240,0.045);}
 
 .quick-nav{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px;}
 .quick-nav-btn{
-  font-size:11.5px;font-weight:700;color:var(--blurple-soft);
-  background:var(--blurple-dim);border:1px solid var(--border-hi);
+  font-size:11.5px;font-weight:700;color:var(--dc-soft);
+  background:var(--dc-dim);border:1px solid var(--border-hi);
   border-radius:8px;padding:7px 11px;cursor:pointer;font-family:inherit;
   transition:background .15s,color .15s;
 }
-.quick-nav-btn:hover{background:var(--blurple-mid);color:#fff;}
+.quick-nav-btn:hover{background:var(--dc-mid);color:#fff;}
 
 .summary-card-title{
   display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;
   color:var(--text-hi);margin-bottom:10px;
+}
+
+/* ---- Kanal-/Rollen-Resolver Hinweis ---- */
+.resolve-hint{
+  font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:4px;
+  display:flex;align-items:center;gap:5px;
+}
+.resolve-hint.ok{color:var(--green);}
+.resolve-hint.err{color:var(--red);}
+.channel-name-tag{
+  font-size:11px;font-weight:700;color:var(--dc-soft);
+  background:var(--dc-dim);border:1px solid var(--dc-mid);
+  border-radius:6px;padding:1px 7px;font-family:var(--mono);
 }
 </style>
 </head>
@@ -473,9 +608,24 @@ tr:hover td{background:rgba(124,108,240,0.045);}
     <span class="header-dot"></span>
     <span class="header-sub">server-control</span>
   </a>
-  <nav class="header-nav">
-    <a href="#" onclick="showDevTab();return false;">Entwickler</a>
-  </nav>
+  <div class="header-right">
+    <div class="bell-wrap hidden" id="bellWrap">
+      <button class="bell-btn" id="bellBtn" type="button" aria-label="Benachrichtigungen">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="bell-badge hidden" id="bellBadge">0</span>
+      </button>
+      <div class="bell-panel hidden" id="bellPanel">
+        <div class="bell-panel-head">
+          <span class="bell-panel-title">Benachrichtigungen</span>
+          <button class="bell-mark-all" id="bellMarkAll" type="button">Alle gelesen</button>
+        </div>
+        <div id="bellList"></div>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <a href="#" onclick="showDevTab();return false;">Entwickler</a>
+    </nav>
+  </div>
 </header>
 
 <div class="shell">
@@ -490,7 +640,26 @@ tr:hover td{background:rgba(124,108,240,0.045);}
       <svg width="16" height="16" viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg>
       Mit Discord anmelden
     </button>
-    <div style="margin-top:12px;font-size:11px;color:var(--muted);font-family:var(--mono);">von <strong style="color:var(--text);">Samuel Studios</strong></div>
+    <button class="btn btn-ghost btn-block" id="cantLoginBtn" style="margin-top:9px;position:relative;z-index:1;">
+      Ich kann mich nicht anmelden
+    </button>
+    <div style="margin-top:12px;font-size:11px;color:var(--muted);font-family:var(--mono);position:relative;z-index:1;">von <strong style="color:var(--text);">Samuel Studios</strong></div>
+  </div>
+
+  <div id="cantLoginBox" class="card hidden" style="max-width:400px;margin:10px auto 0;">
+    <div class="dev-help-box" style="margin-bottom:0;">
+      <div class="dev-help-icon">🛠️</div>
+      <div>
+        <div class="dev-help-title">Du kannst dich nicht anmelden?</div>
+        <div class="dev-help-text">Frag den <strong>BotDev</strong> — er erklärt dir alles Weitere. Der BotDev ist <strong>Samuel</strong>! Hast du weitere Fragen, steht er dir jederzeit zur Verfügung.</div>
+      </div>
+    </div>
+    <div class="dev-link-row" style="margin-top:14px;">
+      <a href="https://discord.gg/UnG3erXU33" class="dev-link dev-link-dc" target="_blank" rel="noopener">
+        <svg viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg>
+        Samuel auf Discord kontaktieren
+      </a>
+    </div>
   </div>
 
   <div id="appView" class="hidden" style="display:flex;flex-direction:column;gap:10px;">
@@ -519,7 +688,7 @@ tr:hover td{background:rgba(124,108,240,0.045);}
       <div class="field" style="margin-bottom:0;">
         <select id="guildSelect"></select>
       </div>
-      <div id="guildRankBadge" class="rank-pill" style="width:fit-content;"></div>
+      <div id="guildRankBadge"></div>
     </div>
 
     <div id="guildArea" class="hidden" style="display:flex;flex-direction:column;gap:10px;">
@@ -709,18 +878,22 @@ tr:hover td{background:rgba(124,108,240,0.045);}
           <div class="field">
             <label>Warteraum-Kanal-ID</label>
             <input type="text" id="supportWaitingChannelId" placeholder="Kanal-ID">
+            <div class="resolve-hint" id="resolveWaiting"></div>
           </div>
           <div class="field">
             <label>Benachrichtigungs-Kanal-ID</label>
             <input type="text" id="supportNotifyChannelId" placeholder="Kanal-ID">
+            <div class="resolve-hint" id="resolveNotify"></div>
           </div>
           <div class="field">
             <label>Support-Kanäle (mehrere IDs, kommagetrennt)</label>
             <input type="text" id="supportChannelsList" placeholder="123, 456, 789">
+            <div class="resolve-hint" id="resolveList"></div>
           </div>
           <div class="field">
             <label>Overflow-Kategorie-ID</label>
             <input type="text" id="supportOverflowCategoryId" placeholder="Kategorie-ID">
+            <div class="resolve-hint" id="resolveOverflow"></div>
           </div>
           <button class="btn btn-green btn-block" id="saveSupportChannelsBtn">Support-Kanäle speichern</button>
 
@@ -762,7 +935,7 @@ tr:hover td{background:rgba(124,108,240,0.045);}
         <div class="tabpane" id="pane-audit">
           <p class="card-label">Audit Log</p>
           <div class="audit-channel-hint">
-            💡 Damit der Bot Aktionen auch direkt in einen Discord-Kanal sendet, trage unten die Kanal-ID ein und speichere. Der Bot-Kanal-Key dafür ist <code>audit_channel</code>.
+            💡 Damit der Bot Aktionen auch direkt in einen Discord-Kanal sendet, trage unten die Kanal-ID ein und speichere. Der Bot-Kanal-Key dafür ist <code>audit_channel</code>. Aktionen über diese Website werden im Log mit <span class="audit-source-web">🌐 Website</span> markiert, Aktionen über Discord-Befehle mit <span class="audit-source-bot">🤖 Bot</span>.
           </div>
           <div class="field" style="margin-bottom:14px;">
             <label>Audit-Kanal-ID (optional)</label>
@@ -770,6 +943,7 @@ tr:hover td{background:rgba(124,108,240,0.045);}
               <input type="text" id="auditChannelId" placeholder="Kanal-ID eingeben…" style="flex:1;">
               <button class="btn btn-green btn-sm" id="saveAuditChannelBtn">Speichern</button>
             </div>
+            <div class="resolve-hint" id="resolveAuditChannel"></div>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
             <span style="font-size:12px;color:var(--muted);">Letzte 100 Aktionen</span>
@@ -782,6 +956,13 @@ tr:hover td{background:rgba(124,108,240,0.045);}
         </div>
 
         <div class="tabpane" id="pane-entwickler">
+          <div class="dev-help-box">
+            <div class="dev-help-icon">🛠️</div>
+            <div>
+              <div class="dev-help-title">Du kannst dich nicht anmelden?</div>
+              <div class="dev-help-text">Frag den <strong>BotDev</strong> — er erklärt dir alles Weitere. Der BotDev ist <strong>Samuel</strong>! Hast du weitere Fragen, steht er dir jederzeit zur Verfügung.</div>
+            </div>
+          </div>
           <div class="dev-hero">
             <div class="dev-logo">
               <img src="logo.png" alt="Samuel Studios">
@@ -855,6 +1036,26 @@ let openSupportCaseId = null;
 let latestSupportAudioStatus = null;
 let latestSupportChannelConfig = null;
 let latestSupportCases = [];
+let channelDirectory = {};
+let notifications = [];
+
+/* ---- Rang-Stufen-System (neu): 0 nichts, 10-20 nur ansehen, 30-70 Dateien hochladen, 70+ Dateien ersetzen, 100 volle Rechte ---- */
+function rankTier(rank) {
+  if (rank >= 100) return { key: "owner", label: "Vollzugriff", cls: "rank-owner" };
+  if (rank >= 70) return { key: "replace", label: "Kann Dateien ersetzen", cls: "rank-replace" };
+  if (rank >= 30) return { key: "upload", label: "Kann Dateien hochladen", cls: "rank-upload" };
+  if (rank >= 10) return { key: "view", label: "Nur ansehen", cls: "rank-view" };
+  return { key: "none", label: "Kein Zugriff", cls: "rank-0" };
+}
+function canUpload(rank) { return rank >= 30; }
+function canReplace(rank) { return rank >= 70; }
+function canEdit(rank) { return rank >= 100; }
+
+function renderRankPill(el, rank) {
+  const tier = rankTier(rank);
+  el.className = "rank-pill " + tier.cls;
+  el.innerHTML = '<span class="rank-num">' + rank + '</span>' + tier.label;
+}
 
 function showMsg(id, text, ok) {
   const el = document.getElementById(id);
@@ -865,14 +1066,140 @@ function showMsg(id, text, ok) {
   setTimeout(() => { el.style.display = "none"; }, 4000);
 }
 
-async function api(path, options = {}) {
+/* ---- Glocken-Benachrichtigungscenter ---- */
+function pushNotification(title, detail, opts = {}) {
+  const n = {
+    id: Date.now() + Math.random(),
+    title, detail,
+    icon: opts.icon || "🔔",
+    error: !!opts.error,
+    read: false,
+    ts: new Date()
+  };
+  notifications.unshift(n);
+  if (notifications.length > 60) notifications.pop();
+  renderBell();
+  const bellBtn = document.getElementById("bellBtn");
+  if (bellBtn) {
+    bellBtn.classList.remove("ringing");
+    void bellBtn.offsetWidth;
+    bellBtn.classList.add("ringing");
+  }
+}
+
+function timeAgo(d) {
+  const s = Math.floor((Date.now() - d.getTime()) / 1000);
+  if (s < 60) return "gerade eben";
+  if (s < 3600) return Math.floor(s / 60) + "m";
+  if (s < 86400) return Math.floor(s / 3600) + "h";
+  return d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" });
+}
+
+function renderBell() {
+  const badge = document.getElementById("bellBadge");
+  const list = document.getElementById("bellList");
+  if (!badge || !list) return;
+  const unread = notifications.filter(n => !n.read).length;
+  if (unread > 0) {
+    badge.textContent = unread > 99 ? "99+" : unread;
+    badge.classList.remove("hidden");
+  } else {
+    badge.classList.add("hidden");
+  }
+  if (!notifications.length) {
+    list.innerHTML = '<div class="bell-empty">Keine Benachrichtigungen.</div>';
+    return;
+  }
+  list.innerHTML = "";
+  notifications.forEach(n => {
+    const item = document.createElement("div");
+    item.className = "bell-item" + (n.read ? "" : " unread") + (n.error ? " error" : "");
+    item.innerHTML = `
+      <div class="bell-item-inner">
+        <div class="bell-item-top">
+          <span class="bell-item-icon">${n.icon}</span>
+          <span class="bell-item-title">${n.title}</span>
+          <span class="bell-item-time">${timeAgo(n.ts)}</span>
+        </div>
+      </div>
+      <div class="bell-item-detail" data-expanded="0">${n.detail ? "" : ""}</div>
+    `;
+    const detailEl = item.querySelector(".bell-item-detail");
+    let expanded = false;
+    item.addEventListener("click", () => {
+      n.read = true;
+      item.classList.remove("unread");
+      renderBellBadgeOnly();
+      if (!n.detail) return;
+      expanded = !expanded;
+      if (expanded) {
+        detailEl.textContent = n.detail;
+        detailEl.classList.add("expanded");
+      } else {
+        detailEl.textContent = "";
+        detailEl.classList.remove("expanded");
+      }
+    });
+    list.appendChild(item);
+  });
+}
+
+function renderBellBadgeOnly() {
+  const badge = document.getElementById("bellBadge");
+  if (!badge) return;
+  const unread = notifications.filter(n => !n.read).length;
+  if (unread > 0) {
+    badge.textContent = unread > 99 ? "99+" : unread;
+    badge.classList.remove("hidden");
+  } else {
+    badge.classList.add("hidden");
+  }
+}
+
+const bellBtnEl = document.getElementById("bellBtn");
+if (bellBtnEl) bellBtnEl.addEventListener("click", (e) => {
+  e.stopPropagation();
+  const panel = document.getElementById("bellPanel");
+  panel.classList.toggle("hidden");
+});
+document.addEventListener("click", (e) => {
+  const panel = document.getElementById("bellPanel");
+  const wrap = document.getElementById("bellWrap");
+  if (panel && !panel.classList.contains("hidden") && wrap && !wrap.contains(e.target)) {
+    panel.classList.add("hidden");
+  }
+});
+const bellMarkAllEl = document.getElementById("bellMarkAll");
+if (bellMarkAllEl) bellMarkAllEl.addEventListener("click", (e) => {
+  e.stopPropagation();
+  notifications.forEach(n => n.read = true);
+  renderBell();
+});
+
+async function api(path, options = {}, opts = {}) {
   const headers = options.headers || {};
   if (sessionToken) headers["Authorization"] = "Bearer " + sessionToken;
   if (options.body && !(options.body instanceof FormData)) headers["Content-Type"] = "application/json";
-  const res = await fetch(API_BASE + path, { ...options, headers });
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data.error || ("Fehler " + res.status));
-  return data;
+  try {
+    const res = await fetch(API_BASE + path, { ...options, headers });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      const errMsg = data.error || ("Fehler " + res.status);
+      if (!opts.silentNotify) {
+        pushNotification("Fehler", (opts.label ? opts.label + ": " : "") + errMsg, { icon: "⚠️", error: true });
+      }
+      throw new Error(errMsg);
+    }
+    if (opts.notifyOnSuccess) {
+      pushNotification(opts.notifyOnSuccess, opts.notifyDetail || "", { icon: opts.notifyIcon || "✅" });
+    }
+    return data;
+  } catch (e) {
+    if (!opts.silentNotify && !(e && e.message && opts._alreadyNotified)) {
+      // Netzwerkfehler etc. — nur wenn nicht bereits oben behandelt
+    }
+    throw e;
+  }
 }
 
 function buildDiscordAuthUrl() {
@@ -888,8 +1215,15 @@ function buildDiscordAuthUrl() {
 function showDevTab() {
   if (!document.getElementById("guildArea").classList.contains("hidden")) {
     jumpToTab("entwickler");
+  } else {
+    document.getElementById("cantLoginBox").classList.remove("hidden");
   }
 }
+
+document.getElementById("cantLoginBtn").addEventListener("click", () => {
+  const box = document.getElementById("cantLoginBox");
+  box.classList.toggle("hidden");
+});
 
 function jumpToTab(name) {
   document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
@@ -917,7 +1251,7 @@ document.getElementById("loginBtn").addEventListener("click", () => {
 });
 
 document.getElementById("logoutBtn").addEventListener("click", async () => {
-  try { await api("/api/auth/logout", { method: "POST" }); } catch (e) {}
+  try { await api("/api/auth/logout", { method: "POST" }, { silentNotify: true }); } catch (e) {}
   localStorage.removeItem("session_token");
   sessionToken = null;
   window.location.href = REDIRECT_URI;
@@ -937,20 +1271,20 @@ async function exchangeCode(code) {
   const data = await api("/api/auth/discord", {
     method: "POST",
     body: JSON.stringify({ code, redirect_uri: REDIRECT_URI })
-  });
+  }, { silentNotify: true });
   sessionToken = data.session_token;
   localStorage.setItem("session_token", sessionToken);
   history.replaceState({}, "", REDIRECT_URI);
 }
 
 async function loadUser() {
-  currentUser = await api("/api/auth/me");
+  currentUser = await api("/api/auth/me", {}, { silentNotify: true });
   document.getElementById("userName").textContent = currentUser.username;
   document.getElementById("userAvatar").src = currentUser.avatar_url || "https://cdn.discordapp.com/embed/avatars/0.png";
 }
 
 async function loadGuilds() {
-  guilds = await api("/api/guilds");
+  guilds = await api("/api/guilds", {}, { silentNotify: true });
   const sel = document.getElementById("guildSelect");
   sel.innerHTML = "";
   guilds.forEach(g => {
@@ -972,9 +1306,64 @@ async function loadGuilds() {
 }
 
 async function loadFeatureLabels() {
-  const data = await api("/api/modules");
+  const data = await api("/api/modules", {}, { silentNotify: true });
   featureLabels = data.labels || {};
   commandRegistry = data.commands || [];
+}
+
+/* ---- Kanal-Namensauflösung: ID -> Klartextname, damit man nicht raten muss ---- */
+async function loadChannelDirectory() {
+  try {
+    const list = await api("/api/guild/" + currentGuildId + "/channels", {}, { silentNotify: true });
+    channelDirectory = {};
+    (list || []).forEach(c => { channelDirectory[String(c.channel_id || c.id)] = c.name; });
+  } catch (e) {
+    // Fällt zurück auf currentConfig.available_channels, falls Endpoint fehlt
+    channelDirectory = {};
+    if (currentConfig && currentConfig.available_channels) {
+      currentConfig.available_channels.forEach(c => { channelDirectory[String(c.channel_id)] = c.name; });
+    }
+  }
+}
+
+function resolveChannelName(id) {
+  if (!id) return null;
+  return channelDirectory[String(id).trim()] || null;
+}
+
+function renderResolveHint(elId, value, multi) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  if (!value) { el.textContent = ""; el.className = "resolve-hint"; return; }
+  if (multi) {
+    const ids = value.split(",").map(s => s.trim()).filter(Boolean);
+    const names = ids.map(id => resolveChannelName(id) || null);
+    if (names.every(n => n)) {
+      el.className = "resolve-hint ok";
+      el.innerHTML = "✓ " + names.map(n => '<span class="channel-name-tag">#' + n + '</span>').join(" ");
+    } else if (names.some(n => n)) {
+      el.className = "resolve-hint";
+      el.innerHTML = names.map((n, i) => n ? '<span class="channel-name-tag">#' + n + '</span>' : '<span style="color:var(--muted)">' + ids[i] + " (unbekannt)</span>").join(" ");
+    } else {
+      el.className = "resolve-hint err";
+      el.textContent = "Kanal-Name konnte nicht ermittelt werden.";
+    }
+    return;
+  }
+  const name = resolveChannelName(value);
+  if (name) {
+    el.className = "resolve-hint ok";
+    el.innerHTML = "✓ Kanal gefunden: <span class=\"channel-name-tag\">#" + name + "</span>";
+  } else {
+    el.className = "resolve-hint err";
+    el.textContent = "Kein Kanal mit dieser ID gefunden.";
+  }
+}
+
+function bindResolveLive(inputId, hintId, multi) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  input.addEventListener("input", () => renderResolveHint(hintId, input.value, multi));
 }
 
 function groupCommandsByModule() {
@@ -998,6 +1387,7 @@ function renderModules() {
   const { map } = groupCommandsByModule();
 
   const moduleKeys = Object.keys(features);
+  const editable = canEdit(currentRank);
 
   moduleKeys.forEach(key => {
     const cmds = map[key] || [];
@@ -1043,19 +1433,19 @@ function renderModules() {
     const moduleInput = document.createElement("input");
     moduleInput.type = "checkbox";
     moduleInput.checked = isOn;
-    moduleInput.disabled = currentRank < 100;
+    moduleInput.disabled = !editable;
     moduleInput.addEventListener("change", async () => {
       const nowOn = moduleInput.checked;
       try {
         await api("/api/guild/" + currentGuildId + "/config", {
           method: "POST",
           body: JSON.stringify({ features: { [key]: nowOn } })
-        });
+        }, { notifyOnSuccess: "Modul geändert", notifyDetail: (featureLabels[key] || key) + " → " + (nowOn ? "aktiviert" : "deaktiviert"), notifyIcon: "🔧", label: "Modul speichern" });
         showMsg("moduleMsg", "Gespeichert.", true);
         features[key] = nowOn;
         group.classList.toggle("module-off", !nowOn);
         group.querySelectorAll(".command-toggle-input").forEach(inp => {
-          inp.disabled = !nowOn || currentRank < 100;
+          inp.disabled = !nowOn || !editable;
         });
         renderOverviewStats();
       } catch (e) {
@@ -1094,13 +1484,13 @@ function renderModules() {
         cInput.type = "checkbox";
         cInput.className = "command-toggle-input";
         cInput.checked = commandsCfg[cmd.key] !== false;
-        cInput.disabled = !isOn || currentRank < 100;
+        cInput.disabled = !isOn || !editable;
         cInput.addEventListener("change", async () => {
           try {
             await api("/api/guild/" + currentGuildId + "/config", {
               method: "POST",
               body: JSON.stringify({ commands: { [cmd.key]: cInput.checked } })
-            });
+            }, { notifyOnSuccess: "Befehl geändert", notifyDetail: cmd.label + " → " + (cInput.checked ? "aktiviert" : "deaktiviert"), notifyIcon: "🎚️", label: "Befehl speichern" });
             showMsg("moduleMsg", "Gespeichert.", true);
           } catch (e) {
             cInput.checked = !cInput.checked;
@@ -1134,47 +1524,53 @@ function fillSelect(selectEl, items, valueKey, labelKey) {
 async function loadGuildArea() {
   const guild = guilds.find(g => g.guild_id === currentGuildId);
   currentRank = guild ? guild.rank : 0;
-  document.getElementById("guildRankBadge").textContent = "Rang " + currentRank;
-  currentConfig = await api("/api/guild/" + currentGuildId + "/config");
+  renderRankPill(document.getElementById("guildRankBadge"), currentRank);
+  currentConfig = await api("/api/guild/" + currentGuildId + "/config", {}, { silentNotify: true });
+  await loadChannelDirectory();
   document.getElementById("guildArea").classList.remove("hidden");
+  document.getElementById("bellWrap").classList.remove("hidden");
   renderModules();
   fillSelect(document.getElementById("roleValueSelect"), currentConfig.available_roles, "role_id", "name");
   fillSelect(document.getElementById("channelValueSelect"), currentConfig.available_channels, "channel_id", "name");
   fillSelect(document.getElementById("sayChannelSelect"), currentConfig.available_channels, "channel_id", "name");
-  const editable = currentRank >= 100;
+  const editable = canEdit(currentRank);
+  const uploadOk = canUpload(currentRank);
+  const replaceOk = canReplace(currentRank);
   document.getElementById("saveRoleBtn").disabled = !editable;
   document.getElementById("saveChannelBtn").disabled = !editable;
   document.getElementById("saveAdminBtn").disabled = !editable;
   const uploadBtn = document.getElementById("supportAudioUploadBtn");
   const removeBtn = document.getElementById("supportAudioRemoveBtn");
-  if (uploadBtn) uploadBtn.disabled = !editable;
-  if (removeBtn) removeBtn.disabled = !editable;
+  if (uploadBtn) uploadBtn.disabled = !uploadOk;
+  if (removeBtn) removeBtn.disabled = !replaceOk;
   const saveSupportChannelsBtnEl = document.getElementById("saveSupportChannelsBtn");
   if (saveSupportChannelsBtnEl) saveSupportChannelsBtnEl.disabled = !editable;
   const aiVoiceCreateBtnEl = document.getElementById("aiVoiceCreateBtn");
-  if (aiVoiceCreateBtnEl) aiVoiceCreateBtnEl.disabled = !editable;
+  if (aiVoiceCreateBtnEl) aiVoiceCreateBtnEl.disabled = !uploadOk;
   if (editable) await loadAdmins();
   if (currentConfig.config.audit_channel_id) {
     document.getElementById("auditChannelId").value = currentConfig.config.audit_channel_id;
+    renderResolveHint("resolveAuditChannel", currentConfig.config.audit_channel_id, false);
   }
   renderOverviewStats();
   refreshOverview();
 }
 
 async function loadAdmins() {
-  const admins = await api("/api/guild/" + currentGuildId + "/admins");
+  const admins = await api("/api/guild/" + currentGuildId + "/admins", {}, { silentNotify: true });
   const body = document.getElementById("adminsBody");
   body.innerHTML = "";
   admins.forEach(a => {
+    const tier = rankTier(a.rank);
     const tr = document.createElement("tr");
-    tr.innerHTML = "<td>" + a.user_id + "</td><td>" + (a.username || "—") + "</td><td>" + a.rank + "</td>";
+    tr.innerHTML = "<td>" + a.user_id + "</td><td>" + (a.username || "—") + "</td><td><span class=\"rank-badge-sm " + tier.cls + "\">" + a.rank + " · " + tier.label + "</span></td>";
     body.appendChild(tr);
   });
   document.getElementById("statAdmins").textContent = admins.length;
 }
 
 const SUPPORT_STATUS_LABELS = {
-  waiting: { text: "Wartend", color: "var(--blurple-soft)" },
+  waiting: { text: "Wartend", color: "var(--dc-soft)" },
   claimed: { text: "Aktiv", color: "var(--green)" },
   closed: { text: "Geschlossen", color: "var(--muted)" },
   canceled: { text: "Abgebrochen", color: "var(--red)" },
@@ -1209,7 +1605,7 @@ async function loadSupportAudioStatus() {
   main.textContent = "Lade…";
   sub.textContent = "";
   try {
-    const data = await api("/api/guild/" + currentGuildId + "/support/audio");
+    const data = await api("/api/guild/" + currentGuildId + "/support/audio", {}, { silentNotify: true });
     latestSupportAudioStatus = data;
     renderFileStatusCard(icon, main, sub, card, data.exists, data.filename);
     renderOverviewSupportAudio();
@@ -1243,12 +1639,22 @@ if (supportAudioUploadBtn) supportAudioUploadBtn.addEventListener("click", async
     showMsg("supportAudioMsg", "Nur mp3, wav oder ogg erlaubt.", false);
     return;
   }
+  const isReplace = latestSupportAudioStatus && latestSupportAudioStatus.exists;
+  if (isReplace && !canReplace(currentRank)) {
+    showMsg("supportAudioMsg", "Zum Ersetzen einer bestehenden Datei brauchst du Rang 70+.", false);
+    return;
+  }
   try {
     const formData = new FormData();
     formData.append("audio", file);
     await api("/api/guild/" + currentGuildId + "/support/audio", {
       method: "POST",
       body: formData
+    }, {
+      notifyOnSuccess: isReplace ? "Ansage ersetzt" : "Ansage hochgeladen",
+      notifyDetail: file.name,
+      notifyIcon: "🔊",
+      label: "Ansage-Upload"
     });
     showMsg("supportAudioMsg", "Ansage-Datei gespeichert.", true);
     fileInput.value = "";
@@ -1261,7 +1667,7 @@ if (supportAudioUploadBtn) supportAudioUploadBtn.addEventListener("click", async
 const supportAudioRemoveBtn = document.getElementById("supportAudioRemoveBtn");
 if (supportAudioRemoveBtn) supportAudioRemoveBtn.addEventListener("click", async () => {
   try {
-    await api("/api/guild/" + currentGuildId + "/support/audio", { method: "DELETE" });
+    await api("/api/guild/" + currentGuildId + "/support/audio", { method: "DELETE" }, { notifyOnSuccess: "Ansage entfernt", notifyIcon: "🔇", label: "Ansage entfernen" });
     showMsg("supportAudioMsg", "Ansage-Datei entfernt.", true);
     await loadSupportAudioStatus();
   } catch (e) {
@@ -1276,14 +1682,18 @@ function renderSupportChannelsSummary(cfg) {
     ["Support-Kanäle", (cfg.support_channels || []).length ? (cfg.support_channels || []).join(", ") : null],
     ["Overflow-Kategorie", cfg.overflow_category_id],
   ];
-  const html = rows.map(([label, val]) => `
+  const html = rows.map(([label, val]) => {
+    const name = val ? resolveChannelName(val) : null;
+    const display = val ? (name ? "#" + name : val) : null;
+    return `
     <div class="status-row">
       <span class="status-row-label">${label}</span>
-      <span class="status-row-value ${val ? "" : "empty"}">
-        ${val ? '<span class="dot dot-green"></span>' + val : '<span class="dot dot-muted"></span>nicht gesetzt'}
+      <span class="status-row-value ${display ? "" : "empty"}">
+        ${display ? '<span class="dot dot-green"></span>' + display : '<span class="dot dot-muted"></span>nicht gesetzt'}
       </span>
     </div>
-  `).join("");
+  `;
+  }).join("");
   const target1 = document.getElementById("supportChannelsSummary");
   const target2 = document.getElementById("ovSupportChannels");
   if (target1) target1.innerHTML = html;
@@ -1292,15 +1702,25 @@ function renderSupportChannelsSummary(cfg) {
 
 async function loadSupportChannelConfig() {
   try {
-    const cfg = await api("/api/guild/" + currentGuildId + "/support/config");
+    const cfg = await api("/api/guild/" + currentGuildId + "/support/config", {}, { silentNotify: true });
     latestSupportChannelConfig = cfg;
     document.getElementById("supportWaitingChannelId").value = cfg.waiting_channel_id || "";
     document.getElementById("supportNotifyChannelId").value = cfg.notify_channel_id || "";
     document.getElementById("supportChannelsList").value = (cfg.support_channels || []).join(", ");
     document.getElementById("supportOverflowCategoryId").value = cfg.overflow_category_id || "";
+    renderResolveHint("resolveWaiting", cfg.waiting_channel_id, false);
+    renderResolveHint("resolveNotify", cfg.notify_channel_id, false);
+    renderResolveHint("resolveList", (cfg.support_channels || []).join(", "), true);
+    renderResolveHint("resolveOverflow", cfg.overflow_category_id, false);
     renderSupportChannelsSummary(cfg);
   } catch (e) {}
 }
+
+bindResolveLive("supportWaitingChannelId", "resolveWaiting", false);
+bindResolveLive("supportNotifyChannelId", "resolveNotify", false);
+bindResolveLive("supportChannelsList", "resolveList", true);
+bindResolveLive("supportOverflowCategoryId", "resolveOverflow", false);
+bindResolveLive("auditChannelId", "resolveAuditChannel", false);
 
 const saveSupportChannelsBtn = document.getElementById("saveSupportChannelsBtn");
 if (saveSupportChannelsBtn) saveSupportChannelsBtn.addEventListener("click", async () => {
@@ -1315,7 +1735,7 @@ if (saveSupportChannelsBtn) saveSupportChannelsBtn.addEventListener("click", asy
     await api("/api/guild/" + currentGuildId + "/support/config", {
       method: "POST",
       body: JSON.stringify(payload)
-    });
+    }, { notifyOnSuccess: "Support-Kanäle geändert", notifyDetail: "Kanalkonfiguration aktualisiert", notifyIcon: "🚪", label: "Support-Kanäle speichern" });
     showMsg("supportAudioMsg", "Support-Kanäle gespeichert.", true);
     latestSupportChannelConfig = payload;
     renderSupportChannelsSummary(payload);
@@ -1360,7 +1780,7 @@ async function loadSupportCases() {
   list.innerHTML = '<div class="audit-empty">Lade…</div>';
   try {
     const path = "/api/guild/" + currentGuildId + "/support/cases" + (currentSupportFilter ? "?status=" + currentSupportFilter : "");
-    const cases = await api(path);
+    const cases = await api(path, {}, { silentNotify: true });
     renderSupportCases(cases);
   } catch (e) {
     list.innerHTML = '<div class="audit-empty">Fehler beim Laden: ' + e.message + '</div>';
@@ -1386,7 +1806,7 @@ async function openSupportCaseDetail(caseId) {
   body.innerHTML = '<div class="audit-empty">Lade…</div>';
   modal.classList.remove("hidden");
   try {
-    const c = await api("/api/guild/" + currentGuildId + "/support/cases/" + caseId);
+    const c = await api("/api/guild/" + currentGuildId + "/support/cases/" + caseId, {}, { silentNotify: true });
     const statusInfo = SUPPORT_STATUS_LABELS[c.status] || { text: c.status, color: "var(--muted)" };
     let html = `
       <div style="margin-bottom:14px;">
@@ -1423,14 +1843,14 @@ async function openSupportCaseDetail(caseId) {
 
     const actions = document.getElementById("supportDetailActions");
     actions.innerHTML = "";
-    if (currentRank >= 100) {
+    if (canEdit(currentRank)) {
       if (c.status === "waiting") {
         const cancelBtn = document.createElement("button");
         cancelBtn.className = "btn btn-danger btn-sm";
         cancelBtn.textContent = "Abbrechen";
         cancelBtn.addEventListener("click", async () => {
           try {
-            await api("/api/guild/" + currentGuildId + "/support/cases/" + caseId + "/cancel", { method: "POST" });
+            await api("/api/guild/" + currentGuildId + "/support/cases/" + caseId + "/cancel", { method: "POST" }, { notifyOnSuccess: "Support-Fall abgebrochen", notifyDetail: "#" + caseId, notifyIcon: "❌" });
             closeSupportDetail();
             loadSupportCases();
           } catch (e) { alert(e.message); }
@@ -1443,7 +1863,7 @@ async function openSupportCaseDetail(caseId) {
         closeBtn.textContent = "Schließen";
         closeBtn.addEventListener("click", async () => {
           try {
-            await api("/api/guild/" + currentGuildId + "/support/cases/" + caseId + "/close", { method: "POST" });
+            await api("/api/guild/" + currentGuildId + "/support/cases/" + caseId + "/close", { method: "POST" }, { notifyOnSuccess: "Support-Fall geschlossen", notifyDetail: "#" + caseId, notifyIcon: "🔒" });
             closeSupportDetail();
             loadSupportCases();
           } catch (e) { alert(e.message); }
@@ -1474,7 +1894,7 @@ document.getElementById("supportCommentSendBtn").addEventListener("click", async
     await api("/api/guild/" + currentGuildId + "/support/cases/" + openSupportCaseId + "/comment", {
       method: "POST",
       body: JSON.stringify({ text })
-    });
+    }, { notifyOnSuccess: "Kommentar gesendet", notifyDetail: "#" + openSupportCaseId, notifyIcon: "💬" });
     textEl.value = "";
     openSupportCaseDetail(openSupportCaseId);
   } catch (e) {
@@ -1486,7 +1906,7 @@ async function loadAiVoiceList() {
   const list = document.getElementById("aiVoiceList");
   list.innerHTML = '<div class="audit-empty">Lade…</div>';
   try {
-    aiVoiceList = await api("/api/guild/" + currentGuildId + "/ai-voice");
+    aiVoiceList = await api("/api/guild/" + currentGuildId + "/ai-voice", {}, { silentNotify: true });
     renderAiVoiceList();
     renderOverviewAiVoice();
   } catch (e) {
@@ -1497,7 +1917,8 @@ async function loadAiVoiceList() {
 function renderAiVoiceList() {
   const list = document.getElementById("aiVoiceList");
   list.innerHTML = "";
-  const editable = currentRank >= 100;
+  const uploadOk = canUpload(currentRank);
+  const replaceOk = canReplace(currentRank);
   document.getElementById("statAiVoice").textContent = aiVoiceList.length;
   if (!aiVoiceList.length) {
     list.innerHTML = '<div class="audit-empty">Noch keine Kategorien angelegt.</div>';
@@ -1521,12 +1942,14 @@ function renderAiVoiceList() {
     const fileInput = document.createElement("input");
     fileInput.type = "file";
     fileInput.accept = ".mp3,.wav,.ogg";
-    fileInput.disabled = !editable;
+    const needsReplace = entry.has_file;
+    const canDoThis = needsReplace ? replaceOk : uploadOk;
+    fileInput.disabled = !canDoThis;
 
     const uploadBtn = document.createElement("button");
     uploadBtn.className = "btn btn-green btn-sm";
-    uploadBtn.textContent = "Datei setzen";
-    uploadBtn.disabled = !editable;
+    uploadBtn.textContent = needsReplace ? "Datei ersetzen" : "Datei setzen";
+    uploadBtn.disabled = !canDoThis;
     uploadBtn.addEventListener("click", async () => {
       const file = fileInput.files[0];
       if (!file) {
@@ -1543,7 +1966,7 @@ function renderAiVoiceList() {
         const formData = new FormData();
         formData.append("name", entry.name);
         formData.append("audio", file);
-        await api("/api/guild/" + currentGuildId + "/ai-voice", { method: "POST", body: formData });
+        await api("/api/guild/" + currentGuildId + "/ai-voice", { method: "POST", body: formData }, { notifyOnSuccess: needsReplace ? "AI-Voice Datei ersetzt" : "AI-Voice Datei gesetzt", notifyDetail: entry.name + " · " + file.name, notifyIcon: "🎙️" });
         showMsg("aiVoiceMsg", "Datei gespeichert.", true);
         await loadAiVoiceList();
       } catch (e) {
@@ -1557,7 +1980,7 @@ function renderAiVoiceList() {
     playBtn.disabled = !entry.has_file;
     playBtn.addEventListener("click", async () => {
       try {
-        await api("/api/guild/" + currentGuildId + "/ai-voice/" + encodeURIComponent(entry.name) + "/play", { method: "POST" });
+        await api("/api/guild/" + currentGuildId + "/ai-voice/" + encodeURIComponent(entry.name) + "/play", { method: "POST" }, { notifyOnSuccess: "AI-Voice abgespielt", notifyDetail: entry.name, notifyIcon: "🔊" });
         showMsg("aiVoiceMsg", "Wird abgespielt.", true);
       } catch (e) {
         showMsg("aiVoiceMsg", e.message, false);
@@ -1567,10 +1990,10 @@ function renderAiVoiceList() {
     const deleteBtn = document.createElement("button");
     deleteBtn.className = "btn btn-danger btn-sm";
     deleteBtn.textContent = "Löschen";
-    deleteBtn.disabled = !editable;
+    deleteBtn.disabled = !canEdit(currentRank);
     deleteBtn.addEventListener("click", async () => {
       try {
-        await api("/api/guild/" + currentGuildId + "/ai-voice/" + encodeURIComponent(entry.name), { method: "DELETE" });
+        await api("/api/guild/" + currentGuildId + "/ai-voice/" + encodeURIComponent(entry.name), { method: "DELETE" }, { notifyOnSuccess: "AI-Voice Kategorie gelöscht", notifyDetail: entry.name, notifyIcon: "🗑️" });
         showMsg("aiVoiceMsg", "Kategorie gelöscht.", true);
         await loadAiVoiceList();
       } catch (e) {
@@ -1627,7 +2050,7 @@ if (aiVoiceCreateBtn) aiVoiceCreateBtn.addEventListener("click", async () => {
     const formData = new FormData();
     formData.append("name", name);
     formData.append("audio", file);
-    await api("/api/guild/" + currentGuildId + "/ai-voice", { method: "POST", body: formData });
+    await api("/api/guild/" + currentGuildId + "/ai-voice", { method: "POST", body: formData }, { notifyOnSuccess: "AI-Voice Kategorie erstellt", notifyDetail: name, notifyIcon: "🎙️" });
     showMsg("aiVoiceMsg", "Kategorie erstellt.", true);
     document.getElementById("aiVoiceNewName").value = "";
     fileInput.value = "";
@@ -1673,11 +2096,20 @@ const ACTION_ICONS = {
   "Reinvite genutzt":              "🔗",
 };
 
+/* ---- Audit-Log Quellenkennzeichnung: Website vs. Bot/Discord ---- */
+function auditSourceBadge(entry) {
+  const source = entry.source || (entry.via_dashboard ? "web" : (entry.via_web ? "web" : "bot"));
+  if (source === "web" || source === "dashboard" || source === "website") {
+    return '<span class="audit-source-web">🌐 Website</span>';
+  }
+  return '<span class="audit-source-bot">🤖 Bot</span>';
+}
+
 async function loadAuditLog() {
   const list = document.getElementById("auditList");
   list.innerHTML = '<div class="audit-empty">Lade…</div>';
   try {
-    const entries = await api("/api/guild/" + currentGuildId + "/audit");
+    const entries = await api("/api/guild/" + currentGuildId + "/audit", {}, { silentNotify: true });
     if (!entries.length) {
       list.innerHTML = '<div class="audit-empty">Noch keine Einträge.</div>';
       return;
@@ -1690,7 +2122,10 @@ async function loadAuditLog() {
       div.innerHTML = `
         <div class="audit-header">
           <span class="audit-action">${icon} ${e.action}</span>
-          <span class="audit-ts">${e.timestamp}</span>
+          <span style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:10px;font-weight:700;font-family:var(--mono);">${auditSourceBadge(e)}</span>
+            <span class="audit-ts">${e.timestamp}</span>
+          </span>
         </div>
         <span class="audit-who">👤 ${e.username} <span style="color:var(--muted);">(${e.user_id})</span></span>
         <span class="audit-details">${e.details || "—"}</span>
@@ -1710,7 +2145,7 @@ document.getElementById("saveAuditChannelBtn").addEventListener("click", async (
     await api("/api/guild/" + currentGuildId + "/config", {
       method: "POST",
       body: JSON.stringify({ audit_channel_id: channelId })
-    });
+    }, { notifyOnSuccess: "Audit-Kanal gesetzt", notifyDetail: resolveChannelName(channelId) ? "#" + resolveChannelName(channelId) : channelId, notifyIcon: "📋" });
     showMsg("auditMsg", "Audit-Kanal gespeichert.", true);
   } catch (e) {
     showMsg("auditMsg", e.message, false);
@@ -1724,21 +2159,23 @@ document.getElementById("guildSelect").addEventListener("change", async (e) => {
 
 document.getElementById("saveRoleBtn").addEventListener("click", async () => {
   try {
-    await api("/api/guild/" + currentGuildId + "/config", { method: "POST", body: JSON.stringify({ roles: { [document.getElementById("roleKeySelect").value]: parseInt(document.getElementById("roleValueSelect").value) } }) });
+    await api("/api/guild/" + currentGuildId + "/config", { method: "POST", body: JSON.stringify({ roles: { [document.getElementById("roleKeySelect").value]: parseInt(document.getElementById("roleValueSelect").value) } }) }, { notifyOnSuccess: "Rolle gesetzt", notifyIcon: "🎭" });
     showMsg("rollenMsg", "Rolle gespeichert.", true);
   } catch (e) { showMsg("rollenMsg", e.message, false); }
 });
 
 document.getElementById("saveChannelBtn").addEventListener("click", async () => {
   try {
-    await api("/api/guild/" + currentGuildId + "/config", { method: "POST", body: JSON.stringify({ channels: { [document.getElementById("channelKeySelect").value]: parseInt(document.getElementById("channelValueSelect").value) } }) });
+    const channelId = document.getElementById("channelValueSelect").value;
+    await api("/api/guild/" + currentGuildId + "/config", { method: "POST", body: JSON.stringify({ channels: { [document.getElementById("channelKeySelect").value]: parseInt(channelId) } }) }, { notifyOnSuccess: "Kanal gesetzt", notifyDetail: resolveChannelName(channelId) ? "#" + resolveChannelName(channelId) : channelId, notifyIcon: "📢" });
     showMsg("rollenMsg", "Kanal gespeichert.", true);
   } catch (e) { showMsg("rollenMsg", e.message, false); }
 });
 
 document.getElementById("saveAdminBtn").addEventListener("click", async () => {
   try {
-    await api("/api/guild/" + currentGuildId + "/admins", { method: "POST", body: JSON.stringify({ user_id: document.getElementById("adminUserId").value.trim(), rank: parseInt(document.getElementById("adminRankValue").value.trim()) }) });
+    const rankVal = parseInt(document.getElementById("adminRankValue").value.trim());
+    await api("/api/guild/" + currentGuildId + "/admins", { method: "POST", body: JSON.stringify({ user_id: document.getElementById("adminUserId").value.trim(), rank: rankVal }) }, { notifyOnSuccess: "Rang gesetzt", notifyDetail: "Rang " + rankVal + " (" + rankTier(rankVal).label + ")", notifyIcon: "⭐" });
     showMsg("adminsMsg", "Rang gespeichert.", true);
     await loadAdmins();
   } catch (e) { showMsg("adminsMsg", e.message, false); }
@@ -1746,7 +2183,8 @@ document.getElementById("saveAdminBtn").addEventListener("click", async () => {
 
 document.getElementById("sayBtn").addEventListener("click", async () => {
   try {
-    await api("/api/guild/" + currentGuildId + "/say", { method: "POST", body: JSON.stringify({ channel_id: document.getElementById("sayChannelSelect").value, message: document.getElementById("sayMessage").value }) });
+    const channelId = document.getElementById("sayChannelSelect").value;
+    await api("/api/guild/" + currentGuildId + "/say", { method: "POST", body: JSON.stringify({ channel_id: channelId, message: document.getElementById("sayMessage").value }) }, { notifyOnSuccess: "Say gesendet", notifyDetail: resolveChannelName(channelId) ? "#" + resolveChannelName(channelId) : channelId, notifyIcon: "💬" });
     showMsg("sayMsg", "Nachricht gesendet.", true);
     document.getElementById("sayMessage").value = "";
   } catch (e) { showMsg("sayMsg", e.message, false); }
@@ -1754,7 +2192,7 @@ document.getElementById("sayBtn").addEventListener("click", async () => {
 
 document.getElementById("dmBtn").addEventListener("click", async () => {
   try {
-    await api("/api/guild/" + currentGuildId + "/dm", { method: "POST", body: JSON.stringify({ target_user_id: document.getElementById("dmUserId").value.trim(), message: document.getElementById("dmMessage").value }) });
+    await api("/api/guild/" + currentGuildId + "/dm", { method: "POST", body: JSON.stringify({ target_user_id: document.getElementById("dmUserId").value.trim(), message: document.getElementById("dmMessage").value }) }, { notifyOnSuccess: "DM gesendet", notifyIcon: "📨" });
     showMsg("dmMsg", "Nachricht gesendet.", true);
     document.getElementById("dmMessage").value = "";
   } catch (e) { showMsg("dmMsg", e.message, false); }
@@ -1796,6 +2234,7 @@ async function init() {
     await loadGuilds();
     document.getElementById("loginView").classList.add("hidden");
     document.getElementById("appView").classList.remove("hidden");
+    renderBell();
   } catch (e) {
     localStorage.removeItem("session_token");
     sessionToken = null;
