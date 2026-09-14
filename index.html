@@ -24,6 +24,10 @@
   --green-dim:rgba(95,227,130,0.13);
   --green-mid:rgba(95,227,130,0.28);
 
+  --amber:#ffc55f;
+  --amber-dim:rgba(255,197,95,0.13);
+  --amber-mid:rgba(255,197,95,0.3);
+
   --blurple:#7C6CF0;
   --blurple-soft:#9C90FF;
   --blurple-dim:rgba(124,108,240,0.16);
@@ -74,7 +78,7 @@ body::before{
 }
 .header-nav a:hover{color:var(--blurple-soft);background:var(--blurple-dim);border-color:var(--border-hi);}
 
-.shell{width:100%;max-width:720px;margin:0 auto;padding:20px 14px 80px;display:flex;flex-direction:column;gap:10px;}
+.shell{width:100%;max-width:820px;margin:0 auto;padding:20px 14px 80px;display:flex;flex-direction:column;gap:10px;}
 
 .card{
   background:var(--surface);
@@ -383,8 +387,81 @@ tr:hover td{background:rgba(124,108,240,0.045);}
 }
 .modal-close:hover{color:var(--text);border-color:var(--border-hi);}
 
-.aivoice-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:center;}
-.aivoice-actions input[type=file]{flex:1;min-width:150px;}
+.aivoice-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;align-items:center;}
+.aivoice-actions input[type=file]{flex:1;min-width:140px;}
+
+/* ---- Übersicht / Dashboard ---- */
+.stat-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:6px;
+}
+@media(min-width:560px){.stat-grid{grid-template-columns:repeat(4,1fr);}}
+.stat-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:12px;
+  padding:13px 14px;cursor:pointer;transition:border-color .15s,transform .1s;
+}
+.stat-card:hover{border-color:var(--border-hi);transform:translateY(-1px);}
+.stat-num{font-size:22px;font-weight:800;color:var(--text-hi);line-height:1;}
+.stat-num .stat-num-of{font-size:13px;color:var(--muted);font-weight:700;}
+.stat-label{font-size:11px;color:var(--muted);margin-top:5px;font-weight:600;}
+
+.status-row{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:10px;
+  padding:11px 0;border-bottom:1px solid rgba(137,127,255,0.09);
+}
+.status-row:last-child{border-bottom:none;}
+.status-row-label{font-size:12px;color:var(--muted);font-weight:600;flex-shrink:0;min-width:120px;}
+.status-row-value{font-size:13px;color:var(--text-hi);text-align:right;font-family:var(--mono);word-break:break-word;}
+.status-row-value.empty{color:var(--muted);font-style:italic;font-family:var(--sans);}
+
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;flex-shrink:0;}
+.dot-green{background:var(--green);box-shadow:0 0 6px var(--green);}
+.dot-amber{background:var(--amber);box-shadow:0 0 6px var(--amber);}
+.dot-muted{background:var(--muted);}
+
+.file-status-card{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;border-radius:12px;margin-bottom:14px;
+  border:1px solid var(--border);background:var(--bg2);
+}
+.file-status-card.on{border-color:var(--green-mid);background:var(--green-dim);}
+.file-status-card.off{border-color:var(--border);background:var(--bg2);}
+.file-status-icon{
+  width:38px;height:38px;border-radius:10px;flex-shrink:0;
+  display:grid;place-items:center;font-size:17px;
+  background:rgba(255,255,255,0.05);
+}
+.file-status-card.on .file-status-icon{background:var(--green-mid);}
+.file-status-text-main{font-size:13px;font-weight:700;color:var(--text-hi);}
+.file-status-text-sub{font-size:11.5px;color:var(--muted);font-family:var(--mono);margin-top:2px;}
+
+.aivoice-grid{display:grid;grid-template-columns:1fr;gap:8px;}
+.aivoice-card{
+  border:1px solid var(--border);border-radius:12px;padding:13px 14px;
+  background:var(--bg2);transition:border-color .15s;
+}
+.aivoice-card:hover{border-color:var(--border-hi);}
+.aivoice-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.aivoice-card-name{font-size:13.5px;font-weight:700;color:var(--text-hi);}
+.aivoice-badge{
+  font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;
+  font-family:var(--mono);display:inline-flex;align-items:center;
+}
+.aivoice-badge.on{background:var(--green-dim);color:var(--green);border:1px solid var(--green-mid);}
+.aivoice-badge.off{background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-mid);}
+
+.quick-nav{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px;}
+.quick-nav-btn{
+  font-size:11.5px;font-weight:700;color:var(--blurple-soft);
+  background:var(--blurple-dim);border:1px solid var(--border-hi);
+  border-radius:8px;padding:7px 11px;cursor:pointer;font-family:inherit;
+  transition:background .15s,color .15s;
+}
+.quick-nav-btn:hover{background:var(--blurple-mid);color:#fff;}
+
+.summary-card-title{
+  display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;
+  color:var(--text-hi);margin-bottom:10px;
+}
 </style>
 </head>
 <body>
@@ -448,7 +525,8 @@ tr:hover td{background:rgba(124,108,240,0.045);}
     <div id="guildArea" class="hidden" style="display:flex;flex-direction:column;gap:10px;">
 
       <div class="tabs-row">
-        <button class="tab active" data-tab="module">Module</button>
+        <button class="tab active" data-tab="uebersicht">Übersicht</button>
+        <button class="tab" data-tab="module">Module</button>
         <button class="tab" data-tab="rollen">Rollen &amp; Kanäle</button>
         <button class="tab" data-tab="admins">Admins</button>
         <button class="tab" data-tab="say">Say</button>
@@ -461,7 +539,65 @@ tr:hover td{background:rgba(124,108,240,0.045);}
 
       <div class="card">
 
-        <div class="tabpane active" id="pane-module">
+        <div class="tabpane active" id="pane-uebersicht">
+          <p class="card-label">Übersicht</p>
+
+          <div class="stat-grid">
+            <div class="stat-card" data-jump="module">
+              <div class="stat-num" id="statModules">–</div>
+              <div class="stat-label">Module aktiv</div>
+            </div>
+            <div class="stat-card" data-jump="admins">
+              <div class="stat-num" id="statAdmins">–</div>
+              <div class="stat-label">Team-Ränge</div>
+            </div>
+            <div class="stat-card" data-jump="support">
+              <div class="stat-num" id="statSupportWaiting">–</div>
+              <div class="stat-label">Support wartend</div>
+            </div>
+            <div class="stat-card" data-jump="aivoice">
+              <div class="stat-num" id="statAiVoice">–</div>
+              <div class="stat-label">AI-Voice Kategorien</div>
+            </div>
+          </div>
+
+          <div class="sec">Support</div>
+          <div class="summary-card-title">🔊 Ansage-Datei</div>
+          <div id="ovSupportAudio" class="file-status-card off">
+            <div class="file-status-icon">🔈</div>
+            <div>
+              <div class="file-status-text-main">Lade…</div>
+              <div class="file-status-text-sub"></div>
+            </div>
+          </div>
+          <div class="summary-card-title">🚪 Konfigurierte Kanäle</div>
+          <div id="ovSupportChannels">
+            <div class="status-row"><span class="status-row-label">Lade…</span></div>
+          </div>
+          <div class="quick-nav">
+            <button class="quick-nav-btn" data-jump="support">Support öffnen →</button>
+          </div>
+
+          <div class="sec">AI Voice</div>
+          <div id="ovAiVoice">
+            <div class="status-row"><span class="status-row-label">Lade…</span></div>
+          </div>
+          <div class="quick-nav">
+            <button class="quick-nav-btn" data-jump="aivoice">AI Voice öffnen →</button>
+          </div>
+
+          <div class="sec">Schnellzugriff</div>
+          <div class="quick-nav">
+            <button class="quick-nav-btn" data-jump="module">🔧 Module</button>
+            <button class="quick-nav-btn" data-jump="rollen">🎭 Rollen &amp; Kanäle</button>
+            <button class="quick-nav-btn" data-jump="admins">⭐ Admins</button>
+            <button class="quick-nav-btn" data-jump="say">💬 Say</button>
+            <button class="quick-nav-btn" data-jump="dm">📨 DM</button>
+            <button class="quick-nav-btn" data-jump="audit">📋 Audit Log</button>
+          </div>
+        </div>
+
+        <div class="tabpane" id="pane-module">
           <p class="card-label">Feature-Module</p>
           <div id="moduleList"></div>
           <div class="msg" id="moduleMsg"></div>
@@ -545,18 +681,31 @@ tr:hover td{background:rgba(124,108,240,0.045);}
 
         <div class="tabpane" id="pane-support">
           <p class="card-label">Support-Ansage</p>
+
+          <div id="supportAudioCard" class="file-status-card off">
+            <div class="file-status-icon" id="supportAudioIcon">🔈</div>
+            <div>
+              <div class="file-status-text-main" id="supportAudioMain">Lade…</div>
+              <div class="file-status-text-sub" id="supportAudioSub"></div>
+            </div>
+          </div>
+
           <div class="field">
-            <label>Audio-Datei (mp3, wav, ogg)</label>
+            <label>Neue Audio-Datei (mp3, wav, ogg)</label>
             <input type="file" id="supportAudioFile" accept=".mp3,.wav,.ogg">
           </div>
           <div style="display:flex;gap:8px;margin-bottom:10px;">
             <button class="btn btn-green btn-sm" id="supportAudioUploadBtn">Hochladen</button>
             <button class="btn btn-danger btn-sm" id="supportAudioRemoveBtn">Entfernen</button>
           </div>
-          <div id="supportAudioStatus" style="font-size:12px;color:var(--muted);margin-bottom:6px;">Lade…</div>
           <div class="msg" id="supportAudioMsg"></div>
 
-          <div class="sec">Support-Kanäle</div>
+          <div class="sec">Aktuelle Kanal-Konfiguration</div>
+          <div id="supportChannelsSummary">
+            <div class="status-row"><span class="status-row-label">Lade…</span></div>
+          </div>
+
+          <div class="sec">Kanäle bearbeiten</div>
           <div class="field">
             <label>Warteraum-Kanal-ID</label>
             <input type="text" id="supportWaitingChannelId" placeholder="Kanal-ID">
@@ -594,7 +743,7 @@ tr:hover td{background:rgba(124,108,240,0.045);}
 
         <div class="tabpane" id="pane-aivoice">
           <p class="card-label">AI-Voice Kategorien</p>
-          <div id="aiVoiceList">
+          <div id="aiVoiceList" class="aivoice-grid">
             <div class="audit-empty">Lade…</div>
           </div>
           <div class="sec">Neue Kategorie</div>
@@ -703,6 +852,9 @@ let expandedModules = new Set();
 let aiVoiceList = [];
 let currentSupportFilter = "";
 let openSupportCaseId = null;
+let latestSupportAudioStatus = null;
+let latestSupportChannelConfig = null;
+let latestSupportCases = [];
 
 function showMsg(id, text, ok) {
   const el = document.getElementById(id);
@@ -735,11 +887,29 @@ function buildDiscordAuthUrl() {
 
 function showDevTab() {
   if (!document.getElementById("guildArea").classList.contains("hidden")) {
-    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-    document.querySelectorAll(".tabpane").forEach(p => p.classList.remove("active"));
-    document.querySelector('[data-tab="entwickler"]').classList.add("active");
-    document.getElementById("pane-entwickler").classList.add("active");
+    jumpToTab("entwickler");
   }
+}
+
+function jumpToTab(name) {
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  document.querySelectorAll(".tabpane").forEach(p => p.classList.remove("active"));
+  const tabBtn = document.querySelector('.tab[data-tab="' + name + '"]');
+  if (tabBtn) tabBtn.classList.add("active");
+  const pane = document.getElementById("pane-" + name);
+  if (pane) pane.classList.add("active");
+  onTabOpened(name);
+}
+
+function onTabOpened(name) {
+  if (name === "audit") loadAuditLog();
+  if (name === "support") {
+    loadSupportAudioStatus();
+    loadSupportChannelConfig();
+    loadSupportCases();
+  }
+  if (name === "aivoice") loadAiVoiceList();
+  if (name === "uebersicht") refreshOverview();
 }
 
 document.getElementById("loginBtn").addEventListener("click", () => {
@@ -755,19 +925,12 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
 
 document.querySelectorAll(".tab").forEach(tab => {
   tab.addEventListener("click", () => {
-    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-    document.querySelectorAll(".tabpane").forEach(p => p.classList.remove("active"));
-    tab.classList.add("active");
-    const pane = document.getElementById("pane-" + tab.dataset.tab);
-    pane.classList.add("active");
-    if (tab.dataset.tab === "audit") loadAuditLog();
-    if (tab.dataset.tab === "support") {
-      loadSupportAudioStatus();
-      loadSupportChannelConfig();
-      loadSupportCases();
-    }
-    if (tab.dataset.tab === "aivoice") loadAiVoiceList();
+    jumpToTab(tab.dataset.tab);
   });
+});
+
+document.querySelectorAll("[data-jump]").forEach(el => {
+  el.addEventListener("click", () => jumpToTab(el.dataset.jump));
 });
 
 async function exchangeCode(code) {
@@ -894,6 +1057,7 @@ function renderModules() {
         group.querySelectorAll(".command-toggle-input").forEach(inp => {
           inp.disabled = !nowOn || currentRank < 100;
         });
+        renderOverviewStats();
       } catch (e) {
         moduleInput.checked = !nowOn;
         showMsg("moduleMsg", e.message, false);
@@ -993,6 +1157,8 @@ async function loadGuildArea() {
   if (currentConfig.config.audit_channel_id) {
     document.getElementById("auditChannelId").value = currentConfig.config.audit_channel_id;
   }
+  renderOverviewStats();
+  refreshOverview();
 }
 
 async function loadAdmins() {
@@ -1004,6 +1170,7 @@ async function loadAdmins() {
     tr.innerHTML = "<td>" + a.user_id + "</td><td>" + (a.username || "—") + "</td><td>" + a.rank + "</td>";
     body.appendChild(tr);
   });
+  document.getElementById("statAdmins").textContent = admins.length;
 }
 
 const SUPPORT_STATUS_LABELS = {
@@ -1019,21 +1186,47 @@ function formatSupportTimestamp(unixSeconds) {
   return d.toLocaleString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
 }
 
+function renderFileStatusCard(iconEl, mainEl, subEl, cardEl, exists, filename) {
+  if (exists) {
+    cardEl.className = "file-status-card on";
+    iconEl.textContent = "🔊";
+    mainEl.textContent = "Ansage aktiv";
+    subEl.textContent = filename || "";
+  } else {
+    cardEl.className = "file-status-card off";
+    iconEl.textContent = "🔈";
+    mainEl.textContent = "Keine Ansage-Datei hinterlegt";
+    subEl.textContent = "";
+  }
+}
+
 async function loadSupportAudioStatus() {
-  const statusEl = document.getElementById("supportAudioStatus");
-  if (!statusEl) return true;
-  statusEl.textContent = "Lade…";
+  const card = document.getElementById("supportAudioCard");
+  const icon = document.getElementById("supportAudioIcon");
+  const main = document.getElementById("supportAudioMain");
+  const sub = document.getElementById("supportAudioSub");
+  if (!card) return true;
+  main.textContent = "Lade…";
+  sub.textContent = "";
   try {
     const data = await api("/api/guild/" + currentGuildId + "/support/audio");
-    if (data.exists) {
-      statusEl.innerHTML = `✅ Datei hinterlegt: <code style="font-family:var(--mono);background:var(--surface2);padding:1px 5px;border-radius:4px;">${data.filename}</code>`;
-    } else {
-      statusEl.textContent = "Keine Ansage-Datei hinterlegt.";
-    }
+    latestSupportAudioStatus = data;
+    renderFileStatusCard(icon, main, sub, card, data.exists, data.filename);
+    renderOverviewSupportAudio();
   } catch (e) {
-    statusEl.textContent = "Fehler beim Laden: " + e.message;
+    main.textContent = "Fehler beim Laden";
+    sub.textContent = e.message;
   }
   return true;
+}
+
+function renderOverviewSupportAudio() {
+  const card = document.getElementById("ovSupportAudio");
+  if (!card || !latestSupportAudioStatus) return;
+  const icon = card.querySelector(".file-status-icon");
+  const main = card.querySelector(".file-status-text-main");
+  const sub = card.querySelector(".file-status-text-sub");
+  renderFileStatusCard(icon, main, sub, card, latestSupportAudioStatus.exists, latestSupportAudioStatus.filename);
 }
 
 const supportAudioUploadBtn = document.getElementById("supportAudioUploadBtn");
@@ -1076,13 +1269,36 @@ if (supportAudioRemoveBtn) supportAudioRemoveBtn.addEventListener("click", async
   }
 });
 
+function renderSupportChannelsSummary(cfg) {
+  const rows = [
+    ["Warteraum", cfg.waiting_channel_id],
+    ["Benachrichtigung", cfg.notify_channel_id],
+    ["Support-Kanäle", (cfg.support_channels || []).length ? (cfg.support_channels || []).join(", ") : null],
+    ["Overflow-Kategorie", cfg.overflow_category_id],
+  ];
+  const html = rows.map(([label, val]) => `
+    <div class="status-row">
+      <span class="status-row-label">${label}</span>
+      <span class="status-row-value ${val ? "" : "empty"}">
+        ${val ? '<span class="dot dot-green"></span>' + val : '<span class="dot dot-muted"></span>nicht gesetzt'}
+      </span>
+    </div>
+  `).join("");
+  const target1 = document.getElementById("supportChannelsSummary");
+  const target2 = document.getElementById("ovSupportChannels");
+  if (target1) target1.innerHTML = html;
+  if (target2) target2.innerHTML = html;
+}
+
 async function loadSupportChannelConfig() {
   try {
     const cfg = await api("/api/guild/" + currentGuildId + "/support/config");
+    latestSupportChannelConfig = cfg;
     document.getElementById("supportWaitingChannelId").value = cfg.waiting_channel_id || "";
     document.getElementById("supportNotifyChannelId").value = cfg.notify_channel_id || "";
     document.getElementById("supportChannelsList").value = (cfg.support_channels || []).join(", ");
     document.getElementById("supportOverflowCategoryId").value = cfg.overflow_category_id || "";
+    renderSupportChannelsSummary(cfg);
   } catch (e) {}
 }
 
@@ -1090,44 +1306,52 @@ const saveSupportChannelsBtn = document.getElementById("saveSupportChannelsBtn")
 if (saveSupportChannelsBtn) saveSupportChannelsBtn.addEventListener("click", async () => {
   try {
     const support_channels = document.getElementById("supportChannelsList").value.split(",").map(s => s.trim()).filter(Boolean);
+    const payload = {
+      waiting_channel_id: document.getElementById("supportWaitingChannelId").value.trim() || null,
+      notify_channel_id: document.getElementById("supportNotifyChannelId").value.trim() || null,
+      support_channels,
+      overflow_category_id: document.getElementById("supportOverflowCategoryId").value.trim() || null
+    };
     await api("/api/guild/" + currentGuildId + "/support/config", {
       method: "POST",
-      body: JSON.stringify({
-        waiting_channel_id: document.getElementById("supportWaitingChannelId").value.trim() || null,
-        notify_channel_id: document.getElementById("supportNotifyChannelId").value.trim() || null,
-        support_channels,
-        overflow_category_id: document.getElementById("supportOverflowCategoryId").value.trim() || null
-      })
+      body: JSON.stringify(payload)
     });
     showMsg("supportAudioMsg", "Support-Kanäle gespeichert.", true);
+    latestSupportChannelConfig = payload;
+    renderSupportChannelsSummary(payload);
   } catch (e) {
     showMsg("supportAudioMsg", e.message, false);
   }
 });
 
 function renderSupportCases(cases) {
+  latestSupportCases = cases;
   const list = document.getElementById("supportCasesList");
   list.innerHTML = "";
   if (!cases.length) {
     list.innerHTML = '<div class="audit-empty">Keine Support-Fälle mit diesem Filter.</div>';
-    return;
+  } else {
+    cases.forEach(c => {
+      const statusInfo = SUPPORT_STATUS_LABELS[c.status] || { text: c.status, color: "var(--muted)" };
+      const div = document.createElement("div");
+      div.className = "audit-entry";
+      div.style.cursor = "pointer";
+      div.innerHTML = `
+        <div class="audit-header">
+          <span class="audit-action">#${c.case_id}</span>
+          <span style="font-size:11px;font-weight:700;color:${statusInfo.color};font-family:var(--mono);">${statusInfo.text}</span>
+        </div>
+        <span class="audit-who">👤 ${c.user_name}${c.supporter_name ? " · 🛠️ " + c.supporter_name : ""}</span>
+        <span class="audit-details">Erstellt: ${formatSupportTimestamp(c.created_at)}${c.comment_count ? " · 💬 " + c.comment_count : ""}</span>
+      `;
+      div.addEventListener("click", () => openSupportCaseDetail(c.case_id));
+      list.appendChild(div);
+    });
   }
-  cases.forEach(c => {
-    const statusInfo = SUPPORT_STATUS_LABELS[c.status] || { text: c.status, color: "var(--muted)" };
-    const div = document.createElement("div");
-    div.className = "audit-entry";
-    div.style.cursor = "pointer";
-    div.innerHTML = `
-      <div class="audit-header">
-        <span class="audit-action">#${c.case_id}</span>
-        <span style="font-size:11px;font-weight:700;color:${statusInfo.color};font-family:var(--mono);">${statusInfo.text}</span>
-      </div>
-      <span class="audit-who">👤 ${c.user_name}${c.supporter_name ? " · 🛠️ " + c.supporter_name : ""}</span>
-      <span class="audit-details">Erstellt: ${formatSupportTimestamp(c.created_at)}${c.comment_count ? " · 💬 " + c.comment_count : ""}</span>
-    `;
-    div.addEventListener("click", () => openSupportCaseDetail(c.case_id));
-    list.appendChild(div);
-  });
+  if (!currentSupportFilter) {
+    const waiting = cases.filter(c => c.status === "waiting").length;
+    document.getElementById("statSupportWaiting").textContent = waiting;
+  }
 }
 
 async function loadSupportCases() {
@@ -1264,6 +1488,7 @@ async function loadAiVoiceList() {
   try {
     aiVoiceList = await api("/api/guild/" + currentGuildId + "/ai-voice");
     renderAiVoiceList();
+    renderOverviewAiVoice();
   } catch (e) {
     list.innerHTML = '<div class="audit-empty">Fehler beim Laden: ' + e.message + '</div>';
   }
@@ -1273,17 +1498,20 @@ function renderAiVoiceList() {
   const list = document.getElementById("aiVoiceList");
   list.innerHTML = "";
   const editable = currentRank >= 100;
+  document.getElementById("statAiVoice").textContent = aiVoiceList.length;
   if (!aiVoiceList.length) {
     list.innerHTML = '<div class="audit-empty">Noch keine Kategorien angelegt.</div>';
     return;
   }
   aiVoiceList.forEach(entry => {
     const div = document.createElement("div");
-    div.className = "audit-entry";
+    div.className = "aivoice-card";
     div.innerHTML = `
-      <div class="audit-header">
-        <span class="audit-action">${entry.name}</span>
-        <span class="audit-ts">${entry.has_file ? entry.filename : "keine Datei"}</span>
+      <div class="aivoice-card-head">
+        <span class="aivoice-card-name">🎙️ ${entry.name}</span>
+        <span class="aivoice-badge ${entry.has_file ? "on" : "off"}">
+          ${entry.has_file ? "🔊 " + entry.filename : "⚠️ keine Datei"}
+        </span>
       </div>
     `;
 
@@ -1357,6 +1585,23 @@ function renderAiVoiceList() {
     div.appendChild(actions);
     list.appendChild(div);
   });
+}
+
+function renderOverviewAiVoice() {
+  const target = document.getElementById("ovAiVoice");
+  if (!target) return;
+  if (!aiVoiceList.length) {
+    target.innerHTML = '<div class="status-row"><span class="status-row-label">Noch keine Kategorien angelegt.</span></div>';
+    return;
+  }
+  target.innerHTML = aiVoiceList.map(entry => `
+    <div class="status-row">
+      <span class="status-row-label">🎙️ ${entry.name}</span>
+      <span class="status-row-value ${entry.has_file ? "" : "empty"}">
+        ${entry.has_file ? '<span class="dot dot-green"></span>' + entry.filename : '<span class="dot dot-amber"></span>keine Datei'}
+      </span>
+    </div>
+  `).join("");
 }
 
 const aiVoiceCreateBtn = document.getElementById("aiVoiceCreateBtn");
@@ -1514,6 +1759,25 @@ document.getElementById("dmBtn").addEventListener("click", async () => {
     document.getElementById("dmMessage").value = "";
   } catch (e) { showMsg("dmMsg", e.message, false); }
 });
+
+function renderOverviewStats() {
+  if (!currentConfig) return;
+  const features = currentConfig.config.features || {};
+  const keys = Object.keys(features);
+  const onCount = keys.filter(k => features[k]).length;
+  const el = document.getElementById("statModules");
+  if (el) el.innerHTML = onCount + '<span class="stat-num-of"> / ' + keys.length + '</span>';
+}
+
+async function refreshOverview() {
+  renderOverviewStats();
+  await Promise.all([
+    loadSupportAudioStatus(),
+    loadSupportChannelConfig(),
+    loadSupportCases(),
+    loadAiVoiceList()
+  ]).catch(() => {});
+}
 
 async function init() {
   const params = new URLSearchParams(window.location.search);
