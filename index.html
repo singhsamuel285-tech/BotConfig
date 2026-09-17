@@ -1384,16 +1384,9 @@ async function loadFeatureLabels() {
 
 /* ---- Kanal-Namensauflösung: ID -> Klartextname, damit man nicht raten muss ---- */
 async function loadChannelDirectory() {
-  try {
-    const list = await api("/api/guild/" + currentGuildId + "/channels", {}, { silentNotify: true });
-    channelDirectory = {};
-    (list || []).forEach(c => { channelDirectory[String(c.channel_id || c.id)] = c.name; });
-  } catch (e) {
-    // Fällt zurück auf currentConfig.available_channels, falls Endpoint fehlt
-    channelDirectory = {};
-    if (currentConfig && currentConfig.available_channels) {
-      currentConfig.available_channels.forEach(c => { channelDirectory[String(c.channel_id)] = c.name; });
-    }
+  channelDirectory = {};
+  if (currentConfig && currentConfig.available_channels) {
+    currentConfig.available_channels.forEach(c => { channelDirectory[String(c.channel_id)] = c.name; });
   }
 }
 
@@ -1711,6 +1704,11 @@ if (supportAudioUploadBtn) supportAudioUploadBtn.addEventListener("click", async
     return;
   }
   const allowed = [".mp3", ".wav", ".ogg"];
+  const maxUploadSize = 100 * 1024 * 1024;
+  if (file.size > maxUploadSize) {
+    showMsg("supportAudioMsg", "Datei ist zu groß. Maximal 100 MB.", false);
+    return;
+  }
   const lower = file.name.toLowerCase();
   if (!allowed.some(ext => lower.endsWith(ext))) {
     showMsg("supportAudioMsg", "Nur mp3, wav oder ogg erlaubt.", false);
@@ -2034,6 +2032,11 @@ function renderAiVoiceList() {
         return;
       }
       const allowed = [".mp3", ".wav", ".ogg"];
+      const maxUploadSize = 100 * 1024 * 1024;
+      if (file.size > maxUploadSize) {
+        showMsg("aiVoiceMsg", "Datei ist zu groß. Maximal 100 MB.", false);
+        return;
+      }
       const lower = file.name.toLowerCase();
       if (!allowed.some(ext => lower.endsWith(ext))) {
         showMsg("aiVoiceMsg", "Nur mp3, wav oder ogg erlaubt.", false);
@@ -2333,9 +2336,30 @@ async function init() {
     return;
   }
   try {
-    await loadUser();
-    await loadFeatureLabels();
-    await loadGuilds();
+    const bootstrap = await api("/api/bootstrap", {}, { silentNotify: true });
+    currentUser = bootstrap.user;
+    featureLabels = (bootstrap.modules && bootstrap.modules.labels) || {};
+    commandRegistry = (bootstrap.modules && bootstrap.modules.commands) || [];
+    guilds = bootstrap.guilds || [];
+    document.getElementById("userName").textContent = currentUser.username;
+    document.getElementById("userAvatar").src = currentUser.avatar_url || "https://cdn.discordapp.com/embed/avatars/0.png";
+    const sel = document.getElementById("guildSelect");
+    sel.innerHTML = "";
+    guilds.forEach(g => {
+      const opt = document.createElement("option");
+      opt.value = g.guild_id;
+      opt.textContent = g.name;
+      sel.appendChild(opt);
+    });
+    if (guilds.length === 0) {
+      document.getElementById("noAccessView").classList.remove("hidden");
+      document.getElementById("serverSelectCard").classList.add("hidden");
+      document.getElementById("guildArea").classList.add("hidden");
+    } else {
+      currentGuildId = guilds[0].guild_id;
+      sel.value = currentGuildId;
+      await loadGuildArea();
+    }
     document.getElementById("loginView").classList.add("hidden");
     document.getElementById("appView").classList.remove("hidden");
     renderBell();
