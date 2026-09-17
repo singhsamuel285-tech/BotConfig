@@ -616,6 +616,30 @@ tr:hover td{background:rgba(88,101,242,0.045);}
 .toast-detail{color:var(--muted);line-height:1.5;}
 @keyframes toastIn{from{opacity:0;transform:translateX(16px);}to{opacity:1;transform:translateX(0);}}
 @keyframes toastOut{to{opacity:0;transform:translateX(16px);}}
+
+/* ---- Panels (neue, benannte Warteraum-Systeme) ---- */
+.panel-card{
+  border:1px solid var(--border);border-radius:12px;
+  margin-bottom:8px;overflow:hidden;background:rgba(255,255,255,0.015);
+  transition:border-color .15s;
+}
+.panel-card.expanded{border-color:var(--border-hi);}
+.panel-card-head{
+  display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;
+}
+.panel-card-name{font-size:13.5px;font-weight:700;color:var(--text-hi);flex:1;min-width:0;}
+.panel-card-sub{font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:2px;}
+.panel-card-body{
+  display:none;padding:2px 14px 14px;border-top:1px solid var(--border);
+  background:rgba(0,0,0,0.1);
+}
+.panel-card.expanded .panel-card-body{display:block;}
+.panel-badge{
+  font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;
+  font-family:var(--mono);display:inline-flex;align-items:center;flex-shrink:0;
+}
+.panel-badge.on{background:var(--green-dim);color:var(--green);border:1px solid var(--green-mid);}
+.panel-badge.off{background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-mid);}
 </style>
 </head>
 <body>
@@ -722,6 +746,7 @@ tr:hover td{background:rgba(88,101,242,0.045);}
         <button class="tab" data-tab="say">Say</button>
         <button class="tab" data-tab="dm">DM</button>
         <button class="tab" data-tab="support">Support</button>
+        <button class="tab" data-tab="panels">Panels</button>
         <button class="tab" data-tab="aivoice">AI Voice</button>
         <button class="tab" data-tab="audit">Audit Log</button>
         <button class="tab" data-tab="entwickler">Entwickler</button>
@@ -744,6 +769,10 @@ tr:hover td{background:rgba(88,101,242,0.045);}
             <div class="stat-card" data-jump="support">
               <div class="stat-num" id="statSupportWaiting">–</div>
               <div class="stat-label">Support wartend</div>
+            </div>
+            <div class="stat-card" data-jump="panels">
+              <div class="stat-num" id="statPanels">–</div>
+              <div class="stat-label">Panels</div>
             </div>
             <div class="stat-card" data-jump="aivoice">
               <div class="stat-num" id="statAiVoice">–</div>
@@ -768,6 +797,14 @@ tr:hover td{background:rgba(88,101,242,0.045);}
             <button class="quick-nav-btn" data-jump="support">Support öffnen →</button>
           </div>
 
+          <div class="sec">Panels</div>
+          <div id="ovPanels">
+            <div class="status-row"><span class="status-row-label">Lade…</span></div>
+          </div>
+          <div class="quick-nav">
+            <button class="quick-nav-btn" data-jump="panels">Panels öffnen →</button>
+          </div>
+
           <div class="sec">AI Voice</div>
           <div id="ovAiVoice">
             <div class="status-row"><span class="status-row-label">Lade…</span></div>
@@ -783,6 +820,7 @@ tr:hover td{background:rgba(88,101,242,0.045);}
             <button class="quick-nav-btn" data-jump="admins">⭐ Admins</button>
             <button class="quick-nav-btn" data-jump="say">💬 Say</button>
             <button class="quick-nav-btn" data-jump="dm">📨 DM</button>
+            <button class="quick-nav-btn" data-jump="panels">🧩 Panels</button>
             <button class="quick-nav-btn" data-jump="audit">📋 Audit Log</button>
           </div>
         </div>
@@ -935,6 +973,59 @@ tr:hover td{background:rgba(88,101,242,0.045);}
           </div>
         </div>
 
+        <div class="tabpane" id="pane-panels">
+          <p class="card-label">Panels — zusätzliche Warteräume</p>
+          <div id="panelsCasesView" class="hidden">
+            <button class="btn btn-ghost btn-sm" id="panelsBackBtn" style="margin-bottom:10px;">← Zurück zu allen Panels</button>
+            <div style="font-size:13px;font-weight:700;color:var(--text-hi);margin-bottom:10px;" id="panelsCasesTitle"></div>
+
+            <div class="support-filter-row">
+              <button class="support-filter-btn active" data-pstatus="">Alle</button>
+              <button class="support-filter-btn" data-pstatus="waiting">Wartend</button>
+              <button class="support-filter-btn" data-pstatus="claimed">Aktiv</button>
+              <button class="support-filter-btn" data-pstatus="closed">Geschlossen</button>
+              <button class="support-filter-btn" data-pstatus="canceled">Abgebrochen</button>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+              <span style="font-size:12px;color:var(--muted);">Fälle</span>
+              <button class="btn btn-ghost btn-sm" id="refreshPanelCasesBtn">↻ Aktualisieren</button>
+            </div>
+            <div class="audit-list" id="panelCasesList">
+              <div class="audit-empty">Lade…</div>
+            </div>
+          </div>
+
+          <div id="panelsListView">
+            <div id="panelsList">
+              <div class="audit-empty">Lade…</div>
+            </div>
+
+            <div class="sec">Neues Panel erstellen</div>
+            <div class="field">
+              <label>Name</label>
+              <input type="text" id="panelNewName" placeholder="z.B. Bewerbungen">
+            </div>
+            <div class="field">
+              <label>Warteraum-Kanal-ID (Sprachkanal)</label>
+              <input type="text" id="panelNewWaiting" placeholder="Kanal-ID">
+            </div>
+            <div class="field">
+              <label>Benachrichtigungs-Kanal-ID</label>
+              <input type="text" id="panelNewNotify" placeholder="Kanal-ID">
+            </div>
+            <div class="field">
+              <label>Feste Räume (mehrere IDs, kommagetrennt)</label>
+              <input type="text" id="panelNewFesteRaeume" placeholder="123, 456">
+            </div>
+            <div class="field">
+              <label>Kategorie-ID für neue Räume (optional)</label>
+              <input type="text" id="panelNewKategorie" placeholder="Kategorie-ID">
+            </div>
+            <button class="btn btn-green btn-block" id="panelCreateBtn">Panel erstellen</button>
+            <div class="msg" id="panelsMsg"></div>
+          </div>
+        </div>
+
         <div class="tabpane" id="pane-aivoice">
           <p class="card-label">AI-Voice Kategorien</p>
           <div style="display:flex;justify-content:flex-end;margin-bottom:10px;">
@@ -1045,6 +1136,19 @@ tr:hover td{background:rgba(88,101,242,0.045);}
   </div>
 </div>
 
+<div id="panelDetailModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <button class="modal-close" id="panelDetailCloseX">✕</button>
+    <div id="panelDetailBody"></div>
+    <div id="panelDetailActions" style="display:flex;gap:8px;margin-top:14px;"></div>
+    <div class="sec">Kommentar hinzufügen</div>
+    <div class="field">
+      <textarea id="panelCommentText" placeholder="Kommentar…"></textarea>
+    </div>
+    <button class="btn btn-green btn-block" id="panelCommentSendBtn">Senden</button>
+  </div>
+</div>
+
 <script>
 const API_BASE = "https://botconfig.wisp.uno";
 const DISCORD_CLIENT_ID = "1446188210794401883";
@@ -1062,6 +1166,14 @@ let latestSupportChannelConfig = null;
 let latestSupportCases = [];
 let channelDirectory = {};
 let notifications = [];
+
+/* ---- Panels: State ---- */
+let panelsList = [];
+let expandedPanels = new Set();
+let currentPanelId = null;
+let currentPanelFilter = "";
+let openPanelCaseId = null;
+let latestPanelCases = [];
 
 /* ---- Rang-Stufen-System (neu): 0 nichts, 10-20 nur ansehen, 30-70 Dateien hochladen, 70+ Dateien ersetzen, 100 volle Rechte ---- */
 function rankTier(rank) {
@@ -1312,6 +1424,10 @@ function onTabOpened(name) {
     loadSupportAudioStatus();
     loadSupportChannelConfig();
     loadSupportCases();
+  }
+  if (name === "panels") {
+    showPanelsListView();
+    loadPanelsList();
   }
   if (name === "aivoice") loadAiVoiceList();
   if (name === "uebersicht") refreshOverview();
@@ -1665,6 +1781,8 @@ async function loadGuildArea() {
   if (saveSupportChannelsBtnEl) saveSupportChannelsBtnEl.disabled = !editable;
   const aiVoiceCreateBtnEl = document.getElementById("aiVoiceCreateBtn");
   if (aiVoiceCreateBtnEl) aiVoiceCreateBtnEl.disabled = !uploadOk;
+  const panelCreateBtnEl = document.getElementById("panelCreateBtn");
+  if (panelCreateBtnEl) panelCreateBtnEl.disabled = !editable;
   if (editable) await loadAdmins();
   if (currentConfig.config.audit_channel_id) {
     document.getElementById("auditChannelId").value = currentConfig.config.audit_channel_id;
@@ -1910,9 +2028,9 @@ async function loadSupportCases() {
   }
 }
 
-document.querySelectorAll(".support-filter-btn").forEach(btn => {
+document.querySelectorAll(".support-filter-row [data-status]").forEach(btn => {
   btn.addEventListener("click", () => {
-    document.querySelectorAll(".support-filter-btn").forEach(b => b.classList.remove("active"));
+    btn.parentElement.querySelectorAll("[data-status]").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
     currentSupportFilter = btn.dataset.status;
     loadSupportCases();
@@ -2024,6 +2142,443 @@ document.getElementById("supportCommentSendBtn").addEventListener("click", async
     alert(e.message);
   }
 });
+
+/* ===================== PANELS ===================== */
+
+function showPanelsListView() {
+  document.getElementById("panelsListView").classList.remove("hidden");
+  document.getElementById("panelsCasesView").classList.add("hidden");
+  currentPanelId = null;
+}
+
+function showPanelsCasesView(panelId, panelName) {
+  currentPanelId = panelId;
+  currentPanelFilter = "";
+  document.getElementById("panelsListView").classList.add("hidden");
+  document.getElementById("panelsCasesView").classList.remove("hidden");
+  document.getElementById("panelsCasesTitle").textContent = "🧩 Fälle — " + panelName;
+  document.querySelectorAll("#panelsCasesView [data-pstatus]").forEach(b => b.classList.remove("active"));
+  const allBtn = document.querySelector('#panelsCasesView [data-pstatus=""]');
+  if (allBtn) allBtn.classList.add("active");
+  loadPanelCases();
+}
+
+const panelsBackBtnEl = document.getElementById("panelsBackBtn");
+if (panelsBackBtnEl) panelsBackBtnEl.addEventListener("click", () => {
+  showPanelsListView();
+  loadPanelsList();
+});
+
+async function loadPanelsList() {
+  const list = document.getElementById("panelsList");
+  list.innerHTML = '<div class="audit-empty">Lade…</div>';
+  try {
+    panelsList = await api("/api/guild/" + currentGuildId + "/panels", {}, { silentNotify: true });
+    renderPanelsList();
+    renderOverviewPanels();
+  } catch (e) {
+    list.innerHTML = '<div class="audit-empty">Fehler beim Laden: ' + e.message + '</div>';
+  }
+}
+
+function renderPanelsList() {
+  const list = document.getElementById("panelsList");
+  list.innerHTML = "";
+  document.getElementById("statPanels").textContent = panelsList.length;
+  const editable = canEdit(currentRank);
+  const uploadOk = canUpload(currentRank);
+  const replaceOk = canReplace(currentRank);
+  if (!panelsList.length) {
+    list.innerHTML = '<div class="audit-empty">Noch keine Panels angelegt.</div>';
+    return;
+  }
+  panelsList.forEach(panel => {
+    const card = document.createElement("div");
+    card.className = "panel-card" + (expandedPanels.has(panel.id) ? " expanded" : "");
+
+    const head = document.createElement("div");
+    head.className = "panel-card-head";
+    const waitingName = resolveChannelName(panel.waiting_channel_id);
+    const notifyName = resolveChannelName(panel.notify_channel_id);
+    head.innerHTML = `
+      <div class="panel-card-name">🧩 ${panel.name}
+        <div class="panel-card-sub">
+          Warteraum: ${waitingName ? "#" + waitingName : (panel.waiting_channel_id || "nicht gesetzt")}
+          · Benachrichtigung: ${notifyName ? "#" + notifyName : (panel.notify_channel_id || "nicht gesetzt")}
+        </div>
+      </div>
+      <span class="panel-badge ${panel.has_audio ? "on" : "off"}">${panel.has_audio ? "🔊 " + (panel.audio_filename || "Ansage") : "⚠️ keine Ansage"}</span>
+    `;
+    head.addEventListener("click", () => {
+      if (expandedPanels.has(panel.id)) {
+        expandedPanels.delete(panel.id);
+      } else {
+        expandedPanels.add(panel.id);
+      }
+      renderPanelsList();
+    });
+
+    const body = document.createElement("div");
+    body.className = "panel-card-body";
+
+    const editWrap = document.createElement("div");
+    editWrap.innerHTML = `
+      <div class="field">
+        <label>Name</label>
+        <input type="text" class="panel-edit-name" value="${panel.name}">
+      </div>
+      <div class="field">
+        <label>Warteraum-Kanal-ID</label>
+        <input type="text" class="panel-edit-waiting" value="${panel.waiting_channel_id || ""}">
+      </div>
+      <div class="field">
+        <label>Benachrichtigungs-Kanal-ID</label>
+        <input type="text" class="panel-edit-notify" value="${panel.notify_channel_id || ""}">
+      </div>
+      <div class="field">
+        <label>Feste Räume (kommagetrennt)</label>
+        <input type="text" class="panel-edit-feste" value="${(panel.feste_raeume || []).join(", ")}">
+      </div>
+      <div class="field">
+        <label>Kategorie-ID für neue Räume</label>
+        <input type="text" class="panel-edit-kategorie" value="${panel.neue_raeume_kategorie_id || ""}">
+      </div>
+    `;
+    const saveBtn = document.createElement("button");
+    saveBtn.className = "btn btn-green btn-sm";
+    saveBtn.textContent = "Speichern";
+    saveBtn.disabled = !editable;
+    saveBtn.addEventListener("click", async () => {
+      const patch = {
+        name: editWrap.querySelector(".panel-edit-name").value.trim(),
+        waiting_channel_id: editWrap.querySelector(".panel-edit-waiting").value.trim() || null,
+        notify_channel_id: editWrap.querySelector(".panel-edit-notify").value.trim() || null,
+        feste_raeume: editWrap.querySelector(".panel-edit-feste").value.split(",").map(s => s.trim()).filter(Boolean),
+        neue_raeume_kategorie_id: editWrap.querySelector(".panel-edit-kategorie").value.trim() || null,
+      };
+      try {
+        await api("/api/guild/" + currentGuildId + "/panels/" + panel.id, {
+          method: "POST",
+          body: JSON.stringify(patch)
+        }, { notifyOnSuccess: "Panel geändert", notifyDetail: patch.name, notifyIcon: "🧩" });
+        showMsg("panelsMsg", "Panel gespeichert.", true);
+        await loadPanelsList();
+      } catch (e) {
+        showMsg("panelsMsg", e.message, false);
+      }
+    });
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "btn btn-danger btn-sm";
+    deleteBtn.textContent = "Löschen";
+    deleteBtn.disabled = !editable;
+    deleteBtn.addEventListener("click", async () => {
+      try {
+        await api("/api/guild/" + currentGuildId + "/panels/" + panel.id, { method: "DELETE" }, { notifyOnSuccess: "Panel gelöscht", notifyDetail: panel.name, notifyIcon: "🗑️" });
+        showMsg("panelsMsg", "Panel gelöscht.", true);
+        await loadPanelsList();
+      } catch (e) {
+        showMsg("panelsMsg", e.message, false);
+      }
+    });
+
+    const casesBtn = document.createElement("button");
+    casesBtn.className = "btn btn-discord btn-sm";
+    casesBtn.textContent = "Fälle anzeigen";
+    casesBtn.addEventListener("click", () => showPanelsCasesView(panel.id, panel.name));
+
+    const btnRow = document.createElement("div");
+    btnRow.style.cssText = "display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;margin-bottom:14px;";
+    btnRow.appendChild(saveBtn);
+    btnRow.appendChild(deleteBtn);
+    btnRow.appendChild(casesBtn);
+    editWrap.appendChild(btnRow);
+    body.appendChild(editWrap);
+
+    body.appendChild(document.createElement("div")).className = "sec";
+    body.lastChild.textContent = "Ansage-Datei";
+    const audioStatus = document.createElement("div");
+    audioStatus.className = "file-status-card " + (panel.has_audio ? "on" : "off");
+    audioStatus.innerHTML = `
+      <div class="file-status-icon">${panel.has_audio ? "🔊" : "🔈"}</div>
+      <div>
+        <div class="file-status-text-main">${panel.has_audio ? "Ansage aktiv" : "Keine Ansage-Datei hinterlegt"}</div>
+        <div class="file-status-text-sub">${panel.has_audio ? (panel.audio_filename || "") : ""}</div>
+      </div>
+    `;
+    body.appendChild(audioStatus);
+
+    const audioField = document.createElement("div");
+    audioField.className = "field";
+    audioField.innerHTML = `<label>Neue Audio-Datei (mp3, wav, ogg)</label><input type="file" class="panel-audio-file" accept=".mp3,.wav,.ogg">`;
+    body.appendChild(audioField);
+
+    const audioBtnRow = document.createElement("div");
+    audioBtnRow.style.cssText = "display:flex;gap:8px;margin-bottom:10px;";
+    const uploadAudioBtn = document.createElement("button");
+    uploadAudioBtn.className = "btn btn-green btn-sm";
+    uploadAudioBtn.textContent = panel.has_audio ? "Ansage ersetzen" : "Ansage hochladen";
+    const neededRank = panel.has_audio ? replaceOk : uploadOk;
+    uploadAudioBtn.disabled = !neededRank;
+    uploadAudioBtn.addEventListener("click", async () => {
+      const fileInput = audioField.querySelector(".panel-audio-file");
+      const file = fileInput.files[0];
+      if (!file) {
+        showMsg("panelsMsg", "Bitte zuerst eine Datei auswählen.", false);
+        return;
+      }
+      const allowed = [".mp3", ".wav", ".ogg"];
+      const lower = file.name.toLowerCase();
+      if (!allowed.some(ext => lower.endsWith(ext))) {
+        showMsg("panelsMsg", "Nur mp3, wav oder ogg erlaubt.", false);
+        return;
+      }
+      if (file.size > 100 * 1024 * 1024) {
+        showMsg("panelsMsg", "Datei ist zu groß. Maximal 100 MB.", false);
+        return;
+      }
+      try {
+        const formData = new FormData();
+        formData.append("audio", file);
+        await api("/api/guild/" + currentGuildId + "/panels/" + panel.id + "/audio", { method: "POST", body: formData }, { notifyOnSuccess: "Panel-Ansage gespeichert", notifyDetail: panel.name + " · " + file.name, notifyIcon: "🔊" });
+        showMsg("panelsMsg", "Ansage gespeichert.", true);
+        fileInput.value = "";
+        await loadPanelsList();
+      } catch (e) {
+        showMsg("panelsMsg", e.message, false);
+      }
+    });
+    const removeAudioBtn = document.createElement("button");
+    removeAudioBtn.className = "btn btn-danger btn-sm";
+    removeAudioBtn.textContent = "Ansage entfernen";
+    removeAudioBtn.disabled = !replaceOk;
+    removeAudioBtn.addEventListener("click", async () => {
+      try {
+        await api("/api/guild/" + currentGuildId + "/panels/" + panel.id + "/audio", { method: "DELETE" }, { notifyOnSuccess: "Panel-Ansage entfernt", notifyDetail: panel.name, notifyIcon: "🔇" });
+        showMsg("panelsMsg", "Ansage entfernt.", true);
+        await loadPanelsList();
+      } catch (e) {
+        showMsg("panelsMsg", e.message, false);
+      }
+    });
+    audioBtnRow.appendChild(uploadAudioBtn);
+    audioBtnRow.appendChild(removeAudioBtn);
+    body.appendChild(audioBtnRow);
+
+    card.appendChild(head);
+    card.appendChild(body);
+    list.appendChild(card);
+  });
+}
+
+function renderOverviewPanels() {
+  const target = document.getElementById("ovPanels");
+  if (!target) return;
+  if (!panelsList.length) {
+    target.innerHTML = '<div class="status-row"><span class="status-row-label">Noch keine Panels angelegt.</span></div>';
+    return;
+  }
+  target.innerHTML = panelsList.map(p => {
+    const waitingName = resolveChannelName(p.waiting_channel_id);
+    const display = waitingName ? "#" + waitingName : (p.waiting_channel_id || "kein Warteraum");
+    return `
+    <div class="status-row">
+      <span class="status-row-label">🧩 ${p.name}</span>
+      <span class="status-row-value ${p.waiting_channel_id ? "" : "empty"}">
+        ${p.waiting_channel_id ? '<span class="dot dot-green"></span>' + display : '<span class="dot dot-muted"></span>nicht konfiguriert'}
+      </span>
+    </div>
+  `;
+  }).join("");
+}
+
+const panelCreateBtn = document.getElementById("panelCreateBtn");
+if (panelCreateBtn) panelCreateBtn.addEventListener("click", async () => {
+  const name = document.getElementById("panelNewName").value.trim();
+  if (!name) {
+    showMsg("panelsMsg", "Bitte einen Namen eingeben.", false);
+    return;
+  }
+  const feste_raeume = document.getElementById("panelNewFesteRaeume").value.split(",").map(s => s.trim()).filter(Boolean);
+  const payload = {
+    name,
+    waiting_channel_id: document.getElementById("panelNewWaiting").value.trim() || null,
+    notify_channel_id: document.getElementById("panelNewNotify").value.trim() || null,
+    feste_raeume,
+    neue_raeume_kategorie_id: document.getElementById("panelNewKategorie").value.trim() || null,
+  };
+  try {
+    await api("/api/guild/" + currentGuildId + "/panels", {
+      method: "POST",
+      body: JSON.stringify(payload)
+    }, { notifyOnSuccess: "Panel erstellt", notifyDetail: name, notifyIcon: "🧩" });
+    showMsg("panelsMsg", "Panel erstellt.", true);
+    document.getElementById("panelNewName").value = "";
+    document.getElementById("panelNewWaiting").value = "";
+    document.getElementById("panelNewNotify").value = "";
+    document.getElementById("panelNewFesteRaeume").value = "";
+    document.getElementById("panelNewKategorie").value = "";
+    await loadPanelsList();
+  } catch (e) {
+    showMsg("panelsMsg", e.message, false);
+  }
+});
+
+function renderPanelCases(cases) {
+  latestPanelCases = cases;
+  const list = document.getElementById("panelCasesList");
+  list.innerHTML = "";
+  if (!cases.length) {
+    list.innerHTML = '<div class="audit-empty">Keine Fälle mit diesem Filter.</div>';
+    return;
+  }
+  cases.forEach(c => {
+    const statusInfo = SUPPORT_STATUS_LABELS[c.status] || { text: c.status, color: "var(--muted)" };
+    const div = document.createElement("div");
+    div.className = "audit-entry";
+    div.style.cursor = "pointer";
+    div.innerHTML = `
+      <div class="audit-header">
+        <span class="audit-action">#${c.case_id}</span>
+        <span style="font-size:11px;font-weight:700;color:${statusInfo.color};font-family:var(--mono);">${statusInfo.text}</span>
+      </div>
+      <span class="audit-who">👤 ${c.user_name}${c.supporter_name ? " · 🛠️ " + c.supporter_name : ""}</span>
+      <span class="audit-details">Erstellt: ${formatSupportTimestamp(c.created_at)}${c.comment_count ? " · 💬 " + c.comment_count : ""}</span>
+    `;
+    div.addEventListener("click", () => openPanelCaseDetail(c.case_id));
+    list.appendChild(div);
+  });
+}
+
+async function loadPanelCases() {
+  const list = document.getElementById("panelCasesList");
+  if (!list || !currentPanelId) return;
+  list.innerHTML = '<div class="audit-empty">Lade…</div>';
+  try {
+    const path = "/api/guild/" + currentGuildId + "/panels/" + currentPanelId + "/cases" + (currentPanelFilter ? "?status=" + currentPanelFilter : "");
+    const cases = await api(path, {}, { silentNotify: true });
+    renderPanelCases(cases);
+  } catch (e) {
+    list.innerHTML = '<div class="audit-empty">Fehler beim Laden: ' + e.message + '</div>';
+  }
+}
+
+document.querySelectorAll("#panelsCasesView [data-pstatus]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll("#panelsCasesView [data-pstatus]").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    currentPanelFilter = btn.dataset.pstatus;
+    loadPanelCases();
+  });
+});
+
+const refreshPanelCasesBtn = document.getElementById("refreshPanelCasesBtn");
+if (refreshPanelCasesBtn) refreshPanelCasesBtn.addEventListener("click", loadPanelCases);
+
+async function openPanelCaseDetail(caseId) {
+  openPanelCaseId = caseId;
+  const modal = document.getElementById("panelDetailModal");
+  const body = document.getElementById("panelDetailBody");
+  body.innerHTML = '<div class="audit-empty">Lade…</div>';
+  modal.classList.remove("hidden");
+  try {
+    const c = await api("/api/guild/" + currentGuildId + "/panels/" + currentPanelId + "/cases/" + caseId, {}, { silentNotify: true });
+    const statusInfo = SUPPORT_STATUS_LABELS[c.status] || { text: c.status, color: "var(--muted)" };
+    let html = `
+      <div style="margin-bottom:14px;">
+        <div style="font-size:15px;font-weight:800;color:var(--text-hi);">#${c.case_id}</div>
+        <div style="font-size:12px;color:${statusInfo.color};font-weight:700;font-family:var(--mono);margin-top:2px;">${statusInfo.text}</div>
+      </div>
+      <div class="table-wrap" style="margin-bottom:14px;">
+        <table>
+          <tr><td>User</td><td>${c.user_name}</td></tr>
+          <tr><td>Bearbeiter</td><td>${c.supporter_name || "—"}</td></tr>
+          <tr><td>Erstellt</td><td>${formatSupportTimestamp(c.created_at)}</td></tr>
+          <tr><td>Geclaimt</td><td>${formatSupportTimestamp(c.claimed_at)}</td></tr>
+          <tr><td>Geschlossen</td><td>${formatSupportTimestamp(c.closed_at)}</td></tr>
+        </table>
+      </div>
+      <div class="sec">Kommentare</div>
+    `;
+    if (!c.comments || !c.comments.length) {
+      html += '<div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Keine Kommentare vorhanden.</div>';
+    } else {
+      c.comments.forEach(cm => {
+        html += `
+          <div class="audit-entry">
+            <div class="audit-header">
+              <span class="audit-who">${cm.author_name}</span>
+              <span class="audit-ts">${formatSupportTimestamp(cm.at)}</span>
+            </div>
+            <div class="audit-details">${cm.text}</div>
+          </div>
+        `;
+      });
+    }
+    body.innerHTML = html;
+
+    const actions = document.getElementById("panelDetailActions");
+    actions.innerHTML = "";
+    if (canEdit(currentRank)) {
+      if (c.status === "waiting") {
+        const cancelBtn = document.createElement("button");
+        cancelBtn.className = "btn btn-danger btn-sm";
+        cancelBtn.textContent = "Abbrechen";
+        cancelBtn.addEventListener("click", async () => {
+          try {
+            await api("/api/guild/" + currentGuildId + "/panels/" + currentPanelId + "/cases/" + caseId + "/cancel", { method: "POST" }, { notifyOnSuccess: "Fall abgebrochen", notifyDetail: "#" + caseId, notifyIcon: "❌" });
+            closePanelDetail();
+            loadPanelCases();
+          } catch (e) { alert(e.message); }
+        });
+        actions.appendChild(cancelBtn);
+      }
+      if (c.status === "claimed") {
+        const closeBtn = document.createElement("button");
+        closeBtn.className = "btn btn-danger btn-sm";
+        closeBtn.textContent = "Schließen";
+        closeBtn.addEventListener("click", async () => {
+          try {
+            await api("/api/guild/" + currentGuildId + "/panels/" + currentPanelId + "/cases/" + caseId + "/close", { method: "POST" }, { notifyOnSuccess: "Fall geschlossen", notifyDetail: "#" + caseId, notifyIcon: "🔒" });
+            closePanelDetail();
+            loadPanelCases();
+          } catch (e) { alert(e.message); }
+        });
+        actions.appendChild(closeBtn);
+      }
+    }
+  } catch (e) {
+    body.innerHTML = '<div class="audit-empty">Fehler: ' + e.message + '</div>';
+  }
+}
+
+function closePanelDetail() {
+  document.getElementById("panelDetailModal").classList.add("hidden");
+  openPanelCaseId = null;
+}
+
+document.getElementById("panelDetailCloseX").addEventListener("click", closePanelDetail);
+document.getElementById("panelDetailModal").addEventListener("click", (e) => {
+  if (e.target.id === "panelDetailModal") closePanelDetail();
+});
+
+document.getElementById("panelCommentSendBtn").addEventListener("click", async () => {
+  const textEl = document.getElementById("panelCommentText");
+  const text = textEl.value.trim();
+  if (!text || !openPanelCaseId || !currentPanelId) return;
+  try {
+    await api("/api/guild/" + currentGuildId + "/panels/" + currentPanelId + "/cases/" + openPanelCaseId + "/comment", {
+      method: "POST",
+      body: JSON.stringify({ text })
+    }, { notifyOnSuccess: "Kommentar gesendet", notifyDetail: "#" + openPanelCaseId, notifyIcon: "💬" });
+    textEl.value = "";
+    openPanelCaseDetail(openPanelCaseId);
+  } catch (e) {
+    alert(e.message);
+  }
+});
+
+/* ===================== /PANELS ===================== */
 
 async function loadAiVoiceList() {
   const list = document.getElementById("aiVoiceList");
@@ -2230,6 +2785,12 @@ const ACTION_ICONS = {
   "Support-Ansage entfernt":       "🔇",
   "Support-Kanäle geändert":       "🚪",
   "Support-Kommentar (Dashboard)": "💬",
+  "Panel erstellt":                "🧩",
+  "Panel geändert":                "🧩",
+  "Panel gelöscht":                "🗑️",
+  "Panel-Ansage hochgeladen":      "🔊",
+  "Panel-Ansage entfernt":         "🔇",
+  "Panel-Kommentar (Dashboard)":   "💬",
   "AI-Voice Kategorie erstellt":   "🎙️",
   "AI-Voice Datei geändert":       "🎙️",
   "AI-Voice Kategorie gelöscht":   "🗑️",
@@ -2368,6 +2929,7 @@ async function refreshOverview() {
     loadSupportAudioStatus(),
     loadSupportChannelConfig(),
     loadSupportCases(),
+    loadPanelsList(),
     loadAiVoiceList()
   ]).catch(() => {});
 }
