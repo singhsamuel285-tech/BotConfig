@@ -2889,6 +2889,10 @@ document.getElementById("saveChannelBtn").addEventListener("click", async () => 
 });
 
 document.getElementById("saveAdminBtn").addEventListener("click", async () => {
+  if (!isOwner) {
+    showMsg("adminsMsg", "Nur der Owner darf Ränge vergeben oder entfernen.", false);
+    return;
+  }
   try {
     const rankVal = parseInt(document.getElementById("adminRankValue").value.trim());
     await api("/api/guild/" + currentGuildId + "/admins", { method: "POST", body: JSON.stringify({ user_id: document.getElementById("adminUserId").value.trim(), rank: rankVal }) }, { notifyOnSuccess: "Rang gesetzt", notifyDetail: "Rang " + rankVal + " (" + rankTier(rankVal).label + ")", notifyIcon: "⭐" });
@@ -2948,6 +2952,7 @@ async function init() {
   try {
     const bootstrap = await api("/api/bootstrap", {}, { silentNotify: true });
     currentUser = bootstrap.user;
+isOwner = !!currentUser.is_master;
     featureLabels = (bootstrap.modules && bootstrap.modules.labels) || {};
     commandRegistry = (bootstrap.modules && bootstrap.modules.commands) || [];
     mergeBuiltinRegistry();
