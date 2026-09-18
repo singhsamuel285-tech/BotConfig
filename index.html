@@ -1885,6 +1885,9 @@ if (supportAudioUploadBtn) supportAudioUploadBtn.addEventListener("click", async
     showMsg("supportAudioMsg", "Zum Ersetzen einer bestehenden Datei brauchst du Rang 70+.", false);
     return;
   }
+  const originalLabel = supportAudioUploadBtn.textContent;
+  supportAudioUploadBtn.disabled = true;
+  supportAudioUploadBtn.textContent = "Wird hochgeladen…";
   try {
     const formData = new FormData();
     formData.append("audio", file);
@@ -1902,6 +1905,9 @@ if (supportAudioUploadBtn) supportAudioUploadBtn.addEventListener("click", async
     await loadSupportAudioStatus();
   } catch (e) {
     showMsg("supportAudioMsg", e.message, false);
+  } finally {
+    supportAudioUploadBtn.disabled = !canUpload(currentRank);
+    supportAudioUploadBtn.textContent = originalLabel;
   }
 });
 
@@ -2337,14 +2343,20 @@ function renderPanelsList() {
         showMsg("panelsMsg", "Datei ist zu groß. Maximal 100 MB.", false);
         return;
       }
+      const originalLabel = uploadAudioBtn.textContent;
+      uploadAudioBtn.disabled = true;
+      uploadAudioBtn.textContent = "Wird hochgeladen…";
       try {
         const formData = new FormData();
         formData.append("audio", file);
         await api("/api/guild/" + currentGuildId + "/panels/" + panel.id + "/audio", { method: "POST", body: formData }, { notifyOnSuccess: "Panel-Ansage gespeichert", notifyDetail: panel.name + " · " + file.name, notifyIcon: "🔊" });
         showMsg("panelsMsg", "Ansage gespeichert.", true);
         fileInput.value = "";
+        expandedPanels.add(panel.id);
         await loadPanelsList();
       } catch (e) {
+        uploadAudioBtn.disabled = !neededRank;
+        uploadAudioBtn.textContent = originalLabel;
         showMsg("panelsMsg", e.message, false);
       }
     });
@@ -2356,6 +2368,7 @@ function renderPanelsList() {
       try {
         await api("/api/guild/" + currentGuildId + "/panels/" + panel.id + "/audio", { method: "DELETE" }, { notifyOnSuccess: "Panel-Ansage entfernt", notifyDetail: panel.name, notifyIcon: "🔇" });
         showMsg("panelsMsg", "Ansage entfernt.", true);
+        expandedPanels.add(panel.id);
         await loadPanelsList();
       } catch (e) {
         showMsg("panelsMsg", e.message, false);
@@ -2407,6 +2420,9 @@ if (panelCreateBtn) panelCreateBtn.addEventListener("click", async () => {
     feste_raeume,
     neue_raeume_kategorie_id: document.getElementById("panelNewKategorie").value.trim() || null,
   };
+  const originalLabel = panelCreateBtn.textContent;
+  panelCreateBtn.disabled = true;
+  panelCreateBtn.textContent = "Wird erstellt…";
   try {
     await api("/api/guild/" + currentGuildId + "/panels", {
       method: "POST",
@@ -2421,6 +2437,9 @@ if (panelCreateBtn) panelCreateBtn.addEventListener("click", async () => {
     await loadPanelsList();
   } catch (e) {
     showMsg("panelsMsg", e.message, false);
+  } finally {
+    panelCreateBtn.disabled = !canEdit(currentRank);
+    panelCreateBtn.textContent = originalLabel;
   }
 });
 
@@ -2645,6 +2664,9 @@ function renderAiVoiceList() {
         showMsg("aiVoiceMsg", "Nur mp3, wav oder ogg erlaubt.", false);
         return;
       }
+      const originalLabel = uploadBtn.textContent;
+      uploadBtn.disabled = true;
+      uploadBtn.textContent = "Wird gespeichert…";
       try {
         const formData = new FormData();
         formData.append("name", entry.name);
@@ -2653,6 +2675,8 @@ function renderAiVoiceList() {
         showMsg("aiVoiceMsg", "Datei gespeichert.", true);
         await loadAiVoiceList();
       } catch (e) {
+        uploadBtn.disabled = !canDoThis;
+        uploadBtn.textContent = originalLabel;
         showMsg("aiVoiceMsg", e.message, false);
       }
     });
@@ -2745,6 +2769,9 @@ if (aiVoiceCreateBtn) aiVoiceCreateBtn.addEventListener("click", async () => {
     showMsg("aiVoiceMsg", "Nur mp3, wav oder ogg erlaubt.", false);
     return;
   }
+  const originalLabel = aiVoiceCreateBtn.textContent;
+  aiVoiceCreateBtn.disabled = true;
+  aiVoiceCreateBtn.textContent = "Wird erstellt…";
   try {
     const formData = new FormData();
     formData.append("name", name);
@@ -2756,6 +2783,9 @@ if (aiVoiceCreateBtn) aiVoiceCreateBtn.addEventListener("click", async () => {
     await loadAiVoiceList();
   } catch (e) {
     showMsg("aiVoiceMsg", e.message, false);
+  } finally {
+    aiVoiceCreateBtn.disabled = !canUpload(currentRank);
+    aiVoiceCreateBtn.textContent = originalLabel;
   }
 });
 
