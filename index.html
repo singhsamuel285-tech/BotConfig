@@ -1759,9 +1759,8 @@ async function loadGuildArea() {
   const guild = guilds.find(g => g.guild_id === currentGuildId);
   currentRank = guild ? guild.rank : 0;
   renderRankPill(document.getElementById("guildRankBadge"), currentRank);
-  const configPromise = api("/api/guild/" + currentGuildId + "/config", {}, { silentNotify: true });
-  currentConfig = await configPromise;
-  loadChannelDirectory();
+  currentConfig = await api("/api/guild/" + currentGuildId + "/config", {}, { silentNotify: true });
+  await loadChannelDirectory();
   document.getElementById("guildArea").classList.remove("hidden");
   document.getElementById("bellWrap").classList.remove("hidden");
   renderModules();
@@ -1784,7 +1783,7 @@ async function loadGuildArea() {
   if (aiVoiceCreateBtnEl) aiVoiceCreateBtnEl.disabled = !uploadOk;
   const panelCreateBtnEl = document.getElementById("panelCreateBtn");
   if (panelCreateBtnEl) panelCreateBtnEl.disabled = !editable;
-  if (editable) loadAdmins().catch(() => {});
+  if (editable) await loadAdmins();
   if (currentConfig.config.audit_channel_id) {
     document.getElementById("auditChannelId").value = currentConfig.config.audit_channel_id;
     renderResolveHint("resolveAuditChannel", currentConfig.config.audit_channel_id, false);
@@ -2600,40 +2599,15 @@ document.getElementById("panelCommentSendBtn").addEventListener("click", async (
 
 /* ===================== /PANELS ===================== */
 
-let aiVoiceListGuildId = null;
-let aiVoiceListLoadedAt = 0;
-let aiVoiceListPromise = null;
-
-async function loadAiVoiceList(force = false) {
+async function loadAiVoiceList() {
   const list = document.getElementById("aiVoiceList");
-  if (!list) return;
-  const now = Date.now();
-  if (!force && aiVoiceListGuildId === currentGuildId && aiVoiceListLoadedAt && now - aiVoiceListLoadedAt < 2000) {
-    renderAiVoiceList();
-    renderOverviewAiVoice();
-    return;
-  }
-  if (aiVoiceListPromise && aiVoiceListGuildId === currentGuildId) {
-    await aiVoiceListPromise;
-    return;
-  }
-  if (!aiVoiceListLoadedAt || aiVoiceListGuildId !== currentGuildId) {
-    list.innerHTML = '<div class="audit-empty">Lade…</div>';
-  }
-  const guildIdAtStart = currentGuildId;
-  aiVoiceListPromise = api("/api/guild/" + guildIdAtStart + "/ai-voice", {}, { silentNotify: true });
+  list.innerHTML = '<div class="audit-empty">Lade…</div>';
   try {
-    const data = await aiVoiceListPromise;
-    if (guildIdAtStart !== currentGuildId) return;
-    aiVoiceList = data;
-    aiVoiceListGuildId = guildIdAtStart;
-    aiVoiceListLoadedAt = Date.now();
+    aiVoiceList = await api("/api/guild/" + currentGuildId + "/ai-voice", {}, { silentNotify: true });
     renderAiVoiceList();
     renderOverviewAiVoice();
   } catch (e) {
-    if (guildIdAtStart === currentGuildId) list.innerHTML = '<div class="audit-empty">Fehler beim Laden: ' + e.message + '</div>';
-  } finally {
-    aiVoiceListPromise = null;
+    list.innerHTML = '<div class="audit-empty">Fehler beim Laden: ' + e.message + '</div>';
   }
 }
 
@@ -2699,7 +2673,7 @@ function renderAiVoiceList() {
         formData.append("audio", file);
         await api("/api/guild/" + currentGuildId + "/ai-voice", { method: "POST", body: formData }, { notifyOnSuccess: needsReplace ? "AI-Voice Datei ersetzt" : "AI-Voice Datei gesetzt", notifyDetail: entry.name + " · " + file.name, notifyIcon: "🎙️" });
         showMsg("aiVoiceMsg", "Datei gespeichert.", true);
-        await loadAiVoiceList(true);
+        await loadAiVoiceList();
       } catch (e) {
         uploadBtn.disabled = !canDoThis;
         uploadBtn.textContent = originalLabel;
@@ -2712,19 +2686,11 @@ function renderAiVoiceList() {
     playBtn.textContent = "▶ Abspielen";
     playBtn.disabled = !entry.has_file;
     playBtn.addEventListener("click", async () => {
-      if (playBtn.disabled) return;
-      const originalLabel = playBtn.textContent;
-      playBtn.disabled = true;
-      playBtn.textContent = "▶ Startet…";
-      showMsg("aiVoiceMsg", "Ansage wird sofort gestartet…", true);
       try {
         await api("/api/guild/" + currentGuildId + "/ai-voice/" + encodeURIComponent(entry.name) + "/play", { method: "POST" }, { notifyOnSuccess: "AI-Voice abgespielt", notifyDetail: entry.name, notifyIcon: "🔊" });
-        showMsg("aiVoiceMsg", "🔊 Ansage läuft.", true);
+        showMsg("aiVoiceMsg", "Wird abgespielt.", true);
       } catch (e) {
         showMsg("aiVoiceMsg", e.message, false);
-      } finally {
-        playBtn.disabled = !entry.has_file;
-        playBtn.textContent = originalLabel;
       }
     });
 
@@ -2751,7 +2717,7 @@ function renderAiVoiceList() {
       try {
         await api("/api/guild/" + currentGuildId + "/ai-voice/" + encodeURIComponent(entry.name), { method: "DELETE" }, { notifyOnSuccess: "AI-Voice Kategorie gelöscht", notifyDetail: entry.name, notifyIcon: "🗑️" });
         showMsg("aiVoiceMsg", "Kategorie gelöscht.", true);
-        await loadAiVoiceList(true);
+        await loadAiVoiceList();
       } catch (e) {
         showMsg("aiVoiceMsg", e.message, false);
       }
