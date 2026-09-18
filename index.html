@@ -748,7 +748,6 @@ tr:hover td{background:rgba(88,101,242,0.045);}
         <button class="tab" data-tab="support">Support</button>
         <button class="tab" data-tab="panels">Panels</button>
         <button class="tab" data-tab="aivoice">AI Voice</button>
-        <button class="tab" data-tab="medien">🎬 Medien / Bildschirm</button>
         <button class="tab" data-tab="audit">Audit Log</button>
         <button class="tab" data-tab="entwickler">Entwickler</button>
       </div>
@@ -1046,35 +1045,6 @@ tr:hover td{background:rgba(88,101,242,0.045);}
           </div>
           <button class="btn btn-green btn-block" id="aiVoiceCreateBtn">Kategorie erstellen</button>
           <div class="msg" id="aiVoiceMsg"></div>
-        </div>
-
-        <div class="tabpane" id="pane-medien">
-          <p class="card-label">🎬 Medien / Bildschirm</p>
-          <div class="audit-channel-hint">
-            MP4-Dateien werden hier gespeichert. <b>Wichtig:</b> Ein Discord-Bot kann über die offizielle Discord-Bot-Schnittstelle keinen echten Go-Live-/Bildschirm-Stream senden. Die MP4 kann aber direkt über den Bot im verbundenen Sprachkanal abgespielt werden; die Website dient zusätzlich als Medienverwaltung.
-          </div>
-          <div class="sec">Bot in Sprachkanal setzen</div>
-          <div class="field">
-            <label>Sprach-/Stage-Kanal-ID</label>
-            <div style="display:flex;gap:8px;">
-              <input type="text" id="mediaVoiceChannelId" placeholder="Kanal-ID">
-              <button class="btn btn-green btn-sm" id="mediaVoiceJoinBtn">🔊 Bot beitreten lassen</button>
-            </div>
-          </div>
-          <div class="msg" id="mediaVoiceMsg"></div>
-          <div class="sec">MP4-Dateien</div>
-          <div id="mediaList" class="aivoice-grid"><div class="audit-empty">Lade…</div></div>
-          <div class="sec">Neue Datei</div>
-          <div class="field">
-            <label>Name / Kategorie</label>
-            <input type="text" id="mediaNewName" placeholder="z.B. Intro">
-          </div>
-          <div class="field">
-            <label>MP4-Datei (max. 100 MB)</label>
-            <input type="file" id="mediaNewFile" accept="video/mp4,.mp4">
-          </div>
-          <button class="btn btn-green btn-block" id="mediaCreateBtn">MP4 hochladen</button>
-          <div class="msg" id="mediaMsg"></div>
         </div>
 
         <div class="tabpane" id="pane-audit">
@@ -1460,7 +1430,6 @@ function onTabOpened(name) {
     loadPanelsList();
   }
   if (name === "aivoice") loadAiVoiceList();
-  if (name === "medien") loadMediaList();
   if (name === "uebersicht") refreshOverview();
 }
 
@@ -2629,78 +2598,6 @@ document.getElementById("panelCommentSendBtn").addEventListener("click", async (
 });
 
 /* ===================== /PANELS ===================== */
-
-let mediaList = [];
-
-async function loadMediaList() {
-  const list = document.getElementById("mediaList");
-  if (!list || !currentGuildId) return;
-  try {
-    mediaList = await api("/api/guild/" + currentGuildId + "/media", {}, { silentNotify: true });
-    renderMediaList();
-  } catch (e) {
-    list.innerHTML = '<div class="audit-empty">Medien konnten nicht geladen werden.</div>';
-  }
-}
-
-function renderMediaList() {
-  const list = document.getElementById("mediaList");
-  if (!list) return;
-  if (!mediaList.length) {
-    list.innerHTML = '<div class="audit-empty">Noch keine MP4-Dateien vorhanden.</div>';
-    return;
-  }
-  list.innerHTML = "";
-  mediaList.forEach(entry => {
-    const div = document.createElement("div");
-    div.className = "aivoice-card";
-    div.innerHTML = '<div class="aivoice-card-head"><span class="aivoice-card-name">🎬 ' + escapeHtml(entry.name) + '</span><span class="aivoice-badge on">MP4</span></div><div style="font-size:12px;opacity:.75;margin-top:5px;">' + escapeHtml(entry.filename || "") + ' · ' + formatBytes(entry.size || 0) + '</div>';
-    const actions = document.createElement("div");
-    actions.className = "aivoice-actions";
-    const play = document.createElement("button");
-    play.className = "btn btn-green btn-sm";
-    play.textContent = "▶ Abspielen";
-    play.addEventListener("click", async () => {
-      const old = play.textContent; play.disabled = true; play.textContent = "Startet…";
-      try { await api("/api/guild/" + currentGuildId + "/media/" + encodeURIComponent(entry.name) + "/play", { method: "POST" }, { notifyOnSuccess: "MP4 gestartet", notifyDetail: entry.name, notifyIcon: "🎬" }); showMsg("mediaMsg", "MP4 wird sofort abgespielt.", true); } catch(e) { showMsg("mediaMsg", e.message, false); } finally { play.disabled = false; play.textContent = old; }
-    });
-    const del = document.createElement("button");
-    del.className = "btn btn-danger btn-sm";
-    del.textContent = "🗑 Löschen";
-    del.addEventListener("click", async () => {
-      if (!confirm("MP4-Datei '" + entry.name + "' löschen?")) return;
-      try { await api("/api/guild/" + currentGuildId + "/media/" + encodeURIComponent(entry.name), { method: "DELETE" }, { notifyOnSuccess: "MP4 gelöscht", notifyDetail: entry.name, notifyIcon: "🗑️" }); await loadMediaList(); } catch(e) { showMsg("mediaMsg", e.message, false); }
-    });
-    actions.append(play, del); div.appendChild(actions); list.appendChild(div);
-  });
-}
-
-function formatBytes(n) {
-  if (!n) return "0 B";
-  const u = ["B","KB","MB","GB"]; let i = 0, v = n;
-  while (v >= 1024 && i < u.length - 1) { v /= 1024; i++; }
-  return v.toFixed(i ? 1 : 0) + " " + u[i];
-}
-
-const mediaCreateBtn = document.getElementById("mediaCreateBtn");
-if (mediaCreateBtn) mediaCreateBtn.addEventListener("click", async () => {
-  const name = document.getElementById("mediaNewName").value.trim();
-  const file = document.getElementById("mediaNewFile").files[0];
-  if (!name || !file) { showMsg("mediaMsg", "Name und MP4-Datei auswählen.", false); return; }
-  if (!file.name.toLowerCase().endsWith(".mp4")) { showMsg("mediaMsg", "Nur MP4-Dateien erlaubt.", false); return; }
-  if (file.size > 100 * 1024 * 1024) { showMsg("mediaMsg", "Maximal 100 MB.", false); return; }
-  const fd = new FormData(); fd.append("name", name); fd.append("media", file);
-  const old = mediaCreateBtn.textContent; mediaCreateBtn.disabled = true; mediaCreateBtn.textContent = "Upload läuft…";
-  try { await api("/api/guild/" + currentGuildId + "/media", { method: "POST", body: fd }, { notifyOnSuccess: "MP4 gespeichert", notifyDetail: name, notifyIcon: "🎬" }); document.getElementById("mediaNewName").value = ""; document.getElementById("mediaNewFile").value = ""; showMsg("mediaMsg", "MP4 gespeichert.", true); await loadMediaList(); } catch(e) { showMsg("mediaMsg", e.message, false); } finally { mediaCreateBtn.disabled = false; mediaCreateBtn.textContent = old; }
-});
-
-const mediaVoiceJoinBtn = document.getElementById("mediaVoiceJoinBtn");
-if (mediaVoiceJoinBtn) mediaVoiceJoinBtn.addEventListener("click", async () => {
-  const channelId = document.getElementById("mediaVoiceChannelId").value.trim();
-  if (!channelId) { showMsg("mediaVoiceMsg", "Kanal-ID eingeben.", false); return; }
-  const old = mediaVoiceJoinBtn.textContent; mediaVoiceJoinBtn.disabled = true; mediaVoiceJoinBtn.textContent = "Verbinde…";
-  try { const r = await api("/api/guild/" + currentGuildId + "/voice/join", { method: "POST", body: JSON.stringify({ channel_id: channelId }) }, { notifyOnSuccess: "Bot verbunden", notifyDetail: r.channel_name || channelId, notifyIcon: "🔊" }); showMsg("mediaVoiceMsg", "Bot ist jetzt im Sprachkanal.", true); } catch(e) { showMsg("mediaVoiceMsg", e.message, false); } finally { mediaVoiceJoinBtn.disabled = false; mediaVoiceJoinBtn.textContent = old; }
-});
 
 async function loadAiVoiceList() {
   const list = document.getElementById("aiVoiceList");
