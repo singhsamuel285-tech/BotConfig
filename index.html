@@ -1410,8 +1410,20 @@ function jumpToTab(name) {
   onTabOpened(name);
 }
 
+async function reloadModuleConfig() {
+  const guildId = currentGuildId;
+  try {
+    const cfg = await api("/api/guild/" + guildId + "/config", {}, { silentNotify: true });
+    if (guildId !== currentGuildId) return;
+    currentConfig = cfg;
+    renderModules();
+    renderOverviewStats();
+  } catch (e) {}
+}
+
 function onTabOpened(name) {
   if (!currentGuildId) return;
+  if (name === "module") reloadModuleConfig();
   if (name === "audit") loadAuditLog();
   if (name === "support") {
     loadSupportAudioStatus();
@@ -1504,11 +1516,17 @@ function bindResolveLive(inputId, hintId, multi) {
   input.addEventListener("input", () => renderResolveHint(hintId, input.value, multi));
 }
 
-/* ---- Module ---- */
 const BUILTIN_MODULE_LABELS = {
   rj: "🏁 RJ",
   event: "🎉 Events",
-  lostopf: "🎟️ Lostopf"
+  lostopf: "🎟️ Lostopf",
+  security: "🛡️ Security",
+  say_dm: "💬 Say & DM",
+  account_sync: "🔄 Account-Sync",
+  fraktion: "🔰 Fraktionen",
+  teamliste: "👑 Teamliste",
+  rp: "🎭 RP",
+  ai_voice: "🎙️ AI Voice"
 };
 
 const BUILTIN_COMMANDS = [
@@ -1537,7 +1555,41 @@ const BUILTIN_COMMANDS = [
   ["lostopf","lostopf_status","/lostopf_status"],
   ["lostopf","lostopf_wiederherstellen_manuell","/lostopf_wiederherstellen_manuell"],
   ["lostopf","lostopf_entfernen","/lostopf_entfernen"],
-  ["lostopf","lostopf_liste","/lostopf_liste"]
+  ["lostopf","lostopf_liste","/lostopf_liste"],
+   ["security","ban","/ban"],
+  ["security","kick","/kick"],
+  ["security","timeout","/timeout"],
+  ["security","security_backup","/security backup"],
+  ["security","security_backups","/security backups"],
+  ["security","security_restore","/security restore"],
+  ["security","security_lockdown","/security lockdown"],
+  ["security","security_bot_whitelist","/security bot_whitelist"],
+  ["security","security_bot_whitelist_remove","/security bot_whitelist_remove"],
+  ["security","security_authorize_reinvite_alle","/security authorize_reinvite_alle"],
+  ["say_dm","say","/say"],
+  ["say_dm","dm","/dm"],
+  ["account_sync","serveradd","/serveradd"],
+  ["account_sync","reinvite","/reinvite"],
+  ["fraktion","frak_kategorien_add","/frak kategorien_add"],
+  ["fraktion","frak_add","/frak add"],
+  ["fraktion","frak_edit","/frak edit"],
+  ["fraktion","frak_delete","/frak delete"],
+  ["fraktion","frak_info","/frak info"],
+  ["fraktion","frak_liste","/frak liste"],
+  ["fraktion","fraktion_warn","/fraktion_warn"],
+  ["fraktion","fraktion_warn_remove","/fraktion_warn_remove"],
+  ["teamliste","team_liste","/team liste"],
+  ["teamliste","team_refresh","/team refresh"],
+  ["rp","rp_kanal","/rp kanal"],
+  ["rp","rp_start","/rp start"],
+  ["rp","rp_stop","/rp stop"],
+  ["rp","rp_time","/rp time"],
+  ["rp","rp_an","/rp an"],
+  ["rp","rp_aus","/rp aus"],
+  ["ai_voice","voice_join","/voice join"],
+  ["ai_voice","voice_leave","/voice leave"],
+  ["ai_voice","bot_say","/bot say"],
+  ["ai_voice","bot_stop","/bot stop"]
 ];
 
 function mergeBuiltinRegistry() {
@@ -1638,7 +1690,7 @@ function renderModules() {
         moduleInput.checked = !nowOn;
         group.classList.toggle("module-off", nowOn);
         group.querySelectorAll(".command-toggle-input").forEach(inp => {
-          inp.disabled = nowOn ? false : true;
+                    inp.disabled = nowOn;
           if (!editable) inp.disabled = true;
         });
         showMsg("moduleMsg", e.message, false);
