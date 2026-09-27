@@ -255,6 +255,9 @@ select,input[type=text],input[type=file],textarea{
 }
 select:focus,input:focus,textarea:focus{border-color:var(--dc);box-shadow:0 0 0 3px var(--dc-dim);}
 textarea{resize:vertical;min-height:88px;}
+select[multiple]{min-height:104px;padding:6px;}
+select[multiple] option{padding:6px 8px;border-radius:6px;}
+.field-hint{font-size:10.5px;color:var(--muted);margin-top:3px;font-family:var(--mono);}
 
 /* ---- Rang-Badges ---- */
 .rank-pill{
@@ -334,6 +337,13 @@ textarea{resize:vertical;min-height:88px;}
 .module-title-wrap{flex:1;min-width:0;}
 .module-title{font-size:13px;font-weight:700;color:var(--text-hi);}
 .module-count{font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:1px;}
+
+.module-status-tag{
+  font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;
+  font-family:var(--mono);flex-shrink:0;margin-right:4px;
+}
+.module-status-tag.on{background:var(--green-dim);color:var(--green);border:1px solid var(--green-mid);}
+.module-status-tag.off{background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-mid);}
 
 .module-commands{
   display:none;
@@ -929,24 +939,22 @@ tr:hover td{background:rgba(88,101,242,0.045);}
 
           <div class="sec">Kanäle bearbeiten</div>
           <div class="field">
-            <label>Warteraum-Kanal-ID</label>
-            <input type="text" id="supportWaitingChannelId" placeholder="Kanal-ID">
-            <div class="resolve-hint" id="resolveWaiting"></div>
+            <label>Warteraum (Sprachkanal)</label>
+            <select id="supportWaitingChannelSelect"></select>
+            <div class="field-hint">Hier joinen Nutzer, um einen Support-Fall zu eröffnen.</div>
           </div>
           <div class="field">
-            <label>Benachrichtigungs-Kanal-ID</label>
-            <input type="text" id="supportNotifyChannelId" placeholder="Kanal-ID">
-            <div class="resolve-hint" id="resolveNotify"></div>
+            <label>Benachrichtigungs-Kanal (Textkanal)</label>
+            <select id="supportNotifyChannelSelect"></select>
           </div>
           <div class="field">
-            <label>Support-Kanäle (mehrere IDs, kommagetrennt)</label>
-            <input type="text" id="supportChannelsList" placeholder="123, 456, 789">
-            <div class="resolve-hint" id="resolveList"></div>
+            <label>Feste Support-Räume (Sprachkanäle, Mehrfachauswahl)</label>
+            <select id="supportChannelsMultiSelect" multiple></select>
+            <div class="field-hint">Strg/Cmd gedrückt halten für Mehrfachauswahl.</div>
           </div>
           <div class="field">
-            <label>Overflow-Kategorie-ID</label>
-            <input type="text" id="supportOverflowCategoryId" placeholder="Kategorie-ID">
-            <div class="resolve-hint" id="resolveOverflow"></div>
+            <label>Overflow-Kategorie (für automatisch neue Räume)</label>
+            <select id="supportOverflowCategorySelect"></select>
           </div>
           <button class="btn btn-green btn-block" id="saveSupportChannelsBtn">Support-Kanäle speichern</button>
 
@@ -1000,20 +1008,20 @@ tr:hover td{background:rgba(88,101,242,0.045);}
               <input type="text" id="panelNewName" placeholder="z.B. Bewerbungen">
             </div>
             <div class="field">
-              <label>Warteraum-Kanal-ID (Sprachkanal)</label>
-              <input type="text" id="panelNewWaiting" placeholder="Kanal-ID">
+              <label>Warteraum (Sprachkanal)</label>
+              <select id="panelNewWaitingSelect"></select>
             </div>
             <div class="field">
-              <label>Benachrichtigungs-Kanal-ID</label>
-              <input type="text" id="panelNewNotify" placeholder="Kanal-ID">
+              <label>Benachrichtigungs-Kanal (Textkanal)</label>
+              <select id="panelNewNotifySelect"></select>
             </div>
             <div class="field">
-              <label>Feste Räume (mehrere IDs, kommagetrennt)</label>
-              <input type="text" id="panelNewFesteRaeume" placeholder="123, 456">
+              <label>Feste Räume (Sprachkanäle, Mehrfachauswahl)</label>
+              <select id="panelNewFesteRaeumeSelect" multiple></select>
             </div>
             <div class="field">
-              <label>Kategorie-ID für neue Räume (optional)</label>
-              <input type="text" id="panelNewKategorie" placeholder="Kategorie-ID">
+              <label>Kategorie für neue Räume (optional)</label>
+              <select id="panelNewKategorieSelect"></select>
             </div>
             <button class="btn btn-green btn-block" id="panelCreateBtn">Panel erstellen</button>
             <div class="msg" id="panelsMsg"></div>
@@ -1044,15 +1052,14 @@ tr:hover td{background:rgba(88,101,242,0.045);}
         <div class="tabpane" id="pane-audit">
           <p class="card-label">Audit Log</p>
           <div class="audit-channel-hint">
-            💡 Damit der Bot Aktionen auch direkt in einen Discord-Kanal sendet, trage unten die Kanal-ID ein und speichere. Aktionen über diese Website werden im Log mit <span class="audit-source-web">🌐 Website</span> markiert, Aktionen über Discord-Befehle mit <span class="audit-source-bot">🤖 Bot</span>.
+            💡 Damit der Bot Aktionen auch direkt in einen Discord-Kanal sendet, wähle unten den Kanal aus und speichere. Aktionen über diese Website werden im Log mit <span class="audit-source-web">🌐 Website</span> markiert, Aktionen über Discord-Befehle mit <span class="audit-source-bot">🤖 Bot</span>.
           </div>
           <div class="field" style="margin-bottom:14px;">
-            <label>Audit-Kanal-ID (optional)</label>
+            <label>Audit-Kanal (optional)</label>
             <div style="display:flex;gap:8px;">
-              <input type="text" id="auditChannelId" placeholder="Kanal-ID eingeben…" style="flex:1;">
+              <select id="auditChannelSelect" style="flex:1;"></select>
               <button class="btn btn-green btn-sm" id="saveAuditChannelBtn">Speichern</button>
             </div>
-            <div class="resolve-hint" id="resolveAuditChannel"></div>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
             <span style="font-size:12px;color:var(--muted);">Letzte 100 Aktionen</span>
@@ -1170,6 +1177,61 @@ let currentPanelId = null;
 let currentPanelFilter = "";
 let openPanelCaseId = null;
 let latestPanelCases = [];
+
+/* ---- Kanaltypen: Discord-Backend liefert für jeden Kanal ein "type"-Feld
+   (str(discord.ChannelType) → "text", "voice", "stage_voice", "category", "news", ...).
+   Diese Listen legen fest, welche Typen in welchem Dropdown erlaubt sind. ---- */
+const VOICE_TYPES = ["voice", "stage_voice"];
+const TEXT_TYPES = ["text", "news"];
+const CATEGORY_TYPES = ["category"];
+
+function getChannelsByType(types) {
+  const list = (currentConfig && currentConfig.available_channels) || [];
+  return list.filter(c => types.includes(c.type));
+}
+
+function channelTypePrefix(types) {
+  if (types === VOICE_TYPES) return "🔊 ";
+  if (types === CATEGORY_TYPES) return "📁 ";
+  return "#";
+}
+
+/* Baut <option>-HTML für ein <select>, optional mit "— keiner —"-Leereintrag,
+   und markiert selectedValue als ausgewählt. Fällt der gespeicherte Wert nicht
+   unter die bekannten Kanäle (z.B. Kanal gelöscht), wird er trotzdem als Option
+   angezeigt, damit nichts unsichtbar verloren geht. */
+function buildChannelOptions(types, selectedValue, includeEmpty, emptyLabel) {
+  let html = "";
+  if (includeEmpty) html += '<option value="">' + escapeHtml(emptyLabel || "— keiner —") + '</option>';
+  const prefix = channelTypePrefix(types);
+  const items = getChannelsByType(types);
+  const known = new Set(items.map(c => String(c.channel_id)));
+  items.forEach(c => {
+    const sel = String(c.channel_id) === String(selectedValue || "") ? " selected" : "";
+    html += '<option value="' + escapeHtml(c.channel_id) + '"' + sel + '>' + prefix + escapeHtml(c.name) + '</option>';
+  });
+  if (selectedValue && !known.has(String(selectedValue))) {
+    html += '<option value="' + escapeHtml(selectedValue) + '" selected>⚠️ Unbekannter Kanal (' + escapeHtml(selectedValue) + ')</option>';
+  }
+  return html;
+}
+
+function buildChannelMultiOptions(types, selectedValues) {
+  const prefix = channelTypePrefix(types);
+  const items = getChannelsByType(types);
+  const selectedSet = new Set((selectedValues || []).map(String));
+  const known = new Set(items.map(c => String(c.channel_id)));
+  let html = items.map(c => {
+    const sel = selectedSet.has(String(c.channel_id)) ? " selected" : "";
+    return '<option value="' + escapeHtml(c.channel_id) + '"' + sel + '>' + prefix + escapeHtml(c.name) + '</option>';
+  }).join("");
+  (selectedValues || []).forEach(v => {
+    if (!known.has(String(v))) {
+      html += '<option value="' + escapeHtml(v) + '" selected>⚠️ Unbekannter Kanal (' + escapeHtml(v) + ')</option>';
+    }
+  });
+  return html;
+}
 
 /* ---- Rang-Stufen: 0 nichts, 10-20 ansehen, 30+ hochladen, 70+ ersetzen, 100 volle Rechte ---- */
 function rankTier(rank) {
@@ -1468,7 +1530,7 @@ async function exchangeCode(code) {
   history.replaceState({}, "", REDIRECT_URI);
 }
 
-/* ---- Kanal-Namensauflösung ---- */
+/* ---- Kanal-Namensauflösung (für Anzeige in Zusammenfassungen/Listen) ---- */
 function loadChannelDirectory() {
   channelDirectory = {};
   if (currentConfig && currentConfig.available_channels) {
@@ -1479,41 +1541,6 @@ function loadChannelDirectory() {
 function resolveChannelName(id) {
   if (!id) return null;
   return channelDirectory[String(id).trim()] || null;
-}
-
-function renderResolveHint(elId, value, multi) {
-  const el = document.getElementById(elId);
-  if (!el) return;
-  if (!value) { el.textContent = ""; el.className = "resolve-hint"; return; }
-  if (multi) {
-    const ids = String(value).split(",").map(s => s.trim()).filter(Boolean);
-    const names = ids.map(id => resolveChannelName(id));
-    if (names.every(n => n)) {
-      el.className = "resolve-hint ok";
-      el.innerHTML = "✓ " + names.map(n => '<span class="channel-name-tag">#' + escapeHtml(n) + '</span>').join(" ");
-    } else if (names.some(n => n)) {
-      el.className = "resolve-hint";
-      el.innerHTML = names.map((n, i) => n ? '<span class="channel-name-tag">#' + escapeHtml(n) + '</span>' : '<span style="color:var(--muted)">' + escapeHtml(ids[i]) + " (unbekannt)</span>").join(" ");
-    } else {
-      el.className = "resolve-hint err";
-      el.textContent = "Kanal-Name konnte nicht ermittelt werden.";
-    }
-    return;
-  }
-  const name = resolveChannelName(value);
-  if (name) {
-    el.className = "resolve-hint ok";
-    el.innerHTML = '✓ Kanal gefunden: <span class="channel-name-tag">#' + escapeHtml(name) + '</span>';
-  } else {
-    el.className = "resolve-hint err";
-    el.textContent = "Kein Kanal mit dieser ID gefunden.";
-  }
-}
-
-function bindResolveLive(inputId, hintId, multi) {
-  const input = document.getElementById(inputId);
-  if (!input) return;
-  input.addEventListener("input", () => renderResolveHint(hintId, input.value, multi));
 }
 
 const BUILTIN_MODULE_LABELS = {
@@ -1659,9 +1686,15 @@ function renderModules() {
     titleWrap.appendChild(title);
     titleWrap.appendChild(count);
 
+    /* Eindeutiger, sofort sichtbarer Status-Tag zusätzlich zum Schalter */
+    const statusTag = document.createElement("span");
+    statusTag.className = "module-status-tag " + (isOn ? "on" : "off");
+    statusTag.textContent = isOn ? "AN" : "AUS";
+
     const toggleWrap = document.createElement("div");
     toggleWrap.className = "toggle-row";
     toggleWrap.style.flex = "0 0 auto";
+    toggleWrap.style.gap = "8px";
     const switchWrap = document.createElement("label");
     switchWrap.className = "switch";
     const moduleInput = document.createElement("input");
@@ -1672,6 +1705,8 @@ function renderModules() {
       const nowOn = moduleInput.checked;
       /* Sofort sichtbar umschalten (optimistisch), bei Fehler wird zurückgesetzt */
       group.classList.toggle("module-off", !nowOn);
+      statusTag.className = "module-status-tag " + (nowOn ? "on" : "off");
+      statusTag.textContent = nowOn ? "AN" : "AUS";
       group.querySelectorAll(".command-toggle-input").forEach(inp => {
         inp.disabled = !nowOn || !editable;
       });
@@ -1689,6 +1724,8 @@ function renderModules() {
       } catch (e) {
         moduleInput.checked = !nowOn;
         group.classList.toggle("module-off", nowOn);
+        statusTag.className = "module-status-tag " + (!nowOn ? "on" : "off");
+        statusTag.textContent = !nowOn ? "AN" : "AUS";
         group.querySelectorAll(".command-toggle-input").forEach(inp => {
                     inp.disabled = nowOn;
           if (!editable) inp.disabled = true;
@@ -1700,6 +1737,7 @@ function renderModules() {
     slider.className = "slider";
     switchWrap.appendChild(moduleInput);
     switchWrap.appendChild(slider);
+    toggleWrap.appendChild(statusTag);
     toggleWrap.appendChild(switchWrap);
 
     header.appendChild(expandBtn);
@@ -1721,12 +1759,17 @@ function renderModules() {
         const label = document.createElement("span");
         label.className = "command-label";
         label.textContent = cmd.label;
+        const cmdOn = commandsCfg[cmd.key] !== false;
+        const cStatus = document.createElement("span");
+        cStatus.className = "module-status-tag " + (cmdOn ? "on" : "off");
+        cStatus.style.marginRight = "6px";
+        cStatus.textContent = cmdOn ? "AN" : "AUS";
         const cSwitchWrap = document.createElement("label");
         cSwitchWrap.className = "switch switch-sm";
         const cInput = document.createElement("input");
         cInput.type = "checkbox";
         cInput.className = "command-toggle-input";
-        cInput.checked = commandsCfg[cmd.key] !== false;
+        cInput.checked = cmdOn;
         cInput.disabled = !isOn || !editable;
         cInput.addEventListener("change", async () => {
           const nowChecked = cInput.checked;
@@ -1736,12 +1779,16 @@ function renderModules() {
               body: JSON.stringify({ commands: { [cmd.key]: nowChecked } })
             }, { notifyOnSuccess: "Befehl geändert", notifyDetail: cmd.label + " → " + (nowChecked ? "aktiviert" : "deaktiviert"), notifyIcon: "🎚️", label: "Befehl speichern" });
             showMsg("moduleMsg", "Gespeichert.", true);
+            cStatus.className = "module-status-tag " + (nowChecked ? "on" : "off");
+            cStatus.textContent = nowChecked ? "AN" : "AUS";
             if (guildIdAtRender === currentGuildId) {
               commandsCfg[cmd.key] = nowChecked;
               currentConfig.config.commands = commandsCfg;
             }
           } catch (e) {
             cInput.checked = !nowChecked;
+            cStatus.className = "module-status-tag " + (!nowChecked ? "on" : "off");
+            cStatus.textContent = !nowChecked ? "AN" : "AUS";
             showMsg("moduleMsg", e.message, false);
           }
         });
@@ -1750,7 +1797,11 @@ function renderModules() {
         cSwitchWrap.appendChild(cInput);
         cSwitchWrap.appendChild(cSlider);
         row.appendChild(label);
-        row.appendChild(cSwitchWrap);
+        const cToggleWrap = document.createElement("div");
+        cToggleWrap.style.cssText = "display:flex;align-items:center;gap:8px;";
+        cToggleWrap.appendChild(cStatus);
+        cToggleWrap.appendChild(cSwitchWrap);
+        row.appendChild(cToggleWrap);
         commandsWrap.appendChild(row);
       });
     }
@@ -1844,13 +1895,13 @@ async function loadGuildArea() {
 
   renderModules();
   fillSelect(document.getElementById("roleValueSelect"), currentConfig.available_roles, "role_id", "name");
-  fillSelect(document.getElementById("channelValueSelect"), currentConfig.available_channels, "channel_id", "name");
-  fillSelect(document.getElementById("sayChannelSelect"), currentConfig.available_channels, "channel_id", "name");
+  /* Nur Textkanäle für RP-Auto-Kanal und Say (kein Sinn für Voice/Kategorien) */
+  fillSelect(document.getElementById("channelValueSelect"), getChannelsByType(TEXT_TYPES), "channel_id", "name");
+  fillSelect(document.getElementById("sayChannelSelect"), getChannelsByType(TEXT_TYPES), "channel_id", "name");
   setGuildButtonsByRank();
 
-  const auditInput = document.getElementById("auditChannelId");
-  auditInput.value = currentConfig.config.audit_channel_id || "";
-  renderResolveHint("resolveAuditChannel", auditInput.value, false);
+  const auditSelect = document.getElementById("auditChannelSelect");
+  auditSelect.innerHTML = buildChannelOptions(TEXT_TYPES, currentConfig.config.audit_channel_id, true, "— kein Audit-Kanal —");
 
   renderOverviewStats();
 
@@ -2021,32 +2072,23 @@ async function loadSupportChannelConfig() {
     const cfg = await api("/api/guild/" + guildId + "/support/config", {}, { silentNotify: true });
     if (guildId !== currentGuildId) return;
     latestSupportChannelConfig = cfg;
-    document.getElementById("supportWaitingChannelId").value = cfg.waiting_channel_id || "";
-    document.getElementById("supportNotifyChannelId").value = cfg.notify_channel_id || "";
-    document.getElementById("supportChannelsList").value = (cfg.support_channels || []).join(", ");
-    document.getElementById("supportOverflowCategoryId").value = cfg.overflow_category_id || "";
-    renderResolveHint("resolveWaiting", cfg.waiting_channel_id, false);
-    renderResolveHint("resolveNotify", cfg.notify_channel_id, false);
-    renderResolveHint("resolveList", (cfg.support_channels || []).join(", "), true);
-    renderResolveHint("resolveOverflow", cfg.overflow_category_id, false);
+    document.getElementById("supportWaitingChannelSelect").innerHTML = buildChannelOptions(VOICE_TYPES, cfg.waiting_channel_id, true, "— kein Warteraum —");
+    document.getElementById("supportNotifyChannelSelect").innerHTML = buildChannelOptions(TEXT_TYPES, cfg.notify_channel_id, true, "— Standard-Kanal —");
+    document.getElementById("supportChannelsMultiSelect").innerHTML = buildChannelMultiOptions(VOICE_TYPES, cfg.support_channels || []);
+    document.getElementById("supportOverflowCategorySelect").innerHTML = buildChannelOptions(CATEGORY_TYPES, cfg.overflow_category_id, true, "— keine Kategorie —");
     renderSupportChannelsSummary(cfg);
   } catch (e) {}
 }
 
-bindResolveLive("supportWaitingChannelId", "resolveWaiting", false);
-bindResolveLive("supportNotifyChannelId", "resolveNotify", false);
-bindResolveLive("supportChannelsList", "resolveList", true);
-bindResolveLive("supportOverflowCategoryId", "resolveOverflow", false);
-bindResolveLive("auditChannelId", "resolveAuditChannel", false);
-
 document.getElementById("saveSupportChannelsBtn").addEventListener("click", async () => {
   try {
-    const support_channels = document.getElementById("supportChannelsList").value.split(",").map(s => s.trim()).filter(Boolean);
+    const multiSel = document.getElementById("supportChannelsMultiSelect");
+    const support_channels = Array.from(multiSel.selectedOptions).map(o => o.value).filter(Boolean);
     const payload = {
-      waiting_channel_id: document.getElementById("supportWaitingChannelId").value.trim() || null,
-      notify_channel_id: document.getElementById("supportNotifyChannelId").value.trim() || null,
+      waiting_channel_id: document.getElementById("supportWaitingChannelSelect").value || null,
+      notify_channel_id: document.getElementById("supportNotifyChannelSelect").value || null,
       support_channels,
-      overflow_category_id: document.getElementById("supportOverflowCategoryId").value.trim() || null
+      overflow_category_id: document.getElementById("supportOverflowCategorySelect").value || null
     };
     await api("/api/guild/" + currentGuildId + "/support/config", {
       method: "POST",
@@ -2317,20 +2359,20 @@ function renderPanelsList() {
         <input type="text" class="panel-edit-name" value="${escapeHtml(panel.name)}">
       </div>
       <div class="field">
-        <label>Warteraum-Kanal-ID</label>
-        <input type="text" class="panel-edit-waiting" value="${escapeHtml(panel.waiting_channel_id || "")}">
+        <label>Warteraum (Sprachkanal)</label>
+        <select class="panel-edit-waiting">${buildChannelOptions(VOICE_TYPES, panel.waiting_channel_id, true, "— kein Warteraum —")}</select>
       </div>
       <div class="field">
-        <label>Benachrichtigungs-Kanal-ID</label>
-        <input type="text" class="panel-edit-notify" value="${escapeHtml(panel.notify_channel_id || "")}">
+        <label>Benachrichtigungs-Kanal (Textkanal)</label>
+        <select class="panel-edit-notify">${buildChannelOptions(TEXT_TYPES, panel.notify_channel_id, true, "— Standard-Kanal —")}</select>
       </div>
       <div class="field">
-        <label>Feste Räume (kommagetrennt)</label>
-        <input type="text" class="panel-edit-feste" value="${escapeHtml((panel.feste_raeume || []).join(", "))}">
+        <label>Feste Räume (Sprachkanäle, Mehrfachauswahl)</label>
+        <select class="panel-edit-feste" multiple>${buildChannelMultiOptions(VOICE_TYPES, panel.feste_raeume || [])}</select>
       </div>
       <div class="field">
-        <label>Kategorie-ID für neue Räume</label>
-        <input type="text" class="panel-edit-kategorie" value="${escapeHtml(panel.neue_raeume_kategorie_id || "")}">
+        <label>Kategorie für neue Räume</label>
+        <select class="panel-edit-kategorie">${buildChannelOptions(CATEGORY_TYPES, panel.neue_raeume_kategorie_id, true, "— keine Kategorie —")}</select>
       </div>
     `;
     const saveBtn = document.createElement("button");
@@ -2338,12 +2380,13 @@ function renderPanelsList() {
     saveBtn.textContent = "Speichern";
     saveBtn.disabled = !editable;
     saveBtn.addEventListener("click", async () => {
+      const festeSel = editWrap.querySelector(".panel-edit-feste");
       const patch = {
         name: editWrap.querySelector(".panel-edit-name").value.trim(),
-        waiting_channel_id: editWrap.querySelector(".panel-edit-waiting").value.trim() || null,
-        notify_channel_id: editWrap.querySelector(".panel-edit-notify").value.trim() || null,
-        feste_raeume: editWrap.querySelector(".panel-edit-feste").value.split(",").map(s => s.trim()).filter(Boolean),
-        neue_raeume_kategorie_id: editWrap.querySelector(".panel-edit-kategorie").value.trim() || null,
+        waiting_channel_id: editWrap.querySelector(".panel-edit-waiting").value || null,
+        notify_channel_id: editWrap.querySelector(".panel-edit-notify").value || null,
+        feste_raeume: Array.from(festeSel.selectedOptions).map(o => o.value).filter(Boolean),
+        neue_raeume_kategorie_id: editWrap.querySelector(".panel-edit-kategorie").value || null,
       };
       try {
         await api("/api/guild/" + currentGuildId + "/panels/" + encodeURIComponent(panel.id), {
@@ -2479,6 +2522,13 @@ function renderOverviewPanels() {
   }).join("");
 }
 
+function fillPanelCreateSelects() {
+  document.getElementById("panelNewWaitingSelect").innerHTML = buildChannelOptions(VOICE_TYPES, null, true, "— kein Warteraum —");
+  document.getElementById("panelNewNotifySelect").innerHTML = buildChannelOptions(TEXT_TYPES, null, true, "— Standard-Kanal —");
+  document.getElementById("panelNewFesteRaeumeSelect").innerHTML = buildChannelMultiOptions(VOICE_TYPES, []);
+  document.getElementById("panelNewKategorieSelect").innerHTML = buildChannelOptions(CATEGORY_TYPES, null, true, "— keine Kategorie —");
+}
+
 const panelCreateBtn = document.getElementById("panelCreateBtn");
 panelCreateBtn.addEventListener("click", async () => {
   const name = document.getElementById("panelNewName").value.trim();
@@ -2486,13 +2536,14 @@ panelCreateBtn.addEventListener("click", async () => {
     showMsg("panelsMsg", "Bitte einen Namen eingeben.", false);
     return;
   }
-  const feste_raeume = document.getElementById("panelNewFesteRaeume").value.split(",").map(s => s.trim()).filter(Boolean);
+  const festeSel = document.getElementById("panelNewFesteRaeumeSelect");
+  const feste_raeume = Array.from(festeSel.selectedOptions).map(o => o.value).filter(Boolean);
   const payload = {
     name,
-    waiting_channel_id: document.getElementById("panelNewWaiting").value.trim() || null,
-    notify_channel_id: document.getElementById("panelNewNotify").value.trim() || null,
+    waiting_channel_id: document.getElementById("panelNewWaitingSelect").value || null,
+    notify_channel_id: document.getElementById("panelNewNotifySelect").value || null,
     feste_raeume,
-    neue_raeume_kategorie_id: document.getElementById("panelNewKategorie").value.trim() || null,
+    neue_raeume_kategorie_id: document.getElementById("panelNewKategorieSelect").value || null,
   };
   const originalLabel = panelCreateBtn.textContent;
   panelCreateBtn.disabled = true;
@@ -2503,9 +2554,8 @@ panelCreateBtn.addEventListener("click", async () => {
       body: JSON.stringify(payload)
     }, { notifyOnSuccess: "Panel erstellt", notifyDetail: name, notifyIcon: "🧩" });
     showMsg("panelsMsg", "Panel erstellt.", true);
-    ["panelNewName", "panelNewWaiting", "panelNewNotify", "panelNewFesteRaeume", "panelNewKategorie"].forEach(id => {
-      document.getElementById(id).value = "";
-    });
+    document.getElementById("panelNewName").value = "";
+    fillPanelCreateSelects();
     await loadPanelsList();
   } catch (e) {
     showMsg("panelsMsg", e.message, false);
@@ -2910,12 +2960,13 @@ document.getElementById("refreshAuditBtn").addEventListener("click", loadAuditLo
 
 document.getElementById("saveAuditChannelBtn").addEventListener("click", async () => {
   try {
-    const channelId = document.getElementById("auditChannelId").value.trim();
+    const channelId = document.getElementById("auditChannelSelect").value;
     await api("/api/guild/" + currentGuildId + "/config", {
       method: "POST",
-      body: JSON.stringify({ audit_channel_id: channelId })
-    }, { notifyOnSuccess: "Audit-Kanal gesetzt", notifyDetail: resolveChannelName(channelId) ? "#" + resolveChannelName(channelId) : channelId, notifyIcon: "📋" });
+      body: JSON.stringify({ audit_channel_id: channelId || null })
+    }, { notifyOnSuccess: "Audit-Kanal gesetzt", notifyDetail: resolveChannelName(channelId) ? "#" + resolveChannelName(channelId) : (channelId || "entfernt"), notifyIcon: "📋" });
     showMsg("auditMsg", "Audit-Kanal gespeichert.", true);
+    if (currentConfig) currentConfig.config.audit_channel_id = channelId || null;
   } catch (e) {
     showMsg("auditMsg", e.message, false);
   }
@@ -3054,6 +3105,7 @@ async function init() {
       currentGuildId = guilds[0].guild_id;
       fillGuildSelects();
       await loadGuildArea();
+      fillPanelCreateSelects();
     }
   } catch (e) {
     localStorage.removeItem("session_token");
