@@ -8,90 +8,47 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0e1016;
-  --surface:#171b27;
-  --surface2:#22283a;
-  --border:rgba(120,132,168,0.22);
-  --text:#c7cbdb;
-  --text-hi:#f5f6fb;
-  --muted:#8a90aa;
-  --dc:#5865F2;
-  --dc-soft:#8993FF;
-  --green:#3ddc84;
-  --green-dim:rgba(61,220,132,0.12);
-  --red:#ff5c68;
-  --red-dim:rgba(255,92,104,0.12);
-  --amber:#ffb454;
-  --amber-dim:rgba(255,180,84,0.12);
-  --disp:'Sora',system-ui,sans-serif;
-  --sans:'Manrope',system-ui,sans-serif;
+  --bg:#0e1016;--surface:#171b27;--surface2:#22283a;--border:rgba(120,132,168,0.22);
+  --text:#c7cbdb;--text-hi:#f5f6fb;--muted:#8a90aa;--dc:#5865F2;--dc-soft:#8993FF;
+  --green:#3ddc84;--green-dim:rgba(61,220,132,0.12);--red:#ff5c68;--red-dim:rgba(255,92,104,0.12);
+  --amber:#ffb454;--amber-dim:rgba(255,180,84,0.12);
+  --disp:'Sora',system-ui,sans-serif;--sans:'Manrope',system-ui,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
 body{
-  background:var(--bg);color:var(--text);font-family:var(--sans);
-  -webkit-font-smoothing:antialiased;
-  display:flex;align-items:center;justify-content:center;
-  padding:20px;
+  background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;
+  display:flex;align-items:center;justify-content:center;padding:20px;
   background-image:
     radial-gradient(ellipse 700px 420px at 15% -80px,rgba(88,101,242,0.16),transparent),
     radial-gradient(ellipse 520px 380px at 100% 100%,rgba(226,53,47,0.08),transparent);
 }
-.box{
-  width:100%;max-width:400px;
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:20px;padding:38px 30px 30px;text-align:center;
-  box-shadow:0 20px 60px -24px rgba(0,0,0,0.7);
-}
-.logo{
-  width:72px;height:72px;margin:0 auto 20px;border-radius:18px;
-  background:var(--surface2);border:1px solid var(--border);
-  display:grid;place-items:center;padding:6px;
-}
+.box{width:100%;max-width:400px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:38px 30px 30px;text-align:center;box-shadow:0 20px 60px -24px rgba(0,0,0,0.7);}
+.logo{width:72px;height:72px;margin:0 auto 20px;border-radius:18px;background:var(--surface2);border:1px solid var(--border);display:grid;place-items:center;padding:6px;}
 .logo img{width:100%;height:100%;object-fit:contain;border-radius:12px;}
 h1{font-family:var(--disp);font-size:22px;font-weight:800;color:var(--text-hi);letter-spacing:-0.02em;margin-bottom:8px;}
 p.sub{font-size:13.5px;line-height:1.65;color:var(--muted);margin:0 auto 24px;max-width:300px;}
-.btn{
-  width:100%;display:inline-flex;align-items:center;justify-content:center;gap:9px;
-  border:none;border-radius:11px;padding:13px 20px;
-  font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;
-  background:var(--dc);color:#fff;
-  transition:filter .15s,transform .1s;
-}
+.btn{width:100%;display:inline-flex;align-items:center;justify-content:center;gap:9px;border:none;border-radius:11px;padding:13px 20px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;background:var(--dc);color:#fff;transition:filter .15s,transform .1s;}
 .btn:hover{filter:brightness(1.1);}
 .btn:active{transform:translateY(1px);}
 .btn:focus-visible{outline:2px solid var(--dc-soft);outline-offset:3px;}
 .btn:disabled{opacity:.45;cursor:not-allowed;filter:none;}
 .btn svg{width:18px;height:18px;flex-shrink:0;}
-.status{
-  display:flex;align-items:center;gap:12px;text-align:left;
-  border-radius:12px;padding:14px 15px;margin-bottom:18px;
-  border:1px solid var(--border);
-}
+.status{display:flex;align-items:center;gap:12px;text-align:left;border-radius:12px;padding:14px 15px;margin-bottom:18px;border:1px solid var(--border);}
 .status.ok{background:var(--green-dim);border-color:rgba(61,220,132,0.35);}
 .status.warn{background:var(--amber-dim);border-color:rgba(255,180,84,0.35);}
 .status.err{background:var(--red-dim);border-color:rgba(255,92,104,0.35);}
 .status.load{background:var(--surface2);}
-.status-icon{
-  width:34px;height:34px;border-radius:50%;flex-shrink:0;
-  display:grid;place-items:center;font-size:16px;font-weight:800;
-}
+.status-icon{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font-size:16px;font-weight:800;}
 .status.ok .status-icon{background:var(--green);color:#062615;}
 .status.warn .status-icon{background:var(--amber);color:#2a1a00;}
 .status.err .status-icon{background:var(--red);color:#2a0007;}
 .status.load .status-icon{background:transparent;}
-.spinner{
-  width:20px;height:20px;border-radius:50%;
-  border:3px solid var(--border);border-top-color:var(--dc-soft);
-  animation:spin .8s linear infinite;
-}
+.spinner{width:20px;height:20px;border-radius:50%;border:3px solid var(--border);border-top-color:var(--dc-soft);animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 .status-title{font-size:14px;font-weight:700;color:var(--text-hi);}
 .status-detail{font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.5;}
-.user{
-  display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:18px;
-  font-size:13.5px;font-weight:600;color:var(--text-hi);
-}
+.user{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:18px;font-size:13.5px;font-weight:600;color:var(--text-hi);}
 .user img{width:30px;height:30px;border-radius:50%;background:var(--surface2);}
 .note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:16px;}
 .hidden{display:none!important;}
@@ -122,7 +79,7 @@ p.sub{font-size:13.5px;line-height:1.65;color:var(--muted);margin:0 auto 24px;ma
     <span id="authBtnLabel">Mit Discord autorisieren</span>
   </button>
 
-  <p class="note" id="note">Zum Widerrufen: Discord → Einstellungen → Autorisierte Apps → Samuel Studios → Deautorisieren.</p>
+  <p class="note" id="note">Zum Widerrufen: Discord → Einstellungen → Autorisierte Apps → Samuel Studios → Deautorisieren, oder per <code>/deauthorize</code> im Bot.</p>
 </main>
 
 <script>
@@ -145,11 +102,14 @@ const els = {
   avatar: document.getElementById("userAvatar"),
   name: document.getElementById("userName"),
   btn: document.getElementById("authBtn"),
-  btnLabel: document.getElementById("authBtnLabel"),
-  note: document.getElementById("note")
+  btnLabel: document.getElementById("authBtnLabel")
 };
 
 let busy = false;
+
+function lsGet(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+function lsSet(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+function lsDel(k){ try { localStorage.removeItem(k); } catch(e){} }
 
 function setStatus(kind, title, detail) {
   els.box.className = "status " + kind;
@@ -178,6 +138,7 @@ function randomState() {
   return Array.from(a, b => b.toString(16).padStart(2, "0")).join("");
 }
 
+// silent=true: Discord antwortet ohne Zustimmungsfenster, wenn bereits autorisiert
 function buildAuthUrl(silent) {
   const state = randomState();
   sessionStorage.setItem(STORAGE_STATE, state);
@@ -195,7 +156,6 @@ function buildAuthUrl(silent) {
 function getUsedCodes() {
   try { return JSON.parse(sessionStorage.getItem(STORAGE_USED) || "[]"); } catch (e) { return []; }
 }
-
 function markCodeUsed(code) {
   const list = getUsedCodes();
   list.push(code);
@@ -203,12 +163,12 @@ function markCodeUsed(code) {
 }
 
 function renderAuthorized(user, already) {
-  try { localStorage.setItem(STORAGE_DONE, user && user.user_id ? String(user.user_id) : "1"); } catch (e) {}
+  lsSet(STORAGE_DONE, user && (user.id || user.user_id) ? String(user.id || user.user_id) : "1");
   showUser(user);
   setStatus(
     already ? "warn" : "ok",
     already ? "Bereits autorisiert" : "Autorisiert",
-    already ? "Du bist schon eingetragen. Nichts weiter zu tun." : "Fertig. Die Autorisierung bleibt bestehen, bis du sie in Discord widerrufst."
+    already ? "Du bist schon eingetragen. Nichts weiter zu tun." : "Fertig. Die Autorisierung bleibt bestehen, bis du sie widerrufst."
   );
   els.sub.textContent = "Du kannst diese Seite schließen.";
   els.btnLabel.textContent = "Status erneut prüfen";
@@ -241,11 +201,9 @@ async function handleReturn(params) {
   sessionStorage.removeItem(STORAGE_STATE);
 
   if (error) {
-    const done = localStorage.getItem(STORAGE_DONE);
     if (error === "interaction_required" || error === "consent_required" || error === "login_required") {
-      if (done) {
-        localStorage.removeItem(STORAGE_DONE);
-      }
+      // Nicht (mehr) autorisiert -> lokalen Merker löschen
+      lsDel(STORAGE_DONE);
       setStatus("warn", "Noch nicht autorisiert", "Klicke auf den Button, um dich zu autorisieren.");
       els.btnLabel.textContent = "Mit Discord autorisieren";
       return;
@@ -256,11 +214,11 @@ async function handleReturn(params) {
 
   if (!code) return;
 
-  if (!expected || state !== expected) {
+  // state "join" kommt vom Button im Bot-Panel (kein vorheriger Seitenaufruf nötig)
+  if (state !== "join" && (!expected || state !== expected)) {
     renderError("Ungültige Anfrage. Bitte starte die Autorisierung neu.");
     return;
   }
-
   if (getUsedCodes().includes(code)) {
     renderError("Dieser Code wurde bereits verwendet. Bitte starte neu.");
     return;
@@ -285,8 +243,12 @@ els.btn.addEventListener("click", () => {
   if (busy) return;
   busy = true;
   els.btn.disabled = true;
-  const alreadyDone = !!localStorage.getItem(STORAGE_DONE);
-  window.location.href = buildAuthUrl(alreadyDone);
+  window.location.href = buildAuthUrl(!!lsGet(STORAGE_DONE));
+});
+
+// Wenn der Nutzer per Zurück-Button aus Discord zurückkommt, Button wieder freigeben
+window.addEventListener("pageshow", (e) => {
+  if (e.persisted) { busy = false; els.btn.disabled = false; }
 });
 
 (function init() {
@@ -295,8 +257,8 @@ els.btn.addEventListener("click", () => {
     handleReturn(params);
     return;
   }
-  if (localStorage.getItem(STORAGE_DONE)) {
-    setStatus("ok", "Bereits autorisiert", "Du bist eingetragen. Die Autorisierung gilt, bis du sie in Discord widerrufst.");
+  if (lsGet(STORAGE_DONE)) {
+    setStatus("ok", "Bereits autorisiert", "Du bist eingetragen. Die Autorisierung gilt, bis du sie widerrufst.");
     els.sub.textContent = "Du kannst diese Seite schließen.";
     els.btnLabel.textContent = "Status erneut prüfen";
   }
