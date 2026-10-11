@@ -4,95 +4,302 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Autorisieren · Samuel Studios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:dark}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
-body{background:#0e1016;color:#c7cbdb;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:flex;align-items:center;justify-content:center;padding:16px}
-.box{width:100%;max-width:380px;background:#171b27;border:1px solid rgba(120,132,168,.28);border-radius:18px;padding:34px 26px;text-align:center}
-.logo{width:64px;height:64px;border-radius:16px;object-fit:contain;background:#22283a;padding:6px;margin:0 auto 16px;display:block}
-h1{font-size:21px;color:#f5f6fb;margin-bottom:8px}
-p{font-size:13.5px;line-height:1.6;color:#8b91ab;margin-bottom:20px}
-.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:10px;padding:12px 18px;font-size:14px;font-weight:700;color:#fff;background:#5865F2;cursor:pointer;text-decoration:none}
-.btn:hover{filter:brightness(1.08)}
-.state{display:none}
-.state.on{display:block}
-.spin{width:30px;height:30px;border:3px solid rgba(255,255,255,.12);border-top-color:#5865F2;border-radius:50%;margin:0 auto 16px;animation:s .7s linear infinite}
-@keyframes s{to{transform:rotate(360deg)}}
-.ok{color:#3ddc84}
-.err{color:#ff5c68}
+:root{
+  --bg:#0e1016;
+  --surface:#171b27;
+  --surface2:#22283a;
+  --border:rgba(120,132,168,0.22);
+  --text:#c7cbdb;
+  --text-hi:#f5f6fb;
+  --muted:#8a90aa;
+  --dc:#5865F2;
+  --dc-soft:#8993FF;
+  --green:#3ddc84;
+  --green-dim:rgba(61,220,132,0.12);
+  --red:#ff5c68;
+  --red-dim:rgba(255,92,104,0.12);
+  --amber:#ffb454;
+  --amber-dim:rgba(255,180,84,0.12);
+  --disp:'Sora',system-ui,sans-serif;
+  --sans:'Manrope',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{
+  background:var(--bg);color:var(--text);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;
+  background-image:
+    radial-gradient(ellipse 700px 420px at 15% -80px,rgba(88,101,242,0.16),transparent),
+    radial-gradient(ellipse 520px 380px at 100% 100%,rgba(226,53,47,0.08),transparent);
+}
+.box{
+  width:100%;max-width:400px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:20px;padding:38px 30px 30px;text-align:center;
+  box-shadow:0 20px 60px -24px rgba(0,0,0,0.7);
+}
+.logo{
+  width:72px;height:72px;margin:0 auto 20px;border-radius:18px;
+  background:var(--surface2);border:1px solid var(--border);
+  display:grid;place-items:center;padding:6px;
+}
+.logo img{width:100%;height:100%;object-fit:contain;border-radius:12px;}
+h1{font-family:var(--disp);font-size:22px;font-weight:800;color:var(--text-hi);letter-spacing:-0.02em;margin-bottom:8px;}
+p.sub{font-size:13.5px;line-height:1.65;color:var(--muted);margin:0 auto 24px;max-width:300px;}
+.btn{
+  width:100%;display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  border:none;border-radius:11px;padding:13px 20px;
+  font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;
+  background:var(--dc);color:#fff;
+  transition:filter .15s,transform .1s;
+}
+.btn:hover{filter:brightness(1.1);}
+.btn:active{transform:translateY(1px);}
+.btn:focus-visible{outline:2px solid var(--dc-soft);outline-offset:3px;}
+.btn:disabled{opacity:.45;cursor:not-allowed;filter:none;}
+.btn svg{width:18px;height:18px;flex-shrink:0;}
+.status{
+  display:flex;align-items:center;gap:12px;text-align:left;
+  border-radius:12px;padding:14px 15px;margin-bottom:18px;
+  border:1px solid var(--border);
+}
+.status.ok{background:var(--green-dim);border-color:rgba(61,220,132,0.35);}
+.status.warn{background:var(--amber-dim);border-color:rgba(255,180,84,0.35);}
+.status.err{background:var(--red-dim);border-color:rgba(255,92,104,0.35);}
+.status.load{background:var(--surface2);}
+.status-icon{
+  width:34px;height:34px;border-radius:50%;flex-shrink:0;
+  display:grid;place-items:center;font-size:16px;font-weight:800;
+}
+.status.ok .status-icon{background:var(--green);color:#062615;}
+.status.warn .status-icon{background:var(--amber);color:#2a1a00;}
+.status.err .status-icon{background:var(--red);color:#2a0007;}
+.status.load .status-icon{background:transparent;}
+.spinner{
+  width:20px;height:20px;border-radius:50%;
+  border:3px solid var(--border);border-top-color:var(--dc-soft);
+  animation:spin .8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+.status-title{font-size:14px;font-weight:700;color:var(--text-hi);}
+.status-detail{font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.5;}
+.user{
+  display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:18px;
+  font-size:13.5px;font-weight:600;color:var(--text-hi);
+}
+.user img{width:30px;height:30px;border-radius:50%;background:var(--surface2);}
+.note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:16px;}
+.hidden{display:none!important;}
+@media (prefers-reduced-motion:reduce){.spinner{animation-duration:2s;}}
 </style>
 </head>
 <body>
-<div class="box">
-  <img class="logo" src="Logo.png" alt="" onerror="this.style.display='none'">
+<main class="box">
+  <div class="logo"><img src="Logo.png" alt="Samuel Studios"></div>
+  <h1>Autorisieren</h1>
+  <p class="sub" id="sub">Autorisiere dich einmalig mit Discord. Das gilt dauerhaft, bis du es selbst widerrufst.</p>
 
-  <div class="state on" id="sStart">
-    <h1>Account autorisieren</h1>
-    <p> mit <b>/deauthorize</b> widerrufst du deine authorisierung.</p>
-    <a class="btn" id="authBtn" href="#">Jetzt autorisieren</a>
+  <div id="statusBox" class="status hidden">
+    <div class="status-icon" id="statusIcon"></div>
+    <div>
+      <div class="status-title" id="statusTitle"></div>
+      <div class="status-detail" id="statusDetail"></div>
+    </div>
   </div>
 
-  <div class="state" id="sLoad">
-    <div class="spin"></div>
-    <h1>Wird verifiziert…</h1>
+  <div id="userBox" class="user hidden">
+    <img id="userAvatar" src="" alt="">
+    <span id="userName"></span>
   </div>
 
-  <div class="state" id="sDone">
-    <h1 id="doneTitle"></h1>
-    <p id="doneText"></p>
-  </div>
-</div>
+  <button class="btn" id="authBtn" type="button">
+    <svg viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg>
+    <span id="authBtnLabel">Mit Discord autorisieren</span>
+  </button>
+
+  <p class="note" id="note">Zum Widerrufen: Discord → Einstellungen → Autorisierte Apps → Samuel Studios → Deautorisieren.</p>
+</main>
 
 <script>
 const API_BASE = "https://botconfig.wisp.uno";
-const CLIENT_ID = "1446188210794401883";
-const REDIRECT_URI = location.origin + location.pathname;
+const DISCORD_CLIENT_ID = "1446188210794401883";
+const REDIRECT_URI = window.location.origin + window.location.pathname;
+const SCOPES = "identify guilds.join";
 
-function show(id) {
-  document.querySelectorAll(".state").forEach(function (e) { e.classList.toggle("on", e.id === id); });
-}
+const STORAGE_DONE = "auth_done_user";
+const STORAGE_STATE = "auth_oauth_state";
+const STORAGE_USED = "auth_used_codes";
 
-function done(ok, title, text) {
-  var t = document.getElementById("doneTitle");
-  t.textContent = title;
-  t.className = ok ? "ok" : "err";
-  document.getElementById("doneText").textContent = text;
-  var p = document.getElementById("doneText");
-  p.style.marginBottom = "0";
-  show("sDone");
-}
+const els = {
+  sub: document.getElementById("sub"),
+  box: document.getElementById("statusBox"),
+  icon: document.getElementById("statusIcon"),
+  title: document.getElementById("statusTitle"),
+  detail: document.getElementById("statusDetail"),
+  userBox: document.getElementById("userBox"),
+  avatar: document.getElementById("userAvatar"),
+  name: document.getElementById("userName"),
+  btn: document.getElementById("authBtn"),
+  btnLabel: document.getElementById("authBtnLabel"),
+  note: document.getElementById("note")
+};
 
-document.getElementById("authBtn").href = "https://discord.com/oauth2/authorize?" + new URLSearchParams({
-  client_id: CLIENT_ID,
-  redirect_uri: REDIRECT_URI,
-  response_type: "code",
-  scope: "identify guilds.join",
-  state: "join"
-}).toString();
+let busy = false;
 
-(function () {
-  var params = new URLSearchParams(location.search);
-  var code = params.get("code");
-  if (params.get("error")) {
-    history.replaceState({}, "", REDIRECT_URI);
-    done(false, "Abgebrochen", "Die Autorisierung wurde bei Discord abgebrochen.");
-    return;
+function setStatus(kind, title, detail) {
+  els.box.className = "status " + kind;
+  els.icon.innerHTML = "";
+  if (kind === "load") {
+    const sp = document.createElement("div");
+    sp.className = "spinner";
+    els.icon.appendChild(sp);
+  } else {
+    els.icon.textContent = kind === "ok" ? "✓" : kind === "warn" ? "!" : "✕";
   }
-  if (!code) return;
-  history.replaceState({}, "", REDIRECT_URI);
-  show("sLoad");
-  fetch(API_BASE + "/api/authorize", {
+  els.title.textContent = title;
+  els.detail.textContent = detail || "";
+}
+
+function showUser(user) {
+  if (!user) { els.userBox.classList.add("hidden"); return; }
+  els.name.textContent = user.username || "";
+  els.avatar.src = user.avatar_url || "https://cdn.discordapp.com/embed/avatars/0.png";
+  els.userBox.classList.remove("hidden");
+}
+
+function randomState() {
+  const a = new Uint8Array(16);
+  crypto.getRandomValues(a);
+  return Array.from(a, b => b.toString(16).padStart(2, "0")).join("");
+}
+
+function buildAuthUrl(silent) {
+  const state = randomState();
+  sessionStorage.setItem(STORAGE_STATE, state);
+  const params = new URLSearchParams({
+    client_id: DISCORD_CLIENT_ID,
+    redirect_uri: REDIRECT_URI,
+    response_type: "code",
+    scope: SCOPES,
+    state: state,
+    prompt: silent ? "none" : "consent"
+  });
+  return "https://discord.com/oauth2/authorize?" + params.toString();
+}
+
+function getUsedCodes() {
+  try { return JSON.parse(sessionStorage.getItem(STORAGE_USED) || "[]"); } catch (e) { return []; }
+}
+
+function markCodeUsed(code) {
+  const list = getUsedCodes();
+  list.push(code);
+  sessionStorage.setItem(STORAGE_USED, JSON.stringify(list.slice(-10)));
+}
+
+function renderAuthorized(user, already) {
+  try { localStorage.setItem(STORAGE_DONE, user && user.user_id ? String(user.user_id) : "1"); } catch (e) {}
+  showUser(user);
+  setStatus(
+    already ? "warn" : "ok",
+    already ? "Bereits autorisiert" : "Autorisiert",
+    already ? "Du bist schon eingetragen. Nichts weiter zu tun." : "Fertig. Die Autorisierung bleibt bestehen, bis du sie in Discord widerrufst."
+  );
+  els.sub.textContent = "Du kannst diese Seite schließen.";
+  els.btnLabel.textContent = "Status erneut prüfen";
+  els.btn.disabled = false;
+}
+
+function renderError(msg) {
+  setStatus("err", "Autorisierung fehlgeschlagen", msg);
+  els.btnLabel.textContent = "Erneut versuchen";
+  els.btn.disabled = false;
+}
+
+async function submitCode(code) {
+  const res = await fetch(API_BASE + "/api/authorize", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ code: code, redirect_uri: REDIRECT_URI })
-  }).then(function (r) {
-    return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok && d.ok, d: d }; });
-  }).then(function (res) {
-    done(res.ok, res.d.title || (res.ok ? "Verifiziert ✅" : "Fehlgeschlagen"), res.d.text || (res.ok ? "Du kannst dieses Fenster schließen." : "Bitte versuch es erneut."));
-  }).catch(function () {
-    done(false, "Fehlgeschlagen", "Der Server ist gerade nicht erreichbar.");
   });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || ("Fehler " + res.status));
+  return data;
+}
+
+async function handleReturn(params) {
+  const code = params.get("code");
+  const error = params.get("error");
+  const state = params.get("state");
+  const expected = sessionStorage.getItem(STORAGE_STATE);
+  history.replaceState({}, "", REDIRECT_URI);
+  sessionStorage.removeItem(STORAGE_STATE);
+
+  if (error) {
+    const done = localStorage.getItem(STORAGE_DONE);
+    if (error === "interaction_required" || error === "consent_required" || error === "login_required") {
+      if (done) {
+        localStorage.removeItem(STORAGE_DONE);
+      }
+      setStatus("warn", "Noch nicht autorisiert", "Klicke auf den Button, um dich zu autorisieren.");
+      els.btnLabel.textContent = "Mit Discord autorisieren";
+      return;
+    }
+    renderError(error === "access_denied" ? "Du hast die Autorisierung abgebrochen." : "Discord meldet: " + error);
+    return;
+  }
+
+  if (!code) return;
+
+  if (!expected || state !== expected) {
+    renderError("Ungültige Anfrage. Bitte starte die Autorisierung neu.");
+    return;
+  }
+
+  if (getUsedCodes().includes(code)) {
+    renderError("Dieser Code wurde bereits verwendet. Bitte starte neu.");
+    return;
+  }
+  markCodeUsed(code);
+
+  busy = true;
+  els.btn.disabled = true;
+  setStatus("load", "Wird autorisiert…", "Einen Moment bitte.");
+  try {
+    const data = await submitCode(code);
+    const already = data.status === "already_authorized" || data.already_authorized === true;
+    renderAuthorized(data.user || null, already);
+  } catch (e) {
+    renderError(e.message);
+  } finally {
+    busy = false;
+  }
+}
+
+els.btn.addEventListener("click", () => {
+  if (busy) return;
+  busy = true;
+  els.btn.disabled = true;
+  const alreadyDone = !!localStorage.getItem(STORAGE_DONE);
+  window.location.href = buildAuthUrl(alreadyDone);
+});
+
+(function init() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.has("code") || params.has("error")) {
+    handleReturn(params);
+    return;
+  }
+  if (localStorage.getItem(STORAGE_DONE)) {
+    setStatus("ok", "Bereits autorisiert", "Du bist eingetragen. Die Autorisierung gilt, bis du sie in Discord widerrufst.");
+    els.sub.textContent = "Du kannst diese Seite schließen.";
+    els.btnLabel.textContent = "Status erneut prüfen";
+  }
 })();
 </script>
 </body>
