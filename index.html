@@ -1,515 +1,83 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Samuel Studios — BotConfig</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>🔰 • EURP | Manager Bot</title>
 <style>
-:root{color-scheme:light dark;--bg:light-dark(#f5f7fb,#080d18);--panel:light-dark(#fff,#101827);--panel2:light-dark(#eef2f8,#151f31);--text:light-dark(#172033,#f2f5fc);--muted:light-dark(#64708a,#a4b0c6);--line:light-dark(#dce3ee,#26334a);--blue:#5b7cfa;--cyan:#43d9d0;--shadow:0 18px 55px #0002}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}button,a{font:inherit}a{color:inherit;text-decoration:none}.app{min-height:100vh;background:var(--bg)}.wrap{width:min(1160px,calc(100% - 36px));margin:auto}.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}.navin{height:76px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:11px;font-weight:850;letter-spacing:-.4px}.logo{display:grid;place-items:center;width:39px;height:39px;border-radius:13px;background:linear-gradient(135deg,var(--blue),#8e65ef);color:white;font-weight:900;box-shadow:0 8px 20px #5b7cfa55}.links{display:flex;gap:24px;align-items:center;color:var(--muted);font-size:14px}.links a:hover,.links a.active{color:var(--text)}.btn{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:12px;padding:11px 16px;font-weight:750;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:9px;transition:.18s}.btn:hover{transform:translateY(-1px);border-color:var(--blue)}.primary{background:linear-gradient(120deg,#5b7cfa,#7658ed);border-color:transparent;color:white;box-shadow:0 8px 22px #5b7cfa40}.hero{padding:78px 0 55px;display:grid;grid-template-columns:1.12fr .88fr;gap:45px;align-items:center}.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--cyan);font-size:12px;font-weight:850;letter-spacing:1.5px;text-transform:uppercase}.dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 5px #43d9d022}.hero h1{font-size:clamp(42px,6vw,70px);line-height:1.04;letter-spacing:-3.4px;margin:18px 0}.gradient{background:linear-gradient(100deg,#5b7cfa,#9b7aff 55%,#43d9d0);background-clip:text;color:transparent}.lead{font-size:18px;color:var(--muted);max-width:590px}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:27px}.hint{font-size:12px;color:var(--muted);margin-top:14px}.mock{background:linear-gradient(145deg,#18233a,#0e1524);border:1px solid #2c3a55;border-radius:24px;padding:18px;box-shadow:var(--shadow);transform:rotate(1deg)}.mocktop{display:flex;justify-content:space-between;align-items:center;padding:5px 3px 17px;color:#a9b7d2;font-size:12px}.lights{display:flex;gap:5px}.lights i{width:7px;height:7px;border-radius:50%;background:#63718d}.mockbody{display:grid;grid-template-columns:120px 1fr;gap:13px}.side{background:#111a2b;border-radius:13px;padding:13px 10px}.side small{color:#70819f;display:block;margin:9px 0}.side div{padding:8px;border-radius:8px;color:#aab8d2;font-size:11px}.side .sel{background:#5b7cfa2c;color:#fff}.dash{display:grid;gap:12px}.dashhead{display:flex;justify-content:space-between;align-items:center;color:white;font-weight:800}.live{font-size:10px;color:#43d9d0;background:#43d9d01b;padding:4px 8px;border-radius:20px}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{background:#151f32;border:1px solid #293650;border-radius:12px;padding:13px}.stat small{display:block;color:#8fa0bd;font-size:10px}.stat b{font-size:23px;color:white}.chart{height:92px;border-radius:12px;background:linear-gradient(180deg,#5b7cfa25,transparent);border:1px solid #293650;display:flex;align-items:end;gap:7px;padding:12px}.chart i{flex:1;background:linear-gradient(0deg,#5b7cfa,#43d9d0);border-radius:5px 5px 2px 2px;opacity:.9}.section{padding:55px 0}.sectionhead{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:25px}.section h2{font-size:clamp(27px,4vw,40px);letter-spacing:-1.4px;line-height:1.15;margin:8px 0}.sectionhead p{color:var(--muted);max-width:480px;margin:0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:23px;box-shadow:0 4px 16px #00000008}.ico{width:43px;height:43px;border-radius:13px;background:light-dark(#edf0ff,#242746);display:grid;place-items:center;font-size:21px;margin-bottom:15px}.card h3{margin:0 0 6px;font-size:17px}.card p{color:var(--muted);margin:0;font-size:14px}.page{display:none;min-height:68vh;padding:55px 0}.page.active{display:block}.pageintro{max-width:720px;margin-bottom:30px}.pageintro h1{font-size:clamp(35px,5vw,52px);line-height:1.1;letter-spacing:-2px;margin:12px 0}.pageintro p{color:var(--muted);font-size:17px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:25px;margin-bottom:16px}.row{display:flex;align-items:center;justify-content:space-between;gap:16px}.row p{color:var(--muted);margin:4px 0}.tag{border-radius:30px;padding:5px 10px;background:light-dark(#eafaf7,#123a39);color:light-dark(#137c71,#68e4d6);font-size:12px;font-weight:800}.field{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:12px;margin:7px 0 15px}.notice{padding:14px 16px;border-radius:12px;background:light-dark(#fff7df,#342913);color:light-dark(#74510b,#f7d782);font-size:13px;margin:14px 0}.footer{border-top:1px solid var(--line);padding:27px 0;color:var(--muted);font-size:13px}.footin{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}.toast{position:fixed;right:20px;bottom:20px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 17px;box-shadow:var(--shadow);z-index:50;max-width:360px;display:none}.mobile{display:none}@media(max-width:800px){.hero{grid-template-columns:1fr;padding-top:52px}.mock{transform:none}.grid{grid-template-columns:1fr 1fr}.links{gap:12px}.links a:not(.btn){display:none}.sectionhead{display:block}.sectionhead p{margin-top:10px}}@media(max-width:520px){.wrap{width:min(100% - 24px,1160px)}.navin{height:66px}.brand span:last-child{font-size:14px}.links{gap:7px}.links .btn{padding:9px 10px;font-size:12px}.hero h1{letter-spacing:-2px}.grid{grid-template-columns:1fr}.mockbody{grid-template-columns:85px 1fr}.side{padding:8px 5px}.side div{font-size:10px;padding:7px 4px}.stats{gap:7px}.stat{padding:10px}.stat b{font-size:19px}.section{padding:40px 0}.row{align-items:flex-start;flex-direction:column}}
-/* Dashboard workspace enhancements */
-.workspace-layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:22px;align-items:start}
-.workspace-sidebar{position:sticky;top:96px;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:12px}
-.workspace-sidebar button{width:100%;display:flex;align-items:center;gap:10px;border:0;background:transparent;color:var(--muted);padding:12px;border-radius:11px;text-align:left;cursor:pointer}
-.workspace-sidebar button:hover,.workspace-sidebar button.selected{background:light-dark(#edf0ff,#222a48);color:var(--text)}
-.workspace-sidebar .side-label{padding:12px 10px 5px;color:var(--muted);font-size:10px;font-weight:850;letter-spacing:1.3px}
-.workspace-content{min-width:0}
-.workspace-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
-.workspace-toolbar h2{margin:0;font-size:26px;letter-spacing:-.8px}
-.workspace-toolbar p{margin:3px 0 0;color:var(--muted);font-size:13px}
-.workspace-tools{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
-.search-field{min-width:180px;max-width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--text)}
-.workspace-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:19px;margin-bottom:14px;min-width:0}
-.workspace-card h3{margin:0 0 7px;font-size:16px}
-.workspace-card p{color:var(--muted);margin:0;font-size:13px}
-.workspace-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.workspace-grid .workspace-card{margin:0}
-.workspace-section{display:none}
-.workspace-section.active{display:block;animation:workspace-in .2s ease-out}
-@keyframes workspace-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-.server-choice{display:flex;align-items:center;gap:13px;padding:13px;border:1px solid var(--line);border-radius:13px;margin:9px 0;cursor:pointer;transition:border-color .15s,background .15s}
-.server-choice:hover{border-color:var(--blue)}
-.server-choice.selected{border-color:var(--blue);background:light-dark(#f1f3ff,#1a2340)}
-.server-avatar{width:43px;height:43px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(135deg,#5b7cfa,#9365ef);color:#fff;font-weight:900;flex-shrink:0}
-.server-meta{min-width:0;flex:1}
-.server-meta strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.server-meta small{display:block;color:var(--muted);font-size:12px}
-.module-row{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
-.module-row:last-child{border-bottom:0}
-.module-icon{width:40px;height:40px;display:grid;place-items:center;background:var(--panel2);border-radius:12px;font-size:18px;flex-shrink:0}
-.module-description{flex:1;min-width:0}
-.module-description strong{display:block;font-size:14px}
-.module-description small{display:block;color:var(--muted);font-size:12px;overflow-wrap:anywhere}
-.switch{position:relative;width:43px;height:25px;border:0;border-radius:20px;background:light-dark(#cbd3e1,#38435a);cursor:pointer;flex-shrink:0;transition:background .18s}
-.switch:after{content:"";position:absolute;left:3px;top:3px;width:19px;height:19px;background:white;border-radius:50%;transition:transform .18s;box-shadow:0 1px 4px #0003}
-.switch[aria-checked="true"]{background:#5b7cfa}
-.switch[aria-checked="true"]:after{transform:translateX(18px)}
-.switch:disabled{opacity:.45;cursor:not-allowed}
-.config-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.config-field{display:block;margin-bottom:14px}
-.config-field span{display:block;font-weight:750;font-size:13px;margin-bottom:6px}
-.config-field small{display:block;color:var(--muted);font-size:11px;margin-top:5px}
-.config-field input,.config-field select,.config-field textarea{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:inherit;outline:none}
-.config-field textarea{min-height:100px;resize:vertical}
-.config-field input:focus,.config-field select:focus,.config-field textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px #5b7cfa22}
-.form-actions{display:flex;gap:10px;align-items:center;justify-content:flex-end;flex-wrap:wrap;margin-top:16px}
-.empty-state{padding:30px 18px;text-align:center;border:1px dashed var(--line);border-radius:14px;color:var(--muted)}
-.empty-state strong{display:block;color:var(--text);margin-bottom:5px}
-.status-line{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}
-.status-dot{width:8px;height:8px;border-radius:50%;background:#e5a83d}
-.status-dot.online{background:#35c99a;box-shadow:0 0 0 4px #35c99a1c}
-.status-dot.error{background:#f06a78}
-.permission-note{border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--muted);font-size:12px;margin:12px 0}
-.admin-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
-.admin-row:last-child{border-bottom:0}
-.admin-avatar{width:37px;height:37px;border-radius:50%;background:var(--panel2);display:grid;place-items:center;font-weight:850}
-.admin-info{flex:1;min-width:0}
-.admin-info strong{display:block;overflow-wrap:anywhere}
-.admin-info small{display:block;color:var(--muted);font-size:12px}
-.danger-button{border-color:#d84c633d;color:light-dark(#b4233b,#ff8998)}
-.table-wrap{overflow:auto}
-.data-table{width:100%;border-collapse:collapse;font-size:13px}
-.data-table th,.data-table td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
-.data-table th{font-size:11px;color:var(--muted);font-weight:850;text-transform:uppercase;letter-spacing:.6px}
-.data-table tr:last-child td{border-bottom:0}
-.inline-error{padding:12px;border-radius:10px;background:light-dark(#fff0f0,#351a23);color:light-dark(#a11e36,#ff9dab);font-size:12px;margin:12px 0;overflow-wrap:anywhere}
-.inline-success{padding:12px;border-radius:10px;background:light-dark(#eafaf4,#12342b);color:light-dark(#176b50,#7ce2bd);font-size:12px;margin:12px 0}
-.skeleton{height:14px;border-radius:7px;background:var(--panel2);animation:skeleton-pulse 1.3s infinite alternate}
-@keyframes skeleton-pulse{from{opacity:.55}to{opacity:1}}
-.small-label{color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px}
-.metric-value{font-size:27px;font-weight:900;letter-spacing:-1px;margin-top:4px}
-.metric-caption{font-size:12px;color:var(--muted)}
-.workspace-card,.workspace-sidebar{box-shadow:0 8px 26px #00000008}
-.workspace-card h2{letter-spacing:-.8px}
-.workspace-sidebar button{transition:background .16s ease,color .16s ease,transform .16s ease}
-.workspace-sidebar button:hover{transform:translateX(2px)}
-.server-choice{width:100%;background:var(--panel);color:var(--text);font:inherit;text-align:left}
-.server-choice:focus-visible{outline:3px solid #5b7cfa88;outline-offset:2px}
-.module-row{min-width:0}
-.module-description{overflow-wrap:anywhere}
-.workspace-content .btn{white-space:nowrap}
-.workspace-content .empty-state{line-height:1.7}
-.workspace-content .inline-error,.workspace-content .inline-success{line-height:1.6}
-.workspace-content .permission-note{line-height:1.6}
-.workspace-toolbar .search-field{font:inherit;font-size:13px}
-.workspace-toolbar .search-field::placeholder{color:var(--muted)}
-.config-field input:disabled,.config-field select:disabled,.config-field textarea:disabled{opacity:.6;cursor:not-allowed}
-.config-field input[type=number]{font-variant-numeric:tabular-nums}
-.admin-info{overflow-wrap:anywhere}
-.admin-row .admin-avatar{flex-shrink:0}
-.status-line{white-space:nowrap}
-.status-line span{overflow-wrap:anywhere}
-.metric-value{overflow-wrap:anywhere}
-.workspace-content button:disabled{opacity:.55;cursor:wait}
-.workspace-content button:disabled:hover{transform:none}
-.workspace-content form{min-width:0}
-.workspace-content textarea{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
-.workspace-content .tag{white-space:nowrap}
-.workspace-content .data-table{min-width:420px}
-.workspace-content .form-actions .btn{min-height:42px}
-.workspace-content .search-field:focus{outline:2px solid #5b7cfa55;outline-offset:1px}
-.notice code{overflow-wrap:anywhere}
-button:focus-visible,a:focus-visible{outline:3px solid #5b7cfa88;outline-offset:3px}
-@media(max-width:800px){.workspace-layout{grid-template-columns:1fr}.workspace-sidebar{position:static;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}.workspace-sidebar .side-label{display:none}.workspace-sidebar button{justify-content:center;font-size:12px;padding:10px 5px}.config-grid{grid-template-columns:1fr}}
-@media(max-width:520px){.workspace-sidebar{grid-template-columns:repeat(2,minmax(0,1fr))}.workspace-grid{grid-template-columns:1fr}.workspace-toolbar{align-items:flex-start;flex-direction:column}.workspace-toolbar h2{font-size:22px}.search-field{width:100%;min-width:0}.admin-row{align-items:flex-start}.data-table th,.data-table td{padding:9px 7px}}
+:root{color-scheme:light dark;--bg:light-dark(#f4f6fc,#0b0d14);--panel:light-dark(#fff,#141824);--panel2:light-dark(#f5f6fb,#1b2030);--line:light-dark(#e3e7f2,#2b3042);--text:light-dark(#171b2b,#f4f6ff);--muted:light-dark(#69718a,#9ba3bc);--accent:#6674ff;--accent2:#8993ff;--green:#31d69a;--shadow:0 28px 90px #0308172b;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text)}body{min-height:100vh;overflow-x:hidden}.app{min-height:100vh;background:radial-gradient(ellipse at 13% 6%,#6574ff22,transparent 33%),radial-gradient(ellipse at 91% 88%,#e34f6120,transparent 30%),var(--bg);display:flex;flex-direction:column}.topbar{height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,6vw,92px);border-bottom:1px solid var(--line);background:light-dark(#ffffffa8,#0b0d14a8);backdrop-filter:blur(18px)}.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:-.5px}.brand-mark{width:39px;height:39px;border-radius:13px;background:linear-gradient(145deg,#8490ff,#525eea);display:grid;place-items:center;color:white;box-shadow:0 7px 20px #6674ff45}.brand-mark svg{width:22px}.brand small{display:block;font-size:10px;letter-spacing:2.2px;color:var(--muted);font-weight:700;margin-top:2px}.top-right{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px}.secure{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px #31d69a1a}.main{flex:1;display:grid;place-items:center;padding:58px 22px 72px}.layout{width:min(100%,980px);display:grid;grid-template-columns:1fr 410px;align-items:center;gap:clamp(36px,7vw,90px)}.intro{padding:12px 0}.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid #7b87ff45;color:var(--accent2);background:#6674ff12;border-radius:999px;padding:8px 12px;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}.eyebrow .dot{height:6px;width:6px;background:var(--accent2);border-radius:50%}h1{font-size:clamp(37px,5vw,57px);line-height:1.08;letter-spacing:-2.5px;margin:23px 0 18px;font-weight:850}.gradient{background:linear-gradient(100deg,#8993ff,#6470ff 52%,#b18bff);color:transparent;background-clip:text}.lead{font-size:16px;line-height:1.8;color:var(--muted);max-width:440px}.feature-list{display:grid;gap:17px;margin-top:32px}.feature{display:flex;gap:13px;align-items:flex-start}.feature-icon{width:36px;height:36px;border:1px solid var(--line);background:var(--panel);border-radius:12px;display:grid;place-items:center;flex-shrink:0;color:var(--accent2)}.feature-icon svg{width:17px;height:17px}.feature b{display:block;font-size:13px;margin:1px 0 4px}.feature span{display:block;color:var(--muted);font-size:12px;line-height:1.6}.auth-card{background:var(--panel);border:1px solid var(--line);border-radius:25px;padding:34px;box-shadow:var(--shadow);position:relative;overflow:hidden}.auth-card:before{content:"";position:absolute;height:3px;top:0;left:25px;right:25px;background:linear-gradient(90deg,transparent,#7783ff,transparent)}.card-logo{width:68px;height:68px;border-radius:21px;background:linear-gradient(145deg,#8792ff,#4e5ae4);display:grid;place-items:center;margin:0 auto 20px;color:#fff;box-shadow:0 12px 28px #6674ff38}.card-logo svg{width:36px;height:36px}.card-title{text-align:center;font-size:25px;letter-spacing:-.8px;font-weight:850}.card-sub{text-align:center;font-size:13px;line-height:1.75;color:var(--muted);margin:10px auto 25px;max-width:290px}.status{border:1px solid var(--line);background:var(--panel2);border-radius:13px;padding:13px;display:flex;align-items:center;gap:11px;margin-bottom:18px}.status-icon{width:34px;height:34px;border-radius:11px;background:#31d69a1a;color:var(--green);display:grid;place-items:center;flex-shrink:0}.status-icon svg{width:17px}.status strong{font-size:12px;display:block}.status small{font-size:11px;color:var(--muted);display:block;margin-top:3px;line-height:1.4}.discord-btn{width:100%;border:0;border-radius:12px;background:#5865f2;color:white;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;gap:11px;padding:15px 16px;cursor:pointer;transition:transform .16s,filter .16s,box-shadow .16s;box-shadow:0 9px 22px #5865f233}.discord-btn:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 12px 26px #5865f244}.discord-btn:active{transform:translateY(0)}.discord-btn svg{width:20px;height:20px}.fineprint{text-align:center;color:var(--muted);font-size:10px;line-height:1.7;margin:16px 2px 0}.fineprint a{color:var(--accent2);text-decoration:none}.divider{height:1px;background:var(--line);margin:24px 0 17px}.card-bottom{display:flex;justify-content:center;align-items:center;gap:7px;color:var(--muted);font-size:10px}.card-bottom svg{width:13px;color:var(--green)}.footer{padding:18px 26px 24px;display:flex;justify-content:space-between;gap:16px;color:var(--muted);font-size:10px;border-top:1px solid var(--line)}.footer-links{display:flex;gap:18px}.footer a{color:inherit;text-decoration:none}.footer a:hover{color:var(--text)}.toast{position:fixed;bottom:25px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;transition:.25s;background:var(--text);color:var(--bg);padding:13px 18px;border-radius:12px;font-size:12px;font-weight:700;box-shadow:var(--shadow);max-width:calc(100vw - 32px);text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:760px){.topbar{height:68px;padding:0 20px}.top-right .top-label{display:none}.layout{grid-template-columns:1fr;max-width:430px;gap:30px}.intro{text-align:center;padding:0}.intro .lead{margin:0 auto}.feature-list{text-align:left;max-width:330px;margin:25px auto 0}.intro h1{font-size:39px}.main{padding:38px 18px 45px}.auth-card{padding:28px 24px}.footer{flex-direction:column;align-items:center;text-align:center}.top-right{font-size:11px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+.app{background:radial-gradient(ellipse at 12% 8%,#a855f733,transparent 30%),radial-gradient(ellipse at 88% 24%,#22c55e22,transparent 28%),#07090d}.topbar{position:sticky;top:0;z-index:10;background:#080a0ee8;border-bottom-color:#252a32}.brand-mark{background:linear-gradient(145deg,#a855f7,#22c55e);box-shadow:0 7px 24px #22c55e20}.brand small{color:#a4aab5}.top-right{color:#c0c5cf}.intro{display:none}.main{padding-top:54px}.layout{grid-template-columns:minmax(0,500px);justify-content:center;gap:0}.auth-card{width:100%;border-color:#303640;background:#101318}.auth-card:before{background:linear-gradient(90deg,#22c55e,#a855f7,#fff)}.card-logo{background:linear-gradient(145deg,#a855f7,#22c55e)}.gradient{background:linear-gradient(100deg,#22c55e,#fff 45%,#c084fc);background-clip:text}.eyebrow{border-color:#22c55e55;color:#86efac;background:#22c55e12}.eyebrow .dot{background:#22c55e}.feature-icon{color:#c084fc}.discord-btn{background:linear-gradient(100deg,#15803d,#7e22ce)}.footer{border-color:#252a32;color:#9ca3af}.footer a:hover{color:#fff}.landing{padding:clamp(55px,8vw,105px) 22px 50px}.hero-inner,.showcase-inner,.bottom-cta{width:min(100%,1100px);margin:0 auto}.hero-inner{display:grid;grid-template-columns:1.05fr .95fr;gap:55px;align-items:center}.hero-copy h1{font-size:clamp(44px,6vw,76px);line-height:1.01;letter-spacing:-4px;margin:24px 0}.hero-copy p{color:#a4aab5;max-width:550px;font-size:16px;line-height:1.85}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.action-primary,.action-secondary{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:12px;padding:14px 19px;font-size:13px;font-weight:800;transition:transform .2s,filter .2s}.action-primary{color:#07100b;background:linear-gradient(100deg,#4ade80,#c084fc)}.action-secondary{border:1px solid #363b46;color:#f3f4f6;background:#111419}.action-primary:hover,.action-secondary:hover{transform:translateY(-2px);filter:brightness(1.1)}.hero-note{margin-top:20px;font-size:11px!important;color:#747c89!important}.mock-window{border:1px solid #343943;background:#101318;border-radius:20px;padding:15px;box-shadow:0 30px 90px #0009;transform:rotate(1deg)}.mock-top{display:flex;align-items:center;gap:6px;border-bottom:1px solid #292e38;padding:2px 4px 14px;color:#8b93a1;font-size:10px}.mock-dot{width:7px;height:7px;border-radius:50%;background:#4ade80}.mock-content{display:grid;grid-template-columns:105px 1fr;gap:13px;padding-top:15px;min-height:285px}.mock-sidebar{border-radius:12px;background:#171b22;padding:12px 8px}.mock-brand{font-size:10px;font-weight:900;color:#fff;margin-bottom:18px}.mock-nav{font-size:9px;color:#a5acb8;padding:9px 7px;border-radius:7px;margin:4px 0}.mock-nav.active{background:#22c55e1c;color:#86efac}.mock-main{min-width:0}.mock-welcome{border-radius:12px;background:linear-gradient(115deg,#14532d,#581c87);padding:17px;color:white}.mock-welcome small{font-size:9px;opacity:.8}.mock-welcome strong{display:block;font-size:19px;margin:8px 0}.mock-welcome span{font-size:9px;opacity:.8}.mock-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0}.mock-stat{background:#191d25;border:1px solid #292e38;border-radius:9px;padding:11px 8px}.mock-stat small{display:block;font-size:8px;color:#8b93a1}.mock-stat strong{display:block;font-size:15px;margin-top:6px}.mock-stat:nth-child(1) strong{color:#4ade80}.mock-stat:nth-child(2) strong{color:#c084fc}.mock-stat:nth-child(3) strong{color:#fff}.mock-activity{border:1px solid #292e38;border-radius:10px;padding:12px}.mock-activity strong{font-size:10px}.mock-line{height:7px;border-radius:5px;background:#292e38;margin-top:10px}.mock-line:nth-child(3){width:78%}.mock-line:nth-child(4){width:57%}.showcase{padding:45px 22px 95px;scroll-margin-top:90px}.section-heading{text-align:center;max-width:680px;margin:0 auto 34px}.section-heading h2{font-size:clamp(29px,4vw,43px);letter-spacing:-1.8px;margin:16px 0 12px}.section-heading p{color:#9ca3af;line-height:1.8;font-size:14px}.preview-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:17px}.preview-panel{background:#101318;border:1px solid #2e333d;border-radius:18px;padding:24px;min-height:205px;overflow:hidden}.preview-panel h3{margin:0 0 9px;font-size:17px}.preview-panel p{margin:0;color:#9ca3af;font-size:12px;line-height:1.7}.preview-tag{display:inline-flex;font-size:9px;font-weight:800;letter-spacing:1px;color:#86efac;background:#22c55e15;border:1px solid #22c55e40;border-radius:99px;padding:7px 9px;margin-bottom:15px}.preview-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:22px}.preview-mini{background:#191d25;border:1px solid #2c323d;border-radius:10px;padding:13px}.preview-mini span{display:block;font-size:9px;color:#9ca3af}.preview-mini b{display:block;margin-top:8px;font-size:12px}.preview-mini:nth-child(2) b{color:#c084fc}.preview-mini:nth-child(3) b{color:#4ade80}.preview-panel.purple{background:linear-gradient(145deg,#171220,#101318);border-color:#5b347b}.preview-panel.green{background:linear-gradient(145deg,#102018,#101318);border-color:#285c3d}.bottom-cta{padding:0 22px 80px;text-align:center}.bottom-cta h2{font-size:clamp(26px,4vw,40px);letter-spacing:-1.5px;margin:0 0 12px}.bottom-cta p{color:#9ca3af;font-size:13px;margin:0 0 24px}.main{scroll-margin-top:95px;border-top:1px solid #252a32;background:linear-gradient(180deg,#0b0d11,#07090d);width:100%}.auth-card{box-shadow:0 25px 80px #0008}.card-sub,.fineprint{color:#a4aab5}.status{background:#171b22;border-color:#303640}.status strong{color:#f3f4f6}.status-icon{background:#22c55e1a}.card-bottom svg{color:#4ade80}
+</style>
+<style>
+@media(max-width:760px){.hero-inner{grid-template-columns:1fr;gap:35px}.hero-copy{text-align:center}.hero-copy p{margin-left:auto;margin-right:auto}.hero-actions{justify-content:center}.mock-window{transform:none;max-width:540px;width:100%;margin:0 auto}.mock-content{grid-template-columns:82px 1fr;min-height:240px}.mock-sidebar{padding:9px 5px}.mock-nav{font-size:8px;padding:8px 4px}.mock-welcome{padding:13px}.mock-welcome strong{font-size:16px}.mock-stats{gap:5px}.mock-stat{padding:9px 5px}.mock-stat strong{font-size:12px}.preview-grid{grid-template-columns:1fr}.showcase{padding-bottom:65px}.landing{padding-top:48px}.hero-copy h1{letter-spacing:-2.5px}.preview-panel{padding:20px}}
+</style>
+<style>
+/* Motion polish: soft aurora, staggered entrance, floating dashboard and scroll reveals */
+.app{position:relative;isolation:isolate}.app:before,.app:after{content:"";position:fixed;z-index:-1;pointer-events:none;width:390px;height:390px;border-radius:50%;filter:blur(90px);opacity:.14;animation:auroraDrift 17s ease-in-out infinite alternate}.app:before{background:#22c55e;top:12%;left:-220px}.app:after{background:#a855f7;right:-230px;top:46%;animation-delay:-8s}.hero-copy .eyebrow{animation:riseIn .75s .05s both}.hero-copy h1{animation:riseIn .8s .12s both}.hero-copy>p:not(.hero-note){animation:riseIn .8s .2s both}.hero-actions{animation:riseIn .8s .28s both}.hero-note{animation:riseIn .8s .35s both}.mock-window{animation:floatIn 1s .15s both,hoverFloat 7s 1.2s ease-in-out infinite;transform-origin:center;transition:border-color .35s,box-shadow .35s}.mock-window:hover{border-color:#4ade8080;box-shadow:0 34px 100px #22c55e15,0 25px 70px #0008}.mock-welcome{background-size:180% 180%;animation:gradientFlow 8s ease infinite}.mock-stat,.preview-panel,.auth-card{transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}.mock-stat:hover{transform:translateY(-4px);border-color:#a855f766}.preview-panel:hover{transform:translateY(-5px);border-color:#4ade8070;box-shadow:0 20px 55px #0004}.preview-panel.purple:hover{border-color:#a855f780}.auth-card{animation:cardAppear .85s .15s both}.card-logo{animation:logoPulse 4s ease-in-out infinite}.action-primary{box-shadow:0 8px 30px #22c55e18}.action-primary:hover{box-shadow:0 12px 35px #a855f745}.showcase .section-heading,.showcase .preview-panel,.bottom-cta{animation:riseIn .8s both;animation-timeline:view();animation-range:entry 0% entry 28%}.preview-panel:nth-child(2){animation-delay:.1s}.secure{animation:statusPulse 2.4s ease-in-out infinite}.discord-btn:hover svg:first-child{animation:tinyBounce .45s ease}.brand-mark{transition:transform .35s}.brand:hover .brand-mark{transform:rotate(-8deg) scale(1.06)}.footer a{transition:color .2s}
+@keyframes riseIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}@keyframes floatIn{from{opacity:0;transform:translateY(28px) rotate(2deg) scale(.97)}to{opacity:1;transform:translateY(0) rotate(1deg) scale(1)}}@keyframes hoverFloat{0%,100%{translate:0 0}50%{translate:0 -9px}}@keyframes auroraDrift{from{translate:0 -25px;scale:.9}to{translate:45px 45px;scale:1.15}}@keyframes gradientFlow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}@keyframes logoPulse{0%,100%{box-shadow:0 12px 28px #6674ff20,0 0 0 0 #a855f700}50%{box-shadow:0 12px 32px #a855f744,0 0 0 7px #22c55e08}}@keyframes statusPulse{0%,100%{box-shadow:0 0 0 4px #22c55e14}50%{box-shadow:0 0 0 7px #22c55e08}}@keyframes tinyBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@media(max-width:760px){.app:before,.app:after{width:240px;height:240px;filter:blur(70px)}.mock-window{animation:floatIn .8s .15s both,hoverFloat 8s 1s ease-in-out infinite}.showcase .section-heading,.showcase .preview-panel,.bottom-cta{animation:none}}
+@media(prefers-reduced-motion:reduce){.app:before,.app:after,.mock-window,.mock-welcome,.hero-copy .eyebrow,.hero-copy h1,.hero-copy>p,.hero-actions,.hero-note,.auth-card,.card-logo,.secure,.showcase .section-heading,.showcase .preview-panel,.bottom-cta{animation:none!important}.mock-stat,.preview-panel,.auth-card,.action-primary,.action-secondary{transition:none!important}}
 </style>
 </head>
-<body><div class="app">
-<header class="nav"><div class="wrap navin"><a class="brand" href="#home" data-page="home"><span class="logo">SS</span><span>Samuel Studios <span style="color:var(--muted);font-weight:600">/ BotConfig</span></span></a><nav class="links"><a href="#features" data-page="features">Funktionen</a><a href="#docs" data-page="docs">Dokumentation</a><a href="#support" data-page="support">Support</a><button class="btn primary" id="loginTop">◈ Mit Discord anmelden</button></nav></div></header>
-<main>
-<section class="page active" id="home"><div class="wrap hero"><div><span class="eyebrow"><i class="dot"></i> BOT MANAGEMENT PLATFORM</span><h1>Dein Discord-Bot.<br><span class="gradient">Alles im Griff.</span></h1><p class="lead">Verwalte deinen Bot bequem über ein modernes Dashboard. Konfiguration, Module und Serverübersicht an einem Ort — entwickelt von Samuel Studios.</p><div class="actions"><button class="btn primary" id="loginHero">Mit Discord starten <span>→</span></button><a class="btn" href="#features" data-page="features">Funktionen ansehen</a></div><p class="hint">🔒 Anmeldung über Discord OAuth · Kein Discord-Passwort auf dieser Website</p></div><div class="mock"><div class="mocktop"><span class="lights"><i></i><i></i><i></i></span><span>Samuel Studios / Dashboard</span><span>•••</span></div><div class="mockbody"><aside class="side"><small>WORKSPACE</small><div class="sel">▦ Übersicht</div><div>⚙ Einstellungen</div><div>◈ Module</div><div>🛡 Sicherheit</div><div>📋 Protokolle</div><small>SERVER</small><div>◉ Mein Server</div></aside><div class="dash"><div class="dashhead">Übersicht <span class="live">● ONLINE</span></div><div class="stats"><div class="stat"><small>Bot-Status</small><b>Online</b></div><div class="stat"><small>Module</small><b>10+</b></div><div class="stat"><small>Server</small><b>Live</b></div><div class="stat"><small>Kontrolle</small><b>24/7</b></div></div><div class="chart"><i style="height:32%"></i><i style="height:54%"></i><i style="height:41%"></i><i style="height:70%"></i><i style="height:59%"></i><i style="height:85%"></i><i style="height:68%"></i><i style="height:96%"></i><i style="height:75%"></i><i style="height:88%"></i></div></div></div></div></div>
-<div class="wrap section"><div class="sectionhead"><div><span class="eyebrow">ALLES AN EINEM ORT</span><h2>Ein Dashboard. Viele Möglichkeiten.</h2></div><p>Die wichtigsten Verwaltungsbereiche übersichtlich sortiert, damit du deinen Bot schneller konfigurieren kannst.</p></div><div class="grid"><article class="card"><div class="ico">⚙️</div><h3>Bot-Konfiguration</h3><p>Konfigurationsbereiche und Serveroptionen über eine zentrale Oberfläche verwalten.</p></article><article class="card"><div class="ico">🛡️</div><h3>Sicherheit</h3><p>Moderation und Anti-Raid-Funktionen an einem Ort im Blick behalten.</p></article><article class="card"><div class="ico">🧩</div><h3>Module</h3><p>Module, Befehle und verfügbare Funktionen übersichtlich entdecken.</p></article></div></div></section>
-<section class="page" id="features"><div class="wrap pageintro"><span class="eyebrow">FUNKTIONEN</span><h1>Alles für deine Bot-Verwaltung.</h1><p>Eine klare Oberfläche für die vorhandenen Bot-Module. Welche Optionen wirklich verfügbar sind, hängt von deinem Bot und deinen Berechtigungen ab.</p></div><div class="wrap grid"><article class="card"><div class="ico">🛡️</div><h3>Moderation & Sicherheit</h3><p>Moderationsaktionen, Sicherheitsfunktionen und Anti-Raid-Verwaltung.</p></article><article class="card"><div class="ico">👥</div><h3>Team & Fraktionen</h3><p>Bereiche für Teamlisten, Fraktionen und serverbezogene Einstellungen.</p></article><article class="card"><div class="ico">🛒</div><h3>Shop & RP</h3><p>Unterstützung für vorhandene Shop- und Roleplay-Module.</p></article><article class="card"><div class="ico">📨</div><h3>Bewerbungen & Support</h3><p>Verwaltung der entsprechenden Bot-Funktionen und Abläufe.</p></article><article class="card"><div class="ico">🤖</div><h3>KI-Assistent</h3><p>KI-bezogene Bot-Funktionen, soweit sie auf dem Server eingerichtet sind.</p></article><article class="card"><div class="ico">📊</div><h3>Status & Übersicht</h3><p>Server, Module und Kontostatus zentral einsehen, sobald du angemeldet bist.</p></article></div></section>
-<section class="page" id="dashboard"><div class="wrap pageintro"><span class="eyebrow">DASHBOARD</span><h1>Willkommen zurück.</h1><p id="userLine">Melde dich mit Discord an, um deine Server und verfügbaren Bot-Funktionen zu laden.</p></div><div class="wrap"><div class="panel row"><div><h3>Dein Konto</h3><p id="userDetail">Noch nicht angemeldet.</p></div><button class="btn primary" id="loginDash">Mit Discord anmelden</button></div><div class="grid"><div class="card"><div class="ico">🏠</div><h3>Deine Server</h3><p id="guildCount">Nach der Anmeldung werden zugängliche Server hier angezeigt.</p></div><div class="card"><div class="ico">🧩</div><h3>Module</h3><p>Modulübersicht wird nach erfolgreicher Verbindung mit dem Bot geladen.</p></div><div class="card"><div class="ico">🔐</div><h3>Berechtigungen</h3><p>Änderungen werden vom Bot-Backend anhand deiner Rechte geprüft.</p></div></div><div class="notice">Vorschau-Hinweis: Diese Chat-Vorschau kann keine Verbindung zu deinem Wispbyte-Backend aufbauen. Auf GitHub Pages funktionieren Login und Live-Daten erst, wenn die API-Adresse erreichbar ist und die OAuth-Redirect-Adresse exakt eingetragen wurde.</div></div></section>
-<section class="page" id="docs"><div class="wrap pageintro"><span class="eyebrow">DOKUMENTATION</span><h1>So richtest du BotConfig ein.</h1><p>Die Website ist der Client. Discord OAuth und alle geheimen Schlüssel gehören auf das Backend — niemals in den öffentlichen Website-Code.</p></div><div class="wrap"><div class="panel"><h3>1. Discord OAuth</h3><p>Im Discord Developer Portal unter OAuth2 die Redirect-Adresse eintragen:</p><input class="field" readonly value="https://singhsamuel285-tech.github.io/BotConfig/" onclick="this.select()"><p>Client-ID: <code>1446188210794401883</code></p></div><div class="panel"><h3>2. Wispbyte Umgebungsvariablen</h3><p>Diese Werte im Backend setzen:</p><pre style="white-space:pre-wrap;background:var(--panel2);padding:15px;border-radius:10px;overflow:auto">WEBSITE_URL=https://singhsamuel285-tech.github.io/BotConfig/
-WEBSITE_ORIGIN=https://singhsamuel285-tech.github.io
-DISCORD_CLIENT_ID=1446188210794401883</pre><p>Zusätzlich werden <code>DISCORD_CLIENT_SECRET</code> und ein starker <code>API_SECRET</code> benötigt. Diese beiden Werte nicht veröffentlichen.</p></div><div class="panel"><h3>3. API-Verbindung</h3><p>Die Website erwartet die Backend-Routen für Discord-Login, Bootstrap, Serverliste und Konfiguration. Die API muss HTTPS verwenden und CORS für die oben genannte Website-Origin erlauben.</p></div></div></section>
-<section class="page" id="support"><div class="wrap pageintro"><span class="eyebrow">SUPPORT</span><h1>Wir helfen dir weiter.</h1><p>Hier findest du die wichtigsten Schritte zur Fehlerbehebung für Samuel Studios BotConfig.</p></div><div class="wrap"><div class="panel"><h3>Discord-Login schlägt fehl?</h3><p>Prüfe Client-ID, Client-Secret auf dem Backend, Redirect-URL und ob der API-Server online ist.</p></div><div class="panel"><h3>Dashboard bleibt leer?</h3><p>Prüfe in den Wispbyte-Logs, ob die API gestartet wurde und ob die Backend-Adresse stimmt. Teile niemals deinen Bot-Token oder Secrets.</p></div><div class="panel"><h3>Kontakt</h3><p>Verlinke hier deinen offiziellen Support-Discord oder ein Support-Ticket, sobald du die richtige URL festgelegt hast.</p></div></div></section>
-</main><footer class="footer"><div class="wrap footin"><span>© 2026 Samuel Studios</span><span>BotConfig · Sicher verbinden. Einfach verwalten.</span><span><a href="#docs" data-page="docs">Dokumentation</a> · <a href="#support" data-page="support">Support</a></span></div></footer><div class="toast" id="toast"></div></div>
+<body>
+<div class="app">
+<header class="topbar"><div class="brand"><div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 20 7.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg></div><div>🔰 • EURP | Manager Bot<small>BOTCONFIG</small></div></div><div class="top-right"><span class="secure"></span><span class="top-label">Sichere Verbindung</span><span>·</span><span>OAuth 2.0</span></div></header>
+<section class="landing"><div class="hero-inner"><div class="hero-copy"><div class="eyebrow"><span class="dot"></span> 🔰 • EURP | Manager Bot</div><h1>Dein Server.<br><span class="gradient">Dein System.</span></h1><p>Eine zentrale Plattform für Community-Funktionen, Server-Tools und sichere Konto-Verbindungen. Entdecke zuerst die Vorschau – du musst dich nicht anmelden, um dir das Design anzusehen.</p><div class="hero-actions"><a class="action-primary" href="#showcase">Website entdecken ↓</a><a class="action-secondary" href="#login">Mit Discord verbinden ↗</a></div><p class="hero-note">● Vorschau frei ansehen · Anmeldung erst weiter unten</p></div><div class="mock-window" aria-label="Grafische Vorschau des 🔰 • EURP | Manager Bot Dashboards"><div class="mock-top"><span class="mock-dot"></span><span class="mock-dot" style="background:#c084fc"></span><span class="mock-dot" style="background:#fff"></span><span style="margin-left:8px">botconfig / dashboard</span></div><div class="mock-content"><aside class="mock-sidebar"><div class="mock-brand">🔰 • EURP<br>　 MANAGER BOT</div><div class="mock-nav active">⌂ Übersicht</div><div class="mock-nav">▦ Funktionen</div><div class="mock-nav">♧ Community</div><div class="mock-nav">⚙ Einstellungen</div></aside><div class="mock-main"><div class="mock-welcome"><small>WILLKOMMEN ZURÜCK</small><strong>Alles im Blick.</strong><span>Deine Tools. An einem Ort.</span></div><div class="mock-stats"><div class="mock-stat"><small>STATUS</small><strong>Online</strong></div><div class="mock-stat"><small>TOOLS</small><strong>12+</strong></div><div class="mock-stat"><small>DESIGN</small><strong>Pro</strong></div></div><div class="mock-activity"><strong>Deine Plattform</strong><div class="mock-line"></div><div class="mock-line"></div><div class="mock-line"></div></div></div></div></div></div></section>
+<section class="showcase" id="showcase"><div class="showcase-inner"><div class="section-heading"><div class="eyebrow"><span class="dot"></span> Ein erster Einblick</div><h2>Sieh dir die Plattform an,<br><span class="gradient">bevor du dich anmeldest.</span></h2><p>Das sind beispielhafte Muster für die spätere Website – übersichtlich, modern und in Schwarz, Weiß, Grün und Lila gestaltet.</p></div><div class="preview-grid"><article class="preview-panel green"><span class="preview-tag">01 · DASHBOARD</span><h3>Deine wichtigsten Tools</h3><p>Ein aufgeräumter Überblick mit Statusanzeigen, Schnellzugriffen und den wichtigsten Funktionen deiner Community.</p><div class="preview-cards"><div class="preview-mini"><span>System</span><b>Bereit</b></div><div class="preview-mini"><span>Design</span><b>Modern</b></div><div class="preview-mini"><span>Zugriff</span><b>Sicher</b></div></div></article><article class="preview-panel purple"><span class="preview-tag" style="color:#d8b4fe;background:#a855f719;border-color:#a855f744">02 · COMMUNITY</span><h3>Alles an einem Ort</h3><p>Community-Infos, Bot-Funktionen und hilfreiche Links – später passend zu deinen echten Funktionen.</p><div style="display:flex;gap:8px;margin-top:24px;flex-wrap:wrap"><span class="preview-tag">BOT-TOOLS</span><span class="preview-tag" style="color:#d8b4fe;background:#a855f719;border-color:#a855f744">DISCORD</span></div></article></div></div></section>
+<section class="bottom-cta"><h2>Bereit, loszulegen?</h2><p>Sieh dir alles in Ruhe an. Wenn du möchtest, kannst du dich danach verbinden.</p><a class="action-primary" href="#login">Weiter zur Anmeldung ↓</a></section>
+<main class="main"><div class="layout"><section class="intro"><div class="eyebrow"><span class="dot"></span> Konto verbinden</div><h1>Dein Discord.<br><span class="gradient">Deine Kontrolle.</span></h1><p class="lead">Verbinde dein Discord-Konto einmalig mit 🔰 • EURP | Manager Bot und nutze die freigeschalteten Community-Funktionen – transparent und unter deiner Kontrolle.</p><div class="feature-list"><div class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg></div><div><b>Einmal autorisieren</b><span>Du musst die Freigabe nicht bei jeder Nutzung erneut erteilen.</span></div></div><div class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg></div><div><b>Du entscheidest</b><span>Du kannst den Zugriff später in Discord wieder widerrufen.</span></div></div><div class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg></div><div><b>Geschützt verbunden</b><span>Die Anmeldung läuft über Discord – dein Passwort gibst du nicht bei uns ein.</span></div></div></div></section>
+<section class="auth-card" aria-label="Discord Autorisierung"><div class="card-logo"><svg viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0 105.89 105.89 0 0 0 19.39 8.09C2.79 32.65-1.71 56.6.54 80.21h0A105.73 105.73 0 0 0 32.71 96.36 77.7 77.7 0 0 0 39.6 85.25a68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1A105.25 105.25 0 0 0 126.6 80.22h0C129.24 52.84 122.09 29.11 107.7 8.07ZM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53 48.84 65.69 42.45 65.69Zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53 91.08 65.69 84.69 65.69Z"/></svg></div><div class="card-title">Autorisieren</div><p class="card-sub">Melde dich mit Discord an, um 🔰 • EURP | Manager Bot sicher mit deinem Konto zu verbinden.</p><div class="status"><div class="status-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg></div><div><strong>Weiterleitung zu Discord</strong><small>Du bestätigst die Freigabe direkt bei Discord.</small></div></div><button class="discord-btn" id="authBtn"><svg viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0 105.89 105.89 0 0 0 19.39 8.09C2.79 32.65-1.71 56.6.54 80.21h0A105.73 105.73 0 0 0 32.71 96.36 77.7 77.7 0 0 0 39.6 85.25a68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1A105.25 105.25 0 0 0 126.6 80.22h0C129.24 52.84 122.09 29.11 107.7 8.07ZM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53 48.84 65.69 42.45 65.69Zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53 91.08 65.69 84.69 65.69Z"/></svg><span>Mit Discord autorisieren</span><svg style="width:15px;opacity:.75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg></button><p class="fineprint">Mit dem Fortfahren stimmst du der angezeigten Discord-Freigabe zu. Prüfe die Berechtigungen sorgfältig, bevor du bestätigst.</p><div class="divider"></div><div class="card-bottom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg> Autorisierung über Discord OAuth 2.0</div></section></div></main>
+<footer class="footer"><span>© 2026 🔰 • EURP | Manager Bot</span><div class="footer-links"><a href="#" id="privacy">Datenschutz</a><a href="#" id="help">Hilfe</a></div></footer>
+</div><div class="toast" id="toast" role="status">Vorschau: Discord-Anmeldung ist hier noch nicht verbunden.</div>
+<script>document.querySelector('.main').id='login';</script>
 <script>
-// Public website settings. Never put DISCORD_CLIENT_SECRET or API_SECRET in this file.
+const toast=document.getElementById('toast');
+let toastTimer;
 const DISCORD_CLIENT_ID='1446188210794401883';
 const API_BASE='https://botconfig.wisp.uno';
 const REDIRECT_URI=window.location.origin+window.location.pathname;
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.style.display='none',5200)}
-function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page));document.querySelectorAll('[data-page]').forEach(a=>a.classList.toggle('active',a.dataset.page===page));if(page==='dashboard')history.replaceState(null,'','#dashboard');else history.replaceState(null,'','#'+page);window.scrollTo({top:0,behavior:'smooth'})}
-document.querySelectorAll('[data-page]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();go(a.dataset.page)}));
-function login(){if(!DISCORD_CLIENT_ID||DISCORD_CLIENT_ID==='DEINE_CLIENT_ID'){toast('Bitte zuerst die Discord Client-ID im Website-Code eintragen.');return}const state=crypto.randomUUID();sessionStorage.setItem('discord_oauth_state',state);sessionStorage.setItem('discord_oauth_redirect',REDIRECT_URI);const url=new URL('https://discord.com/oauth2/authorize');url.searchParams.set('client_id',DISCORD_CLIENT_ID);url.searchParams.set('response_type','code');url.searchParams.set('redirect_uri',REDIRECT_URI);url.searchParams.set('scope','identify');url.searchParams.set('state',state);window.location.href=url.toString()}
-document.getElementById('loginTop').addEventListener('click',login);document.getElementById('loginHero').addEventListener('click',login);document.getElementById('loginDash').addEventListener('click',login);
-(async function(){
-  const params=new URLSearchParams(location.search);
-  const code=params.get('code');
-  const headersFor=token=>({Authorization:'Bearer '+token});
-  function addDashboardPanel(title,id){let el=document.getElementById(id);if(!el){el=document.createElement('section');el.className='panel';el.id=id;const dashboard=document.getElementById('dashboard');dashboard.querySelector('.wrap:last-child').insertBefore(el,dashboard.querySelector('.notice'));}el.innerHTML='<h3>'+title+'</h3><div class="live-state">Wird geladen …</div>';return el;}
-  async function api(path,token,options={}){const response=await fetch(API_BASE+path,{...options,headers:{...(options.headers||{}),...(token?headersFor(token):{})}});let body={};try{body=await response.json()}catch{}if(!response.ok)throw new Error(body.error||body.message||('API-Fehler '+response.status));return body;}
-  async function loadDashboard(token,user){
-    if(user){document.getElementById('userLine').textContent='Angemeldet als '+(user.username||'Discord-Nutzer');document.getElementById('userDetail').textContent='Discord-ID: '+(user.id||'nicht angegeben');}
-    const serverPanel=addDashboardPanel('Deine Discord-Server','liveGuilds');
-    const modulePanel=addDashboardPanel('Bot-Module','liveModules');
-    try{
-      const boot=await api('/api/bootstrap',token);
-      const guilds=Array.isArray(boot.guilds)?boot.guilds:(Array.isArray(boot.servers)?boot.servers:[]);
-      document.getElementById('guildCount').textContent=guilds.length+' Server vom Backend zurückgegeben.';
-      serverPanel.innerHTML='<h3>Deine Discord-Server</h3>'+(guilds.length?'<div class="grid">'+guilds.map((g,i)=>'<article class="card"><div class="ico">🏠</div><h3>'+escapeHtml(g.name||g.guild_name||('Server '+(i+1)))+'</h3><p>'+escapeHtml(g.id||g.guild_id||'Server-ID nicht angegeben')+'</p></article>').join('')+'</div>':'<p>Das Backend hat keine Serverliste zurückgegeben oder dein Konto hat keinen zugänglichen Server.</p>');
-      try{
-        const modData=await api('/api/modules',token);
-        const mods=Array.isArray(modData.modules)?modData.modules:(Array.isArray(modData)?modData:[]);
-        modulePanel.innerHTML='<h3>Bot-Module</h3>'+(mods.length?'<div class="grid">'+mods.map(m=>{const name=typeof m==='string'?m:(m.label||m.name||m.key||'Modul');const enabled=typeof m==='object'?(m.enabled??m.active):null;return '<article class="card"><div class="ico">🧩</div><h3>'+escapeHtml(name)+'</h3><p>'+(enabled===null?'Status vom Backend nicht angegeben':(enabled?'Aktiviert':'Deaktiviert'))+'</p></article>'}).join('')+'</div>':'<p>Die API antwortet, liefert aber keine bekannte Modulliste. Prüfe die Antwortstruktur von <code>/api/modules</code>.</p>');
-      }catch(e){modulePanel.innerHTML='<h3>Bot-Module</h3><p>Module konnten nicht geladen werden: '+escapeHtml(e.message)+'</p>';}
-      toast('Dashboard mit den verfügbaren Backend-Daten geladen.');
-    }catch(e){serverPanel.innerHTML='<h3>Deine Discord-Server</h3><p>Die API konnte die Daten nicht laden: '+escapeHtml(e.message)+'</p>';modulePanel.innerHTML='<h3>Bot-Module</h3><p>Bitte Backend, Sitzungstoken und Berechtigungen prüfen.</p>';toast('Dashboard konnte nicht vollständig geladen werden: '+e.message);}
-  }
-  function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-  try{const health=await fetch(API_BASE+'/api/health');if(!health.ok)throw new Error('HTTP '+health.status);document.querySelector('.notice').textContent='Backend erreichbar. Live-Daten werden nach der Discord-Anmeldung geladen.';}catch{document.querySelector('.notice').textContent='Backend aktuell nicht erreichbar. Prüfe API_BASE, Wispbyte-Status, HTTPS und CORS. Die Website kann ohne erreichbare API keine Live-Daten anzeigen.';}
-  if(code){
-    go('dashboard');const gotState=params.get('state');const expected=sessionStorage.getItem('discord_oauth_state');history.replaceState(null,'',REDIRECT_URI+'#dashboard');
-    if(!gotState||gotState!==expected){toast('Discord-Anmeldung abgebrochen: Sicherheitsprüfung fehlgeschlagen.');return;}
-    try{const data=await api('/api/auth/discord',null,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code,redirect_uri:REDIRECT_URI})});if(!data.session_token)throw new Error('Backend hat kein Sitzungstoken zurückgegeben.');sessionStorage.setItem('botconfig_session_token',data.session_token);sessionStorage.removeItem('discord_oauth_state');await loadDashboard(data.session_token,data.user||null);}catch(err){toast('Login nicht möglich: '+err.message+' — API-Adresse, Redirect-URL und Backend prüfen.');}
-  }else{
-    if(location.hash==='#dashboard')go('dashboard');else if(['#features','#docs','#support'].includes(location.hash))go(location.hash.slice(1));
-    const token=sessionStorage.getItem('botconfig_session_token');if(token)await loadDashboard(token,null);
-  }
-})();
+function showToast(message){toast.textContent=message;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),5000)}
+function setAuthLoading(loading){const button=document.getElementById('authBtn');button.disabled=loading;button.style.opacity=loading?'.65':'1';button.querySelector('span').textContent=loading?'Verbindung wird geprüft …':'Mit Discord autorisieren'}
+async function finishDiscordLogin(){
+ const params=new URLSearchParams(window.location.search);
+ const code=params.get('code');
+ if(!code)return;
+ const returnedState=params.get('state');
+ const savedState=sessionStorage.getItem('discord_oauth_state');
+ sessionStorage.removeItem('discord_oauth_state');
+ history.replaceState({},document.title,REDIRECT_URI);
+ if(!returnedState||!savedState||returnedState!==savedState){showToast('Anmeldung abgebrochen: Sicherheitsprüfung fehlgeschlagen. Bitte erneut versuchen.');return}
+ setAuthLoading(true);
+ try{
+  const response=await fetch(API_BASE+'/api/auth/discord',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code,redirect_uri:REDIRECT_URI})});
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok||!data.session_token)throw new Error(data.error||data.message||'Discord-Anmeldung fehlgeschlagen.');
+  sessionStorage.setItem('eurp_manager_bot_session_token',data.session_token);
+  const meResponse=await fetch(API_BASE+'/api/bootstrap',{headers:{Authorization:'Bearer '+data.session_token}});
+  const bootstrap=await meResponse.json().catch(()=>({}));
+  if(!meResponse.ok)throw new Error(bootstrap.error||'Anmeldung erfolgreich, aber die Bot-API antwortet nicht korrekt.');
+  const username=(data.user&&data.user.username)||(bootstrap.user&&bootstrap.user.username)||'Discord-Nutzer';
+  const guildCount=Array.isArray(bootstrap.guilds)?bootstrap.guilds.length:0;
+  document.querySelector('.card-title').textContent='Verbunden!';
+  document.querySelector('.card-sub').textContent='Angemeldet als '+username+'. Zugriff auf '+guildCount+' Discord-Server gefunden.';
+  document.querySelector('.status strong').textContent='Discord-Konto verbunden';
+  document.querySelector('.status small').textContent='Deine Sitzung ist aktiv. Die Website kann jetzt deine freigegebenen Bot-Server laden.';
+  document.querySelector('#authBtn span').textContent='Erneut mit Discord verbinden';
+  showToast('Erfolgreich mit Discord verbunden! Server: '+guildCount);
+ }catch(error){showToast('Verbindung fehlgeschlagen: '+error.message)}
+ finally{setAuthLoading(false)}
+}
+document.getElementById('authBtn').addEventListener('click',()=>{
+ const state=Array.from(crypto.getRandomValues(new Uint8Array(24)),b=>b.toString(16).padStart(2,'0')).join('');
+ sessionStorage.setItem('discord_oauth_state',state);
+ const params=new URLSearchParams({client_id:DISCORD_CLIENT_ID,response_type:'code',redirect_uri:REDIRECT_URI,scope:'identify',state});
+ window.location.assign('https://discord.com/oauth2/authorize?'+params.toString());
+});
+finishDiscordLogin();
+document.getElementById('privacy').addEventListener('click',e=>{e.preventDefault();showToast('Hier kannst du später deine Datenschutzerklärung verlinken.')});
+document.getElementById('help').addEventListener('click',e=>{e.preventDefault();showToast('Hier kannst du später einen Support-Link einsetzen.')});
 </script>
-<script>
-/* Zusätzliche Dashboard-Oberfläche für Server, Module, Konfiguration und Admins. */
-(() => {
-  const API = 'https://botconfig.wisp.uno';
-  const session = () => sessionStorage.getItem('botconfig_session_token') || '';
-  const state = { guilds: [], guildId: '', modules: [], config: {}, admins: [] };
-  const $ = (selector, root = document) => root.querySelector(selector);
-  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-
-  function escape(value) {
-    return String(value ?? '').replace(/[&<>"']/g, char => ({
-      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-    })[char]);
-  }
-
-  async function api(path, options = {}) {
-    const headers = new Headers(options.headers || {});
-    if (session()) headers.set('Authorization', `Bearer ${session()}`);
-    if (options.body && !headers.has('Content-Type')) headers.set('Content-Type', 'application/json');
-    let response;
-    try {
-      response = await fetch(`${API}${path}`, { ...options, headers });
-    } catch {
-      throw new Error('Backend nicht erreichbar. Prüfe Wispbyte, HTTPS und CORS.');
-    }
-    const body = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(body.error || body.message || `API-Fehler ${response.status}`);
-    return body;
-  }
-
-  function feedback(message, error = false) {
-    const box = $('#workspaceFeedback');
-    if (box) box.innerHTML = `<div class="${error ? 'inline-error' : 'inline-success'}">${escape(message)}</div>`;
-    const toast = $('#toast');
-    if (toast) {
-      toast.textContent = message;
-      toast.style.display = 'block';
-      clearTimeout(feedback.timer);
-      feedback.timer = setTimeout(() => { toast.style.display = 'none'; }, 4500);
-    }
-  }
-
-  function mount() {
-    if ($('#workspaceRoot')) return;
-    const host = $('#dashboard .wrap:last-child');
-    if (!host) return;
-    const root = document.createElement('div');
-    root.id = 'workspaceRoot';
-    root.innerHTML = `
-      <div class="workspace-toolbar">
-        <div><h2>Bot-Verwaltung</h2><p>Server auswählen und verfügbare Einstellungen ansehen.</p></div>
-        <div class="workspace-tools"><span class="status-line"><i class="status-dot" id="workspaceDot"></i><span id="workspaceStatus">Noch nicht verbunden</span></span><button class="btn" id="workspaceRefresh" type="button">↻ Aktualisieren</button></div>
-      </div>
-      <div class="workspace-layout">
-        <aside class="workspace-sidebar" aria-label="Dashboard-Navigation">
-          <div class="side-label">VERWALTUNG</div>
-          <button class="selected" type="button" data-tab="overview">▦ Übersicht</button>
-          <button type="button" data-tab="servers">▣ Server</button>
-          <button type="button" data-tab="modules">🧩 Module</button>
-          <button type="button" data-tab="config">⚙ Konfiguration</button>
-          <button type="button" data-tab="admins">🛡 Admins</button>
-          <div class="side-label">KONTO</div>
-          <button type="button" data-tab="account">◉ Konto</button>
-        </aside>
-        <div class="workspace-content">
-          <section class="workspace-section active" data-section="overview">
-            <div class="workspace-grid">
-              <article class="workspace-card"><span class="small-label">Verfügbare Server</span><div class="metric-value" id="metricServers">—</div><div class="metric-caption">Server, die das Backend zurückgibt</div></article>
-              <article class="workspace-card"><span class="small-label">Module</span><div class="metric-value" id="metricModules">—</div><div class="metric-caption">Vom Backend geladene Einträge</div></article>
-            </div>
-            <article class="workspace-card" style="margin-top:14px"><h3>So funktioniert die Verwaltung</h3><p>Wähle einen Server aus. Die Website fragt anschließend die passenden API-Routen ab. Wenn eine Route oder Berechtigung fehlt, wird eine Fehlermeldung angezeigt. Ein Klick allein ändert keine Bot-Einstellung.</p><div class="form-actions"><button class="btn primary" type="button" data-jump="servers">Server auswählen →</button><button class="btn" type="button" data-jump="config">Konfiguration öffnen</button></div></article>
-          </section>
-          <section class="workspace-section" data-section="servers"><article class="workspace-card"><div class="workspace-toolbar"><div><h2>Server</h2><p>Wähle den Server für die Verwaltung.</p></div><input class="search-field" id="serverSearch" placeholder="Server suchen…" aria-label="Server suchen"></div><div id="serverList"><div class="empty-state"><strong>Wird geladen</strong>Die Serverliste wird vom Backend abgefragt.</div></div></article></section>
-          <section class="workspace-section" data-section="modules"><article class="workspace-card"><div class="workspace-toolbar"><div><h2>Module</h2><p id="moduleSubtitle">Zuerst einen Server auswählen.</p></div><input class="search-field" id="moduleSearch" placeholder="Module suchen…" aria-label="Module suchen"></div><div id="moduleList"><div class="empty-state"><strong>Kein Server ausgewählt</strong>Öffne zuerst den Bereich „Server“.</div></div><div class="permission-note">Moduländerungen benötigen eine passende Backend-Route. Diese Oberfläche behauptet nicht, eine Änderung gespeichert zu haben, wenn die API sie nicht bestätigt.</div></article></section>
-          <section class="workspace-section" data-section="config"><article class="workspace-card"><div class="workspace-toolbar"><div><h2>Konfiguration</h2><p id="configSubtitle">Zuerst einen Server auswählen.</p></div><button class="btn" id="configReload" type="button">↻ Neu laden</button></div><div id="configEditor"><div class="empty-state"><strong>Keine Konfiguration geladen</strong>Wähle einen Server aus.</div></div></article></section>
-          <section class="workspace-section" data-section="admins"><article class="workspace-card"><div class="workspace-toolbar"><div><h2>Admins</h2><p id="adminSubtitle">Zuerst einen Server auswählen.</p></div></div><div id="adminList"><div class="empty-state"><strong>Keine Admins geladen</strong>Wähle einen Server aus.</div></div><div class="permission-note">Admin-Rechte werden ausschließlich vom Backend geprüft.</div></article></section>
-          <section class="workspace-section" data-section="account"><article class="workspace-card"><h2>Konto und Sitzung</h2><p>Deine Anmeldung wird über Discord OAuth durchgeführt.</p><div id="accountDetails" class="permission-note">Noch keine Kontodaten geladen.</div><div class="form-actions"><button class="btn danger-button" id="workspaceLogout" type="button">Abmelden</button></div></article></section>
-          <div id="workspaceFeedback" aria-live="polite"></div>
-        </div>
-      </div>`;
-    host.insertBefore(root, $('.notice', host));
-
-    $$('[data-tab]', root).forEach(button => button.addEventListener('click', () => showTab(button.dataset.tab)));
-    $$('[data-jump]', root).forEach(button => button.addEventListener('click', () => showTab(button.dataset.jump)));
-    $('#workspaceRefresh', root).addEventListener('click', () => refresh(true));
-    $('#serverSearch', root).addEventListener('input', renderServers);
-    $('#moduleSearch', root).addEventListener('input', renderModules);
-    $('#configReload', root).addEventListener('click', loadConfig);
-    $('#workspaceLogout', root).addEventListener('click', logout);
-  }
-
-  function showTab(name) {
-    $$('[data-section]').forEach(section => section.classList.toggle('active', section.dataset.section === name));
-    $$('[data-tab]').forEach(button => button.classList.toggle('selected', button.dataset.tab === name));
-    if (name === 'config') loadConfig();
-    if (name === 'admins') loadAdmins();
-    if (name === 'modules') renderModules();
-  }
-
-  function normalizeServers(data) {
-    const list = Array.isArray(data) ? data : data.guilds || data.servers || data.data || [];
-    return list.filter(item => item && typeof item === 'object').map(item => ({
-      id: String(item.id || item.guild_id || item.server_id || ''),
-      name: String(item.name || item.guild_name || item.server_name || 'Unbenannter Server')
-    })).filter(item => item.id);
-  }
-
-  function renderServers() {
-    const target = $('#serverList');
-    if (!target) return;
-    const query = ($('#serverSearch')?.value || '').trim().toLowerCase();
-    const list = state.guilds.filter(server => `${server.name} ${server.id}`.toLowerCase().includes(query));
-    if (!list.length) {
-      target.innerHTML = `<div class="empty-state"><strong>${state.guilds.length ? 'Kein Treffer' : 'Keine Server erhalten'}</strong>${state.guilds.length ? 'Ändere deinen Suchbegriff.' : 'Prüfe die Antwort von /api/bootstrap oder /api/guilds.'}</div>`;
-      return;
-    }
-    target.innerHTML = list.map(server => `<button class="server-choice ${server.id === state.guildId ? 'selected' : ''}" type="button" data-server="${escape(server.id)}"><span class="server-avatar">${escape(server.name.slice(0, 1).toUpperCase())}</span><span class="server-meta"><strong>${escape(server.name)}</strong><small>ID: ${escape(server.id)}</small></span><span>${server.id === state.guildId ? '✓' : 'Auswählen →'}</span></button>`).join('');
-    $$('[data-server]', target).forEach(button => button.addEventListener('click', () => selectServer(button.dataset.server)));
-  }
-
-  async function selectServer(id) {
-    const server = state.guilds.find(item => item.id === id);
-    if (!server) return;
-    state.guildId = id;
-    state.modules = [];
-    state.config = {};
-    state.admins = [];
-    $('#moduleSubtitle').textContent = `Server: ${server.name}`;
-    $('#configSubtitle').textContent = `Server: ${server.name}`;
-    $('#adminSubtitle').textContent = `Server: ${server.name}`;
-    renderServers();
-    showTab('modules');
-    await Promise.allSettled([loadModules(), loadConfig(), loadAdmins()]);
-  }
-
-  async function loadModules() {
-    if (!state.guildId) return;
-    const target = $('#moduleList');
-    target.innerHTML = '<div class="empty-state"><strong>Module werden geladen</strong>Bitte warten.</div>';
-    try {
-      const data = await api(`/api/modules?guild_id=${encodeURIComponent(state.guildId)}`);
-      const list = Array.isArray(data) ? data : data.modules || data.features || data.data || [];
-      state.modules = list.map(item => {
-        if (typeof item === 'string') return { key: item, name: item, enabled: null };
-        const key = String(item.key || item.id || item.name || 'Modul');
-        const value = item.enabled ?? item.active ?? item.is_enabled;
-        return { key, name: String(item.label || item.display_name || item.name || key), description: String(item.description || 'Vom Backend bereitgestelltes Modul'), enabled: typeof value === 'boolean' ? value : null };
-      });
-      renderModules();
-      $('#metricModules').textContent = String(state.modules.length);
-    } catch (error) {
-      target.innerHTML = `<div class="inline-error">Module konnten nicht geladen werden: ${escape(error.message)}</div>`;
-    }
-  }
-
-  function renderModules() {
-    const target = $('#moduleList');
-    if (!target || !state.guildId) return;
-    const query = ($('#moduleSearch')?.value || '').trim().toLowerCase();
-    const list = state.modules.filter(item => `${item.name} ${item.key} ${item.description || ''}`.toLowerCase().includes(query));
-    if (!list.length) {
-      target.innerHTML = '<div class="empty-state"><strong>Keine Module angezeigt</strong>Warte auf die API oder prüfe ihre Antwortstruktur.</div>';
-      return;
-    }
-    target.innerHTML = list.map(item => `<div class="module-row"><div class="module-icon">🧩</div><div class="module-description"><strong>${escape(item.name)}</strong><small>${escape(item.description || item.key)} · ${escape(item.key)}</small></div>${item.enabled === null ? '<span class="tag">Status unbekannt</span>' : `<span class="tag">${item.enabled ? 'Aktiviert' : 'Deaktiviert'}</span>`}</div>`).join('');
-  }
-
-  function flatten(value, prefix = '') {
-    const result = [];
-    if (!value || typeof value !== 'object' || Array.isArray(value)) return [{ key: prefix || 'value', value }];
-    for (const [key, child] of Object.entries(value)) {
-      const full = prefix ? `${prefix}.${key}` : key;
-      if (child && typeof child === 'object' && !Array.isArray(child)) result.push(...flatten(child, full));
-      else result.push({ key: full, value: child });
-    }
-    return result;
-  }
-
-  function assignNested(target, dotted, value) {
-    const keys = dotted.split('.');
-    let cursor = target;
-    keys.slice(0, -1).forEach(key => {
-      if (!cursor[key] || typeof cursor[key] !== 'object' || Array.isArray(cursor[key])) cursor[key] = {};
-      cursor = cursor[key];
-    });
-    cursor[keys[keys.length - 1]] = value;
-  }
-
-  async function loadConfig() {
-    if (!state.guildId) return;
-    const target = $('#configEditor');
-    target.innerHTML = '<div class="empty-state"><strong>Konfiguration wird geladen</strong>Bitte warten.</div>';
-    try {
-      const data = await api(`/api/guild/${encodeURIComponent(state.guildId)}/config`);
-      state.config = data.config && typeof data.config === 'object' ? data.config : data;
-      renderConfig();
-    } catch (error) {
-      target.innerHTML = `<div class="inline-error">Konfiguration konnte nicht geladen werden: ${escape(error.message)}</div>`;
-    }
-  }
-
-  function renderConfig() {
-    const target = $('#configEditor');
-    const rows = flatten(state.config).filter(row => !['guild_id', 'server_id'].includes(row.key));
-    if (!rows.length) {
-      target.innerHTML = '<div class="empty-state"><strong>Leere Konfiguration</strong>Das Backend hat keine bekannten Konfigurationsfelder geliefert.</div>';
-      return;
-    }
-    const fields = rows.map(row => {
-      const value = row.value;
-      let control;
-      if (typeof value === 'boolean') {
-        control = `<select class="config-value" data-key="${escape(row.key)}"><option value="true" ${value ? 'selected' : ''}>Aktiviert</option><option value="false" ${!value ? 'selected' : ''}>Deaktiviert</option></select>`;
-      } else if (typeof value === 'number') {
-        control = `<input class="config-value" data-key="${escape(row.key)}" type="number" step="any" value="${escape(value)}">`;
-      } else if (value === null || typeof value === 'string') {
-        control = `<input class="config-value" data-key="${escape(row.key)}" type="text" value="${escape(value ?? '')}">`;
-      } else {
-        control = `<textarea class="config-value" data-key="${escape(row.key)}">${escape(JSON.stringify(value))}</textarea>`;
-      }
-      return `<label class="config-field"><span>${escape(row.key)}</span>${control}<small>Typ: ${escape(typeof value)}</small></label>`;
-    }).join('');
-    target.innerHTML = `<form id="configForm"><div class="config-grid">${fields}</div><div class="form-actions"><button class="btn" type="button" id="configDiscard">Verwerfen</button><button class="btn primary" type="submit">Änderungen speichern</button></div></form>`;
-    $('#configDiscard').addEventListener('click', renderConfig);
-    $('#configForm').addEventListener('submit', saveConfig);
-  }
-
-  async function saveConfig(event) {
-    event.preventDefault();
-    const form = event.currentTarget;
-    const next = JSON.parse(JSON.stringify(state.config));
-    try {
-      $$('.config-value', form).forEach(input => {
-        const key = input.dataset.key;
-        const old = flatten(state.config).find(row => row.key === key)?.value;
-        let value = input.value;
-        if (typeof old === 'boolean') value = value === 'true';
-        else if (typeof old === 'number') value = Number(value);
-        else if (old && typeof old === 'object') value = JSON.parse(value);
-        assignNested(next, key, value);
-      });
-      const button = $('button[type="submit"]', form);
-      button.disabled = true;
-      button.textContent = 'Speichert …';
-      const result = await api(`/api/guild/${encodeURIComponent(state.guildId)}/config`, { method: 'POST', body: JSON.stringify(next) });
-      state.config = result.config && typeof result.config === 'object' ? result.config : next;
-      renderConfig();
-      feedback('Die API hat den Speichervorgang erfolgreich beantwortet.');
-    } catch (error) {
-      feedback(`Speichern fehlgeschlagen: ${error.message}`, true);
-      const button = $('button[type="submit"]', form);
-      if (button) { button.disabled = false; button.textContent = 'Erneut versuchen'; }
-    }
-  }
-
-  async function loadAdmins() {
-    if (!state.guildId) return;
-    const target = $('#adminList');
-    target.innerHTML = '<div class="empty-state"><strong>Admins werden geladen</strong>Bitte warten.</div>';
-    try {
-      const data = await api(`/api/guild/${encodeURIComponent(state.guildId)}/admins`);
-      state.admins = Array.isArray(data) ? data : data.admins || data.users || data.data || [];
-      if (!state.admins.length) {
-        target.innerHTML = '<div class="empty-state"><strong>Keine Admins zurückgegeben</strong>Die API hat eine leere Liste geliefert.</div>';
-        return;
-      }
-      target.innerHTML = state.admins.map(entry => {
-        const item = typeof entry === 'string' ? { id: entry, username: entry } : entry;
-        const id = String(item.id || item.user_id || item.discord_id || 'Nicht angegeben');
-        const name = String(item.username || item.name || item.display_name || id);
-        const rank = String(item.rank ?? item.level ?? item.role ?? 'Nicht angegeben');
-        return `<div class="admin-row"><span class="admin-avatar">${escape(name.slice(0, 1).toUpperCase())}</span><span class="admin-info"><strong>${escape(name)}</strong><small>ID: ${escape(id)} · Rang: ${escape(rank)}</small></span></div>`;
-      }).join('');
-    } catch (error) {
-      target.innerHTML = `<div class="inline-error">Admin-Liste konnte nicht geladen werden: ${escape(error.message)}</div>`;
-    }
-  }
-
-  async function refresh(showMessage = false) {
-    if (!session()) {
-      $('#workspaceStatus').textContent = 'Bitte mit Discord anmelden';
-      $('#workspaceDot').className = 'status-dot error';
-      return;
-    }
-    $('#workspaceStatus').textContent = 'Verbindung wird geprüft';
-    try {
-      let data;
-      try { data = await api('/api/bootstrap'); }
-      catch { data = await api('/api/guilds'); }
-      state.guilds = normalizeServers(data);
-      $('#metricServers').textContent = String(state.guilds.length);
-      renderServers();
-      $('#workspaceStatus').textContent = 'Backend verbunden';
-      $('#workspaceDot').className = 'status-dot online';
-      if (state.guildId && state.guilds.some(server => server.id === state.guildId)) {
-        await Promise.allSettled([loadModules(), loadConfig(), loadAdmins()]);
-      }
-      if (showMessage) feedback('Daten wurden erneut vom Backend abgefragt.');
-    } catch (error) {
-      $('#workspaceStatus').textContent = 'Verbindung fehlgeschlagen';
-      $('#workspaceDot').className = 'status-dot error';
-      feedback(`Aktualisieren fehlgeschlagen: ${error.message}`, true);
-    }
-  }
-
-  async function logout() {
-    try { if (session()) await api('/api/auth/logout', { method: 'POST' }); }
-    catch (error) { console.warn('Serverseitiges Abmelden nicht bestätigt:', error.message); }
-    sessionStorage.removeItem('botconfig_session_token');
-    sessionStorage.removeItem('discord_oauth_state');
-    state.guilds = [];
-    state.guildId = '';
-    state.modules = [];
-    state.config = {};
-    state.admins = [];
-    $('#workspaceStatus').textContent = 'Abgemeldet';
-    $('#workspaceDot').className = 'status-dot error';
-    feedback('Du wurdest in diesem Browser-Tab abgemeldet.');
-  }
-
-  async function init() {
-    mount();
-    if (!session()) {
-      $('#workspaceStatus').textContent = 'Bitte mit Discord anmelden';
-      $('#workspaceDot').className = 'status-dot error';
-      return;
-    }
-    try {
-      const me = await api('/api/auth/me');
-      const user = me.user || me;
-      $('#accountDetails').textContent = `Discord-ID: ${user.id || 'nicht angegeben'} · Nutzer: ${user.username || user.global_name || 'Angemeldet'}`;
-    } catch (error) {
-      $('#accountDetails').textContent = `Sitzung konnte nicht bestätigt werden: ${error.message}`;
-    }
-    await refresh(false);
-  }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
-  else init();
-})();
-</script>
-</body>
-</html>
+</body></html>
