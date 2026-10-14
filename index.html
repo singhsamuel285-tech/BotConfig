@@ -7,9 +7,152 @@
 <title>🔰 • EURP | Manager Bot</title>
 <style>
 :root{color-scheme:light dark;--bg:light-dark(#f4f6fc,#0b0d14);--panel:light-dark(#fff,#141824);--panel2:light-dark(#f5f6fb,#1b2030);--line:light-dark(#e3e7f2,#2b3042);--text:light-dark(#171b2b,#f4f6ff);--muted:light-dark(#69718a,#9ba3bc);--accent:#6674ff;--accent2:#8993ff;--green:#31d69a;--shadow:0 28px 90px #0308172b;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text)}body{min-height:100vh;overflow-x:hidden}.app{min-height:100vh;background:radial-gradient(ellipse at 13% 6%,#6574ff22,transparent 33%),radial-gradient(ellipse at 91% 88%,#e34f6120,transparent 30%),var(--bg);display:flex;flex-direction:column}.topbar{height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,6vw,92px);border-bottom:1px solid var(--line);background:light-dark(#ffffffa8,#0b0d14a8);backdrop-filter:blur(18px)}.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:-.5px}.brand-mark{width:39px;height:39px;border-radius:13px;background:linear-gradient(145deg,#8490ff,#525eea);display:grid;place-items:center;color:white;box-shadow:0 7px 20px #6674ff45}.brand-mark svg{width:22px}.brand small{display:block;font-size:10px;letter-spacing:2.2px;color:var(--muted);font-weight:700;margin-top:2px}.top-right{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px}.secure{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px #31d69a1a}.main{flex:1;display:grid;place-items:center;padding:58px 22px 72px}.layout{width:min(100%,980px);display:grid;grid-template-columns:1fr 410px;align-items:center;gap:clamp(36px,7vw,90px)}.intro{padding:12px 0}.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid #7b87ff45;color:var(--accent2);background:#6674ff12;border-radius:999px;padding:8px 12px;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}.eyebrow .dot{height:6px;width:6px;background:var(--accent2);border-radius:50%}h1{font-size:clamp(37px,5vw,57px);line-height:1.08;letter-spacing:-2.5px;margin:23px 0 18px;font-weight:850}.gradient{background:linear-gradient(100deg,#8993ff,#6470ff 52%,#b18bff);color:transparent;background-clip:text}.lead{font-size:16px;line-height:1.8;color:var(--muted);max-width:440px}.feature-list{display:grid;gap:17px;margin-top:32px}.feature{display:flex;gap:13px;align-items:flex-start}.feature-icon{width:36px;height:36px;border:1px solid var(--line);background:var(--panel);border-radius:12px;display:grid;place-items:center;flex-shrink:0;color:var(--accent2)}.feature-icon svg{width:17px;height:17px}.feature b{display:block;font-size:13px;margin:1px 0 4px}.feature span{display:block;color:var(--muted);font-size:12px;line-height:1.6}.auth-card{background:var(--panel);border:1px solid var(--line);border-radius:25px;padding:34px;box-shadow:var(--shadow);position:relative;overflow:hidden}.auth-card:before{content:"";position:absolute;height:3px;top:0;left:25px;right:25px;background:linear-gradient(90deg,transparent,#7783ff,transparent)}.card-logo{width:68px;height:68px;border-radius:21px;background:linear-gradient(145deg,#8792ff,#4e5ae4);display:grid;place-items:center;margin:0 auto 20px;color:#fff;box-shadow:0 12px 28px #6674ff38}.card-logo svg{width:36px;height:36px}.card-title{text-align:center;font-size:25px;letter-spacing:-.8px;font-weight:850}.card-sub{text-align:center;font-size:13px;line-height:1.75;color:var(--muted);margin:10px auto 25px;max-width:290px}.status{border:1px solid var(--line);background:var(--panel2);border-radius:13px;padding:13px;display:flex;align-items:center;gap:11px;margin-bottom:18px}.status-icon{width:34px;height:34px;border-radius:11px;background:#31d69a1a;color:var(--green);display:grid;place-items:center;flex-shrink:0}.status-icon svg{width:17px}.status strong{font-size:12px;display:block}.status small{font-size:11px;color:var(--muted);display:block;margin-top:3px;line-height:1.4}.discord-btn{width:100%;border:0;border-radius:12px;background:#5865f2;color:white;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;gap:11px;padding:15px 16px;cursor:pointer;transition:transform .16s,filter .16s,box-shadow .16s;box-shadow:0 9px 22px #5865f233}.discord-btn:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 12px 26px #5865f244}.discord-btn:active{transform:translateY(0)}.discord-btn svg{width:20px;height:20px}.fineprint{text-align:center;color:var(--muted);font-size:10px;line-height:1.7;margin:16px 2px 0}.fineprint a{color:var(--accent2);text-decoration:none}.divider{height:1px;background:var(--line);margin:24px 0 17px}.card-bottom{display:flex;justify-content:center;align-items:center;gap:7px;color:var(--muted);font-size:10px}.card-bottom svg{width:13px;color:var(--green)}.footer{padding:18px 26px 24px;display:flex;justify-content:space-between;gap:16px;color:var(--muted);font-size:10px;border-top:1px solid var(--line)}.footer-links{display:flex;gap:18px}.footer a{color:inherit;text-decoration:none}.footer a:hover{color:var(--text)}.toast{position:fixed;bottom:25px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;transition:.25s;background:var(--text);color:var(--bg);padding:13px 18px;border-radius:12px;font-size:12px;font-weight:700;box-shadow:var(--shadow);max-width:calc(100vw - 32px);text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:760px){.topbar{height:68px;padding:0 20px}.top-right .top-label{display:none}.layout{grid-template-columns:1fr;max-width:430px;gap:30px}.intro{text-align:center;padding:0}.intro .lead{margin:0 auto}.feature-list{text-align:left;max-width:330px;margin:25px auto 0}.intro h1{font-size:39px}.main{padding:38px 18px 45px}.auth-card{padding:28px 24px}.footer{flex-direction:column;align-items:center;text-align:center}.top-right{font-size:11px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
-.app{background:radial-gradient(ellipse at 12% 8%,#a855f733,transparent 30%),radial-gradient(ellipse at 88% 24%,#22c55e22,transparent 28%),#07090d}.topbar{position:sticky;top:0;z-index:10;background:#080a0ee8;border-bottom-color:#252a32}.brand-mark{background:linear-gradient(145deg,#a855f7,#22c55e);box-shadow:0 7px 24px #22c55e20}.brand small{color:#a4aab5}.top-right{color:#c0c5cf}.intro{display:none}.main{padding-top:54px}.layout{grid-template-columns:minmax(0,500px);justify-content:center;gap:0}.auth-card{width:100%;border-color:#303640;background:#101318}.auth-card:before{background:linear-gradient(90deg,#22c55e,#a855f7,#fff)}.card-logo{background:linear-gradient(145deg,#a855f7,#22c55e)}.gradient{background:linear-gradient(100deg,#22c55e,#fff 45%,#c084fc);background-clip:text}.eyebrow{border-color:#22c55e55;color:#86efac;background:#22c55e12}.eyebrow .dot{background:#22c55e}.feature-icon{color:#c084fc}.discord-btn{background:linear-gradient(100deg,#15803d,#7e22ce)}.footer{border-color:#252a32;color:#9ca3af}.footer a:hover{color:#fff}.landing{padding:clamp(55px,8vw,105px) 22px 50px}.hero-inner,.showcase-inner,.bottom-cta{width:min(100%,1100px);margin:0 auto}.hero-inner{display:grid;grid-template-columns:1.05fr .95fr;gap:55px;align-items:center}.hero-copy h1{font-size:clamp(44px,6vw,76px);line-height:1.01;letter-spacing:-4px;margin:24px 0}.hero-copy p{color:#a4aab5;max-width:550px;font-size:16px;line-height:1.85}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.action-primary,.action-secondary{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:12px;padding:14px 19px;font-size:13px;font-weight:800;transition:transform .2s,filter .2s}.action-primary{color:#07100b;background:linear-gradient(100deg,#4ade80,#c084fc)}.action-secondary{border:1px solid #363b46;color:#f3f4f6;background:#111419}.action-primary:hover,.action-secondary:hover{transform:translateY(-2px);filter:brightness(1.1)}.hero-note{margin-top:20px;font-size:11px!important;color:#747c89!important}.mock-window{border:1px solid #343943;background:#101318;border-radius:20px;padding:15px;box-shadow:0 30px 90px #0009;transform:rotate(1deg)}.mock-top{display:flex;align-items:center;gap:6px;border-bottom:1px solid #292e38;padding:2px 4px 14px;color:#8b93a1;font-size:10px}.mock-dot{width:7px;height:7px;border-radius:50%;background:#4ade80}.mock-content{display:grid;grid-template-columns:105px 1fr;gap:13px;padding-top:15px;min-height:285px}.mock-sidebar{border-radius:12px;background:#171b22;padding:12px 8px}.mock-brand{font-size:10px;font-weight:900;color:#fff;margin-bottom:18px}.mock-nav{font-size:9px;color:#a5acb8;padding:9px 7px;border-radius:7px;margin:4px 0}.mock-nav.active{background:#22c55e1c;color:#86efac}.mock-main{min-width:0}.mock-welcome{border-radius:12px;background:linear-gradient(115deg,#14532d,#581c87);padding:17px;color:white}.mock-welcome small{font-size:9px;opacity:.8}.mock-welcome strong{display:block;font-size:19px;margin:8px 0}.mock-welcome span{font-size:9px;opacity:.8}.mock-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0}.mock-stat{background:#191d25;border:1px solid #292e38;border-radius:9px;padding:11px 8px}.mock-stat small{display:block;font-size:8px;color:#8b93a1}.mock-stat strong{display:block;font-size:15px;margin-top:6px}.mock-stat:nth-child(1) strong{color:#4ade80}.mock-stat:nth-child(2) strong{color:#c084fc}.mock-stat:nth-child(3) strong{color:#fff}.mock-activity{border:1px solid #292e38;border-radius:10px;padding:12px}.mock-activity strong{font-size:10px}.mock-line{height:7px;border-radius:5px;background:#292e38;margin-top:10px}.mock-line:nth-child(3){width:78%}.mock-line:nth-child(4){width:57%}.showcase{padding:45px 22px 95px;scroll-margin-top:90px}.section-heading{text-align:center;max-width:680px;margin:0 auto 34px}.section-heading h2{font-size:clamp(29px,4vw,43px);letter-spacing:-1.8px;margin:16px 0 12px}.section-heading p{color:#9ca3af;line-height:1.8;font-size:14px}.preview-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:17px}.preview-panel{background:#101318;border:1px solid #2e333d;border-radius:18px;padding:24px;min-height:205px;overflow:hidden}.preview-panel h3{margin:0 0 9px;font-size:17px}.preview-panel p{margin:0;color:#9ca3af;font-size:12px;line-height:1.7}.preview-tag{display:inline-flex;font-size:9px;font-weight:800;letter-spacing:1px;color:#86efac;background:#22c55e15;border:1px solid #22c55e40;border-radius:99px;padding:7px 9px;margin-bottom:15px}.preview-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:22px}.preview-mini{background:#191d25;border:1px solid #2c323d;border-radius:10px;padding:13px}.preview-mini span{display:block;font-size:9px;color:#9ca3af}.preview-mini b{display:block;margin-top:8px;font-size:12px}.preview-mini:nth-child(2) b{color:#c084fc}.preview-mini:nth-child(3) b{color:#4ade80}.preview-panel.purple{background:linear-gradient(145deg,#171220,#101318);border-color:#5b347b}.preview-panel.green{background:linear-gradient(145deg,#102018,#101318);border-color:#285c3d}.bottom-cta{padding:0 22px 80px;text-align:center}.bottom-cta h2{font-size:clamp(26px,4vw,40px);letter-spacing:-1.5px;margin:0 0 12px}.bottom-cta p{color:#9ca3af;font-size:13px;margin:0 0 24px}.main{scroll-margin-top:95px;border-top:1px solid #252a32;background:linear-gradient(180deg,#0b0d11,#07090d);width:100%}.auth-card{box-shadow:0 25px 80px #0008}.card-sub,.fineprint{color:#a4aab5}.status{background:#171b22;border-color:#303640}.status strong{color:#f3f4f6}.status-icon{background:#22c55e1a}.card-bottom svg{color:#4ade80}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text)}
+body{min-height:100vh;overflow-x:hidden}
+.app{min-height:100vh;background:radial-gradient(ellipse at 13% 6%,#6574ff22,transparent 33%),radial-gradient(ellipse at 91% 88%,#e34f6120,transparent 30%),var(--bg);display:flex;flex-direction:column}
+.topbar{height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,6vw,92px);border-bottom:1px solid var(--line);background:light-dark(#ffffffa8,#0b0d14a8);backdrop-filter:blur(18px)}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:-.5px}
+.brand-mark{width:39px;height:39px;border-radius:13px;background:linear-gradient(145deg,#8490ff,#525eea);display:grid;place-items:center;color:white;box-shadow:0 7px 20px #6674ff45}
+.brand-mark svg{width:22px}
+.brand small{display:block;font-size:10px;letter-spacing:2.2px;color:var(--muted);font-weight:700;margin-top:2px}
+.top-right{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px}
+.secure{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px #31d69a1a}
+.main{flex:1;display:grid;place-items:center;padding:58px 22px 72px}
+.layout{width:min(100%,980px);display:grid;grid-template-columns:1fr 410px;align-items:center;gap:clamp(36px,7vw,90px)}
+.intro{padding:12px 0}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid #7b87ff45;color:var(--accent2);background:#6674ff12;border-radius:999px;padding:8px 12px;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+.eyebrow .dot{height:6px;width:6px;background:var(--accent2);border-radius:50%}
+h1{font-size:clamp(37px,5vw,57px);line-height:1.08;letter-spacing:-2.5px;margin:23px 0 18px;font-weight:850}
+.gradient{background:linear-gradient(100deg,#8993ff,#6470ff 52%,#b18bff);color:transparent;background-clip:text}
+.lead{font-size:16px;line-height:1.8;color:var(--muted);max-width:440px}
+.feature-list{display:grid;gap:17px;margin-top:32px}
+.feature{display:flex;gap:13px;align-items:flex-start}
+.feature-icon{width:36px;height:36px;border:1px solid var(--line);background:var(--panel);border-radius:12px;display:grid;place-items:center;flex-shrink:0;color:var(--accent2)}
+.feature-icon svg{width:17px;height:17px}
+.feature b{display:block;font-size:13px;margin:1px 0 4px}
+.feature span{display:block;color:var(--muted);font-size:12px;line-height:1.6}
+.auth-card{background:var(--panel);border:1px solid var(--line);border-radius:25px;padding:34px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.auth-card:before{content:"";position:absolute;height:3px;top:0;left:25px;right:25px;background:linear-gradient(90deg,transparent,#7783ff,transparent)}
+.card-logo{width:68px;height:68px;border-radius:21px;background:linear-gradient(145deg,#8792ff,#4e5ae4);display:grid;place-items:center;margin:0 auto 20px;color:#fff;box-shadow:0 12px 28px #6674ff38}
+.card-logo svg{width:36px;height:36px}
+.card-title{text-align:center;font-size:25px;letter-spacing:-.8px;font-weight:850}
+.card-sub{text-align:center;font-size:13px;line-height:1.75;color:var(--muted);margin:10px auto 25px;max-width:290px}
+.status{border:1px solid var(--line);background:var(--panel2);border-radius:13px;padding:13px;display:flex;align-items:center;gap:11px;margin-bottom:18px}
+.status-icon{width:34px;height:34px;border-radius:11px;background:#31d69a1a;color:var(--green);display:grid;place-items:center;flex-shrink:0}
+.status-icon svg{width:17px}
+.status strong{font-size:12px;display:block}
+.status small{font-size:11px;color:var(--muted);display:block;margin-top:3px;line-height:1.4}
+.discord-btn{width:100%;border:0;border-radius:12px;background:#5865f2;color:white;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;gap:11px;padding:15px 16px;cursor:pointer;transition:transform .16s,filter .16s,box-shadow .16s;box-shadow:0 9px 22px #5865f233}
+.discord-btn:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 12px 26px #5865f244}
+.discord-btn:active{transform:translateY(0)}
+.discord-btn svg{width:20px;height:20px}
+.fineprint{text-align:center;color:var(--muted);font-size:10px;line-height:1.7;margin:16px 2px 0}
+.fineprint a{color:var(--accent2);text-decoration:none}
+.divider{height:1px;background:var(--line);margin:24px 0 17px}
+.card-bottom{display:flex;justify-content:center;align-items:center;gap:7px;color:var(--muted);font-size:10px}
+.card-bottom svg{width:13px;color:var(--green)}
+.footer{padding:18px 26px 24px;display:flex;justify-content:space-between;gap:16px;color:var(--muted);font-size:10px;border-top:1px solid var(--line)}
+.footer-links{display:flex;gap:18px}
+.footer a{color:inherit;text-decoration:none}
+.footer a:hover{color:var(--text)}
+.toast{position:fixed;bottom:25px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;transition:.25s;background:var(--text);color:var(--bg);padding:13px 18px;border-radius:12px;font-size:12px;font-weight:700;box-shadow:var(--shadow);max-width:calc(100vw - 32px);text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:760px){.topbar{height:68px;padding:0 20px}
+.top-right .top-label{display:none}
+.layout{grid-template-columns:1fr;max-width:430px;gap:30px}
+.intro{text-align:center;padding:0}
+.intro .lead{margin:0 auto}
+.feature-list{text-align:left;max-width:330px;margin:25px auto 0}
+.intro h1{font-size:39px}
+.main{padding:38px 18px 45px}
+.auth-card{padding:28px 24px}
+.footer{flex-direction:column;align-items:center;text-align:center}
+.top-right{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}
+}
+.app{background:radial-gradient(ellipse at 12% 8%,#a855f733,transparent 30%),radial-gradient(ellipse at 88% 24%,#22c55e22,transparent 28%),#07090d}
+.topbar{position:sticky;top:0;z-index:10;background:#080a0ee8;border-bottom-color:#252a32}
+.brand-mark{background:linear-gradient(145deg,#a855f7,#22c55e);box-shadow:0 7px 24px #22c55e20}
+.brand small{color:#a4aab5}
+.top-right{color:#c0c5cf}
+.intro{display:none}
+.main{padding-top:54px}
+.layout{grid-template-columns:minmax(0,500px);justify-content:center;gap:0}
+.auth-card{width:100%;border-color:#303640;background:#101318}
+.auth-card:before{background:linear-gradient(90deg,#22c55e,#a855f7,#fff)}
+.card-logo{background:linear-gradient(145deg,#a855f7,#22c55e)}
+.gradient{background:linear-gradient(100deg,#22c55e,#fff 45%,#c084fc);background-clip:text}
+.eyebrow{border-color:#22c55e55;color:#86efac;background:#22c55e12}
+.eyebrow .dot{background:#22c55e}
+.feature-icon{color:#c084fc}
+.discord-btn{background:linear-gradient(100deg,#15803d,#7e22ce)}
+.footer{border-color:#252a32;color:#9ca3af}
+.footer a:hover{color:#fff}
+.landing{padding:clamp(55px,8vw,105px) 22px 50px}
+.hero-inner,.showcase-inner,.bottom-cta{width:min(100%,1100px);margin:0 auto}
+.hero-inner{display:grid;grid-template-columns:1.05fr .95fr;gap:55px;align-items:center}
+.hero-copy h1{font-size:clamp(44px,6vw,76px);line-height:1.01;letter-spacing:-4px;margin:24px 0}
+.hero-copy p{color:#a4aab5;max-width:550px;font-size:16px;line-height:1.85}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.action-primary,.action-secondary{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:12px;padding:14px 19px;font-size:13px;font-weight:800;transition:transform .2s,filter .2s}
+.action-primary{color:#07100b;background:linear-gradient(100deg,#4ade80,#c084fc)}
+.action-secondary{border:1px solid #363b46;color:#f3f4f6;background:#111419}
+.action-primary:hover,.action-secondary:hover{transform:translateY(-2px);filter:brightness(1.1)}
+.hero-note{margin-top:20px;font-size:11px!important;color:#747c89!important}
+.mock-window{border:1px solid #343943;background:#101318;border-radius:20px;padding:15px;box-shadow:0 30px 90px #0009;transform:rotate(1deg)}
+.mock-top{display:flex;align-items:center;gap:6px;border-bottom:1px solid #292e38;padding:2px 4px 14px;color:#8b93a1;font-size:10px}
+.mock-dot{width:7px;height:7px;border-radius:50%;background:#4ade80}
+.mock-content{display:grid;grid-template-columns:105px 1fr;gap:13px;padding-top:15px;min-height:285px}
+.mock-sidebar{border-radius:12px;background:#171b22;padding:12px 8px}
+.mock-brand{font-size:10px;font-weight:900;color:#fff;margin-bottom:18px}
+.mock-nav{font-size:9px;color:#a5acb8;padding:9px 7px;border-radius:7px;margin:4px 0}
+.mock-nav.active{background:#22c55e1c;color:#86efac}
+.mock-main{min-width:0}
+.mock-welcome{border-radius:12px;background:linear-gradient(115deg,#14532d,#581c87);padding:17px;color:white}
+.mock-welcome small{font-size:9px;opacity:.8}
+.mock-welcome strong{display:block;font-size:19px;margin:8px 0}
+.mock-welcome span{font-size:9px;opacity:.8}
+.mock-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0}
+.mock-stat{background:#191d25;border:1px solid #292e38;border-radius:9px;padding:11px 8px}
+.mock-stat small{display:block;font-size:8px;color:#8b93a1}
+.mock-stat strong{display:block;font-size:15px;margin-top:6px}
+.mock-stat:nth-child(1) strong{color:#4ade80}
+.mock-stat:nth-child(2) strong{color:#c084fc}
+.mock-stat:nth-child(3) strong{color:#fff}
+.mock-activity{border:1px solid #292e38;border-radius:10px;padding:12px}
+.mock-activity strong{font-size:10px}
+.mock-line{height:7px;border-radius:5px;background:#292e38;margin-top:10px}
+.mock-line:nth-child(3){width:78%}
+.mock-line:nth-child(4){width:57%}
+.showcase{padding:45px 22px 95px;scroll-margin-top:90px}
+.section-heading{text-align:center;max-width:680px;margin:0 auto 34px}
+.section-heading h2{font-size:clamp(29px,4vw,43px);letter-spacing:-1.8px;margin:16px 0 12px}
+.section-heading p{color:#9ca3af;line-height:1.8;font-size:14px}
+.preview-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:17px}
+.preview-panel{background:#101318;border:1px solid #2e333d;border-radius:18px;padding:24px;min-height:205px;overflow:hidden}
+.preview-panel h3{margin:0 0 9px;font-size:17px}
+.preview-panel p{margin:0;color:#9ca3af;font-size:12px;line-height:1.7}
+.preview-tag{display:inline-flex;font-size:9px;font-weight:800;letter-spacing:1px;color:#86efac;background:#22c55e15;border:1px solid #22c55e40;border-radius:99px;padding:7px 9px;margin-bottom:15px}
+.preview-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:22px}
+.preview-mini{background:#191d25;border:1px solid #2c323d;border-radius:10px;padding:13px}
+.preview-mini span{display:block;font-size:9px;color:#9ca3af}
+.preview-mini b{display:block;margin-top:8px;font-size:12px}
+.preview-mini:nth-child(2) b{color:#c084fc}
+.preview-mini:nth-child(3) b{color:#4ade80}
+.preview-panel.purple{background:linear-gradient(145deg,#171220,#101318);border-color:#5b347b}
+.preview-panel.green{background:linear-gradient(145deg,#102018,#101318);border-color:#285c3d}
+.bottom-cta{padding:0 22px 80px;text-align:center}
+.bottom-cta h2{font-size:clamp(26px,4vw,40px);letter-spacing:-1.5px;margin:0 0 12px}
+.bottom-cta p{color:#9ca3af;font-size:13px;margin:0 0 24px}
+.main{scroll-margin-top:95px;border-top:1px solid #252a32;background:linear-gradient(180deg,#0b0d11,#07090d);width:100%}
+.auth-card{box-shadow:0 25px 80px #0008}
+.card-sub,.fineprint{color:#a4aab5}
+.status{background:#171b22;border-color:#303640}
+.status strong{color:#f3f4f6}
+.status-icon{background:#22c55e1a}
+.card-bottom svg{color:#4ade80}
 </style>
 <style>
 @media(max-width:760px){.hero-inner{grid-template-columns:1fr;gap:35px}.hero-copy{text-align:center}.hero-copy p{margin-left:auto;margin-right:auto}.hero-actions{justify-content:center}.mock-window{transform:none;max-width:540px;width:100%;margin:0 auto}.mock-content{grid-template-columns:82px 1fr;min-height:240px}.mock-sidebar{padding:9px 5px}.mock-nav{font-size:8px;padding:8px 4px}.mock-welcome{padding:13px}.mock-welcome strong{font-size:16px}.mock-stats{gap:5px}.mock-stat{padding:9px 5px}.mock-stat strong{font-size:12px}.preview-grid{grid-template-columns:1fr}.showcase{padding-bottom:65px}.landing{padding-top:48px}.hero-copy h1{letter-spacing:-2.5px}.preview-panel{padding:20px}}
@@ -20,64 +163,637 @@
 @keyframes riseIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}@keyframes floatIn{from{opacity:0;transform:translateY(28px) rotate(2deg) scale(.97)}to{opacity:1;transform:translateY(0) rotate(1deg) scale(1)}}@keyframes hoverFloat{0%,100%{translate:0 0}50%{translate:0 -9px}}@keyframes auroraDrift{from{translate:0 -25px;scale:.9}to{translate:45px 45px;scale:1.15}}@keyframes gradientFlow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}@keyframes logoPulse{0%,100%{box-shadow:0 12px 28px #6674ff20,0 0 0 0 #a855f700}50%{box-shadow:0 12px 32px #a855f744,0 0 0 7px #22c55e08}}@keyframes statusPulse{0%,100%{box-shadow:0 0 0 4px #22c55e14}50%{box-shadow:0 0 0 7px #22c55e08}}@keyframes tinyBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 @media(max-width:760px){.app:before,.app:after{width:240px;height:240px;filter:blur(70px)}.mock-window{animation:floatIn .8s .15s both,hoverFloat 8s 1s ease-in-out infinite}.showcase .section-heading,.showcase .preview-panel,.bottom-cta{animation:none}}
 @media(prefers-reduced-motion:reduce){.app:before,.app:after,.mock-window,.mock-welcome,.hero-copy .eyebrow,.hero-copy h1,.hero-copy>p,.hero-actions,.hero-note,.auth-card,.card-logo,.secure,.showcase .section-heading,.showcase .preview-panel,.bottom-cta{animation:none!important}.mock-stat,.preview-panel,.auth-card,.action-primary,.action-secondary{transition:none!important}}
+
+/* Scroll-Reveal: Elemente erscheinen weich, sobald sie in den sichtbaren Bereich kommen. */
+.reveal-on-scroll{opacity:0;transform:translateY(24px) scale(.985);filter:blur(5px);transition:opacity .65s ease,transform .65s cubic-bezier(.2,.75,.25,1),filter .65s ease;transition-delay:var(--reveal-delay,0ms);will-change:opacity,transform,filter}
+.reveal-on-scroll.is-visible{opacity:1;transform:translateY(0) scale(1);filter:blur(0);will-change:auto}
+.preview-panel.reveal-on-scroll.is-visible{transition-duration:.72s}
+.preview-mini.reveal-on-scroll{transform:translateY(14px);transition-duration:.5s}
+.manager-tile.reveal-on-scroll{transform:translateY(18px) scale(.99)}
+@media(prefers-reduced-motion:reduce){.reveal-on-scroll,.reveal-on-scroll.is-visible{opacity:1;transform:none;filter:none;transition:none;animation:none;will-change:auto}}
+
+/* Funktionales Manager-Dashboard */
+:root{--dash-bg:#0b0e13;--dash-card:#121720;--dash-card2:#171e29;--dash-line:#293240;--dash-text:#f4f7fb;--dash-muted:#9aa6b5;--dash-green:#4ade80;--dash-purple:#c084fc}
+.manager-panel{display:none;width:min(1440px,calc(100% - 36px));margin:28px auto 54px;color:var(--dash-text);animation:panel-in .45s ease both}.manager-panel.open{display:block}@keyframes panel-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.reveal-on-scroll{opacity:0;transform:translateY(22px) scale(.99);filter:blur(4px);transition:opacity .65s ease,transform .65s cubic-bezier(.2,.75,.25,1),filter .65s ease;transition-delay:var(--reveal-delay,0ms)}.reveal-on-scroll.is-visible{opacity:1;transform:none;filter:none}
+.manager-head{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:25px 28px;background:linear-gradient(115deg,#13251d,#171527 75%);border:1px solid #303c39;border-radius:20px;margin-bottom:16px}.manager-heading{display:flex;align-items:center;gap:14px}.manager-avatar{width:50px;height:50px;object-fit:cover;border-radius:15px;background:#222936;border:1px solid #424957}.manager-head h2{font-size:clamp(24px,3vw,34px);margin:5px 0 6px;letter-spacing:-1px}.manager-muted{color:var(--dash-muted);font-size:12px;line-height:1.6;margin:0}.manager-actions{display:flex;gap:9px;flex-wrap:wrap}.manager-action,.manager-button{border:1px solid #364151;background:#1a222e;color:#f4f7fb;border-radius:10px;padding:11px 14px;font-weight:750;font-size:12px;cursor:pointer;transition:transform .18s,border-color .18s,filter .18s}.manager-action:hover,.manager-button:hover{transform:translateY(-1px);border-color:#6b7789}.manager-button.primary{background:linear-gradient(100deg,#15803d,#7e22ce);border:0}.manager-button.danger{border-color:#713b42;background:#321a20;color:#fecaca}.manager-action:disabled,.manager-button:disabled{opacity:.42;cursor:not-allowed;transform:none}
+.manager-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--dash-card);border:1px solid var(--dash-line);padding:15px 18px;border-radius:15px;margin-bottom:16px}.manager-field{display:flex;flex-direction:column;gap:7px;min-width:0}.manager-field label,.manager-label{font-size:11px;color:#b4bfce;font-weight:800;letter-spacing:.3px}.manager-field input,.manager-field select,.manager-field textarea,.manager-select{width:100%;min-width:0;background:#0c1118;border:1px solid #333e4d;color:#f4f7fb;border-radius:9px;padding:11px 12px;font:inherit;font-size:12px;outline:none}.manager-field input:focus,.manager-field select:focus,.manager-field textarea:focus{border-color:#4ade80;box-shadow:0 0 0 3px #4ade8019}.manager-field textarea{min-height:100px;resize:vertical}.manager-field select option{background:#0c1118}.manager-select{max-width:420px}.manager-nav{display:flex;gap:7px;overflow-x:auto;padding:5px 2px 14px;margin-bottom:8px}.manager-tab{white-space:nowrap;border:1px solid transparent;background:transparent;color:#9aa6b5;border-radius:10px;padding:11px 14px;font-size:12px;font-weight:800;cursor:pointer}.manager-tab:hover{color:white;background:#171e29}.manager-tab.active{color:#dcfce7;background:#153323;border-color:#286344}.manager-content{min-height:340px}.manager-view{display:none;animation:view-in .3s ease both}.manager-view.active{display:block}@keyframes view-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.manager-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.manager-stat,.manager-card{min-width:0;background:var(--dash-card);border:1px solid var(--dash-line);border-radius:15px;padding:19px}.manager-stat small{display:block;color:var(--dash-muted);font-size:10px;font-weight:800;letter-spacing:1px}.manager-stat strong{display:block;font-size:25px;margin:9px 0 4px;overflow-wrap:anywhere}.manager-stat span{color:var(--dash-muted);font-size:11px}.manager-section-title{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:23px 0 13px}.manager-section-title h3{font-size:16px;margin:0}.manager-section-title p{font-size:11px;color:var(--dash-muted);margin:5px 0 0}.manager-card h3{font-size:14px;margin:0 0 8px}.manager-card p{font-size:12px;line-height:1.7;color:var(--dash-muted);margin:0}.manager-card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.manager-server-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.manager-server{display:flex;gap:12px;align-items:center;text-align:left;background:var(--dash-card);border:1px solid var(--dash-line);border-radius:14px;padding:15px;color:var(--dash-text);cursor:pointer;min-width:0;transition:transform .2s,border-color .2s}.manager-server:hover{transform:translateY(-2px);border-color:#4ade80}.manager-server img{width:42px;height:42px;border-radius:13px;object-fit:cover;background:#252d39}.manager-server strong{display:block;font-size:13px;overflow-wrap:anywhere}.manager-server small{display:block;color:var(--dash-muted);font-size:11px;margin-top:5px}.manager-pill{display:inline-flex;align-items:center;gap:6px;border:1px solid #354253;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:800;color:#cbd5e1}.manager-pill.good{border-color:#276446;color:#86efac;background:#14532d26}.manager-pill.warn{border-color:#7a5c28;color:#fcd34d;background:#713f1224}.manager-pill.bad{border-color:#713b42;color:#fca5a5;background:#7f1d1d22}.manager-list{display:grid;gap:9px}.manager-row{display:flex;justify-content:space-between;align-items:center;gap:14px;background:var(--dash-card);border:1px solid var(--dash-line);border-radius:12px;padding:13px 15px;min-width:0}.manager-row-main{min-width:0}.manager-row strong{font-size:12px;overflow-wrap:anywhere}.manager-row small{display:block;color:var(--dash-muted);font-size:11px;margin-top:5px;line-height:1.5}.manager-switch{appearance:none;width:42px;height:24px;flex:0 0 42px;border-radius:999px;background:#374151;border:1px solid #4b5563;position:relative;cursor:pointer;transition:background .2s}.manager-switch:before{content:"";position:absolute;width:16px;height:16px;top:3px;left:3px;background:white;border-radius:50%;transition:transform .2s}.manager-switch:checked{background:#16a34a;border-color:#4ade80}.manager-switch:checked:before{transform:translateX(18px)}.manager-switch:disabled{opacity:.42;cursor:not-allowed}.manager-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.manager-form-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:16px}.manager-empty{padding:30px;text-align:center;background:var(--dash-card);border:1px dashed #3b4655;border-radius:14px;color:var(--dash-muted);font-size:12px;line-height:1.8}.manager-error{color:#fca5a5}.manager-table-wrap{overflow:auto;border:1px solid var(--dash-line);border-radius:13px}.manager-table{border-collapse:collapse;width:100%;min-width:580px;font-size:12px}.manager-table th,.manager-table td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--dash-line);vertical-align:top}.manager-table th{font-size:10px;color:#aeb9c7;letter-spacing:.7px;background:#171e29}.manager-table tr:last-child td{border-bottom:0}.manager-table td{color:#dbe2ec}.manager-help{font-size:11px;line-height:1.7;color:var(--dash-muted);margin-top:10px}.manager-toast{position:fixed;right:22px;bottom:22px;z-index:1000;max-width:min(420px,calc(100vw - 30px));padding:14px 17px;background:#e5e7eb;color:#111827;border-radius:12px;font-size:12px;font-weight:800;box-shadow:0 15px 45px #0007;opacity:0;transform:translateY(14px);pointer-events:none;transition:.25s}.manager-toast.show{opacity:1;transform:none}.manager-toast.error{background:#fee2e2;color:#7f1d1d}.manager-loading{display:flex;align-items:center;gap:10px;color:var(--dash-muted);font-size:12px;padding:25px}.manager-spinner{width:17px;height:17px;border:2px solid #4b5563;border-top-color:#4ade80;border-radius:50%;animation:spin .7s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.manager-badge{display:inline-flex;border-radius:8px;padding:5px 8px;background:#222b37;color:#cbd5e1;font-size:10px;font-weight:800}.manager-divider{height:1px;background:var(--dash-line);margin:18px 0}
+@media(max-width:900px){.manager-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.manager-head{padding:20px}.manager-panel{width:calc(100% - 24px)}}@media(max-width:600px){.manager-card-grid,.manager-form-grid{grid-template-columns:1fr}.manager-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.manager-stat{padding:13px}.manager-stat strong{font-size:21px}.manager-toolbar{align-items:stretch}.manager-select{max-width:none;width:100%}.manager-head{align-items:flex-start}.manager-actions{width:100%}.manager-actions button{flex:1}.manager-row{align-items:flex-start}.manager-panel{margin-top:15px}.manager-heading{align-items:flex-start}.manager-avatar{width:42px;height:42px}}
+@media(prefers-reduced-motion:reduce){.reveal-on-scroll,.reveal-on-scroll.is-visible,.manager-panel,.manager-view.active{animation:none!important;transition:none!important;transform:none!important;filter:none!important;opacity:1!important}}
 </style>
 </head>
 <body>
 <div class="app">
-<header class="topbar"><div class="brand"><div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 20 7.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg></div><div>🔰 • EURP | Manager Bot<small>BOTCONFIG</small></div></div><div class="top-right"><span class="secure"></span><span class="top-label">Sichere Verbindung</span><span>·</span><span>OAuth 2.0</span></div></header>
-<section class="landing"><div class="hero-inner"><div class="hero-copy"><div class="eyebrow"><span class="dot"></span> 🔰 • EURP | Manager Bot</div><h1>Dein Server.<br><span class="gradient">Dein System.</span></h1><p>Eine zentrale Plattform für Community-Funktionen, Server-Tools und sichere Konto-Verbindungen. Entdecke zuerst die Vorschau – du musst dich nicht anmelden, um dir das Design anzusehen.</p><div class="hero-actions"><a class="action-primary" href="#showcase">Website entdecken ↓</a><a class="action-secondary" href="#login">Mit Discord verbinden ↗</a></div><p class="hero-note">● Vorschau frei ansehen · Anmeldung erst weiter unten</p></div><div class="mock-window" aria-label="Grafische Vorschau des 🔰 • EURP | Manager Bot Dashboards"><div class="mock-top"><span class="mock-dot"></span><span class="mock-dot" style="background:#c084fc"></span><span class="mock-dot" style="background:#fff"></span><span style="margin-left:8px">botconfig / dashboard</span></div><div class="mock-content"><aside class="mock-sidebar"><div class="mock-brand">🔰 • EURP<br>　 MANAGER BOT</div><div class="mock-nav active">⌂ Übersicht</div><div class="mock-nav">▦ Funktionen</div><div class="mock-nav">♧ Community</div><div class="mock-nav">⚙ Einstellungen</div></aside><div class="mock-main"><div class="mock-welcome"><small>WILLKOMMEN ZURÜCK</small><strong>Alles im Blick.</strong><span>Deine Tools. An einem Ort.</span></div><div class="mock-stats"><div class="mock-stat"><small>STATUS</small><strong>Online</strong></div><div class="mock-stat"><small>TOOLS</small><strong>12+</strong></div><div class="mock-stat"><small>DESIGN</small><strong>Pro</strong></div></div><div class="mock-activity"><strong>Deine Plattform</strong><div class="mock-line"></div><div class="mock-line"></div><div class="mock-line"></div></div></div></div></div></div></section>
-<section class="showcase" id="showcase"><div class="showcase-inner"><div class="section-heading"><div class="eyebrow"><span class="dot"></span> Ein erster Einblick</div><h2>Sieh dir die Plattform an,<br><span class="gradient">bevor du dich anmeldest.</span></h2><p>Das sind beispielhafte Muster für die spätere Website – übersichtlich, modern und in Schwarz, Weiß, Grün und Lila gestaltet.</p></div><div class="preview-grid"><article class="preview-panel green"><span class="preview-tag">01 · DASHBOARD</span><h3>Deine wichtigsten Tools</h3><p>Ein aufgeräumter Überblick mit Statusanzeigen, Schnellzugriffen und den wichtigsten Funktionen deiner Community.</p><div class="preview-cards"><div class="preview-mini"><span>System</span><b>Bereit</b></div><div class="preview-mini"><span>Design</span><b>Modern</b></div><div class="preview-mini"><span>Zugriff</span><b>Sicher</b></div></div></article><article class="preview-panel purple"><span class="preview-tag" style="color:#d8b4fe;background:#a855f719;border-color:#a855f744">02 · COMMUNITY</span><h3>Alles an einem Ort</h3><p>Community-Infos, Bot-Funktionen und hilfreiche Links – später passend zu deinen echten Funktionen.</p><div style="display:flex;gap:8px;margin-top:24px;flex-wrap:wrap"><span class="preview-tag">BOT-TOOLS</span><span class="preview-tag" style="color:#d8b4fe;background:#a855f719;border-color:#a855f744">DISCORD</span></div></article></div></div></section>
-<section class="bottom-cta"><h2>Bereit, loszulegen?</h2><p>Sieh dir alles in Ruhe an. Wenn du möchtest, kannst du dich danach verbinden.</p><a class="action-primary" href="#login">Weiter zur Anmeldung ↓</a></section>
-<main class="main"><div class="layout"><section class="intro"><div class="eyebrow"><span class="dot"></span> Konto verbinden</div><h1>Dein Discord.<br><span class="gradient">Deine Kontrolle.</span></h1><p class="lead">Verbinde dein Discord-Konto einmalig mit 🔰 • EURP | Manager Bot und nutze die freigeschalteten Community-Funktionen – transparent und unter deiner Kontrolle.</p><div class="feature-list"><div class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg></div><div><b>Einmal autorisieren</b><span>Du musst die Freigabe nicht bei jeder Nutzung erneut erteilen.</span></div></div><div class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg></div><div><b>Du entscheidest</b><span>Du kannst den Zugriff später in Discord wieder widerrufen.</span></div></div><div class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg></div><div><b>Geschützt verbunden</b><span>Die Anmeldung läuft über Discord – dein Passwort gibst du nicht bei uns ein.</span></div></div></div></section>
-<section class="auth-card" aria-label="Discord Autorisierung"><div class="card-logo"><svg viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0 105.89 105.89 0 0 0 19.39 8.09C2.79 32.65-1.71 56.6.54 80.21h0A105.73 105.73 0 0 0 32.71 96.36 77.7 77.7 0 0 0 39.6 85.25a68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1A105.25 105.25 0 0 0 126.6 80.22h0C129.24 52.84 122.09 29.11 107.7 8.07ZM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53 48.84 65.69 42.45 65.69Zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53 91.08 65.69 84.69 65.69Z"/></svg></div><div class="card-title">Autorisieren</div><p class="card-sub">Melde dich mit Discord an, um 🔰 • EURP | Manager Bot sicher mit deinem Konto zu verbinden.</p><div class="status"><div class="status-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg></div><div><strong>Weiterleitung zu Discord</strong><small>Du bestätigst die Freigabe direkt bei Discord.</small></div></div><button class="discord-btn" id="authBtn"><svg viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0 105.89 105.89 0 0 0 19.39 8.09C2.79 32.65-1.71 56.6.54 80.21h0A105.73 105.73 0 0 0 32.71 96.36 77.7 77.7 0 0 0 39.6 85.25a68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1A105.25 105.25 0 0 0 126.6 80.22h0C129.24 52.84 122.09 29.11 107.7 8.07ZM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53 48.84 65.69 42.45 65.69Zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53 91.08 65.69 84.69 65.69Z"/></svg><span>Mit Discord autorisieren</span><svg style="width:15px;opacity:.75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg></button><p class="fineprint">Mit dem Fortfahren stimmst du der angezeigten Discord-Freigabe zu. Prüfe die Berechtigungen sorgfältig, bevor du bestätigst.</p><div class="divider"></div><div class="card-bottom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg> Autorisierung über Discord OAuth 2.0</div></section></div></main>
-<footer class="footer"><span>© 2026 🔰 • EURP | Manager Bot</span><div class="footer-links"><a href="#" id="privacy">Datenschutz</a><a href="#" id="help">Hilfe</a></div></footer>
-</div><div class="toast" id="toast" role="status">Vorschau: Discord-Anmeldung ist hier noch nicht verbunden.</div>
+<header class="topbar">
+<div class="brand">
+<div class="brand-mark">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M12 3 20 7.5v9L12 21l-8-4.5v-9L12 3Z"/>
+<path d="m8.5 12 2.2 2.2 4.8-5"/>
+</svg>
+</div>
+<div>🔰 • EURP | Manager Bot<small>BOTCONFIG</small>
+</div>
+</div>
+<div class="top-right">
+<span class="secure">
+</span>
+<span class="top-label">Sichere Verbindung</span>
+<span>·</span>
+<span>OAuth 2.0</span>
+</div>
+</header>
+<section class="landing">
+<div class="hero-inner">
+<div class="hero-copy">
+<div class="eyebrow">
+<span class="dot">
+</span> 🔰 • EURP | Manager Bot</div>
+<h1>Alles für deinen Server.<br>
+<span class="gradient">An einem Ort.</span>
+</h1>
+<p>Verwalte deine freigeschalteten Bot-Funktionen und Discord-Server über eine zentrale Oberfläche. Sieh dir zuerst die Vorschau an und melde dich anschließend sicher mit Discord an.</p>
+<div class="hero-actions">
+<a class="action-primary" href="#showcase">Website entdecken ↓</a>
+<a class="action-secondary" href="#login">Mit Discord verbinden ↗</a>
+</div>
+<p class="hero-note">● Vorschau frei ansehen · Anmeldung erst weiter unten</p>
+</div>
+<div class="mock-window" aria-label="Grafische Vorschau des 🔰 • EURP | Manager Bot Dashboards">
+<div class="mock-top">
+<span class="mock-dot">
+</span>
+<span class="mock-dot" style="background:#c084fc">
+</span>
+<span class="mock-dot" style="background:#fff">
+</span>
+<span style="margin-left:8px">botconfig / dashboard</span>
+</div>
+<div class="mock-content">
+<aside class="mock-sidebar">
+<div class="mock-brand">🔰 • EURP<br>　 MANAGER BOT</div>
+<div class="mock-nav active">⌂ Übersicht</div>
+<div class="mock-nav">▦ Funktionen</div>
+<div class="mock-nav">♧ Community</div>
+<div class="mock-nav">⚙ Einstellungen</div>
+</aside>
+<div class="mock-main">
+<div class="mock-welcome">
+<small>WILLKOMMEN ZURÜCK</small>
+<strong>Alles im Blick.</strong>
+<span>Deine Tools. An einem Ort.</span>
+</div>
+<div class="mock-stats">
+<div class="mock-stat">
+<small>STATUS</small>
+<strong>Online</strong>
+</div>
+<div class="mock-stat">
+<small>TOOLS</small>
+<strong>12+</strong>
+</div>
+<div class="mock-stat">
+<small>DESIGN</small>
+<strong>Pro</strong>
+</div>
+</div>
+<div class="mock-activity">
+<strong>Deine Plattform</strong>
+<div class="mock-line">
+</div>
+<div class="mock-line">
+</div>
+<div class="mock-line">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="showcase" id="showcase">
+<div class="showcase-inner">
+<div class="section-heading reveal-on-scroll">
+<div class="eyebrow">
+<span class="dot">
+</span> Ein erster Einblick</div>
+<h2>Sieh dir die Plattform an,<br>
+<span class="gradient">bevor du dich anmeldest.</span>
+</h2>
+<p>Ein klarer Überblick über die Bereiche deiner Plattform – mit einem modernen Design in Schwarz, Weiß, Grün und Lila.</p>
+</div>
+<div class="preview-grid">
+<article class="preview-panel green reveal-on-scroll">
+<span class="preview-tag">01 · DASHBOARD</span>
+<h3>Deine Bot-Verwaltung</h3>
+<p>Behalte wichtige Bereiche im Blick und finde freigeschaltete Funktionen schnell wieder.</p>
+<div class="preview-cards">
+<div class="preview-mini">
+<span>System</span>
+<b>Bereit</b>
+</div>
+<div class="preview-mini">
+<span>Design</span>
+<b>Modern</b>
+</div>
+<div class="preview-mini">
+<span>Zugriff</span>
+<b>Sicher</b>
+</div>
+</div>
+</article>
+<article class="preview-panel purple reveal-on-scroll">
+<span class="preview-tag" style="color:#d8b4fe;background:#a855f719;border-color:#a855f744">02 · COMMUNITY</span>
+<h3>Alles an einem Ort</h3>
+<p>Serverinformationen und Bot-Werkzeuge übersichtlich an einem Ort. Verfügbare Aktionen richten sich nach deinen Berechtigungen.</p>
+<div style="display:flex;gap:8px;margin-top:24px;flex-wrap:wrap">
+<span class="preview-tag">BOT-TOOLS</span>
+<span class="preview-tag" style="color:#d8b4fe;background:#a855f719;border-color:#a855f744">DISCORD</span>
+</div>
+</article>
+</div>
+</div>
+</section>
+<section class="bottom-cta reveal-on-scroll">
+<h2>Bereit, loszulegen?</h2>
+<p>Verbinde dein Discord-Konto, um das Verwaltungs-Panel zu öffnen. Welche Bereiche du nutzen kannst, hängt von deinen Rechten ab.</p>
+<a class="action-primary" href="#login">Weiter zur Anmeldung ↓</a>
+</section>
+<main class="main">
+<div class="layout">
+<section class="intro">
+<div class="eyebrow">
+<span class="dot">
+</span> Konto verbinden</div>
+<h1>Dein Discord.<br>
+<span class="gradient">Deine Kontrolle.</span>
+</h1>
+<p class="lead">Melde dich über Discord an, um das Manager-Panel zu öffnen. Dein Zugriff richtet sich nach den Berechtigungen, die dir zugewiesen wurden.</p>
+<div class="feature-list">
+<div class="feature">
+<div class="feature-icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+<path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/>
+<path d="m9 12 2 2 4-4"/>
+</svg>
+</div>
+<div>
+<b>Einmal autorisieren</b>
+<span>Nach der Anmeldung kann deine aktive Sitzung wiederverwendet werden.</span>
+</div>
+</div>
+<div class="feature">
+<div class="feature-icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+<circle cx="12" cy="12" r="9"/>
+<path d="M12 11v6M12 7h.01"/>
+</svg>
+</div>
+<div>
+<b>Du entscheidest</b>
+<span>Du kannst den Zugriff später in Discord wieder widerrufen.</span>
+</div>
+</div>
+<div class="feature">
+<div class="feature-icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+<rect x="4" y="10" width="16" height="11" rx="2"/>
+<path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/>
+</svg>
+</div>
+<div>
+<b>Geschützt verbunden</b>
+<span>Die Anmeldung läuft über Discord – dein Passwort gibst du nicht bei uns ein.</span>
+</div>
+</div>
+</div>
+</section>
+<section class="auth-card" aria-label="Discord Autorisierung">
+<div class="card-logo">
+<svg viewBox="0 0 127.14 96.36" fill="currentColor">
+<path d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0 105.89 105.89 0 0 0 19.39 8.09C2.79 32.65-1.71 56.6.54 80.21h0A105.73 105.73 0 0 0 32.71 96.36 77.7 77.7 0 0 0 39.6 85.25a68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1A105.25 105.25 0 0 0 126.6 80.22h0C129.24 52.84 122.09 29.11 107.7 8.07ZM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53 48.84 65.69 42.45 65.69Zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53 91.08 65.69 84.69 65.69Z"/>
+</svg>
+</div>
+<div class="card-title">Autorisieren</div>
+<p class="card-sub">Melde dich mit Discord an, um 🔰 • EURP | Manager Bot sicher mit deinem Konto zu verbinden.</p>
+<div class="status">
+<div class="status-icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+<path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/>
+<path d="m9 12 2 2 4-4"/>
+</svg>
+</div>
+<div>
+<strong>Weiterleitung zu Discord</strong>
+<small>Du bestätigst die Freigabe direkt bei Discord.</small>
+</div>
+</div>
+<button class="discord-btn" id="authBtn">
+<svg viewBox="0 0 127.14 96.36" fill="currentColor">
+<path d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0 105.89 105.89 0 0 0 19.39 8.09C2.79 32.65-1.71 56.6.54 80.21h0A105.73 105.73 0 0 0 32.71 96.36 77.7 77.7 0 0 0 39.6 85.25a68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1A105.25 105.25 0 0 0 126.6 80.22h0C129.24 52.84 122.09 29.11 107.7 8.07ZM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53 48.84 65.69 42.45 65.69Zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53 91.08 65.69 84.69 65.69Z"/>
+</svg>
+<span>Mit Discord autorisieren</span>
+<svg style="width:15px;opacity:.75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M7 17 17 7M7 7h10v10"/>
+</svg>
+</button>
+<p class="fineprint">Mit dem Fortfahren stimmst du der angezeigten Discord-Freigabe zu. Prüfe die Berechtigungen sorgfältig, bevor du bestätigst.</p>
+<div class="divider">
+</div>
+<div class="card-bottom">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/>
+<path d="m9 12 2 2 4-4"/>
+</svg> Autorisierung über Discord OAuth 2.0</div>
+</section>
+</div>
+</main>
+
+<section class="manager-panel" id="managerPanel" aria-live="polite">
+ <header class="manager-head reveal-on-scroll is-visible">
+  <div class="manager-heading">
+<img class="manager-avatar" id="managerAvatar" alt="Discord Avatar" hidden>
+<div>
+<div class="eyebrow">
+<span class="dot">
+</span> LIVE · BOTVERBINDUNG</div>
+<h2>Manager Panel</h2>
+<p class="manager-muted" id="managerWelcome">Verbinde dich mit Discord, um deine Server zu verwalten.</p>
+</div>
+</div>
+  <div class="manager-actions">
+<button class="manager-action" id="refreshPanel" type="button">↻ Aktualisieren</button>
+<button class="manager-action" id="logoutPanel" type="button">Abmelden</button>
+</div>
+ </header>
+ <div class="manager-toolbar">
+<div class="manager-field" style="flex:1;min-width:min(100%,260px)">
+<label for="guildSelect">AKTIVER DISCORD-SERVER</label>
+<select class="manager-select" id="guildSelect">
+<option value="">Server werden geladen …</option>
+</select>
+</div>
+<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+<span class="manager-pill good" id="rankBadge">Rang –</span>
+<span class="manager-pill" id="permissionBadge">Berechtigungen werden geprüft</span>
+</div>
+</div>
+ <nav class="manager-nav" aria-label="Panel Navigation">
+  <button class="manager-tab active" data-view="overview">Übersicht</button>
+<button class="manager-tab" data-view="modules">Funktionen</button>
+<button class="manager-tab" data-view="commands">Befehle</button>
+<button class="manager-tab" data-view="settings">Einstellungen</button>
+<button class="manager-tab" data-view="admins">Ränge & Team</button>
+<button class="manager-tab" data-view="messaging">Nachrichten</button>
+<button class="manager-tab" data-view="security">Sicherheit</button>
+<button class="manager-tab" data-view="audit">Protokoll</button>
+ </nav>
+ <div class="manager-content">
+  <section class="manager-view active" id="view-overview">
+<div class="manager-grid" id="overviewStats">
+</div>
+<div class="manager-section-title">
+<div>
+<h3>Deine Server</h3>
+<p>Wähle einen Server, um seine Einstellungen aufzurufen.</p>
+</div>
+</div>
+<div class="manager-server-grid" id="serverCards">
+</div>
+<div class="manager-section-title">
+<div>
+<h3>Verbindungsstatus</h3>
+<p>Direkte Statusprüfung der Bot-API.</p>
+</div>
+<button class="manager-button" id="healthCheck">API prüfen</button>
+</div>
+<div class="manager-card" id="apiStatus">
+<p>API-Status noch nicht geprüft.</p>
+</div>
+</section>
+  <section class="manager-view" id="view-modules">
+<div class="manager-section-title">
+<div>
+<h3>Bot-Funktionen</h3>
+<p>Aktiviere oder deaktiviere ganze Funktionsbereiche. Änderungen sind erst nach dem Speichern aktiv.</p>
+</div>
+<button class="manager-button primary save-config" type="button">Änderungen speichern</button>
+</div>
+<div class="manager-list" id="moduleList">
+</div>
+</section>
+  <section class="manager-view" id="view-commands">
+<div class="manager-section-title">
+<div>
+<h3>Slash-Commands & Funktionen</h3>
+<p>Einzelne Befehle pro Server freigeben oder sperren.</p>
+</div>
+<button class="manager-button primary save-config" type="button">Änderungen speichern</button>
+</div>
+<div class="manager-list" id="commandList">
+</div>
+</section>
+  <section class="manager-view" id="view-settings">
+<div class="manager-section-title">
+<div>
+<h3>Server-Einstellungen</h3>
+<p>Kanäle, Rollen und Audit-Protokoll konfigurieren.</p>
+</div>
+</div>
+<div class="manager-card">
+<h3>Aktuelle Zuordnungen</h3>
+<p>Die gespeicherten Schlüssel bleiben erhalten. Wähle einen Discord-Kanal oder eine Rolle und speichere anschließend.</p>
+<div class="manager-divider">
+</div>
+<div class="manager-form-grid">
+<div class="manager-field">
+<label for="channelKey">Kanal-Schlüssel</label>
+<input id="channelKey" placeholder="z. B. rp_auto_channel">
+</div>
+<div class="manager-field">
+<label for="channelValue">Discord-Kanal</label>
+<select id="channelValue">
+<option value="">Kanal auswählen</option>
+</select>
+</div>
+<div class="manager-field">
+<label for="roleKey">Rollen-Schlüssel</label>
+<input id="roleKey" placeholder="z. B. support_team">
+</div>
+<div class="manager-field">
+<label for="roleValue">Discord-Rolle</label>
+<select id="roleValue">
+<option value="">Rolle auswählen</option>
+</select>
+</div>
+<div class="manager-field">
+<label for="auditChannel">Audit-/Protokoll-Kanal</label>
+<select id="auditChannel">
+<option value="">Nicht festgelegt</option>
+</select>
+</div>
+</div>
+<div class="manager-form-actions">
+<button class="manager-button primary" id="saveSettings" type="button">Einstellungen speichern</button>
+<button class="manager-button" id="reloadSettings" type="button">Neu laden</button>
+</div>
+<div class="manager-help">Hinweis: Dieses Panel ändert nur Einstellungen, die von der Bot-API unterstützt werden. Nicht vorhandene Schlüssel werden nicht automatisch in eine neue Bot-Funktion umgewandelt.</div>
+</div>
+<div class="manager-section-title">
+<div>
+<h3>Gespeicherte Kanal-Zuordnungen</h3>
+</div>
+</div>
+<div class="manager-card" id="channelMappings">
+</div>
+<div class="manager-section-title">
+<div>
+<h3>Gespeicherte Rollen-Zuordnungen</h3>
+</div>
+</div>
+<div class="manager-card" id="roleMappings">
+</div>
+</section>
+  <section class="manager-view" id="view-admins">
+<div class="manager-section-title">
+<div>
+<h3>Team-Berechtigungen</h3>
+<p>Nur Rang 100 darf Ränge verwalten. Rang 0 entfernt den Zugriff.</p>
+</div>
+<button class="manager-button" id="reloadAdmins" type="button">Aktualisieren</button>
+</div>
+<div class="manager-card">
+<div class="manager-form-grid">
+<div class="manager-field">
+<label for="adminUserId">Discord User-ID</label>
+<input id="adminUserId" inputmode="numeric" placeholder="z. B. 123456789012345678">
+</div>
+<div class="manager-field">
+<label for="adminRank">Rang</label>
+<select id="adminRank">
+<option value="0">Rang 0 – Zugriff entfernen</option>
+<option value="10">Rang 10 – Basiszugriff</option>
+<option value="20">Rang 20 – eingeschränkter Zugriff</option>
+<option value="50">Rang 50 – erweiterter Zugriff</option>
+<option value="100">Rang 100 – volle Verwaltung</option>
+</select>
+</div>
+</div>
+<div class="manager-form-actions">
+<button class="manager-button primary" id="saveAdmin" type="button">Rang speichern</button>
+</div>
+<p class="manager-help">Ränge sind serverbezogen. Der festgelegte Bot-Owner kann nicht über dieses Formular herabgestuft werden.</p>
+</div>
+<div class="manager-section-title">
+<div>
+<h3>Aktuell eingetragene Personen</h3>
+</div>
+</div>
+<div id="adminList" class="manager-table-wrap">
+</div>
+</section>
+  <section class="manager-view" id="view-messaging">
+<div class="manager-card">
+<h3>Nachricht in einen Server-Kanal senden</h3>
+<p>Der Bot sendet die Nachricht über den ausgewählten Textkanal.</p>
+<div class="manager-divider">
+</div>
+<div class="manager-form-grid">
+<div class="manager-field">
+<label for="sayChannel">Textkanal</label>
+<select id="sayChannel">
+<option value="">Kanal auswählen</option>
+</select>
+</div>
+<div class="manager-field">
+<label for="sayLink">Optionaler Link</label>
+<input id="sayLink" type="url" placeholder="https://…">
+</div>
+<div class="manager-field" style="grid-column:1/-1">
+<label for="sayMessage">Nachricht</label>
+<textarea id="sayMessage" maxlength="1900" placeholder="Deine Nachricht …">
+</textarea>
+</div>
+</div>
+<div class="manager-form-actions">
+<button class="manager-button primary" id="sendSay" type="button">Nachricht senden</button>
+</div>
+</div>
+<div class="manager-card" style="margin-top:14px">
+<h3>Direktnachricht an ein Servermitglied</h3>
+<p>Das Mitglied muss sich noch auf diesem Discord-Server befinden und DMs erlauben.</p>
+<div class="manager-divider">
+</div>
+<div class="manager-form-grid">
+<div class="manager-field">
+<label for="dmUserId">Discord User-ID</label>
+<input id="dmUserId" inputmode="numeric" placeholder="User-ID des Mitglieds">
+</div>
+<div class="manager-field">
+<label for="dmLink">Optionaler Link</label>
+<input id="dmLink" type="url" placeholder="https://…">
+</div>
+<div class="manager-field" style="grid-column:1/-1">
+<label for="dmMessage">Nachricht</label>
+<textarea id="dmMessage" maxlength="1900" placeholder="Deine Direktnachricht …">
+</textarea>
+</div>
+</div>
+<div class="manager-form-actions">
+<button class="manager-button primary" id="sendDm" type="button">Direktnachricht senden</button>
+</div>
+</div>
+</section>
+  <section class="manager-view" id="view-security">
+<div class="manager-section-title">
+<div>
+<h3>Anti-Raid & Sicherheit</h3>
+<p>Änderungen greifen abhängig von den aktiven Bot-Listenern und Discord-Berechtigungen.</p>
+</div>
+<button class="manager-button primary save-config" type="button">Sicherheit speichern</button>
+</div>
+<div class="manager-card">
+<div class="manager-list" id="securityOptions">
+</div>
+<div class="manager-divider">
+</div>
+<div class="manager-form-grid">
+<div class="manager-field">
+<label for="punishUser">Maßnahme gegen Nutzer</label>
+<select id="punishUser">
+<option value="strip_roles">Rollen entziehen</option>
+<option value="timeout">Timeout</option>
+<option value="kick">Kick</option>
+<option value="ban">Ban</option>
+</select>
+</div>
+<div class="manager-field">
+<label for="punishBot">Maßnahme gegen Bots</label>
+<select id="punishBot">
+<option value="ban">Ban</option>
+<option value="kick">Kick</option>
+<option value="strip_roles">Rollen entziehen</option>
+<option value="timeout">Timeout</option>
+</select>
+</div>
+<div class="manager-field">
+<label for="newAccountDays">Mindestalter des Accounts (Tage)</label>
+<input id="newAccountDays" type="number" min="0" max="365">
+</div>
+<div class="manager-field">
+<label for="raidLogChannel">Anti-Raid-Log-Kanal</label>
+<select id="raidLogChannel">
+<option value="">Nicht festgelegt</option>
+</select>
+</div>
+</div>
+</div>
+<div class="manager-section-title">
+<div>
+<h3>Aktive Sperre</h3>
+<p>Lockdown nur aufheben, wenn die Situation sicher ist.</p>
+</div>
+</div>
+<div class="manager-card">
+<p id="lockdownState">Status wird geladen …</p>
+<div class="manager-form-actions">
+<button class="manager-button danger" id="disableLockdown" type="button">Lockdown aufheben (Owner)</button>
+</div>
+</div>
+<div class="manager-section-title">
+<div>
+<h3>Fraktionswarnungen</h3>
+<p>Aktueller Warnstatus aus dem Bot.</p>
+</div>
+<button class="manager-button" id="loadWarnings" type="button">Warnungen laden</button>
+</div>
+<div class="manager-card" id="fraktionWarnings">
+<p>Noch nicht geladen.</p>
+</div>
+<div class="manager-section-title">
+<div>
+<h3>Bot-Whitelist</h3>
+<p>Nur der Owner darf die Whitelist einsehen und bearbeiten.</p>
+</div>
+<button class="manager-button" id="loadWhitelist" type="button">Whitelist laden</button>
+</div>
+<div class="manager-card" id="botWhitelist">
+<p>Owner-Funktion.</p>
+</div>
+</section>
+  <section class="manager-view" id="view-audit">
+<div class="manager-section-title">
+<div>
+<h3>Audit-Protokoll</h3>
+<p>Die letzten protokollierten Änderungen für diesen Server.</p>
+</div>
+<button class="manager-button" id="reloadAudit" type="button">Aktualisieren</button>
+</div>
+<div id="auditList" class="manager-table-wrap">
+</div>
+</section>
+ </div>
+</section>
+<div class="manager-toast" id="managerToast" role="status" aria-live="polite">
+</div>
+
+<footer class="footer">
+<span>© 2026 🔰 • EURP | Manager Bot</span>
+<div class="footer-links">
+<a href="#" id="privacy">Datenschutz</a>
+<a href="#" id="help">Hilfe</a>
+</div>
+</footer>
+</div>
+<div class="toast" id="toast" role="status">Vorschau: Discord-Anmeldung ist hier noch nicht verbunden.</div>
 <script>document.querySelector('.main').id='login';</script>
 <script>
-const toast=document.getElementById('toast');
-let toastTimer;
-const DISCORD_CLIENT_ID='1446188210794401883';
+'use strict';
 const API_BASE='https://botconfig.wisp.uno';
+const DISCORD_CLIENT_ID='1446188210794401883';
+const SESSION_KEY='eurp_manager_bot_session_token';
+const STATE_KEY='eurp_manager_discord_oauth_state';
 const REDIRECT_URI=window.location.origin+window.location.pathname;
-function showToast(message){toast.textContent=message;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),5000)}
-function setAuthLoading(loading){const button=document.getElementById('authBtn');button.disabled=loading;button.style.opacity=loading?'.65':'1';button.querySelector('span').textContent=loading?'Verbindung wird geprüft …':'Mit Discord autorisieren'}
-async function finishDiscordLogin(){
- const params=new URLSearchParams(window.location.search);
- const code=params.get('code');
- if(!code)return;
- const returnedState=params.get('state');
- const savedState=sessionStorage.getItem('discord_oauth_state');
- sessionStorage.removeItem('discord_oauth_state');
- history.replaceState({},document.title,REDIRECT_URI);
- if(!returnedState||!savedState||returnedState!==savedState){showToast('Anmeldung abgebrochen: Sicherheitsprüfung fehlgeschlagen. Bitte erneut versuchen.');return}
- setAuthLoading(true);
- try{
-  const response=await fetch(API_BASE+'/api/auth/discord',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code,redirect_uri:REDIRECT_URI})});
-  const data=await response.json().catch(()=>({}));
-  if(!response.ok||!data.session_token)throw new Error(data.error||data.message||'Discord-Anmeldung fehlgeschlagen.');
-  sessionStorage.setItem('eurp_manager_bot_session_token',data.session_token);
-  const meResponse=await fetch(API_BASE+'/api/bootstrap',{headers:{Authorization:'Bearer '+data.session_token}});
-  const bootstrap=await meResponse.json().catch(()=>({}));
-  if(!meResponse.ok)throw new Error(bootstrap.error||'Anmeldung erfolgreich, aber die Bot-API antwortet nicht korrekt.');
-  const username=(data.user&&data.user.username)||(bootstrap.user&&bootstrap.user.username)||'Discord-Nutzer';
-  const guildCount=Array.isArray(bootstrap.guilds)?bootstrap.guilds.length:0;
-  document.querySelector('.card-title').textContent='Verbunden!';
-  document.querySelector('.card-sub').textContent='Angemeldet als '+username+'. Zugriff auf '+guildCount+' Discord-Server gefunden.';
-  document.querySelector('.status strong').textContent='Discord-Konto verbunden';
-  document.querySelector('.status small').textContent='Deine Sitzung ist aktiv. Die Website kann jetzt deine freigegebenen Bot-Server laden.';
-  document.querySelector('#authBtn span').textContent='Erneut mit Discord verbinden';
-  showToast('Erfolgreich mit Discord verbunden! Server: '+guildCount);
- }catch(error){showToast('Verbindung fehlgeschlagen: '+error.message)}
- finally{setAuthLoading(false)}
-}
-document.getElementById('authBtn').addEventListener('click',()=>{
- const state=Array.from(crypto.getRandomValues(new Uint8Array(24)),b=>b.toString(16).padStart(2,'0')).join('');
- sessionStorage.setItem('discord_oauth_state',state);
- const params=new URLSearchParams({client_id:DISCORD_CLIENT_ID,response_type:'code',redirect_uri:REDIRECT_URI,scope:'identify',state});
- window.location.assign('https://discord.com/oauth2/authorize?'+params.toString());
-});
-finishDiscordLogin();
-document.getElementById('privacy').addEventListener('click',e=>{e.preventDefault();showToast('Hier kannst du später deine Datenschutzerklärung verlinken.')});
-document.getElementById('help').addEventListener('click',e=>{e.preventDefault();showToast('Hier kannst du später einen Support-Link einsetzen.')});
+const $=id=>document.getElementById(id);
+const state={token:sessionStorage.getItem(SESSION_KEY)||'',user:null,guilds:[],guildId:'',rank:0,isMaster:false,modules:{labels:{},commands:[]},config:null,availableChannels:[],availableRoles:[],admins:[],audit:[],dirty:{features:{},commands:{},anti_raid:{}},configLoaded:false};
+let toastTimer=null;
+function toast(message,error=false){const el=$('managerToast');el.textContent=message;el.classList.toggle('error',error);el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),4500)}
+function esc(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function id(){return state.guildId}
+function canEdit(){return state.rank>=100}
+function headers(json=true){const h={Authorization:'Bearer '+state.token};if(json)h['Content-Type']='application/json';return h}
+async function api(path,options={}){if(!state.token)throw new Error('Du bist nicht angemeldet.');const response=await fetch(API_BASE+path,{...options,headers:{...headers(options.body!==undefined),...(options.headers||{})}});const data=await response.json().catch(()=>({}));if(response.status===401){sessionStorage.removeItem(SESSION_KEY);state.token='';throw new Error('Sitzung abgelaufen. Bitte melde dich erneut an.')}if(!response.ok)throw new Error(data.error||data.message||('API-Fehler '+response.status));return data}
+function setLoading(button,loading,label){if(!button)return;button.disabled=loading;if(label&&!button.dataset.label)button.dataset.label=button.textContent;if(label)button.textContent=loading?'Bitte warten …':button.dataset.label}
+function revealInit(root=document){const items=root.querySelectorAll('.reveal-on-scroll:not([data-reveal-ready])');items.forEach((el,i)=>{el.dataset.revealReady='1';el.style.setProperty('--reveal-delay',Math.min(i,8)*55+'ms');if(!window.IntersectionObserver){el.classList.add('is-visible');return}observer.observe(el)})}
+const observer=window.IntersectionObserver?new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');observer.unobserve(e.target)}}),{threshold:.1,rootMargin:'0px 0px -30px 0px'}):null;
+function switchView(view){document.querySelectorAll('.manager-tab').forEach(b=>b.classList.toggle('active',b.dataset.view===view));document.querySelectorAll('.manager-view').forEach(v=>v.classList.toggle('active',v.id==='view-'+view));if(view==='admins')loadAdmins();if(view==='audit')loadAudit();if(view==='security')loadSecurityExtras()}
+function showPanel(){document.querySelector('.landing').style.display='none';document.querySelector('.showcase').style.display='none';document.querySelector('.bottom-cta').style.display='none';document.querySelector('.main').style.display='none';$('managerPanel').classList.add('open');$('managerWelcome').textContent='Angemeldet als '+(state.user?.username||'Discord-Nutzer')+' · sichere Bot-Verbindung';if(state.user?.avatar_url){$('managerAvatar').src=state.user.avatar_url;$('managerAvatar').hidden=false}renderGuilds();$('managerPanel').scrollIntoView({behavior:'smooth',block:'start'})}
+function showLanding(){ $('managerPanel').classList.remove('open');document.querySelector('.landing').style.display='';document.querySelector('.showcase').style.display='';document.querySelector('.bottom-cta').style.display='';document.querySelector('.main').style.display=''; }
+async function bootstrap(){const data=await api('/api/bootstrap');state.user=data.user||{};state.guilds=Array.isArray(data.guilds)?data.guilds:[];state.modules=data.modules||{labels:{},commands:[]};state.isMaster=!!state.user.is_master;if(!state.guilds.length)throw new Error('Dein Discord-Konto ist angemeldet, hat aber auf keinem Bot-Server einen Rang. Bitte lass dir einen Rang zuweisen.');showPanel();const previous=state.guildId;state.guildId=state.guilds.some(g=>String(g.guild_id)===String(previous))?String(previous):String(state.guilds[0].guild_id);$('guildSelect').value=state.guildId;await loadGuild();}
+function renderGuilds(){const select=$('guildSelect');select.innerHTML=state.guilds.map(g=>`<option value="${esc(g.guild_id)}">${esc(g.name)} · Rang ${esc(g.rank)}</option>`).join('');$('serverCards').innerHTML=state.guilds.map((g,i)=>`<button type="button" class="manager-server reveal-on-scroll" data-guild="${esc(g.guild_id)}" style="--reveal-delay:${i*55}ms">${g.icon_url?`<img src="${esc(g.icon_url)}" alt="">`:'<div class="manager-avatar" style="display:grid;place-items:center">🔰</div>'}<span style="min-width:0;flex:1"><strong>${esc(g.name)}</strong><small>${Number(g.member_count||0).toLocaleString('de-DE')} Mitglieder · Rang ${esc(g.rank)}</small></span><span>↗</span></button>`).join('');$('overviewStats').innerHTML=[['SERVER',state.guilds.length,'Server mit freigegebenem Zugriff'],['RANG',state.guilds.find(g=>String(g.guild_id)===String(state.guildId))?.rank??'–','Berechtigung auf diesem Server'],['MODULE',Object.keys(state.modules.labels||{}).length,'Bekannte Funktionsbereiche'],['STATUS','Verbunden','Discord OAuth & Bot-API']].map(a=>`<article class="manager-stat reveal-on-scroll"><small>${a[0]}</small><strong>${esc(a[1])}</strong><span>${esc(a[2])}</span></article>`).join('');revealInit($('managerPanel'))}
+async function loadGuild(){if(!id())return;const guild=state.guilds.find(g=>String(g.guild_id)===String(id()));state.rank=Number(guild?.rank||0);$('rankBadge').textContent='Rang '+state.rank;$('permissionBadge').textContent=canEdit()?'Volle Verwaltung':'Nur eingeschränkter Zugriff';$('permissionBadge').className='manager-pill '+(canEdit()?'good':'warn');state.configLoaded=false;$('moduleList').innerHTML=loadingHtml();$('commandList').innerHTML=loadingHtml();try{const result=await api('/api/guild/'+encodeURIComponent(id())+'/config');state.config=result.config||{};state.availableChannels=result.available_channels||[];state.availableRoles=result.available_roles||[];state.configLoaded=true;state.dirty={features:{},commands:{},anti_raid:{}};renderConfig();if(canEdit())loadAdmins().catch(()=>{});$('lockdownState').textContent=state.config.lockdown?.active?'Lockdown ist aktiv seit '+(state.config.lockdown.since||'unbekannt')+'. Grund: '+(state.config.lockdown.reason||'Nicht angegeben'):'Aktuell ist kein Lockdown als aktiv gespeichert.';toast('Server-Konfiguration geladen.')}catch(e){$('moduleList').innerHTML=emptyHtml(e.message,true);$('commandList').innerHTML=emptyHtml(e.message,true);toast(e.message,true)}}
+function loadingHtml(){return '<div class="manager-loading"><span class="manager-spinner"></span> Daten werden geladen …</div>'}function emptyHtml(msg,error=false){return `<div class="manager-empty ${error?'manager-error':''}">${esc(msg)}</div>`}
+function renderConfig(){const cfg=state.config||{};const labels=state.modules.labels||{};const modules=Object.keys(labels);$('moduleList').innerHTML=modules.map(key=>{const enabled=(cfg.features||{})[key]!==false;return `<div class="manager-row"><div class="manager-row-main"><strong>${esc(labels[key]||key)}</strong><small>Funktionsschlüssel: ${esc(key)} · ${enabled?'Aktiviert':'Deaktiviert'}</small></div><input class="manager-switch" type="checkbox" data-feature="${esc(key)}" ${enabled?'checked':''} ${canEdit()?'':'disabled'} aria-label="${esc(labels[key]||key)} aktivieren"></div>`}).join('')||emptyHtml('Keine Funktionsbereiche von der API geliefert.');const commands=state.modules.commands||[];$('commandList').innerHTML=commands.map(c=>{const enabled=(cfg.commands||{})[c.key]!==false;const moduleLabel=labels[c.module]||c.module;return `<div class="manager-row"><div class="manager-row-main"><strong>${esc(c.label||c.key)}</strong><small>${esc(moduleLabel)} · ${enabled?'Freigegeben':'Gesperrt'}</small></div><input class="manager-switch" type="checkbox" data-command="${esc(c.key)}" data-module="${esc(c.module)}" ${enabled?'checked':''} ${canEdit()?'':'disabled'} aria-label="${esc(c.label||c.key)} aktivieren"></div>`}).join('')||emptyHtml('Keine Befehle von der API geliefert.');populateSelects();renderMappings();renderSecurity();document.querySelectorAll('.save-config').forEach(b=>b.disabled=!canEdit());['saveSettings','saveAdmin'].forEach(k=>{if($(k))$(k).disabled=!canEdit()});document.querySelectorAll('[data-feature]').forEach(el=>el.addEventListener('change',()=>state.dirty.features[el.dataset.feature]=el.checked));document.querySelectorAll('[data-command]').forEach(el=>el.addEventListener('change',()=>state.dirty.commands[el.dataset.command]=el.checked));revealInit($('managerPanel'))}
+function populateSelects(){const channelOpts=state.availableChannels.map(c=>`<option value="${esc(c.channel_id)}"># ${esc(c.name)} (${esc(c.type)})</option>`).join('');const roleOpts=state.availableRoles.map(r=>`<option value="${esc(r.role_id)}">@ ${esc(r.name)}</option>`).join('');['channelValue','auditChannel','sayChannel','raidLogChannel'].forEach(key=>{const el=$(key);if(!el)return;const old=el.value;el.innerHTML=(key==='channelValue'||key==='sayChannel'?'<option value="">Kanal auswählen</option>':'<option value="">Nicht festgelegt</option>')+channelOpts;if(old)el.value=old});$('roleValue').innerHTML='<option value="">Rolle auswählen</option>'+roleOpts;const saved=state.config?.channels||{};const current=Object.entries(saved).find(([k])=>k==='rp_auto_channel');if(current)$('channelKey').value=current[0];$('auditChannel').value=state.config?.audit_channel_id?String(state.config.audit_channel_id):'';$('raidLogChannel').value=state.config?.anti_raid?.log_channel_id?String(state.config.anti_raid.log_channel_id):'';$('sayChannel').value=state.availableChannels.some(c=>String(c.channel_id)===String(saved.announcement_channel))?String(saved.announcement_channel):''}
+function renderMappings(){const channels=state.config?.channels||{},roles=state.config?.roles||{};$('channelMappings').innerHTML=Object.keys(channels).length?`<div class="manager-list">${Object.entries(channels).map(([k,v])=>`<div class="manager-row"><div class="manager-row-main"><strong>${esc(k)}</strong><small>${esc(channelName(v))} · ID ${esc(v)}</small></div><button class="manager-button" data-fill-channel="${esc(k)}" type="button" ${canEdit()?'':'disabled'}>Bearbeiten</button></div>`).join('')}</div>`:emptyHtml('Noch keine Kanal-Zuordnungen gespeichert.');$('roleMappings').innerHTML=Object.keys(roles).length?`<div class="manager-list">${Object.entries(roles).map(([k,v])=>`<div class="manager-row"><div class="manager-row-main"><strong>${esc(k)}</strong><small>${esc(roleName(v))} · ID ${esc(v)}</small></div><button class="manager-button" data-fill-role="${esc(k)}" type="button" ${canEdit()?'':'disabled'}>Bearbeiten</button></div>`).join('')}</div>`:emptyHtml('Noch keine Rollen-Zuordnungen gespeichert.');document.querySelectorAll('[data-fill-channel]').forEach(b=>b.onclick=()=>{$('channelKey').value=b.dataset.fillChannel;$('channelValue').value=String(channels[b.dataset.fillChannel]||'')});document.querySelectorAll('[data-fill-role]').forEach(b=>b.onclick=()=>{$('roleKey').value=b.dataset.fillRole;$('roleValue').value=String(roles[b.dataset.fillRole]||'')})}
+function channelName(v){return state.availableChannels.find(c=>String(c.channel_id)===String(v))?.name||'Nicht verfügbar'}function roleName(v){return state.availableRoles.find(r=>String(r.role_id)===String(v))?.name||'Nicht verfügbar'}
+function renderSecurity(){const a=state.config?.anti_raid||{};const toggles=[['enabled','Anti-Raid aktiv'],['apply_to_owner','Auch auf Server-Owner anwenden'],['apply_to_bots','Auch auf Bots anwenden'],['exempt_developer','Entwickler ausnehmen'],['block_unknown_bots','Unbekannte Bots blockieren'],['lockdown_on_trigger','Bei Auslösung Lockdown aktivieren']];$('securityOptions').innerHTML=toggles.map(([key,label])=>`<div class="manager-row"><div class="manager-row-main"><strong>${esc(label)}</strong><small>${a[key]?'Aktiviert':'Deaktiviert'}</small></div><input class="manager-switch" type="checkbox" data-raid="${key}" ${a[key]?'checked':''} ${canEdit()?'':'disabled'}></div>`).join('');$('punishUser').value=a.punishment_user||'strip_roles';$('punishBot').value=a.punishment_bot||'ban';$('newAccountDays').value=Number(a.new_account_days||0);$('raidLogChannel').value=a.log_channel_id?String(a.log_channel_id):'';document.querySelectorAll('[data-raid]').forEach(el=>el.addEventListener('change',()=>state.dirty.anti_raid[el.dataset.raid]=el.checked));['punishUser','punishBot','newAccountDays','raidLogChannel'].forEach(k=>$(k).disabled=!canEdit());$('disableLockdown').disabled=!state.isMaster}
+async function saveConfig(){if(!canEdit()){toast('Nur Rang 100 darf Einstellungen ändern.',true);return}const patch={};if(Object.keys(state.dirty.features).length)patch.features={...state.dirty.features};if(Object.keys(state.dirty.commands).length)patch.commands={...state.dirty.commands};const anti={...state.dirty.anti_raid};anti.punishment_user=$('punishUser').value;anti.punishment_bot=$('punishBot').value;anti.new_account_days=Math.max(0,Math.min(365,Number($('newAccountDays').value||0)));anti.log_channel_id=$('raidLogChannel').value||null;if(Object.keys(anti).length)patch.anti_raid=anti;const btn=document.querySelector('.manager-view.active .save-config');setLoading(btn,true);try{await api('/api/guild/'+encodeURIComponent(id())+'/config',{method:'POST',body:JSON.stringify(patch)});state.dirty={features:{},commands:{},anti_raid:{}};toast('Einstellungen erfolgreich im Bot gespeichert.');await loadGuild()}catch(e){toast(e.message,true)}finally{setLoading(btn,false)}}
+async function saveSettings(){if(!canEdit())return toast('Nur Rang 100 darf Einstellungen ändern.',true);const patch={};const ck=$('channelKey').value.trim(),cv=$('channelValue').value;const rk=$('roleKey').value.trim(),rv=$('roleValue').value;if(ck&&cv)patch.channels={[ck]:cv};if(rk&&rv)patch.roles={[rk]:rv};patch.audit_channel_id=$('auditChannel').value||null;try{await api('/api/guild/'+encodeURIComponent(id())+'/config',{method:'POST',body:JSON.stringify(patch)});toast('Server-Einstellungen gespeichert.');await loadGuild()}catch(e){toast(e.message,true)}}
+async function loadAdmins(){if(!canEdit()){$('adminList').innerHTML=emptyHtml('Dein Rang erlaubt keine Einsicht in die Rangverwaltung.');return}try{state.admins=await api('/api/guild/'+encodeURIComponent(id())+'/admins');$('adminList').innerHTML=state.admins.length?`<table class="manager-table"><thead><tr><th>Discord-Nutzer</th><th>User-ID</th><th>Rang</th><th>Aktion</th></tr></thead><tbody>${state.admins.map(a=>`<tr><td>${esc(a.username||'Unbekannter Nutzer')}</td><td>${esc(a.user_id)}</td><td><span class="manager-pill ${Number(a.rank)>=100?'good':'warn'}">${esc(a.rank)}</span></td><td><button class="manager-button danger" data-remove-admin="${esc(a.user_id)}" type="button">Zugriff entfernen</button></td></tr>`).join('')}</tbody></table>`:emptyHtml('Es sind noch keine zusätzlichen Ränge eingetragen.');document.querySelectorAll('[data-remove-admin]').forEach(b=>b.onclick=()=>setAdmin(b.dataset.removeAdmin,0))}catch(e){$('adminList').innerHTML=emptyHtml(e.message,true)}}
+async function setAdmin(uid,rank){if(!/^\d{15,22}$/.test(String(uid))){toast('Bitte eine gültige Discord User-ID eingeben.',true);return}try{await api('/api/guild/'+encodeURIComponent(id())+'/admins',{method:'POST',body:JSON.stringify({user_id:uid,rank:Number(rank)})});toast('Rang gespeichert.');$('adminUserId').value='';await loadAdmins()}catch(e){toast(e.message,true)}}
+async function sendMessage(kind){const isDm=kind==='dm';const body=isDm?{target_user_id:$('dmUserId').value.trim(),message:$('dmMessage').value,link:$('dmLink').value.trim()}:{channel_id:$('sayChannel').value,message:$('sayMessage').value,link:$('sayLink').value.trim()};if(isDm&&!/^\d{15,22}$/.test(body.target_user_id)){toast('Bitte eine gültige Discord User-ID eingeben.',true);return}if(!body.message.trim()){toast('Bitte eine Nachricht eingeben.',true);return}const btn=$(isDm?'sendDm':'sendSay');setLoading(btn,true);try{await api('/api/guild/'+encodeURIComponent(id())+'/'+kind,{method:'POST',body:JSON.stringify(body)});toast(isDm?'Direktnachricht wurde gesendet.':'Nachricht wurde gesendet.');$(isDm?'dmMessage':'sayMessage').value=''}catch(e){toast(e.message,true)}finally{setLoading(btn,false)}}
+async function loadAudit(){if(!canEdit()){$('auditList').innerHTML=emptyHtml('Das Audit-Protokoll ist nur für Rang 100 verfügbar.');return}try{state.audit=await api('/api/guild/'+encodeURIComponent(id())+'/audit');$('auditList').innerHTML=state.audit.length?`<table class="manager-table"><thead><tr><th>Zeit</th><th>Nutzer</th><th>Aktion</th><th>Details</th></tr></thead><tbody>${state.audit.map(a=>`<tr><td>${esc(a.timestamp||'–')}</td><td>${esc(a.username||a.user_id||'–')}</td><td>${esc(a.action||'–')}</td><td>${esc(a.details||'–')}</td></tr>`).join('')}</tbody></table>`:emptyHtml('Noch keine Protokolleinträge vorhanden.')}catch(e){$('auditList').innerHTML=emptyHtml(e.message,true)}}
+async function loadSecurityExtras(){if(!id())return;try{const warns=await api('/api/guild/'+encodeURIComponent(id())+'/fraktion-warns');$('fraktionWarnings').innerHTML=Array.isArray(warns)&&warns.length?`<div class="manager-list">${warns.map(w=>`<div class="manager-row"><div class="manager-row-main"><strong>${esc(w.fraktion)}</strong><small>${esc(w.count)} Warnung(en)${w.pending_deletion?' · Löschung vorgemerkt':''}</small></div>${w.pending_deletion&&state.isMaster?`<button class="manager-button" data-cancel-warn="${esc(w.fraktion)}">Löschung abbrechen</button>`:''}</div>`).join('')}</div>`:emptyHtml('Keine Fraktionswarnungen gemeldet.');document.querySelectorAll('[data-cancel-warn]').forEach(b=>b.onclick=async()=>{try{await api('/api/guild/'+encodeURIComponent(id())+'/fraktion-warns/'+encodeURIComponent(b.dataset.cancelWarn)+'/cancel',{method:'POST',body:'{}'});toast('Vorgemerkte Löschung abgebrochen.');await loadSecurityExtras()}catch(e){toast(e.message,true)}})}catch(e){$('fraktionWarnings').innerHTML=emptyHtml(e.message,true)}}
+async function loadWhitelist(){if(!state.isMaster){$('botWhitelist').innerHTML=emptyHtml('Nur der Owner kann die Bot-Whitelist einsehen.');return}try{const data=await api('/api/guild/'+encodeURIComponent(id())+'/bot-whitelist');const ids=data.bot_ids||[];$('botWhitelist').innerHTML=ids.length?`<div class="manager-list">${ids.map(uid=>`<div class="manager-row"><div class="manager-row-main"><strong>Bot-ID ${esc(uid)}</strong><small>Auf der Sicherheits-Whitelist</small></div><button class="manager-button danger" data-remove-bot="${esc(uid)}">Entfernen</button></div>`).join('')}</div>`:emptyHtml('Die Bot-Whitelist ist leer.');document.querySelectorAll('[data-remove-bot]').forEach(b=>b.onclick=async()=>{if(!confirm('Bot '+b.dataset.removeBot+' wirklich von der Whitelist entfernen?'))return;try{await api('/api/guild/'+encodeURIComponent(id())+'/bot-whitelist',{method:'DELETE',body:JSON.stringify({bot_id:b.dataset.removeBot})});toast('Bot von der Whitelist entfernt.');await loadWhitelist()}catch(e){toast(e.message,true)}})}catch(e){$('botWhitelist').innerHTML=emptyHtml(e.message,true)}}
+async function disableLockdown(){if(!state.isMaster)return toast('Nur der Owner darf den Lockdown aufheben.',true);if(!confirm('Lockdown auf diesem Server wirklich aufheben?'))return;try{const data=await api('/api/guild/'+encodeURIComponent(id())+'/lockdown/off',{method:'POST',body:'{}'});toast('Lockdown aufgehoben. Wiederhergestellte Rollen: '+(data.nachgetragen??0));await loadGuild()}catch(e){toast(e.message,true)}}
+async function healthCheck(){const el=$('apiStatus');el.innerHTML=loadingHtml();try{const r=await fetch(API_BASE+'/api/health');const d=await r.json();if(!r.ok)throw new Error('HTTP '+r.status);el.innerHTML=`<p><span class="manager-pill good">API erreichbar</span> · Status: ${esc(d.status||'ok')}</p>`}catch(e){el.innerHTML=emptyHtml('Die Bot-API ist aktuell nicht erreichbar: '+e.message,true)}}
+async function logout(){try{if(state.token)await fetch(API_BASE+'/api/auth/logout',{method:'POST',headers:{Authorization:'Bearer '+state.token}})}catch(_){}sessionStorage.removeItem(SESSION_KEY);sessionStorage.removeItem(STATE_KEY);state.token='';state.guilds=[];state.guildId='';showLanding();toast('Du wurdest abgemeldet.')}
+function startDiscordLogin(){const bytes=crypto.getRandomValues(new Uint8Array(24));const oauthState=Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');sessionStorage.setItem(STATE_KEY,oauthState);const params=new URLSearchParams({client_id:DISCORD_CLIENT_ID,response_type:'code',redirect_uri:REDIRECT_URI,scope:'identify',state:oauthState});window.location.assign('https://discord.com/oauth2/authorize?'+params.toString())}
+async function finishDiscordLogin(){const params=new URLSearchParams(location.search);const code=params.get('code');if(!code)return false;const returned=params.get('state'),saved=sessionStorage.getItem(STATE_KEY);sessionStorage.removeItem(STATE_KEY);history.replaceState({},document.title,REDIRECT_URI);if(!returned||!saved||returned!==saved){toast('Sicherheitsprüfung fehlgeschlagen. Bitte erneut anmelden.',true);return true}setLoading($('authBtn'),true);try{const response=await fetch(API_BASE+'/api/auth/discord',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code,redirect_uri:REDIRECT_URI})});const data=await response.json().catch(()=>({}));if(!response.ok||!data.session_token)throw new Error(data.error||'Discord-Anmeldung fehlgeschlagen.');state.token=data.session_token;sessionStorage.setItem(SESSION_KEY,state.token);await bootstrap();toast('Erfolgreich mit Discord verbunden.')}catch(e){sessionStorage.removeItem(SESSION_KEY);state.token='';toast(e.message,true)}finally{setLoading($('authBtn'),false)}return true}
+$('authBtn').addEventListener('click',startDiscordLogin);$('refreshPanel').addEventListener('click',async()=>{try{await bootstrap();toast('Panel aktualisiert.')}catch(e){toast(e.message,true)}});$('logoutPanel').addEventListener('click',logout);$('guildSelect').addEventListener('change',async e=>{state.guildId=e.target.value;try{await loadGuild()}catch(err){toast(err.message,true)}});$('serverCards').addEventListener('click',async e=>{const b=e.target.closest('[data-guild]');if(!b)return;state.guildId=b.dataset.guild;$('guildSelect').value=state.guildId;switchView('overview');await loadGuild();$('managerPanel').scrollIntoView({behavior:'smooth',block:'start'})});document.querySelectorAll('.manager-tab').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.view)));document.querySelectorAll('.save-config').forEach(b=>b.addEventListener('click',saveConfig));$('saveSettings').addEventListener('click',saveSettings);$('reloadSettings').addEventListener('click',loadGuild);$('reloadAdmins').addEventListener('click',loadAdmins);$('saveAdmin').addEventListener('click',()=>setAdmin($('adminUserId').value.trim(),$('adminRank').value));$('sendSay').addEventListener('click',()=>sendMessage('say'));$('sendDm').addEventListener('click',()=>sendMessage('dm'));$('reloadAudit').addEventListener('click',loadAudit);$('loadWarnings').addEventListener('click',loadSecurityExtras);$('loadWhitelist').addEventListener('click',loadWhitelist);$('disableLockdown').addEventListener('click',disableLockdown);$('healthCheck').addEventListener('click',healthCheck);$('privacy').addEventListener('click',e=>{e.preventDefault();toast('Bitte hinterlege die gültige Datenschutzerklärung deiner Plattform.')});$('help').addEventListener('click',e=>{e.preventDefault();toast('Bitte hinterlege hier den Support-Link deiner Plattform.')});
+(async()=>{revealInit();const handled=await finishDiscordLogin();if(handled)return;if(state.token){try{await bootstrap()}catch(e){sessionStorage.removeItem(SESSION_KEY);state.token='';showLanding();toast(e.message,true)}}})();
 </script>
-</body></html>
+</body>
+</html>
