@@ -1,267 +1,514 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Autorisieren · Samuel Studios</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Samuel Studios — BotConfig</title>
 <style>
-:root{
-  --bg:#0e1016;--surface:#171b27;--surface2:#22283a;--border:rgba(120,132,168,0.22);
-  --text:#c7cbdb;--text-hi:#f5f6fb;--muted:#8a90aa;--dc:#5865F2;--dc-soft:#8993FF;
-  --green:#3ddc84;--green-dim:rgba(61,220,132,0.12);--red:#ff5c68;--red-dim:rgba(255,92,104,0.12);
-  --amber:#ffb454;--amber-dim:rgba(255,180,84,0.12);
-  --disp:'Sora',system-ui,sans-serif;--sans:'Manrope',system-ui,sans-serif;
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;}
-body{
-  background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;
-  display:flex;align-items:center;justify-content:center;padding:20px;
-  background-image:
-    radial-gradient(ellipse 700px 420px at 15% -80px,rgba(88,101,242,0.16),transparent),
-    radial-gradient(ellipse 520px 380px at 100% 100%,rgba(226,53,47,0.08),transparent);
-}
-.box{width:100%;max-width:400px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:38px 30px 30px;text-align:center;box-shadow:0 20px 60px -24px rgba(0,0,0,0.7);}
-.logo{width:72px;height:72px;margin:0 auto 20px;border-radius:18px;background:var(--surface2);border:1px solid var(--border);display:grid;place-items:center;padding:6px;}
-.logo img{width:100%;height:100%;object-fit:contain;border-radius:12px;}
-h1{font-family:var(--disp);font-size:22px;font-weight:800;color:var(--text-hi);letter-spacing:-0.02em;margin-bottom:8px;}
-p.sub{font-size:13.5px;line-height:1.65;color:var(--muted);margin:0 auto 24px;max-width:300px;}
-.btn{width:100%;display:inline-flex;align-items:center;justify-content:center;gap:9px;border:none;border-radius:11px;padding:13px 20px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;background:var(--dc);color:#fff;transition:filter .15s,transform .1s;}
-.btn:hover{filter:brightness(1.1);}
-.btn:active{transform:translateY(1px);}
-.btn:focus-visible{outline:2px solid var(--dc-soft);outline-offset:3px;}
-.btn:disabled{opacity:.45;cursor:not-allowed;filter:none;}
-.btn svg{width:18px;height:18px;flex-shrink:0;}
-.status{display:flex;align-items:center;gap:12px;text-align:left;border-radius:12px;padding:14px 15px;margin-bottom:18px;border:1px solid var(--border);}
-.status.ok{background:var(--green-dim);border-color:rgba(61,220,132,0.35);}
-.status.warn{background:var(--amber-dim);border-color:rgba(255,180,84,0.35);}
-.status.err{background:var(--red-dim);border-color:rgba(255,92,104,0.35);}
-.status.load{background:var(--surface2);}
-.status-icon{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font-size:16px;font-weight:800;}
-.status.ok .status-icon{background:var(--green);color:#062615;}
-.status.warn .status-icon{background:var(--amber);color:#2a1a00;}
-.status.err .status-icon{background:var(--red);color:#2a0007;}
-.status.load .status-icon{background:transparent;}
-.spinner{width:20px;height:20px;border-radius:50%;border:3px solid var(--border);border-top-color:var(--dc-soft);animation:spin .8s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
-.status-title{font-size:14px;font-weight:700;color:var(--text-hi);}
-.status-detail{font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.5;}
-.user{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:18px;font-size:13.5px;font-weight:600;color:var(--text-hi);}
-.user img{width:30px;height:30px;border-radius:50%;background:var(--surface2);}
-.note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:16px;}
-.hidden{display:none!important;}
-@media (prefers-reduced-motion:reduce){.spinner{animation-duration:2s;}}
+:root{color-scheme:light dark;--bg:light-dark(#f5f7fb,#080d18);--panel:light-dark(#fff,#101827);--panel2:light-dark(#eef2f8,#151f31);--text:light-dark(#172033,#f2f5fc);--muted:light-dark(#64708a,#a4b0c6);--line:light-dark(#dce3ee,#26334a);--blue:#5b7cfa;--cyan:#43d9d0;--shadow:0 18px 55px #0002}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}button,a{font:inherit}a{color:inherit;text-decoration:none}.app{min-height:100vh;background:var(--bg)}.wrap{width:min(1160px,calc(100% - 36px));margin:auto}.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}.navin{height:76px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:11px;font-weight:850;letter-spacing:-.4px}.logo{display:grid;place-items:center;width:39px;height:39px;border-radius:13px;background:linear-gradient(135deg,var(--blue),#8e65ef);color:white;font-weight:900;box-shadow:0 8px 20px #5b7cfa55}.links{display:flex;gap:24px;align-items:center;color:var(--muted);font-size:14px}.links a:hover,.links a.active{color:var(--text)}.btn{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:12px;padding:11px 16px;font-weight:750;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:9px;transition:.18s}.btn:hover{transform:translateY(-1px);border-color:var(--blue)}.primary{background:linear-gradient(120deg,#5b7cfa,#7658ed);border-color:transparent;color:white;box-shadow:0 8px 22px #5b7cfa40}.hero{padding:78px 0 55px;display:grid;grid-template-columns:1.12fr .88fr;gap:45px;align-items:center}.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--cyan);font-size:12px;font-weight:850;letter-spacing:1.5px;text-transform:uppercase}.dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 5px #43d9d022}.hero h1{font-size:clamp(42px,6vw,70px);line-height:1.04;letter-spacing:-3.4px;margin:18px 0}.gradient{background:linear-gradient(100deg,#5b7cfa,#9b7aff 55%,#43d9d0);background-clip:text;color:transparent}.lead{font-size:18px;color:var(--muted);max-width:590px}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:27px}.hint{font-size:12px;color:var(--muted);margin-top:14px}.mock{background:linear-gradient(145deg,#18233a,#0e1524);border:1px solid #2c3a55;border-radius:24px;padding:18px;box-shadow:var(--shadow);transform:rotate(1deg)}.mocktop{display:flex;justify-content:space-between;align-items:center;padding:5px 3px 17px;color:#a9b7d2;font-size:12px}.lights{display:flex;gap:5px}.lights i{width:7px;height:7px;border-radius:50%;background:#63718d}.mockbody{display:grid;grid-template-columns:120px 1fr;gap:13px}.side{background:#111a2b;border-radius:13px;padding:13px 10px}.side small{color:#70819f;display:block;margin:9px 0}.side div{padding:8px;border-radius:8px;color:#aab8d2;font-size:11px}.side .sel{background:#5b7cfa2c;color:#fff}.dash{display:grid;gap:12px}.dashhead{display:flex;justify-content:space-between;align-items:center;color:white;font-weight:800}.live{font-size:10px;color:#43d9d0;background:#43d9d01b;padding:4px 8px;border-radius:20px}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{background:#151f32;border:1px solid #293650;border-radius:12px;padding:13px}.stat small{display:block;color:#8fa0bd;font-size:10px}.stat b{font-size:23px;color:white}.chart{height:92px;border-radius:12px;background:linear-gradient(180deg,#5b7cfa25,transparent);border:1px solid #293650;display:flex;align-items:end;gap:7px;padding:12px}.chart i{flex:1;background:linear-gradient(0deg,#5b7cfa,#43d9d0);border-radius:5px 5px 2px 2px;opacity:.9}.section{padding:55px 0}.sectionhead{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:25px}.section h2{font-size:clamp(27px,4vw,40px);letter-spacing:-1.4px;line-height:1.15;margin:8px 0}.sectionhead p{color:var(--muted);max-width:480px;margin:0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:23px;box-shadow:0 4px 16px #00000008}.ico{width:43px;height:43px;border-radius:13px;background:light-dark(#edf0ff,#242746);display:grid;place-items:center;font-size:21px;margin-bottom:15px}.card h3{margin:0 0 6px;font-size:17px}.card p{color:var(--muted);margin:0;font-size:14px}.page{display:none;min-height:68vh;padding:55px 0}.page.active{display:block}.pageintro{max-width:720px;margin-bottom:30px}.pageintro h1{font-size:clamp(35px,5vw,52px);line-height:1.1;letter-spacing:-2px;margin:12px 0}.pageintro p{color:var(--muted);font-size:17px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:25px;margin-bottom:16px}.row{display:flex;align-items:center;justify-content:space-between;gap:16px}.row p{color:var(--muted);margin:4px 0}.tag{border-radius:30px;padding:5px 10px;background:light-dark(#eafaf7,#123a39);color:light-dark(#137c71,#68e4d6);font-size:12px;font-weight:800}.field{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:12px;margin:7px 0 15px}.notice{padding:14px 16px;border-radius:12px;background:light-dark(#fff7df,#342913);color:light-dark(#74510b,#f7d782);font-size:13px;margin:14px 0}.footer{border-top:1px solid var(--line);padding:27px 0;color:var(--muted);font-size:13px}.footin{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}.toast{position:fixed;right:20px;bottom:20px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 17px;box-shadow:var(--shadow);z-index:50;max-width:360px;display:none}.mobile{display:none}@media(max-width:800px){.hero{grid-template-columns:1fr;padding-top:52px}.mock{transform:none}.grid{grid-template-columns:1fr 1fr}.links{gap:12px}.links a:not(.btn){display:none}.sectionhead{display:block}.sectionhead p{margin-top:10px}}@media(max-width:520px){.wrap{width:min(100% - 24px,1160px)}.navin{height:66px}.brand span:last-child{font-size:14px}.links{gap:7px}.links .btn{padding:9px 10px;font-size:12px}.hero h1{letter-spacing:-2px}.grid{grid-template-columns:1fr}.mockbody{grid-template-columns:85px 1fr}.side{padding:8px 5px}.side div{font-size:10px;padding:7px 4px}.stats{gap:7px}.stat{padding:10px}.stat b{font-size:19px}.section{padding:40px 0}.row{align-items:flex-start;flex-direction:column}}
+/* Dashboard workspace enhancements */
+.workspace-layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:22px;align-items:start}
+.workspace-sidebar{position:sticky;top:96px;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:12px}
+.workspace-sidebar button{width:100%;display:flex;align-items:center;gap:10px;border:0;background:transparent;color:var(--muted);padding:12px;border-radius:11px;text-align:left;cursor:pointer}
+.workspace-sidebar button:hover,.workspace-sidebar button.selected{background:light-dark(#edf0ff,#222a48);color:var(--text)}
+.workspace-sidebar .side-label{padding:12px 10px 5px;color:var(--muted);font-size:10px;font-weight:850;letter-spacing:1.3px}
+.workspace-content{min-width:0}
+.workspace-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.workspace-toolbar h2{margin:0;font-size:26px;letter-spacing:-.8px}
+.workspace-toolbar p{margin:3px 0 0;color:var(--muted);font-size:13px}
+.workspace-tools{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.search-field{min-width:180px;max-width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--text)}
+.workspace-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:19px;margin-bottom:14px;min-width:0}
+.workspace-card h3{margin:0 0 7px;font-size:16px}
+.workspace-card p{color:var(--muted);margin:0;font-size:13px}
+.workspace-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.workspace-grid .workspace-card{margin:0}
+.workspace-section{display:none}
+.workspace-section.active{display:block;animation:workspace-in .2s ease-out}
+@keyframes workspace-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.server-choice{display:flex;align-items:center;gap:13px;padding:13px;border:1px solid var(--line);border-radius:13px;margin:9px 0;cursor:pointer;transition:border-color .15s,background .15s}
+.server-choice:hover{border-color:var(--blue)}
+.server-choice.selected{border-color:var(--blue);background:light-dark(#f1f3ff,#1a2340)}
+.server-avatar{width:43px;height:43px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(135deg,#5b7cfa,#9365ef);color:#fff;font-weight:900;flex-shrink:0}
+.server-meta{min-width:0;flex:1}
+.server-meta strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.server-meta small{display:block;color:var(--muted);font-size:12px}
+.module-row{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.module-row:last-child{border-bottom:0}
+.module-icon{width:40px;height:40px;display:grid;place-items:center;background:var(--panel2);border-radius:12px;font-size:18px;flex-shrink:0}
+.module-description{flex:1;min-width:0}
+.module-description strong{display:block;font-size:14px}
+.module-description small{display:block;color:var(--muted);font-size:12px;overflow-wrap:anywhere}
+.switch{position:relative;width:43px;height:25px;border:0;border-radius:20px;background:light-dark(#cbd3e1,#38435a);cursor:pointer;flex-shrink:0;transition:background .18s}
+.switch:after{content:"";position:absolute;left:3px;top:3px;width:19px;height:19px;background:white;border-radius:50%;transition:transform .18s;box-shadow:0 1px 4px #0003}
+.switch[aria-checked="true"]{background:#5b7cfa}
+.switch[aria-checked="true"]:after{transform:translateX(18px)}
+.switch:disabled{opacity:.45;cursor:not-allowed}
+.config-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.config-field{display:block;margin-bottom:14px}
+.config-field span{display:block;font-weight:750;font-size:13px;margin-bottom:6px}
+.config-field small{display:block;color:var(--muted);font-size:11px;margin-top:5px}
+.config-field input,.config-field select,.config-field textarea{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:inherit;outline:none}
+.config-field textarea{min-height:100px;resize:vertical}
+.config-field input:focus,.config-field select:focus,.config-field textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px #5b7cfa22}
+.form-actions{display:flex;gap:10px;align-items:center;justify-content:flex-end;flex-wrap:wrap;margin-top:16px}
+.empty-state{padding:30px 18px;text-align:center;border:1px dashed var(--line);border-radius:14px;color:var(--muted)}
+.empty-state strong{display:block;color:var(--text);margin-bottom:5px}
+.status-line{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}
+.status-dot{width:8px;height:8px;border-radius:50%;background:#e5a83d}
+.status-dot.online{background:#35c99a;box-shadow:0 0 0 4px #35c99a1c}
+.status-dot.error{background:#f06a78}
+.permission-note{border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--muted);font-size:12px;margin:12px 0}
+.admin-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.admin-row:last-child{border-bottom:0}
+.admin-avatar{width:37px;height:37px;border-radius:50%;background:var(--panel2);display:grid;place-items:center;font-weight:850}
+.admin-info{flex:1;min-width:0}
+.admin-info strong{display:block;overflow-wrap:anywhere}
+.admin-info small{display:block;color:var(--muted);font-size:12px}
+.danger-button{border-color:#d84c633d;color:light-dark(#b4233b,#ff8998)}
+.table-wrap{overflow:auto}
+.data-table{width:100%;border-collapse:collapse;font-size:13px}
+.data-table th,.data-table td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+.data-table th{font-size:11px;color:var(--muted);font-weight:850;text-transform:uppercase;letter-spacing:.6px}
+.data-table tr:last-child td{border-bottom:0}
+.inline-error{padding:12px;border-radius:10px;background:light-dark(#fff0f0,#351a23);color:light-dark(#a11e36,#ff9dab);font-size:12px;margin:12px 0;overflow-wrap:anywhere}
+.inline-success{padding:12px;border-radius:10px;background:light-dark(#eafaf4,#12342b);color:light-dark(#176b50,#7ce2bd);font-size:12px;margin:12px 0}
+.skeleton{height:14px;border-radius:7px;background:var(--panel2);animation:skeleton-pulse 1.3s infinite alternate}
+@keyframes skeleton-pulse{from{opacity:.55}to{opacity:1}}
+.small-label{color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px}
+.metric-value{font-size:27px;font-weight:900;letter-spacing:-1px;margin-top:4px}
+.metric-caption{font-size:12px;color:var(--muted)}
+.workspace-card,.workspace-sidebar{box-shadow:0 8px 26px #00000008}
+.workspace-card h2{letter-spacing:-.8px}
+.workspace-sidebar button{transition:background .16s ease,color .16s ease,transform .16s ease}
+.workspace-sidebar button:hover{transform:translateX(2px)}
+.server-choice{width:100%;background:var(--panel);color:var(--text);font:inherit;text-align:left}
+.server-choice:focus-visible{outline:3px solid #5b7cfa88;outline-offset:2px}
+.module-row{min-width:0}
+.module-description{overflow-wrap:anywhere}
+.workspace-content .btn{white-space:nowrap}
+.workspace-content .empty-state{line-height:1.7}
+.workspace-content .inline-error,.workspace-content .inline-success{line-height:1.6}
+.workspace-content .permission-note{line-height:1.6}
+.workspace-toolbar .search-field{font:inherit;font-size:13px}
+.workspace-toolbar .search-field::placeholder{color:var(--muted)}
+.config-field input:disabled,.config-field select:disabled,.config-field textarea:disabled{opacity:.6;cursor:not-allowed}
+.config-field input[type=number]{font-variant-numeric:tabular-nums}
+.admin-info{overflow-wrap:anywhere}
+.admin-row .admin-avatar{flex-shrink:0}
+.status-line{white-space:nowrap}
+.status-line span{overflow-wrap:anywhere}
+.metric-value{overflow-wrap:anywhere}
+.workspace-content button:disabled{opacity:.55;cursor:wait}
+.workspace-content button:disabled:hover{transform:none}
+.workspace-content form{min-width:0}
+.workspace-content textarea{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+.workspace-content .tag{white-space:nowrap}
+.workspace-content .data-table{min-width:420px}
+.workspace-content .form-actions .btn{min-height:42px}
+.workspace-content .search-field:focus{outline:2px solid #5b7cfa55;outline-offset:1px}
+.notice code{overflow-wrap:anywhere}
+button:focus-visible,a:focus-visible{outline:3px solid #5b7cfa88;outline-offset:3px}
+@media(max-width:800px){.workspace-layout{grid-template-columns:1fr}.workspace-sidebar{position:static;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}.workspace-sidebar .side-label{display:none}.workspace-sidebar button{justify-content:center;font-size:12px;padding:10px 5px}.config-grid{grid-template-columns:1fr}}
+@media(max-width:520px){.workspace-sidebar{grid-template-columns:repeat(2,minmax(0,1fr))}.workspace-grid{grid-template-columns:1fr}.workspace-toolbar{align-items:flex-start;flex-direction:column}.workspace-toolbar h2{font-size:22px}.search-field{width:100%;min-width:0}.admin-row{align-items:flex-start}.data-table th,.data-table td{padding:9px 7px}}
 </style>
 </head>
-<body>
-<main class="box">
-  <div class="logo"><img src="Logo.png" alt="Samuel Studios"></div>
-  <h1>Autorisieren</h1>
-  <p class="sub" id="sub">Autorisiere dich einmalig mit Discord. Das gilt dauerhaft, bis du es selbst widerrufst.</p>
-
-  <div id="statusBox" class="status hidden">
-    <div class="status-icon" id="statusIcon"></div>
-    <div>
-      <div class="status-title" id="statusTitle"></div>
-      <div class="status-detail" id="statusDetail"></div>
-    </div>
-  </div>
-
-  <div id="userBox" class="user hidden">
-    <img id="userAvatar" src="" alt="">
-    <span id="userName"></span>
-  </div>
-
-  <button class="btn" id="authBtn" type="button">
-    <svg viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg>
-    <span id="authBtnLabel">Mit Discord autorisieren</span>
-  </button>
-
-  <p class="note" id="note">Zum Widerrufen: Discord → Einstellungen → Autorisierte Apps → Samuel Studios → Deautorisieren, oder per <code>/deauthorize</code> im Bot.</p>
-</main>
-
+<body><div class="app">
+<header class="nav"><div class="wrap navin"><a class="brand" href="#home" data-page="home"><span class="logo">SS</span><span>Samuel Studios <span style="color:var(--muted);font-weight:600">/ BotConfig</span></span></a><nav class="links"><a href="#features" data-page="features">Funktionen</a><a href="#docs" data-page="docs">Dokumentation</a><a href="#support" data-page="support">Support</a><button class="btn primary" id="loginTop">◈ Mit Discord anmelden</button></nav></div></header>
+<main>
+<section class="page active" id="home"><div class="wrap hero"><div><span class="eyebrow"><i class="dot"></i> BOT MANAGEMENT PLATFORM</span><h1>Dein Discord-Bot.<br><span class="gradient">Alles im Griff.</span></h1><p class="lead">Verwalte deinen Bot bequem über ein modernes Dashboard. Konfiguration, Module und Serverübersicht an einem Ort — entwickelt von Samuel Studios.</p><div class="actions"><button class="btn primary" id="loginHero">Mit Discord starten <span>→</span></button><a class="btn" href="#features" data-page="features">Funktionen ansehen</a></div><p class="hint">🔒 Anmeldung über Discord OAuth · Kein Discord-Passwort auf dieser Website</p></div><div class="mock"><div class="mocktop"><span class="lights"><i></i><i></i><i></i></span><span>Samuel Studios / Dashboard</span><span>•••</span></div><div class="mockbody"><aside class="side"><small>WORKSPACE</small><div class="sel">▦ Übersicht</div><div>⚙ Einstellungen</div><div>◈ Module</div><div>🛡 Sicherheit</div><div>📋 Protokolle</div><small>SERVER</small><div>◉ Mein Server</div></aside><div class="dash"><div class="dashhead">Übersicht <span class="live">● ONLINE</span></div><div class="stats"><div class="stat"><small>Bot-Status</small><b>Online</b></div><div class="stat"><small>Module</small><b>10+</b></div><div class="stat"><small>Server</small><b>Live</b></div><div class="stat"><small>Kontrolle</small><b>24/7</b></div></div><div class="chart"><i style="height:32%"></i><i style="height:54%"></i><i style="height:41%"></i><i style="height:70%"></i><i style="height:59%"></i><i style="height:85%"></i><i style="height:68%"></i><i style="height:96%"></i><i style="height:75%"></i><i style="height:88%"></i></div></div></div></div></div>
+<div class="wrap section"><div class="sectionhead"><div><span class="eyebrow">ALLES AN EINEM ORT</span><h2>Ein Dashboard. Viele Möglichkeiten.</h2></div><p>Die wichtigsten Verwaltungsbereiche übersichtlich sortiert, damit du deinen Bot schneller konfigurieren kannst.</p></div><div class="grid"><article class="card"><div class="ico">⚙️</div><h3>Bot-Konfiguration</h3><p>Konfigurationsbereiche und Serveroptionen über eine zentrale Oberfläche verwalten.</p></article><article class="card"><div class="ico">🛡️</div><h3>Sicherheit</h3><p>Moderation und Anti-Raid-Funktionen an einem Ort im Blick behalten.</p></article><article class="card"><div class="ico">🧩</div><h3>Module</h3><p>Module, Befehle und verfügbare Funktionen übersichtlich entdecken.</p></article></div></div></section>
+<section class="page" id="features"><div class="wrap pageintro"><span class="eyebrow">FUNKTIONEN</span><h1>Alles für deine Bot-Verwaltung.</h1><p>Eine klare Oberfläche für die vorhandenen Bot-Module. Welche Optionen wirklich verfügbar sind, hängt von deinem Bot und deinen Berechtigungen ab.</p></div><div class="wrap grid"><article class="card"><div class="ico">🛡️</div><h3>Moderation & Sicherheit</h3><p>Moderationsaktionen, Sicherheitsfunktionen und Anti-Raid-Verwaltung.</p></article><article class="card"><div class="ico">👥</div><h3>Team & Fraktionen</h3><p>Bereiche für Teamlisten, Fraktionen und serverbezogene Einstellungen.</p></article><article class="card"><div class="ico">🛒</div><h3>Shop & RP</h3><p>Unterstützung für vorhandene Shop- und Roleplay-Module.</p></article><article class="card"><div class="ico">📨</div><h3>Bewerbungen & Support</h3><p>Verwaltung der entsprechenden Bot-Funktionen und Abläufe.</p></article><article class="card"><div class="ico">🤖</div><h3>KI-Assistent</h3><p>KI-bezogene Bot-Funktionen, soweit sie auf dem Server eingerichtet sind.</p></article><article class="card"><div class="ico">📊</div><h3>Status & Übersicht</h3><p>Server, Module und Kontostatus zentral einsehen, sobald du angemeldet bist.</p></article></div></section>
+<section class="page" id="dashboard"><div class="wrap pageintro"><span class="eyebrow">DASHBOARD</span><h1>Willkommen zurück.</h1><p id="userLine">Melde dich mit Discord an, um deine Server und verfügbaren Bot-Funktionen zu laden.</p></div><div class="wrap"><div class="panel row"><div><h3>Dein Konto</h3><p id="userDetail">Noch nicht angemeldet.</p></div><button class="btn primary" id="loginDash">Mit Discord anmelden</button></div><div class="grid"><div class="card"><div class="ico">🏠</div><h3>Deine Server</h3><p id="guildCount">Nach der Anmeldung werden zugängliche Server hier angezeigt.</p></div><div class="card"><div class="ico">🧩</div><h3>Module</h3><p>Modulübersicht wird nach erfolgreicher Verbindung mit dem Bot geladen.</p></div><div class="card"><div class="ico">🔐</div><h3>Berechtigungen</h3><p>Änderungen werden vom Bot-Backend anhand deiner Rechte geprüft.</p></div></div><div class="notice">Vorschau-Hinweis: Diese Chat-Vorschau kann keine Verbindung zu deinem Wispbyte-Backend aufbauen. Auf GitHub Pages funktionieren Login und Live-Daten erst, wenn die API-Adresse erreichbar ist und die OAuth-Redirect-Adresse exakt eingetragen wurde.</div></div></section>
+<section class="page" id="docs"><div class="wrap pageintro"><span class="eyebrow">DOKUMENTATION</span><h1>So richtest du BotConfig ein.</h1><p>Die Website ist der Client. Discord OAuth und alle geheimen Schlüssel gehören auf das Backend — niemals in den öffentlichen Website-Code.</p></div><div class="wrap"><div class="panel"><h3>1. Discord OAuth</h3><p>Im Discord Developer Portal unter OAuth2 die Redirect-Adresse eintragen:</p><input class="field" readonly value="https://singhsamuel285-tech.github.io/BotConfig/" onclick="this.select()"><p>Client-ID: <code>1446188210794401883</code></p></div><div class="panel"><h3>2. Wispbyte Umgebungsvariablen</h3><p>Diese Werte im Backend setzen:</p><pre style="white-space:pre-wrap;background:var(--panel2);padding:15px;border-radius:10px;overflow:auto">WEBSITE_URL=https://singhsamuel285-tech.github.io/BotConfig/
+WEBSITE_ORIGIN=https://singhsamuel285-tech.github.io
+DISCORD_CLIENT_ID=1446188210794401883</pre><p>Zusätzlich werden <code>DISCORD_CLIENT_SECRET</code> und ein starker <code>API_SECRET</code> benötigt. Diese beiden Werte nicht veröffentlichen.</p></div><div class="panel"><h3>3. API-Verbindung</h3><p>Die Website erwartet die Backend-Routen für Discord-Login, Bootstrap, Serverliste und Konfiguration. Die API muss HTTPS verwenden und CORS für die oben genannte Website-Origin erlauben.</p></div></div></section>
+<section class="page" id="support"><div class="wrap pageintro"><span class="eyebrow">SUPPORT</span><h1>Wir helfen dir weiter.</h1><p>Hier findest du die wichtigsten Schritte zur Fehlerbehebung für Samuel Studios BotConfig.</p></div><div class="wrap"><div class="panel"><h3>Discord-Login schlägt fehl?</h3><p>Prüfe Client-ID, Client-Secret auf dem Backend, Redirect-URL und ob der API-Server online ist.</p></div><div class="panel"><h3>Dashboard bleibt leer?</h3><p>Prüfe in den Wispbyte-Logs, ob die API gestartet wurde und ob die Backend-Adresse stimmt. Teile niemals deinen Bot-Token oder Secrets.</p></div><div class="panel"><h3>Kontakt</h3><p>Verlinke hier deinen offiziellen Support-Discord oder ein Support-Ticket, sobald du die richtige URL festgelegt hast.</p></div></div></section>
+</main><footer class="footer"><div class="wrap footin"><span>© 2026 Samuel Studios</span><span>BotConfig · Sicher verbinden. Einfach verwalten.</span><span><a href="#docs" data-page="docs">Dokumentation</a> · <a href="#support" data-page="support">Support</a></span></div></footer><div class="toast" id="toast"></div></div>
 <script>
-const API_BASE = "https://botconfig.wisp.uno";
-const DISCORD_CLIENT_ID = "1446188210794401883";
-const REDIRECT_URI = window.location.origin + window.location.pathname;
-const SCOPES = "identify guilds.join";
-
-const STORAGE_DONE = "auth_done_user";
-const STORAGE_STATE = "auth_oauth_state";
-const STORAGE_USED = "auth_used_codes";
-
-const els = {
-  sub: document.getElementById("sub"),
-  box: document.getElementById("statusBox"),
-  icon: document.getElementById("statusIcon"),
-  title: document.getElementById("statusTitle"),
-  detail: document.getElementById("statusDetail"),
-  userBox: document.getElementById("userBox"),
-  avatar: document.getElementById("userAvatar"),
-  name: document.getElementById("userName"),
-  btn: document.getElementById("authBtn"),
-  btnLabel: document.getElementById("authBtnLabel")
-};
-
-let busy = false;
-
-function lsGet(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
-function lsSet(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
-function lsDel(k){ try { localStorage.removeItem(k); } catch(e){} }
-
-function setStatus(kind, title, detail) {
-  els.box.className = "status " + kind;
-  els.icon.innerHTML = "";
-  if (kind === "load") {
-    const sp = document.createElement("div");
-    sp.className = "spinner";
-    els.icon.appendChild(sp);
-  } else {
-    els.icon.textContent = kind === "ok" ? "✓" : kind === "warn" ? "!" : "✕";
+// Public website settings. Never put DISCORD_CLIENT_SECRET or API_SECRET in this file.
+const DISCORD_CLIENT_ID='1446188210794401883';
+const API_BASE='https://botconfig.wisp.uno';
+const REDIRECT_URI=window.location.origin+window.location.pathname;
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.style.display='none',5200)}
+function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page));document.querySelectorAll('[data-page]').forEach(a=>a.classList.toggle('active',a.dataset.page===page));if(page==='dashboard')history.replaceState(null,'','#dashboard');else history.replaceState(null,'','#'+page);window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('[data-page]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();go(a.dataset.page)}));
+function login(){if(!DISCORD_CLIENT_ID||DISCORD_CLIENT_ID==='DEINE_CLIENT_ID'){toast('Bitte zuerst die Discord Client-ID im Website-Code eintragen.');return}const state=crypto.randomUUID();sessionStorage.setItem('discord_oauth_state',state);sessionStorage.setItem('discord_oauth_redirect',REDIRECT_URI);const url=new URL('https://discord.com/oauth2/authorize');url.searchParams.set('client_id',DISCORD_CLIENT_ID);url.searchParams.set('response_type','code');url.searchParams.set('redirect_uri',REDIRECT_URI);url.searchParams.set('scope','identify');url.searchParams.set('state',state);window.location.href=url.toString()}
+document.getElementById('loginTop').addEventListener('click',login);document.getElementById('loginHero').addEventListener('click',login);document.getElementById('loginDash').addEventListener('click',login);
+(async function(){
+  const params=new URLSearchParams(location.search);
+  const code=params.get('code');
+  const headersFor=token=>({Authorization:'Bearer '+token});
+  function addDashboardPanel(title,id){let el=document.getElementById(id);if(!el){el=document.createElement('section');el.className='panel';el.id=id;const dashboard=document.getElementById('dashboard');dashboard.querySelector('.wrap:last-child').insertBefore(el,dashboard.querySelector('.notice'));}el.innerHTML='<h3>'+title+'</h3><div class="live-state">Wird geladen …</div>';return el;}
+  async function api(path,token,options={}){const response=await fetch(API_BASE+path,{...options,headers:{...(options.headers||{}),...(token?headersFor(token):{})}});let body={};try{body=await response.json()}catch{}if(!response.ok)throw new Error(body.error||body.message||('API-Fehler '+response.status));return body;}
+  async function loadDashboard(token,user){
+    if(user){document.getElementById('userLine').textContent='Angemeldet als '+(user.username||'Discord-Nutzer');document.getElementById('userDetail').textContent='Discord-ID: '+(user.id||'nicht angegeben');}
+    const serverPanel=addDashboardPanel('Deine Discord-Server','liveGuilds');
+    const modulePanel=addDashboardPanel('Bot-Module','liveModules');
+    try{
+      const boot=await api('/api/bootstrap',token);
+      const guilds=Array.isArray(boot.guilds)?boot.guilds:(Array.isArray(boot.servers)?boot.servers:[]);
+      document.getElementById('guildCount').textContent=guilds.length+' Server vom Backend zurückgegeben.';
+      serverPanel.innerHTML='<h3>Deine Discord-Server</h3>'+(guilds.length?'<div class="grid">'+guilds.map((g,i)=>'<article class="card"><div class="ico">🏠</div><h3>'+escapeHtml(g.name||g.guild_name||('Server '+(i+1)))+'</h3><p>'+escapeHtml(g.id||g.guild_id||'Server-ID nicht angegeben')+'</p></article>').join('')+'</div>':'<p>Das Backend hat keine Serverliste zurückgegeben oder dein Konto hat keinen zugänglichen Server.</p>');
+      try{
+        const modData=await api('/api/modules',token);
+        const mods=Array.isArray(modData.modules)?modData.modules:(Array.isArray(modData)?modData:[]);
+        modulePanel.innerHTML='<h3>Bot-Module</h3>'+(mods.length?'<div class="grid">'+mods.map(m=>{const name=typeof m==='string'?m:(m.label||m.name||m.key||'Modul');const enabled=typeof m==='object'?(m.enabled??m.active):null;return '<article class="card"><div class="ico">🧩</div><h3>'+escapeHtml(name)+'</h3><p>'+(enabled===null?'Status vom Backend nicht angegeben':(enabled?'Aktiviert':'Deaktiviert'))+'</p></article>'}).join('')+'</div>':'<p>Die API antwortet, liefert aber keine bekannte Modulliste. Prüfe die Antwortstruktur von <code>/api/modules</code>.</p>');
+      }catch(e){modulePanel.innerHTML='<h3>Bot-Module</h3><p>Module konnten nicht geladen werden: '+escapeHtml(e.message)+'</p>';}
+      toast('Dashboard mit den verfügbaren Backend-Daten geladen.');
+    }catch(e){serverPanel.innerHTML='<h3>Deine Discord-Server</h3><p>Die API konnte die Daten nicht laden: '+escapeHtml(e.message)+'</p>';modulePanel.innerHTML='<h3>Bot-Module</h3><p>Bitte Backend, Sitzungstoken und Berechtigungen prüfen.</p>';toast('Dashboard konnte nicht vollständig geladen werden: '+e.message);}
   }
-  els.title.textContent = title;
-  els.detail.textContent = detail || "";
-}
+  function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  try{const health=await fetch(API_BASE+'/api/health');if(!health.ok)throw new Error('HTTP '+health.status);document.querySelector('.notice').textContent='Backend erreichbar. Live-Daten werden nach der Discord-Anmeldung geladen.';}catch{document.querySelector('.notice').textContent='Backend aktuell nicht erreichbar. Prüfe API_BASE, Wispbyte-Status, HTTPS und CORS. Die Website kann ohne erreichbare API keine Live-Daten anzeigen.';}
+  if(code){
+    go('dashboard');const gotState=params.get('state');const expected=sessionStorage.getItem('discord_oauth_state');history.replaceState(null,'',REDIRECT_URI+'#dashboard');
+    if(!gotState||gotState!==expected){toast('Discord-Anmeldung abgebrochen: Sicherheitsprüfung fehlgeschlagen.');return;}
+    try{const data=await api('/api/auth/discord',null,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code,redirect_uri:REDIRECT_URI})});if(!data.session_token)throw new Error('Backend hat kein Sitzungstoken zurückgegeben.');sessionStorage.setItem('botconfig_session_token',data.session_token);sessionStorage.removeItem('discord_oauth_state');await loadDashboard(data.session_token,data.user||null);}catch(err){toast('Login nicht möglich: '+err.message+' — API-Adresse, Redirect-URL und Backend prüfen.');}
+  }else{
+    if(location.hash==='#dashboard')go('dashboard');else if(['#features','#docs','#support'].includes(location.hash))go(location.hash.slice(1));
+    const token=sessionStorage.getItem('botconfig_session_token');if(token)await loadDashboard(token,null);
+  }
+})();
+</script>
+<script>
+/* Zusätzliche Dashboard-Oberfläche für Server, Module, Konfiguration und Admins. */
+(() => {
+  const API = 'https://botconfig.wisp.uno';
+  const session = () => sessionStorage.getItem('botconfig_session_token') || '';
+  const state = { guilds: [], guildId: '', modules: [], config: {}, admins: [] };
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
-function showUser(user) {
-  if (!user) { els.userBox.classList.add("hidden"); return; }
-  els.name.textContent = user.username || "";
-  els.avatar.src = user.avatar_url || "https://cdn.discordapp.com/embed/avatars/0.png";
-  els.userBox.classList.remove("hidden");
-}
+  function escape(value) {
+    return String(value ?? '').replace(/[&<>"']/g, char => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[char]);
+  }
 
-function randomState() {
-  const a = new Uint8Array(16);
-  crypto.getRandomValues(a);
-  return Array.from(a, b => b.toString(16).padStart(2, "0")).join("");
-}
+  async function api(path, options = {}) {
+    const headers = new Headers(options.headers || {});
+    if (session()) headers.set('Authorization', `Bearer ${session()}`);
+    if (options.body && !headers.has('Content-Type')) headers.set('Content-Type', 'application/json');
+    let response;
+    try {
+      response = await fetch(`${API}${path}`, { ...options, headers });
+    } catch {
+      throw new Error('Backend nicht erreichbar. Prüfe Wispbyte, HTTPS und CORS.');
+    }
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(body.error || body.message || `API-Fehler ${response.status}`);
+    return body;
+  }
 
-// silent=true: Discord antwortet ohne Zustimmungsfenster, wenn bereits autorisiert
-function buildAuthUrl(silent) {
-  const state = randomState();
-  sessionStorage.setItem(STORAGE_STATE, state);
-  const params = new URLSearchParams({
-    client_id: DISCORD_CLIENT_ID,
-    redirect_uri: REDIRECT_URI,
-    response_type: "code",
-    scope: SCOPES,
-    state: state,
-    prompt: silent ? "none" : "consent"
-  });
-  return "https://discord.com/oauth2/authorize?" + params.toString();
-}
+  function feedback(message, error = false) {
+    const box = $('#workspaceFeedback');
+    if (box) box.innerHTML = `<div class="${error ? 'inline-error' : 'inline-success'}">${escape(message)}</div>`;
+    const toast = $('#toast');
+    if (toast) {
+      toast.textContent = message;
+      toast.style.display = 'block';
+      clearTimeout(feedback.timer);
+      feedback.timer = setTimeout(() => { toast.style.display = 'none'; }, 4500);
+    }
+  }
 
-function getUsedCodes() {
-  try { return JSON.parse(sessionStorage.getItem(STORAGE_USED) || "[]"); } catch (e) { return []; }
-}
-function markCodeUsed(code) {
-  const list = getUsedCodes();
-  list.push(code);
-  sessionStorage.setItem(STORAGE_USED, JSON.stringify(list.slice(-10)));
-}
+  function mount() {
+    if ($('#workspaceRoot')) return;
+    const host = $('#dashboard .wrap:last-child');
+    if (!host) return;
+    const root = document.createElement('div');
+    root.id = 'workspaceRoot';
+    root.innerHTML = `
+      <div class="workspace-toolbar">
+        <div><h2>Bot-Verwaltung</h2><p>Server auswählen und verfügbare Einstellungen ansehen.</p></div>
+        <div class="workspace-tools"><span class="status-line"><i class="status-dot" id="workspaceDot"></i><span id="workspaceStatus">Noch nicht verbunden</span></span><button class="btn" id="workspaceRefresh" type="button">↻ Aktualisieren</button></div>
+      </div>
+      <div class="workspace-layout">
+        <aside class="workspace-sidebar" aria-label="Dashboard-Navigation">
+          <div class="side-label">VERWALTUNG</div>
+          <button class="selected" type="button" data-tab="overview">▦ Übersicht</button>
+          <button type="button" data-tab="servers">▣ Server</button>
+          <button type="button" data-tab="modules">🧩 Module</button>
+          <button type="button" data-tab="config">⚙ Konfiguration</button>
+          <button type="button" data-tab="admins">🛡 Admins</button>
+          <div class="side-label">KONTO</div>
+          <button type="button" data-tab="account">◉ Konto</button>
+        </aside>
+        <div class="workspace-content">
+          <section class="workspace-section active" data-section="overview">
+            <div class="workspace-grid">
+              <article class="workspace-card"><span class="small-label">Verfügbare Server</span><div class="metric-value" id="metricServers">—</div><div class="metric-caption">Server, die das Backend zurückgibt</div></article>
+              <article class="workspace-card"><span class="small-label">Module</span><div class="metric-value" id="metricModules">—</div><div class="metric-caption">Vom Backend geladene Einträge</div></article>
+            </div>
+            <article class="workspace-card" style="margin-top:14px"><h3>So funktioniert die Verwaltung</h3><p>Wähle einen Server aus. Die Website fragt anschließend die passenden API-Routen ab. Wenn eine Route oder Berechtigung fehlt, wird eine Fehlermeldung angezeigt. Ein Klick allein ändert keine Bot-Einstellung.</p><div class="form-actions"><button class="btn primary" type="button" data-jump="servers">Server auswählen →</button><button class="btn" type="button" data-jump="config">Konfiguration öffnen</button></div></article>
+          </section>
+          <section class="workspace-section" data-section="servers"><article class="workspace-card"><div class="workspace-toolbar"><div><h2>Server</h2><p>Wähle den Server für die Verwaltung.</p></div><input class="search-field" id="serverSearch" placeholder="Server suchen…" aria-label="Server suchen"></div><div id="serverList"><div class="empty-state"><strong>Wird geladen</strong>Die Serverliste wird vom Backend abgefragt.</div></div></article></section>
+          <section class="workspace-section" data-section="modules"><article class="workspace-card"><div class="workspace-toolbar"><div><h2>Module</h2><p id="moduleSubtitle">Zuerst einen Server auswählen.</p></div><input class="search-field" id="moduleSearch" placeholder="Module suchen…" aria-label="Module suchen"></div><div id="moduleList"><div class="empty-state"><strong>Kein Server ausgewählt</strong>Öffne zuerst den Bereich „Server“.</div></div><div class="permission-note">Moduländerungen benötigen eine passende Backend-Route. Diese Oberfläche behauptet nicht, eine Änderung gespeichert zu haben, wenn die API sie nicht bestätigt.</div></article></section>
+          <section class="workspace-section" data-section="config"><article class="workspace-card"><div class="workspace-toolbar"><div><h2>Konfiguration</h2><p id="configSubtitle">Zuerst einen Server auswählen.</p></div><button class="btn" id="configReload" type="button">↻ Neu laden</button></div><div id="configEditor"><div class="empty-state"><strong>Keine Konfiguration geladen</strong>Wähle einen Server aus.</div></div></article></section>
+          <section class="workspace-section" data-section="admins"><article class="workspace-card"><div class="workspace-toolbar"><div><h2>Admins</h2><p id="adminSubtitle">Zuerst einen Server auswählen.</p></div></div><div id="adminList"><div class="empty-state"><strong>Keine Admins geladen</strong>Wähle einen Server aus.</div></div><div class="permission-note">Admin-Rechte werden ausschließlich vom Backend geprüft.</div></article></section>
+          <section class="workspace-section" data-section="account"><article class="workspace-card"><h2>Konto und Sitzung</h2><p>Deine Anmeldung wird über Discord OAuth durchgeführt.</p><div id="accountDetails" class="permission-note">Noch keine Kontodaten geladen.</div><div class="form-actions"><button class="btn danger-button" id="workspaceLogout" type="button">Abmelden</button></div></article></section>
+          <div id="workspaceFeedback" aria-live="polite"></div>
+        </div>
+      </div>`;
+    host.insertBefore(root, $('.notice', host));
 
-function renderAuthorized(user, already) {
-  lsSet(STORAGE_DONE, user && (user.id || user.user_id) ? String(user.id || user.user_id) : "1");
-  showUser(user);
-  setStatus(
-    already ? "warn" : "ok",
-    already ? "Bereits autorisiert" : "Autorisiert",
-    already ? "Du bist schon eingetragen. Nichts weiter zu tun." : "Fertig. Die Autorisierung bleibt bestehen, bis du sie widerrufst."
-  );
-  els.sub.textContent = "Du kannst diese Seite schließen.";
-  els.btnLabel.textContent = "Status erneut prüfen";
-  els.btn.disabled = false;
-}
+    $$('[data-tab]', root).forEach(button => button.addEventListener('click', () => showTab(button.dataset.tab)));
+    $$('[data-jump]', root).forEach(button => button.addEventListener('click', () => showTab(button.dataset.jump)));
+    $('#workspaceRefresh', root).addEventListener('click', () => refresh(true));
+    $('#serverSearch', root).addEventListener('input', renderServers);
+    $('#moduleSearch', root).addEventListener('input', renderModules);
+    $('#configReload', root).addEventListener('click', loadConfig);
+    $('#workspaceLogout', root).addEventListener('click', logout);
+  }
 
-function renderError(msg) {
-  setStatus("err", "Autorisierung fehlgeschlagen", msg);
-  els.btnLabel.textContent = "Erneut versuchen";
-  els.btn.disabled = false;
-}
+  function showTab(name) {
+    $$('[data-section]').forEach(section => section.classList.toggle('active', section.dataset.section === name));
+    $$('[data-tab]').forEach(button => button.classList.toggle('selected', button.dataset.tab === name));
+    if (name === 'config') loadConfig();
+    if (name === 'admins') loadAdmins();
+    if (name === 'modules') renderModules();
+  }
 
-async function submitCode(code) {
-  const res = await fetch(API_BASE + "/api/authorize", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ code: code, redirect_uri: REDIRECT_URI })
-  });
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data.error || ("Fehler " + res.status));
-  return data;
-}
+  function normalizeServers(data) {
+    const list = Array.isArray(data) ? data : data.guilds || data.servers || data.data || [];
+    return list.filter(item => item && typeof item === 'object').map(item => ({
+      id: String(item.id || item.guild_id || item.server_id || ''),
+      name: String(item.name || item.guild_name || item.server_name || 'Unbenannter Server')
+    })).filter(item => item.id);
+  }
 
-async function handleReturn(params) {
-  const code = params.get("code");
-  const error = params.get("error");
-  const state = params.get("state");
-  const expected = sessionStorage.getItem(STORAGE_STATE);
-  history.replaceState({}, "", REDIRECT_URI);
-  sessionStorage.removeItem(STORAGE_STATE);
-
-  if (error) {
-    if (error === "interaction_required" || error === "consent_required" || error === "login_required") {
-      // Nicht (mehr) autorisiert -> lokalen Merker löschen
-      lsDel(STORAGE_DONE);
-      setStatus("warn", "Noch nicht autorisiert", "Klicke auf den Button, um dich zu autorisieren.");
-      els.btnLabel.textContent = "Mit Discord autorisieren";
+  function renderServers() {
+    const target = $('#serverList');
+    if (!target) return;
+    const query = ($('#serverSearch')?.value || '').trim().toLowerCase();
+    const list = state.guilds.filter(server => `${server.name} ${server.id}`.toLowerCase().includes(query));
+    if (!list.length) {
+      target.innerHTML = `<div class="empty-state"><strong>${state.guilds.length ? 'Kein Treffer' : 'Keine Server erhalten'}</strong>${state.guilds.length ? 'Ändere deinen Suchbegriff.' : 'Prüfe die Antwort von /api/bootstrap oder /api/guilds.'}</div>`;
       return;
     }
-    renderError(error === "access_denied" ? "Du hast die Autorisierung abgebrochen." : "Discord meldet: " + error);
-    return;
+    target.innerHTML = list.map(server => `<button class="server-choice ${server.id === state.guildId ? 'selected' : ''}" type="button" data-server="${escape(server.id)}"><span class="server-avatar">${escape(server.name.slice(0, 1).toUpperCase())}</span><span class="server-meta"><strong>${escape(server.name)}</strong><small>ID: ${escape(server.id)}</small></span><span>${server.id === state.guildId ? '✓' : 'Auswählen →'}</span></button>`).join('');
+    $$('[data-server]', target).forEach(button => button.addEventListener('click', () => selectServer(button.dataset.server)));
   }
 
-  if (!code) return;
-
-  // state "join" kommt vom Button im Bot-Panel (kein vorheriger Seitenaufruf nötig)
-  if (state !== "join" && (!expected || state !== expected)) {
-    renderError("Ungültige Anfrage. Bitte starte die Autorisierung neu.");
-    return;
+  async function selectServer(id) {
+    const server = state.guilds.find(item => item.id === id);
+    if (!server) return;
+    state.guildId = id;
+    state.modules = [];
+    state.config = {};
+    state.admins = [];
+    $('#moduleSubtitle').textContent = `Server: ${server.name}`;
+    $('#configSubtitle').textContent = `Server: ${server.name}`;
+    $('#adminSubtitle').textContent = `Server: ${server.name}`;
+    renderServers();
+    showTab('modules');
+    await Promise.allSettled([loadModules(), loadConfig(), loadAdmins()]);
   }
-  if (getUsedCodes().includes(code)) {
-    renderError("Dieser Code wurde bereits verwendet. Bitte starte neu.");
-    return;
-  }
-  markCodeUsed(code);
 
-  busy = true;
-  els.btn.disabled = true;
-  setStatus("load", "Wird autorisiert…", "Einen Moment bitte.");
-  try {
-    const data = await submitCode(code);
-    const already = data.status === "already_authorized" || data.already_authorized === true;
-    renderAuthorized(data.user || null, already);
-  } catch (e) {
-    renderError(e.message);
-  } finally {
-    busy = false;
+  async function loadModules() {
+    if (!state.guildId) return;
+    const target = $('#moduleList');
+    target.innerHTML = '<div class="empty-state"><strong>Module werden geladen</strong>Bitte warten.</div>';
+    try {
+      const data = await api(`/api/modules?guild_id=${encodeURIComponent(state.guildId)}`);
+      const list = Array.isArray(data) ? data : data.modules || data.features || data.data || [];
+      state.modules = list.map(item => {
+        if (typeof item === 'string') return { key: item, name: item, enabled: null };
+        const key = String(item.key || item.id || item.name || 'Modul');
+        const value = item.enabled ?? item.active ?? item.is_enabled;
+        return { key, name: String(item.label || item.display_name || item.name || key), description: String(item.description || 'Vom Backend bereitgestelltes Modul'), enabled: typeof value === 'boolean' ? value : null };
+      });
+      renderModules();
+      $('#metricModules').textContent = String(state.modules.length);
+    } catch (error) {
+      target.innerHTML = `<div class="inline-error">Module konnten nicht geladen werden: ${escape(error.message)}</div>`;
+    }
   }
-}
 
-els.btn.addEventListener("click", () => {
-  if (busy) return;
-  busy = true;
-  els.btn.disabled = true;
-  window.location.href = buildAuthUrl(!!lsGet(STORAGE_DONE));
-});
-
-// Wenn der Nutzer per Zurück-Button aus Discord zurückkommt, Button wieder freigeben
-window.addEventListener("pageshow", (e) => {
-  if (e.persisted) { busy = false; els.btn.disabled = false; }
-});
-
-(function init() {
-  const params = new URLSearchParams(window.location.search);
-  if (params.has("code") || params.has("error")) {
-    handleReturn(params);
-    return;
+  function renderModules() {
+    const target = $('#moduleList');
+    if (!target || !state.guildId) return;
+    const query = ($('#moduleSearch')?.value || '').trim().toLowerCase();
+    const list = state.modules.filter(item => `${item.name} ${item.key} ${item.description || ''}`.toLowerCase().includes(query));
+    if (!list.length) {
+      target.innerHTML = '<div class="empty-state"><strong>Keine Module angezeigt</strong>Warte auf die API oder prüfe ihre Antwortstruktur.</div>';
+      return;
+    }
+    target.innerHTML = list.map(item => `<div class="module-row"><div class="module-icon">🧩</div><div class="module-description"><strong>${escape(item.name)}</strong><small>${escape(item.description || item.key)} · ${escape(item.key)}</small></div>${item.enabled === null ? '<span class="tag">Status unbekannt</span>' : `<span class="tag">${item.enabled ? 'Aktiviert' : 'Deaktiviert'}</span>`}</div>`).join('');
   }
-  if (lsGet(STORAGE_DONE)) {
-    setStatus("ok", "Bereits autorisiert", "Du bist eingetragen. Die Autorisierung gilt, bis du sie widerrufst.");
-    els.sub.textContent = "Du kannst diese Seite schließen.";
-    els.btnLabel.textContent = "Status erneut prüfen";
+
+  function flatten(value, prefix = '') {
+    const result = [];
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return [{ key: prefix || 'value', value }];
+    for (const [key, child] of Object.entries(value)) {
+      const full = prefix ? `${prefix}.${key}` : key;
+      if (child && typeof child === 'object' && !Array.isArray(child)) result.push(...flatten(child, full));
+      else result.push({ key: full, value: child });
+    }
+    return result;
   }
+
+  function assignNested(target, dotted, value) {
+    const keys = dotted.split('.');
+    let cursor = target;
+    keys.slice(0, -1).forEach(key => {
+      if (!cursor[key] || typeof cursor[key] !== 'object' || Array.isArray(cursor[key])) cursor[key] = {};
+      cursor = cursor[key];
+    });
+    cursor[keys[keys.length - 1]] = value;
+  }
+
+  async function loadConfig() {
+    if (!state.guildId) return;
+    const target = $('#configEditor');
+    target.innerHTML = '<div class="empty-state"><strong>Konfiguration wird geladen</strong>Bitte warten.</div>';
+    try {
+      const data = await api(`/api/guild/${encodeURIComponent(state.guildId)}/config`);
+      state.config = data.config && typeof data.config === 'object' ? data.config : data;
+      renderConfig();
+    } catch (error) {
+      target.innerHTML = `<div class="inline-error">Konfiguration konnte nicht geladen werden: ${escape(error.message)}</div>`;
+    }
+  }
+
+  function renderConfig() {
+    const target = $('#configEditor');
+    const rows = flatten(state.config).filter(row => !['guild_id', 'server_id'].includes(row.key));
+    if (!rows.length) {
+      target.innerHTML = '<div class="empty-state"><strong>Leere Konfiguration</strong>Das Backend hat keine bekannten Konfigurationsfelder geliefert.</div>';
+      return;
+    }
+    const fields = rows.map(row => {
+      const value = row.value;
+      let control;
+      if (typeof value === 'boolean') {
+        control = `<select class="config-value" data-key="${escape(row.key)}"><option value="true" ${value ? 'selected' : ''}>Aktiviert</option><option value="false" ${!value ? 'selected' : ''}>Deaktiviert</option></select>`;
+      } else if (typeof value === 'number') {
+        control = `<input class="config-value" data-key="${escape(row.key)}" type="number" step="any" value="${escape(value)}">`;
+      } else if (value === null || typeof value === 'string') {
+        control = `<input class="config-value" data-key="${escape(row.key)}" type="text" value="${escape(value ?? '')}">`;
+      } else {
+        control = `<textarea class="config-value" data-key="${escape(row.key)}">${escape(JSON.stringify(value))}</textarea>`;
+      }
+      return `<label class="config-field"><span>${escape(row.key)}</span>${control}<small>Typ: ${escape(typeof value)}</small></label>`;
+    }).join('');
+    target.innerHTML = `<form id="configForm"><div class="config-grid">${fields}</div><div class="form-actions"><button class="btn" type="button" id="configDiscard">Verwerfen</button><button class="btn primary" type="submit">Änderungen speichern</button></div></form>`;
+    $('#configDiscard').addEventListener('click', renderConfig);
+    $('#configForm').addEventListener('submit', saveConfig);
+  }
+
+  async function saveConfig(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const next = JSON.parse(JSON.stringify(state.config));
+    try {
+      $$('.config-value', form).forEach(input => {
+        const key = input.dataset.key;
+        const old = flatten(state.config).find(row => row.key === key)?.value;
+        let value = input.value;
+        if (typeof old === 'boolean') value = value === 'true';
+        else if (typeof old === 'number') value = Number(value);
+        else if (old && typeof old === 'object') value = JSON.parse(value);
+        assignNested(next, key, value);
+      });
+      const button = $('button[type="submit"]', form);
+      button.disabled = true;
+      button.textContent = 'Speichert …';
+      const result = await api(`/api/guild/${encodeURIComponent(state.guildId)}/config`, { method: 'POST', body: JSON.stringify(next) });
+      state.config = result.config && typeof result.config === 'object' ? result.config : next;
+      renderConfig();
+      feedback('Die API hat den Speichervorgang erfolgreich beantwortet.');
+    } catch (error) {
+      feedback(`Speichern fehlgeschlagen: ${error.message}`, true);
+      const button = $('button[type="submit"]', form);
+      if (button) { button.disabled = false; button.textContent = 'Erneut versuchen'; }
+    }
+  }
+
+  async function loadAdmins() {
+    if (!state.guildId) return;
+    const target = $('#adminList');
+    target.innerHTML = '<div class="empty-state"><strong>Admins werden geladen</strong>Bitte warten.</div>';
+    try {
+      const data = await api(`/api/guild/${encodeURIComponent(state.guildId)}/admins`);
+      state.admins = Array.isArray(data) ? data : data.admins || data.users || data.data || [];
+      if (!state.admins.length) {
+        target.innerHTML = '<div class="empty-state"><strong>Keine Admins zurückgegeben</strong>Die API hat eine leere Liste geliefert.</div>';
+        return;
+      }
+      target.innerHTML = state.admins.map(entry => {
+        const item = typeof entry === 'string' ? { id: entry, username: entry } : entry;
+        const id = String(item.id || item.user_id || item.discord_id || 'Nicht angegeben');
+        const name = String(item.username || item.name || item.display_name || id);
+        const rank = String(item.rank ?? item.level ?? item.role ?? 'Nicht angegeben');
+        return `<div class="admin-row"><span class="admin-avatar">${escape(name.slice(0, 1).toUpperCase())}</span><span class="admin-info"><strong>${escape(name)}</strong><small>ID: ${escape(id)} · Rang: ${escape(rank)}</small></span></div>`;
+      }).join('');
+    } catch (error) {
+      target.innerHTML = `<div class="inline-error">Admin-Liste konnte nicht geladen werden: ${escape(error.message)}</div>`;
+    }
+  }
+
+  async function refresh(showMessage = false) {
+    if (!session()) {
+      $('#workspaceStatus').textContent = 'Bitte mit Discord anmelden';
+      $('#workspaceDot').className = 'status-dot error';
+      return;
+    }
+    $('#workspaceStatus').textContent = 'Verbindung wird geprüft';
+    try {
+      let data;
+      try { data = await api('/api/bootstrap'); }
+      catch { data = await api('/api/guilds'); }
+      state.guilds = normalizeServers(data);
+      $('#metricServers').textContent = String(state.guilds.length);
+      renderServers();
+      $('#workspaceStatus').textContent = 'Backend verbunden';
+      $('#workspaceDot').className = 'status-dot online';
+      if (state.guildId && state.guilds.some(server => server.id === state.guildId)) {
+        await Promise.allSettled([loadModules(), loadConfig(), loadAdmins()]);
+      }
+      if (showMessage) feedback('Daten wurden erneut vom Backend abgefragt.');
+    } catch (error) {
+      $('#workspaceStatus').textContent = 'Verbindung fehlgeschlagen';
+      $('#workspaceDot').className = 'status-dot error';
+      feedback(`Aktualisieren fehlgeschlagen: ${error.message}`, true);
+    }
+  }
+
+  async function logout() {
+    try { if (session()) await api('/api/auth/logout', { method: 'POST' }); }
+    catch (error) { console.warn('Serverseitiges Abmelden nicht bestätigt:', error.message); }
+    sessionStorage.removeItem('botconfig_session_token');
+    sessionStorage.removeItem('discord_oauth_state');
+    state.guilds = [];
+    state.guildId = '';
+    state.modules = [];
+    state.config = {};
+    state.admins = [];
+    $('#workspaceStatus').textContent = 'Abgemeldet';
+    $('#workspaceDot').className = 'status-dot error';
+    feedback('Du wurdest in diesem Browser-Tab abgemeldet.');
+  }
+
+  async function init() {
+    mount();
+    if (!session()) {
+      $('#workspaceStatus').textContent = 'Bitte mit Discord anmelden';
+      $('#workspaceDot').className = 'status-dot error';
+      return;
+    }
+    try {
+      const me = await api('/api/auth/me');
+      const user = me.user || me;
+      $('#accountDetails').textContent = `Discord-ID: ${user.id || 'nicht angegeben'} · Nutzer: ${user.username || user.global_name || 'Angemeldet'}`;
+    } catch (error) {
+      $('#accountDetails').textContent = `Sitzung konnte nicht bestätigt werden: ${error.message}`;
+    }
+    await refresh(false);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
+  else init();
 })();
 </script>
 </body>
