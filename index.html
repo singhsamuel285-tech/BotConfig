@@ -212,23 +212,23 @@ h1{font-size:clamp(37px,5vw,57px);line-height:1.08;letter-spacing:-2.5px;margin:
 @media(prefers-reduced-motion:reduce){.reveal-on-scroll,.reveal-on-scroll.is-visible,.manager-panel,.manager-view.active{animation:none!important;transition:none!important;transform:none!important;filter:none!important;opacity:1!important}}
 </style>
 <style id="visibility-fix">
-/* FIX: Inhalte dürfen nie dauerhaft unscharf oder unsichtbar bleiben. */
-.reveal-on-scroll,
-.reveal-on-scroll.is-visible {
-  opacity: 1 !important;
+/* Stabile Darstellung: keine Blur-/Scroll-Reveal-Effekte auf Seiteninhalten. */
+html, body, body > .app, .app, .landing, .main, .layout, .intro, .hero-copy,
+.showcase, .section-heading, .preview-panel, .bottom-cta, .auth-card,
+.manager-panel, .manager-head, .manager-content, .manager-view, .manager-card,
+.manager-stat, .manager-server, .manager-row, .manager-toolbar {
   filter: none !important;
-  transform: none !important;
-  transition: none !important;
-  animation: none !important;
-  will-change: auto !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
-.showcase .section-heading,
-.showcase .preview-panel,
-.bottom-cta {
-  animation: none !important;
-  animation-timeline: auto !important;
-  animation-range: normal !important;
+.reveal-on-scroll, .reveal-on-scroll.is-visible {
+  opacity: 1 !important; filter: none !important; transform: none !important;
+  transition: none !important; animation: none !important; will-change: auto !important;
 }
+.showcase .section-heading, .showcase .preview-panel, .bottom-cta {
+  animation: none !important; animation-timeline: auto !important; animation-range: normal !important;
+}
+.manager-modal { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
 </style>
 </head>
 <body>
