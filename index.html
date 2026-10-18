@@ -211,6 +211,25 @@ h1{font-size:clamp(37px,5vw,57px);line-height:1.08;letter-spacing:-2.5px;margin:
 @media(max-width:900px){.manager-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.manager-head{padding:20px}.manager-panel{width:calc(100% - 24px)}}@media(max-width:600px){.manager-card-grid,.manager-form-grid{grid-template-columns:1fr}.manager-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.manager-stat{padding:13px}.manager-stat strong{font-size:21px}.manager-toolbar{align-items:stretch}.manager-select{max-width:none;width:100%}.manager-head{align-items:flex-start}.manager-actions{width:100%}.manager-actions button{flex:1}.manager-row{align-items:flex-start}.manager-panel{margin-top:15px}.manager-heading{align-items:flex-start}.manager-avatar{width:42px;height:42px}}
 @media(prefers-reduced-motion:reduce){.reveal-on-scroll,.reveal-on-scroll.is-visible,.manager-panel,.manager-view.active{animation:none!important;transition:none!important;transform:none!important;filter:none!important;opacity:1!important}}
 </style>
+<style id="visibility-fix">
+/* FIX: Inhalte dürfen nie dauerhaft unscharf oder unsichtbar bleiben. */
+.reveal-on-scroll,
+.reveal-on-scroll.is-visible {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+  will-change: auto !important;
+}
+.showcase .section-heading,
+.showcase .preview-panel,
+.bottom-cta {
+  animation: none !important;
+  animation-timeline: auto !important;
+  animation-range: normal !important;
+}
+</style>
 </head>
 <body>
 <div class="app">
