@@ -6,12 +6,12 @@
 <meta name="color-scheme" content="light dark">
 <title>🔰 • EURP | Manager Bot</title>
 <style>
-:root{color-scheme:light dark;--bg:light-dark(#f4f6fc,#0b0d14);--panel:light-dark(#fff,#141824);--panel2:light-dark(#f5f6fb,#1b2030);--line:light-dark(#e3e7f2,#2b3042);--text:light-dark(#171b2b,#f4f6ff);--muted:light-dark(#69718a,#9ba3bc);--accent:#6674ff;--accent2:#8993ff;--green:#31d69a;--shadow:0 28px 90px #0308172b;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+:root{color-scheme:light dark;--bg:light-dark(#f4f6fc,#1e1f22);--panel:light-dark(#fff,#2b2d31);--panel2:light-dark(#f5f6fb,#313338);--line:light-dark(#e3e7f2,#2b3042);--text:light-dark(#171b2b,#f4f6ff);--muted:light-dark(#69718a,#b5bac1);--accent:#6674ff;--accent2:#8993ff;--green:#31d69a;--shadow:0 28px 90px #0308172b;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text)}
 body{min-height:100vh;overflow-x:hidden}
 .app{min-height:100vh;background:radial-gradient(ellipse at 13% 6%,#6574ff22,transparent 33%),radial-gradient(ellipse at 91% 88%,#e34f6120,transparent 30%),var(--bg);display:flex;flex-direction:column}
-.topbar{height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,6vw,92px);border-bottom:1px solid var(--line);background:light-dark(#ffffffa8,#0b0d14a8);backdrop-filter:blur(18px)}
+.topbar{height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,6vw,92px);border-bottom:1px solid var(--line);background:light-dark(#ffffffa8,#1e1f22a8);backdrop-filter:blur(18px)}
 .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:-.5px}
 .brand-mark{width:39px;height:39px;border-radius:13px;background:linear-gradient(145deg,#8490ff,#525eea);display:grid;place-items:center;color:white;box-shadow:0 7px 20px #6674ff45}
 .brand-mark svg{width:22px}
@@ -72,104 +72,104 @@ h1{font-size:clamp(37px,5vw,57px);line-height:1.08;letter-spacing:-2.5px;margin:
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important}
 }
-.app{background:radial-gradient(ellipse at 12% 8%,#a855f733,transparent 30%),radial-gradient(ellipse at 88% 24%,#22c55e22,transparent 28%),#07090d}
+.app{background:radial-gradient(ellipse at 12% 8%,#5865f233,transparent 30%),radial-gradient(ellipse at 88% 24%,#23a55a22,transparent 28%),#07090d}
 .topbar{position:sticky;top:0;z-index:10;background:#080a0ee8;border-bottom-color:#252a32}
-.brand-mark{background:linear-gradient(145deg,#a855f7,#22c55e);box-shadow:0 7px 24px #22c55e20}
-.brand small{color:#a4aab5}
+.brand-mark{background:linear-gradient(145deg,#5865f2,#23a55a);box-shadow:0 7px 24px #23a55a20}
+.brand small{color:#b5bac1}
 .top-right{color:#c0c5cf}
 .intro{display:none}
 .main{padding-top:54px}
 .layout{grid-template-columns:minmax(0,500px);justify-content:center;gap:0}
-.auth-card{width:100%;border-color:#303640;background:#101318}
-.auth-card:before{background:linear-gradient(90deg,#22c55e,#a855f7,#fff)}
-.card-logo{background:linear-gradient(145deg,#a855f7,#22c55e)}
-.gradient{background:linear-gradient(100deg,#22c55e,#fff 45%,#c084fc);background-clip:text}
-.eyebrow{border-color:#22c55e55;color:#86efac;background:#22c55e12}
-.eyebrow .dot{background:#22c55e}
-.feature-icon{color:#c084fc}
+.auth-card{width:100%;border-color:#303640;background:#2b2d31}
+.auth-card:before{background:linear-gradient(90deg,#23a55a,#5865f2,#fff)}
+.card-logo{background:linear-gradient(145deg,#5865f2,#23a55a)}
+.gradient{background:linear-gradient(100deg,#23a55a,#fff 45%,#949cf7);background-clip:text}
+.eyebrow{border-color:#23a55a55;color:#57f287;background:#23a55a12}
+.eyebrow .dot{background:#23a55a}
+.feature-icon{color:#949cf7}
 .discord-btn{background:linear-gradient(100deg,#15803d,#7e22ce)}
-.footer{border-color:#252a32;color:#9ca3af}
+.footer{border-color:#252a32;color:#b5bac1}
 .footer a:hover{color:#fff}
 .landing{padding:clamp(55px,8vw,105px) 22px 50px}
 .hero-inner,.showcase-inner,.bottom-cta{width:min(100%,1100px);margin:0 auto}
 .hero-inner{display:grid;grid-template-columns:1.05fr .95fr;gap:55px;align-items:center}
 .hero-copy h1{font-size:clamp(44px,6vw,76px);line-height:1.01;letter-spacing:-4px;margin:24px 0}
-.hero-copy p{color:#a4aab5;max-width:550px;font-size:16px;line-height:1.85}
+.hero-copy p{color:#b5bac1;max-width:550px;font-size:16px;line-height:1.85}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
 .action-primary,.action-secondary{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:12px;padding:14px 19px;font-size:13px;font-weight:800;transition:transform .2s,filter .2s}
-.action-primary{color:#07100b;background:linear-gradient(100deg,#4ade80,#c084fc)}
+.action-primary{color:#07100b;background:linear-gradient(100deg,#57f287,#949cf7)}
 .action-secondary{border:1px solid #363b46;color:#f3f4f6;background:#111419}
 .action-primary:hover,.action-secondary:hover{transform:translateY(-2px);filter:brightness(1.1)}
 
-.mock-window{border:1px solid #343943;background:#101318;border-radius:20px;padding:15px;box-shadow:0 30px 90px #0009;transform:rotate(1deg)}
-.mock-top{display:flex;align-items:center;gap:6px;border-bottom:1px solid #292e38;padding:2px 4px 14px;color:#8b93a1;font-size:10px}
-.mock-dot{width:7px;height:7px;border-radius:50%;background:#4ade80}
+.mock-window{border:1px solid #343943;background:#2b2d31;border-radius:20px;padding:15px;box-shadow:0 30px 90px #0009;transform:rotate(1deg)}
+.mock-top{display:flex;align-items:center;gap:6px;border-bottom:1px solid #3f4147;padding:2px 4px 14px;color:#b5bac1;font-size:10px}
+.mock-dot{width:7px;height:7px;border-radius:50%;background:#57f287}
 .mock-content{display:grid;grid-template-columns:105px 1fr;gap:13px;padding-top:15px;min-height:285px}
-.mock-sidebar{border-radius:12px;background:#171b22;padding:12px 8px}
+.mock-sidebar{border-radius:12px;background:#313338;padding:12px 8px}
 .mock-brand{font-size:10px;font-weight:900;color:#fff;margin-bottom:18px}
-.mock-nav{font-size:9px;color:#a5acb8;padding:9px 7px;border-radius:7px;margin:4px 0}
-.mock-nav.active{background:#22c55e1c;color:#86efac}
+.mock-nav{font-size:9px;color:#b5bac1;padding:9px 7px;border-radius:7px;margin:4px 0}
+.mock-nav.active{background:#23a55a1c;color:#57f287}
 .mock-main{min-width:0}
-.mock-welcome{border-radius:12px;background:linear-gradient(115deg,#14532d,#581c87);padding:17px;color:white}
+.mock-welcome{border-radius:12px;background:linear-gradient(115deg,#1a6334,#3c45a5);padding:17px;color:white}
 .mock-welcome small{font-size:9px;opacity:.8}
 .mock-welcome strong{display:block;font-size:19px;margin:8px 0}
 .mock-welcome span{font-size:9px;opacity:.8}
 .mock-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0}
-.mock-stat{background:#191d25;border:1px solid #292e38;border-radius:9px;padding:11px 8px}
-.mock-stat small{display:block;font-size:8px;color:#8b93a1}
+.mock-stat{background:#313338;border:1px solid #3f4147;border-radius:9px;padding:11px 8px}
+.mock-stat small{display:block;font-size:8px;color:#b5bac1}
 .mock-stat strong{display:block;font-size:15px;margin-top:6px}
-.mock-stat:nth-child(1) strong{color:#4ade80}
-.mock-stat:nth-child(2) strong{color:#c084fc}
+.mock-stat:nth-child(1) strong{color:#57f287}
+.mock-stat:nth-child(2) strong{color:#949cf7}
 .mock-stat:nth-child(3) strong{color:#fff}
-.mock-activity{border:1px solid #292e38;border-radius:10px;padding:12px}
+.mock-activity{border:1px solid #3f4147;border-radius:10px;padding:12px}
 .mock-activity strong{font-size:10px}
-.mock-line{height:7px;border-radius:5px;background:#292e38;margin-top:10px}
+.mock-line{height:7px;border-radius:5px;background:#3f4147;margin-top:10px}
 .mock-line:nth-child(3){width:78%}
 .mock-line:nth-child(4){width:57%}
 .showcase{padding:45px 22px 95px;scroll-margin-top:90px}
 .section-heading{text-align:center;max-width:680px;margin:0 auto 34px}
 .section-heading h2{font-size:clamp(29px,4vw,43px);letter-spacing:-1.8px;margin:16px 0 12px}
-.section-heading p{color:#9ca3af;line-height:1.8;font-size:14px}
+.section-heading p{color:#b5bac1;line-height:1.8;font-size:14px}
 .preview-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:17px}
-.preview-panel{background:#101318;border:1px solid #2e333d;border-radius:18px;padding:24px;min-height:205px;overflow:hidden}
+.preview-panel{background:#2b2d31;border:1px solid #3f4147;border-radius:18px;padding:24px;min-height:205px;overflow:hidden}
 .preview-panel h3{margin:0 0 9px;font-size:17px}
-.preview-panel p{margin:0;color:#9ca3af;font-size:12px;line-height:1.7}
-.preview-tag{display:inline-flex;font-size:9px;font-weight:800;letter-spacing:1px;color:#86efac;background:#22c55e15;border:1px solid #22c55e40;border-radius:99px;padding:7px 9px;margin-bottom:15px}
+.preview-panel p{margin:0;color:#b5bac1;font-size:12px;line-height:1.7}
+.preview-tag{display:inline-flex;font-size:9px;font-weight:800;letter-spacing:1px;color:#57f287;background:#23a55a15;border:1px solid #23a55a40;border-radius:99px;padding:7px 9px;margin-bottom:15px}
 .preview-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:22px}
-.preview-mini{background:#191d25;border:1px solid #2c323d;border-radius:10px;padding:13px}
-.preview-mini span{display:block;font-size:9px;color:#9ca3af}
+.preview-mini{background:#313338;border:1px solid #3f4147;border-radius:10px;padding:13px}
+.preview-mini span{display:block;font-size:9px;color:#b5bac1}
 .preview-mini b{display:block;margin-top:8px;font-size:12px}
-.preview-mini:nth-child(2) b{color:#c084fc}
-.preview-mini:nth-child(3) b{color:#4ade80}
-.preview-panel.purple{background:linear-gradient(145deg,#171220,#101318);border-color:#5b347b}
-.preview-panel.green{background:linear-gradient(145deg,#102018,#101318);border-color:#285c3d}
+.preview-mini:nth-child(2) b{color:#949cf7}
+.preview-mini:nth-child(3) b{color:#57f287}
+.preview-panel.purple{background:linear-gradient(145deg,#171220,#2b2d31);border-color:#5b347b}
+.preview-panel.green{background:linear-gradient(145deg,#102018,#2b2d31);border-color:#285c3d}
 .bottom-cta{padding:0 22px 80px;text-align:center}
 .bottom-cta h2{font-size:clamp(26px,4vw,40px);letter-spacing:-1.5px;margin:0 0 12px}
-.bottom-cta p{color:#9ca3af;font-size:13px;margin:0 0 24px}
+.bottom-cta p{color:#b5bac1;font-size:13px;margin:0 0 24px}
 .main{scroll-margin-top:95px;border-top:1px solid #252a32;background:linear-gradient(180deg,#0b0d11,#07090d);width:100%}
 .auth-card{box-shadow:0 25px 80px #0008}
-.card-sub,.fineprint{color:#a4aab5}
-.status{background:#171b22;border-color:#303640}
+.card-sub,.fineprint{color:#b5bac1}
+.status{background:#313338;border-color:#303640}
 .status strong{color:#f3f4f6}
-.status-icon{background:#22c55e1a}
-.card-bottom svg{color:#4ade80}
+.status-icon{background:#23a55a1a}
+.card-bottom svg{color:#57f287}
 
 #botPresenceCard{background:linear-gradient(135deg,#111b18,#171323);border:1px solid #2e5140;border-radius:16px;padding:18px}
 #botPresenceCard .manager-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
 #botPresenceCard h3{margin:0 0 5px}
 #botPresenceCard p{color:var(--muted);font-size:12px;line-height:1.6}
 #botPresenceCard [data-bot-presence]{border:1px solid #383d47;border-radius:10px;padding:10px 13px;background:#1a1e26;color:#f5f6f8;cursor:pointer}
-#botPresenceCard [data-bot-presence].active{border-color:#4ade80;background:#163126}
+#botPresenceCard [data-bot-presence].active{border-color:#57f287;background:#163126}
 #botPresenceCard input{background:#0d1015;border:1px solid #343943;border-radius:9px;color:#f4f6ff;padding:11px}
 #botPresenceCard .manager-note{margin:10px 0 0}
 @media(max-width:600px){#botPresenceCard .manager-card-head{display:block}}
 
 /* EURP dashboard usability additions */
 .manager-audit-tools{display:grid;grid-template-columns:minmax(220px,1fr) auto;gap:12px;align-items:center;margin:0 0 12px}
-.manager-audit-search{width:100%;background:#0c1118;border:1px solid #333e4d;color:#f4f7fb;border-radius:10px;padding:12px 13px;font:inherit;font-size:12px}
+.manager-audit-search{width:100%;background:#1e1f22;border:1px solid #333e4d;color:#f4f7fb;border-radius:10px;padding:12px 13px;font:inherit;font-size:12px}
 .manager-audit-meta{color:var(--dash-muted);font-size:11px}
 .manager-role-tools{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center}
-.manager-role-search{width:100%;background:#0c1118;border:1px solid #333e4d;color:#f4f7fb;border-radius:9px;padding:11px 12px;font:inherit;font-size:12px}
+.manager-role-search{width:100%;background:#1e1f22;border:1px solid #333e4d;color:#f4f7fb;border-radius:9px;padding:11px 12px;font:inherit;font-size:12px}
 .manager-modal{position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;background:#020617d9;backdrop-filter:blur(8px)}
 .manager-modal.open{display:flex}
 .manager-modal-card{width:min(680px,100%);max-height:min(82vh,780px);overflow:auto;background:#111821;border:1px solid #344152;border-radius:18px;padding:24px;box-shadow:0 24px 90px #0009}
@@ -178,18 +178,18 @@ h1{font-size:clamp(37px,5vw,57px);line-height:1.08;letter-spacing:-2.5px;margin:
 .manager-modal-head p,.manager-modal-card p,.manager-modal-card li{font-size:13px;line-height:1.75;color:#b6c2d2}
 .manager-modal-card h3{font-size:13px;margin:18px 0 6px}
 .manager-modal-close{border:1px solid #394657;background:#1b2430;color:#f8fafc;border-radius:9px;padding:8px 11px;cursor:pointer}
-.manager-modal-card a{color:#86efac;text-decoration:underline}
+.manager-modal-card a{color:#57f287;text-decoration:underline}
 @media(max-width:700px){.manager-audit-tools{grid-template-columns:1fr}.manager-role-tools{grid-template-columns:1fr 1fr}.manager-role-tools .manager-role-search{grid-column:1/-1}.manager-modal-card{padding:18px}}
 
-.role-picker-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}.role-picker-panel{min-width:0;border:1px solid var(--dash-line);border-radius:11px;padding:10px;background:#0c1118}.role-picker-panel>strong{display:block;font-size:12px;margin:2px 0 9px}.role-picker-list{display:grid;gap:6px;max-height:260px;overflow:auto}.role-picker-item{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;text-align:left;padding:9px 10px;border:1px solid #303b49;border-radius:8px;background:#171e29;color:var(--dash-text);font:inherit;font-size:12px;cursor:pointer}.role-picker-item:hover{border-color:#4ade80;background:#1b2a25}.role-picker-remove{flex:0 0 auto;border:0;border-radius:6px;background:#7f1d1d;color:#fecaca;font-size:17px;line-height:1;padding:4px 8px;cursor:pointer}.role-picker-empty{padding:10px;color:var(--dash-muted);font-size:11px}@media(max-width:700px){.role-picker-columns{grid-template-columns:1fr}}
+.role-picker-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}.role-picker-panel{min-width:0;border:1px solid var(--dash-line);border-radius:11px;padding:10px;background:#1e1f22}.role-picker-panel>strong{display:block;font-size:12px;margin:2px 0 9px}.role-picker-list{display:grid;gap:6px;max-height:260px;overflow:auto}.role-picker-item{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;text-align:left;padding:9px 10px;border:1px solid #303b49;border-radius:8px;background:#313338;color:var(--dash-text);font:inherit;font-size:12px;cursor:pointer}.role-picker-item:hover{border-color:#57f287;background:#1b2a25}.role-picker-remove{flex:0 0 auto;border:0;border-radius:6px;background:#7f1d1d;color:#fecaca;font-size:17px;line-height:1;padding:4px 8px;cursor:pointer}.role-picker-empty{padding:10px;color:var(--dash-muted);font-size:11px}@media(max-width:700px){.role-picker-columns{grid-template-columns:1fr}}
 </style>
 <style>
 @media(max-width:760px){.hero-inner{grid-template-columns:1fr;gap:35px}.hero-copy{text-align:center}.hero-copy p{margin-left:auto;margin-right:auto}.hero-actions{justify-content:center}.mock-window{transform:none;max-width:540px;width:100%;margin:0 auto}.mock-content{grid-template-columns:82px 1fr;min-height:240px}.mock-sidebar{padding:9px 5px}.mock-nav{font-size:8px;padding:8px 4px}.mock-welcome{padding:13px}.mock-welcome strong{font-size:16px}.mock-stats{gap:5px}.mock-stat{padding:9px 5px}.mock-stat strong{font-size:12px}.preview-grid{grid-template-columns:1fr}.showcase{padding-bottom:65px}.landing{padding-top:48px}.hero-copy h1{letter-spacing:-2.5px}.preview-panel{padding:20px}}
 </style>
 <style>
 /* Motion polish: soft aurora, staggered entrance, floating dashboard and scroll reveals */
-.app{position:relative;isolation:isolate}.app:before,.app:after{content:"";position:fixed;z-index:-1;pointer-events:none;width:390px;height:390px;border-radius:50%;filter:blur(90px);opacity:.14;animation:auroraDrift 17s ease-in-out infinite alternate}.app:before{background:#22c55e;top:12%;left:-220px}.app:after{background:#a855f7;right:-230px;top:46%;animation-delay:-8s}.hero-copy .eyebrow{animation:riseIn .75s .05s both}.hero-copy h1{animation:riseIn .8s .12s both}.hero-copy>p:not(.hero-note){animation:riseIn .8s .2s both}.hero-actions{animation:riseIn .8s .28s both}.mock-window{animation:floatIn 1s .15s both,hoverFloat 7s 1.2s ease-in-out infinite;transform-origin:center;transition:border-color .35s,box-shadow .35s}.mock-window:hover{border-color:#4ade8080;box-shadow:0 34px 100px #22c55e15,0 25px 70px #0008}.mock-welcome{background-size:180% 180%;animation:gradientFlow 8s ease infinite}.mock-stat,.preview-panel,.auth-card{transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}.mock-stat:hover{transform:translateY(-4px);border-color:#a855f766}.preview-panel:hover{transform:translateY(-5px);border-color:#4ade8070;box-shadow:0 20px 55px #0004}.preview-panel.purple:hover{border-color:#a855f780}.auth-card{animation:cardAppear .85s .15s both}.card-logo{animation:logoPulse 4s ease-in-out infinite}.action-primary{box-shadow:0 8px 30px #22c55e18}.action-primary:hover{box-shadow:0 12px 35px #a855f745}.showcase .section-heading,.showcase .preview-panel,.bottom-cta{animation:riseIn .8s both;animation-timeline:view();animation-range:entry 0% entry 28%}.preview-panel:nth-child(2){animation-delay:.1s}.secure{animation:statusPulse 2.4s ease-in-out infinite}.discord-btn:hover svg:first-child{animation:tinyBounce .45s ease}.brand-mark{transition:transform .35s}.brand:hover .brand-mark{transform:rotate(-8deg) scale(1.06)}.footer a{transition:color .2s}
-@keyframes riseIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}@keyframes floatIn{from{opacity:0;transform:translateY(28px) rotate(2deg) scale(.97)}to{opacity:1;transform:translateY(0) rotate(1deg) scale(1)}}@keyframes hoverFloat{0%,100%{translate:0 0}50%{translate:0 -9px}}@keyframes auroraDrift{from{translate:0 -25px;scale:.9}to{translate:45px 45px;scale:1.15}}@keyframes gradientFlow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}@keyframes logoPulse{0%,100%{box-shadow:0 12px 28px #6674ff20,0 0 0 0 #a855f700}50%{box-shadow:0 12px 32px #a855f744,0 0 0 7px #22c55e08}}@keyframes statusPulse{0%,100%{box-shadow:0 0 0 4px #22c55e14}50%{box-shadow:0 0 0 7px #22c55e08}}@keyframes tinyBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.app{position:relative;isolation:isolate}.app:before,.app:after{content:"";position:fixed;z-index:-1;pointer-events:none;width:390px;height:390px;border-radius:50%;filter:blur(90px);opacity:.14;animation:auroraDrift 17s ease-in-out infinite alternate}.app:before{background:#23a55a;top:12%;left:-220px}.app:after{background:#5865f2;right:-230px;top:46%;animation-delay:-8s}.hero-copy .eyebrow{animation:riseIn .75s .05s both}.hero-copy h1{animation:riseIn .8s .12s both}.hero-copy>p:not(.hero-note){animation:riseIn .8s .2s both}.hero-actions{animation:riseIn .8s .28s both}.mock-window{animation:floatIn 1s .15s both,hoverFloat 7s 1.2s ease-in-out infinite;transform-origin:center;transition:border-color .35s,box-shadow .35s}.mock-window:hover{border-color:#57f28780;box-shadow:0 34px 100px #23a55a15,0 25px 70px #0008}.mock-welcome{background-size:180% 180%;animation:gradientFlow 8s ease infinite}.mock-stat,.preview-panel,.auth-card{transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}.mock-stat:hover{transform:translateY(-4px);border-color:#5865f266}.preview-panel:hover{transform:translateY(-5px);border-color:#57f28770;box-shadow:0 20px 55px #0004}.preview-panel.purple:hover{border-color:#5865f280}.auth-card{animation:cardAppear .85s .15s both}.card-logo{animation:logoPulse 4s ease-in-out infinite}.action-primary{box-shadow:0 8px 30px #23a55a18}.action-primary:hover{box-shadow:0 12px 35px #5865f245}.showcase .section-heading,.showcase .preview-panel,.bottom-cta{animation:riseIn .8s both;animation-timeline:view();animation-range:entry 0% entry 28%}.preview-panel:nth-child(2){animation-delay:.1s}.secure{animation:statusPulse 2.4s ease-in-out infinite}.discord-btn:hover svg:first-child{animation:tinyBounce .45s ease}.brand-mark{transition:transform .35s}.brand:hover .brand-mark{transform:rotate(-8deg) scale(1.06)}.footer a{transition:color .2s}
+@keyframes riseIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}@keyframes floatIn{from{opacity:0;transform:translateY(28px) rotate(2deg) scale(.97)}to{opacity:1;transform:translateY(0) rotate(1deg) scale(1)}}@keyframes hoverFloat{0%,100%{translate:0 0}50%{translate:0 -9px}}@keyframes auroraDrift{from{translate:0 -25px;scale:.9}to{translate:45px 45px;scale:1.15}}@keyframes gradientFlow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}@keyframes logoPulse{0%,100%{box-shadow:0 12px 28px #6674ff20,0 0 0 0 #5865f200}50%{box-shadow:0 12px 32px #5865f244,0 0 0 7px #23a55a08}}@keyframes statusPulse{0%,100%{box-shadow:0 0 0 4px #23a55a14}50%{box-shadow:0 0 0 7px #23a55a08}}@keyframes tinyBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 @media(max-width:760px){.app:before,.app:after{width:240px;height:240px;filter:blur(70px)}.mock-window{animation:floatIn .8s .15s both,hoverFloat 8s 1s ease-in-out infinite}.showcase .section-heading,.showcase .preview-panel,.bottom-cta{animation:none}}
 @media(prefers-reduced-motion:reduce){.app:before,.app:after,.mock-window,.mock-welcome,.hero-copy .eyebrow,.hero-copy h1,.hero-copy>p,.hero-actions,.hero-note,.auth-card,.card-logo,.secure,.showcase .section-heading,.showcase .preview-panel,.bottom-cta{animation:none!important}.mock-stat,.preview-panel,.auth-card,.action-primary,.action-secondary{transition:none!important}}
 
@@ -202,12 +202,12 @@ h1{font-size:clamp(37px,5vw,57px);line-height:1.08;letter-spacing:-2.5px;margin:
 @media(prefers-reduced-motion:reduce){.reveal-on-scroll,.reveal-on-scroll.is-visible{opacity:1;transform:none;filter:none;transition:none;animation:none;will-change:auto}}
 
 /* Funktionales Manager-Dashboard */
-:root{--dash-bg:#0b0e13;--dash-card:#121720;--dash-card2:#171e29;--dash-line:#293240;--dash-text:#f4f7fb;--dash-muted:#9aa6b5;--dash-green:#4ade80;--dash-purple:#c084fc}
+:root{--dash-bg:#1e1f22;--dash-card:#2b2d31;--dash-card2:#313338;--dash-line:#3f4147;--dash-text:#f4f7fb;--dash-muted:#b5bac1;--dash-green:#57f287;--dash-purple:#949cf7}
 .manager-panel{display:none;width:min(1440px,calc(100% - 36px));margin:28px auto 54px;color:var(--dash-text);animation:panel-in .45s ease both}.manager-panel.open{display:block}@keyframes panel-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 .reveal-on-scroll{opacity:0;transform:translateY(22px) scale(.99);filter:blur(4px);transition:opacity .65s ease,transform .65s cubic-bezier(.2,.75,.25,1),filter .65s ease;transition-delay:var(--reveal-delay,0ms)}.reveal-on-scroll.is-visible{opacity:1;transform:none;filter:none}
 .manager-head{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:25px 28px;background:linear-gradient(115deg,#13251d,#171527 75%);border:1px solid #303c39;border-radius:20px;margin-bottom:16px}.manager-heading{display:flex;align-items:center;gap:14px}.manager-avatar{width:50px;height:50px;object-fit:cover;border-radius:15px;background:#222936;border:1px solid #424957}.manager-head h2{font-size:clamp(24px,3vw,34px);margin:5px 0 6px;letter-spacing:-1px}.manager-muted{color:var(--dash-muted);font-size:12px;line-height:1.6;margin:0}.manager-actions{display:flex;gap:9px;flex-wrap:wrap}.manager-action,.manager-button{border:1px solid #364151;background:#1a222e;color:#f4f7fb;border-radius:10px;padding:11px 14px;font-weight:750;font-size:12px;cursor:pointer;transition:transform .18s,border-color .18s,filter .18s}.manager-action:hover,.manager-button:hover{transform:translateY(-1px);border-color:#6b7789}.manager-button.primary{background:linear-gradient(100deg,#15803d,#7e22ce);border:0}.manager-button.danger{border-color:#713b42;background:#321a20;color:#fecaca}.manager-action:disabled,.manager-button:disabled{opacity:.42;cursor:not-allowed;transform:none}
-.manager-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--dash-card);border:1px solid var(--dash-line);padding:15px 18px;border-radius:15px;margin-bottom:16px}.manager-field{display:flex;flex-direction:column;gap:7px;min-width:0}.manager-field label,.manager-label{font-size:11px;color:#b4bfce;font-weight:800;letter-spacing:.3px}.manager-field input,.manager-field select,.manager-field textarea,.manager-select{width:100%;min-width:0;background:#0c1118;border:1px solid #333e4d;color:#f4f7fb;border-radius:9px;padding:11px 12px;font:inherit;font-size:12px;outline:none}.manager-field input:focus,.manager-field select:focus,.manager-field textarea:focus{border-color:#4ade80;box-shadow:0 0 0 3px #4ade8019}.manager-field textarea{min-height:100px;resize:vertical}.manager-field select option{background:#0c1118}.manager-select{max-width:420px}.manager-nav{display:flex;gap:7px;overflow-x:auto;padding:5px 2px 14px;margin-bottom:8px}.manager-tab{white-space:nowrap;border:1px solid transparent;background:transparent;color:#9aa6b5;border-radius:10px;padding:11px 14px;font-size:12px;font-weight:800;cursor:pointer}.manager-tab:hover{color:white;background:#171e29}.manager-tab.active{color:#dcfce7;background:#153323;border-color:#286344}.manager-content{min-height:340px}.manager-view{display:none;animation:view-in .3s ease both}.manager-view.active{display:block}@keyframes view-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.manager-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.manager-stat,.manager-card{min-width:0;background:var(--dash-card);border:1px solid var(--dash-line);border-radius:15px;padding:19px}.manager-stat small{display:block;color:var(--dash-muted);font-size:10px;font-weight:800;letter-spacing:1px}.manager-stat strong{display:block;font-size:25px;margin:9px 0 4px;overflow-wrap:anywhere}.manager-stat span{color:var(--dash-muted);font-size:11px}.manager-section-title{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:23px 0 13px}.manager-section-title h3{font-size:16px;margin:0}.manager-section-title p{font-size:11px;color:var(--dash-muted);margin:5px 0 0}.manager-card h3{font-size:14px;margin:0 0 8px}.manager-card p{font-size:12px;line-height:1.7;color:var(--dash-muted);margin:0}.manager-card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.manager-server-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.manager-server{display:flex;gap:12px;align-items:center;text-align:left;background:var(--dash-card);border:1px solid var(--dash-line);border-radius:14px;padding:15px;color:var(--dash-text);cursor:pointer;min-width:0;transition:transform .2s,border-color .2s}.manager-server:hover{transform:translateY(-2px);border-color:#4ade80}.manager-server img{width:42px;height:42px;border-radius:13px;object-fit:cover;background:#252d39}.manager-server strong{display:block;font-size:13px;overflow-wrap:anywhere}.manager-server small{display:block;color:var(--dash-muted);font-size:11px;margin-top:5px}.manager-pill{display:inline-flex;align-items:center;gap:6px;border:1px solid #354253;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:800;color:#cbd5e1}.manager-pill.good{border-color:#276446;color:#86efac;background:#14532d26}.manager-pill.warn{border-color:#7a5c28;color:#fcd34d;background:#713f1224}.manager-pill.bad{border-color:#713b42;color:#fca5a5;background:#7f1d1d22}.manager-list{display:grid;gap:9px}.manager-row{display:flex;justify-content:space-between;align-items:center;gap:14px;background:var(--dash-card);border:1px solid var(--dash-line);border-radius:12px;padding:13px 15px;min-width:0}.manager-row-main{min-width:0}.manager-row strong{font-size:12px;overflow-wrap:anywhere}.manager-row small{display:block;color:var(--dash-muted);font-size:11px;margin-top:5px;line-height:1.5}.manager-switch{appearance:none;width:42px;height:24px;flex:0 0 42px;border-radius:999px;background:#374151;border:1px solid #4b5563;position:relative;cursor:pointer;transition:background .2s}.manager-switch:before{content:"";position:absolute;width:16px;height:16px;top:3px;left:3px;background:white;border-radius:50%;transition:transform .2s}.manager-switch:checked{background:#16a34a;border-color:#4ade80}.manager-switch:checked:before{transform:translateX(18px)}.manager-switch:disabled{opacity:.42;cursor:not-allowed}.manager-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.manager-form-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:16px}.manager-empty{padding:30px;text-align:center;background:var(--dash-card);border:1px dashed #3b4655;border-radius:14px;color:var(--dash-muted);font-size:12px;line-height:1.8}.manager-error{color:#fca5a5}.manager-table-wrap{overflow:auto;border:1px solid var(--dash-line);border-radius:13px}.manager-table{border-collapse:collapse;width:100%;min-width:580px;font-size:12px}.manager-table th,.manager-table td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--dash-line);vertical-align:top}.manager-table th{font-size:10px;color:#aeb9c7;letter-spacing:.7px;background:#171e29}.manager-table tr:last-child td{border-bottom:0}.manager-table td{color:#dbe2ec}.manager-help{font-size:11px;line-height:1.7;color:var(--dash-muted);margin-top:10px}.manager-toast{position:fixed;right:22px;bottom:22px;z-index:1000;max-width:min(420px,calc(100vw - 30px));padding:14px 17px;background:#e5e7eb;color:#111827;border-radius:12px;font-size:12px;font-weight:800;box-shadow:0 15px 45px #0007;opacity:0;transform:translateY(14px);pointer-events:none;transition:.25s}.manager-toast.show{opacity:1;transform:none}.manager-toast.error{background:#fee2e2;color:#7f1d1d}.manager-loading{display:flex;align-items:center;gap:10px;color:var(--dash-muted);font-size:12px;padding:25px}.manager-spinner{width:17px;height:17px;border:2px solid #4b5563;border-top-color:#4ade80;border-radius:50%;animation:spin .7s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.manager-badge{display:inline-flex;border-radius:8px;padding:5px 8px;background:#222b37;color:#cbd5e1;font-size:10px;font-weight:800}.manager-divider{height:1px;background:var(--dash-line);margin:18px 0}.role-preview-banner{display:none;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 14px;padding:12px 15px;border:1px solid #a855f766;border-radius:12px;background:#581c8728;color:#e9d5ff;font-size:12px;font-weight:700}.role-preview-banner.active{display:flex}
+.manager-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--dash-card);border:1px solid var(--dash-line);padding:15px 18px;border-radius:15px;margin-bottom:16px}.manager-field{display:flex;flex-direction:column;gap:7px;min-width:0}.manager-field label,.manager-label{font-size:11px;color:#b4bfce;font-weight:800;letter-spacing:.3px}.manager-field input,.manager-field select,.manager-field textarea,.manager-select{width:100%;min-width:0;background:#1e1f22;border:1px solid #333e4d;color:#f4f7fb;border-radius:9px;padding:11px 12px;font:inherit;font-size:12px;outline:none}.manager-field input:focus,.manager-field select:focus,.manager-field textarea:focus{border-color:#57f287;box-shadow:0 0 0 3px #57f28719}.manager-field textarea{min-height:100px;resize:vertical}.manager-field select option{background:#1e1f22}.manager-select{max-width:420px}.manager-nav{display:flex;gap:7px;overflow-x:auto;padding:5px 2px 14px;margin-bottom:8px}.manager-tab{white-space:nowrap;border:1px solid transparent;background:transparent;color:#b5bac1;border-radius:10px;padding:11px 14px;font-size:12px;font-weight:800;cursor:pointer}.manager-tab:hover{color:white;background:#313338}.manager-tab.active{color:#dcfce7;background:#153323;border-color:#286344}.manager-content{min-height:340px}.manager-view{display:none;animation:view-in .3s ease both}.manager-view.active{display:block}@keyframes view-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.manager-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.manager-stat,.manager-card{min-width:0;background:var(--dash-card);border:1px solid var(--dash-line);border-radius:15px;padding:19px}.manager-stat small{display:block;color:var(--dash-muted);font-size:10px;font-weight:800;letter-spacing:1px}.manager-stat strong{display:block;font-size:25px;margin:9px 0 4px;overflow-wrap:anywhere}.manager-stat span{color:var(--dash-muted);font-size:11px}.manager-section-title{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:23px 0 13px}.manager-section-title h3{font-size:16px;margin:0}.manager-section-title p{font-size:11px;color:var(--dash-muted);margin:5px 0 0}.manager-card h3{font-size:14px;margin:0 0 8px}.manager-card p{font-size:12px;line-height:1.7;color:var(--dash-muted);margin:0}.manager-card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.manager-server-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.manager-server{display:flex;gap:12px;align-items:center;text-align:left;background:var(--dash-card);border:1px solid var(--dash-line);border-radius:14px;padding:15px;color:var(--dash-text);cursor:pointer;min-width:0;transition:transform .2s,border-color .2s}.manager-server:hover{transform:translateY(-2px);border-color:#57f287}.manager-server img{width:42px;height:42px;border-radius:13px;object-fit:cover;background:#252d39}.manager-server strong{display:block;font-size:13px;overflow-wrap:anywhere}.manager-server small{display:block;color:var(--dash-muted);font-size:11px;margin-top:5px}.manager-pill{display:inline-flex;align-items:center;gap:6px;border:1px solid #354253;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:800;color:#cbd5e1}.manager-pill.good{border-color:#276446;color:#57f287;background:#1a633426}.manager-pill.warn{border-color:#7a5c28;color:#fcd34d;background:#713f1224}.manager-pill.bad{border-color:#713b42;color:#fca5a5;background:#7f1d1d22}.manager-list{display:grid;gap:9px}.manager-row{display:flex;justify-content:space-between;align-items:center;gap:14px;background:var(--dash-card);border:1px solid var(--dash-line);border-radius:12px;padding:13px 15px;min-width:0}.manager-row-main{min-width:0}.manager-row strong{font-size:12px;overflow-wrap:anywhere}.manager-row small{display:block;color:var(--dash-muted);font-size:11px;margin-top:5px;line-height:1.5}.manager-switch{appearance:none;width:42px;height:24px;flex:0 0 42px;border-radius:999px;background:#374151;border:1px solid #4b5563;position:relative;cursor:pointer;transition:background .2s}.manager-switch:before{content:"";position:absolute;width:16px;height:16px;top:3px;left:3px;background:white;border-radius:50%;transition:transform .2s}.manager-switch:checked{background:#16a34a;border-color:#57f287}.manager-switch:checked:before{transform:translateX(18px)}.manager-switch:disabled{opacity:.42;cursor:not-allowed}.manager-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.manager-form-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:16px}.manager-empty{padding:30px;text-align:center;background:var(--dash-card);border:1px dashed #3b4655;border-radius:14px;color:var(--dash-muted);font-size:12px;line-height:1.8}.manager-error{color:#fca5a5}.manager-table-wrap{overflow:auto;border:1px solid var(--dash-line);border-radius:13px}.manager-table{border-collapse:collapse;width:100%;min-width:580px;font-size:12px}.manager-table th,.manager-table td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--dash-line);vertical-align:top}.manager-table th{font-size:10px;color:#aeb9c7;letter-spacing:.7px;background:#313338}.manager-table tr:last-child td{border-bottom:0}.manager-table td{color:#dbe2ec}.manager-help{font-size:11px;line-height:1.7;color:var(--dash-muted);margin-top:10px}.manager-toast{position:fixed;right:22px;bottom:22px;z-index:1000;max-width:min(420px,calc(100vw - 30px));padding:14px 17px;background:#e5e7eb;color:#111827;border-radius:12px;font-size:12px;font-weight:800;box-shadow:0 15px 45px #0007;opacity:0;transform:translateY(14px);pointer-events:none;transition:.25s}.manager-toast.show{opacity:1;transform:none}.manager-toast.error{background:#fee2e2;color:#7f1d1d}.manager-loading{display:flex;align-items:center;gap:10px;color:var(--dash-muted);font-size:12px;padding:25px}.manager-spinner{width:17px;height:17px;border:2px solid #4b5563;border-top-color:#57f287;border-radius:50%;animation:spin .7s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.manager-badge{display:inline-flex;border-radius:8px;padding:5px 8px;background:#222b37;color:#cbd5e1;font-size:10px;font-weight:800}.manager-divider{height:1px;background:var(--dash-line);margin:18px 0}.role-preview-banner{display:none;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 14px;padding:12px 15px;border:1px solid #5865f266;border-radius:12px;background:#3c45a528;color:#e9d5ff;font-size:12px;font-weight:700}.role-preview-banner.active{display:flex}
 @media(max-width:900px){.manager-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.manager-head{padding:20px}.manager-panel{width:calc(100% - 24px)}}@media(max-width:600px){.manager-card-grid,.manager-form-grid{grid-template-columns:1fr}.manager-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.manager-stat{padding:13px}.manager-stat strong{font-size:21px}.manager-toolbar{align-items:stretch}.manager-select{max-width:none;width:100%}.manager-head{align-items:flex-start}.manager-actions{width:100%}.manager-actions button{flex:1}.manager-row{align-items:flex-start}.manager-panel{margin-top:15px}.manager-heading{align-items:flex-start}.manager-avatar{width:42px;height:42px}}
 @media(prefers-reduced-motion:reduce){.reveal-on-scroll,.reveal-on-scroll.is-visible,.manager-panel,.manager-view.active{animation:none!important;transition:none!important;transform:none!important;filter:none!important;opacity:1!important}}
 </style>
@@ -230,9 +230,86 @@ html, body, body > .app, .app, .landing, .main, .layout, .intro, .hero-copy,
 }
 .manager-modal { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
 </style>
+<style>
+.v-prog{position:fixed;top:0;left:0;height:3px;width:100%;transform:scaleX(0);transform-origin:left;background:linear-gradient(90deg,#57f287,#949cf7);z-index:60}
+.v-tilt{perspective:1100px;position:relative}
+.v-win{position:relative;border:1px solid #3f4147;background:#2b2d31;border-radius:20px;box-shadow:0 40px 100px #000a;transform:rotateY(var(--ry,-5deg)) rotateX(var(--rx,2deg));transition:transform .3s ease-out;animation:vIn 1s .15s both}
+.v-bar{display:flex;align-items:center;gap:6px;padding:13px 16px;border-bottom:1px solid #3f4147;color:#b5bac1;font-size:11px}
+.v-bar i{width:9px;height:9px;border-radius:50%;background:#3f4147}.v-bar i:first-child{background:#57f287}.v-bar span{margin-left:8px}
+.v-live{margin-left:auto;font-style:normal;color:#57f287;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.v-live:before{content:"";width:7px;height:7px;border-radius:50%;background:#57f287;animation:vBlink 1.6s infinite}
+.v-body{display:grid;grid-template-columns:118px 1fr;min-height:300px}
+.v-nav{display:flex;flex-direction:column;gap:4px;padding:12px;border-right:1px solid #3f4147}
+.v-nav button{all:unset;cursor:pointer;font-size:11px;color:#b5bac1;padding:10px 11px;border-radius:9px;transition:background .25s,color .25s}
+.v-nav button:hover{color:#fff}.v-nav button.on{background:#23a55a1c;color:#57f287}
+.v-stage{padding:16px;min-width:0}.v-pane{display:none}.v-pane.on{display:block}
+.v-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.v-st{background:#313338;border:1px solid #3f4147;border-radius:11px;padding:11px}.v-st small{display:block;font-size:9px;color:#b5bac1}.v-st b{display:block;font-size:20px;margin-top:6px;color:#57f287}.v-st:nth-child(2) b{color:#949cf7}.v-st:nth-child(3) b{color:#fff}
+.v-cap{font-size:10px;color:#b5bac1;margin:16px 0 8px}
+.v-bars{display:flex;align-items:flex-end;gap:5px;height:92px}
+.v-b{flex:1;height:calc(var(--h)*1%);border-radius:4px 4px 2px 2px;background:linear-gradient(#949cf7,#57f287);transform-origin:bottom}
+.v-pane.on .v-st,.v-pane.on .v-row,.v-pane.on .v-mem,.v-pane.on .v-log{animation:vUp .55s calc(var(--i)*110ms) both}
+.v-pane.on .v-b{animation:vGrow .8s calc(var(--i)*45ms) cubic-bezier(.2,.8,.2,1) both}
+.v-row{display:flex;justify-content:space-between;align-items:center;padding:13px 4px;border-bottom:1px solid #3f4147;font-size:12px}
+.v-sw,.v-chips u{width:32px;height:18px;border-radius:99px;background:#2a303b;position:relative;display:block;text-decoration:none}
+.v-sw:after,.v-chips u:after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff}
+.v-pane.on .v-sw:not(.off){animation:vSw .5s calc(.5s + var(--i)*.55s) both}.v-pane.on .v-sw:not(.off):after{animation:vKnob .5s calc(.5s + var(--i)*.55s) both}
+.v-mem{display:flex;align-items:center;gap:11px;padding:11px;margin-bottom:8px;background:#313338;border:1px solid #3f4147;border-radius:12px}
+.v-mem s{text-decoration:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;color:#07100b;background:linear-gradient(135deg,#57f287,#949cf7)}
+.v-mem div{flex:1;min-width:0}.v-mem b{display:block;font-size:12px}.v-mem small{font-size:10px;color:#b5bac1}.v-mem em{font-style:normal;font-size:10px;color:#57f287}.v-mem em.away{color:#fbbf24}
+.v-log{font-size:11px;line-height:1.5;padding:11px 0;border-bottom:1px solid #3f4147;color:#dbdee1}.v-log time,.v-feed time{color:#949cf7;font-weight:700;margin-right:9px;font-variant-numeric:tabular-nums}
+.v-toast{position:absolute;left:-34px;bottom:34px;background:#171c25;border:1px solid #2f3643;border-radius:12px;padding:11px 15px;font-size:11px;display:flex;align-items:center;gap:9px;box-shadow:0 18px 40px #0008;animation:vToast 7s 1.5s infinite;opacity:0}
+.v-toast span{width:16px;height:16px;border-radius:50%;background:#23a55a;position:relative}.v-toast span:after{content:"";position:absolute;left:5px;top:3px;width:4px;height:7px;border:solid #07100b;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.v-head{text-align:center;max-width:640px;margin:0 auto 30px}.v-head h2{font-size:clamp(30px,4.4vw,46px);letter-spacing:-2px;margin:16px 0 12px;line-height:1.08}.v-head p{color:#b5bac1;line-height:1.8;font-size:14px;margin:0}
+.v-marq{overflow:hidden;margin:0 0 30px;padding:14px 0;border-block:1px solid #3f4147;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.v-track{display:flex;gap:44px;width:max-content;animation:vScroll 32s linear infinite}.v-track span{font-size:14px;font-weight:800;color:#b5bac1;letter-spacing:-.2px;white-space:nowrap}.v-track span:nth-child(odd){color:#dbdee1}
+.v-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.v-card{position:relative;overflow:hidden;background:radial-gradient(260px circle at var(--mx,50%) var(--my,0%),#57f28720,transparent 65%),#2b2d31;border:1px solid #3f4147;border-radius:20px;padding:22px;transition:transform .35s,border-color .35s}
+.v-card:hover{transform:translateY(-6px);border-color:#4b5563}.v-card h3{font-size:17px;margin:20px 0 8px;letter-spacing:-.4px}.v-card p{margin:0;color:#b5bac1;font-size:13px;line-height:1.7}
+.v-vis{height:132px;border-radius:14px;background:#1e1f22;border:1px solid #3f4147;display:grid;place-items:center;overflow:hidden;position:relative}
+.v-radar{position:relative;width:96px;height:96px;display:grid;place-items:center}.v-radar i{position:absolute;inset:0;border:1px solid #57f287;border-radius:50%;opacity:0;animation:vPing 3.2s infinite}.v-radar i:nth-child(2){animation-delay:1s}.v-radar i:nth-child(3){animation-delay:2s}.v-radar b{width:14px;height:14px;border-radius:50%;background:#57f287;box-shadow:0 0 22px #57f287}
+.v-chips{display:grid;gap:7px;width:80%}.v-chips span{display:flex;justify-content:space-between;align-items:center;font-size:11px;background:#313338;border:1px solid #3f4147;border-radius:8px;padding:6px 10px}
+.v-chips u{width:26px;height:14px;background:#23a55a}.v-chips u:after{width:10px;height:10px;left:14px}.v-chips u.off{background:#2a303b}.v-chips u.off:after{left:2px}
+.v-feed{position:absolute;inset:0 14px;animation:vFeed 11s linear infinite}.v-feed div{font-size:11px;color:#dbdee1;padding:9px 0;border-bottom:1px solid #3f4147}
+.v-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:left;margin:0 auto 34px;max-width:1000px}
+.v-step{padding:22px;border:1px solid #3f4147;border-radius:18px;background:#2b2d31}.v-step b{display:block;font-size:46px;line-height:1;color:transparent;-webkit-text-stroke:1px #57f287;margin-bottom:14px}.v-step h4{margin:0 0 6px;font-size:15px}.v-step p{margin:0;color:#b5bac1;font-size:13px;line-height:1.7}
+.js .rv{opacity:0;transform:translateY(28px);transition:opacity .8s var(--d,0ms),transform .8s cubic-bezier(.2,.8,.2,1) var(--d,0ms)}.js .rv.in{opacity:1;transform:none}
+@keyframes vIn{from{opacity:0;transform:translateY(30px) rotateY(-12deg)}}
+@keyframes vUp{from{opacity:0;transform:translateY(14px)}}
+@keyframes vGrow{from{transform:scaleY(0)}}
+@keyframes vSw{from{background:#2a303b}to{background:#23a55a}}
+@keyframes vKnob{from{left:2px}to{left:16px}}
+@keyframes vBlink{50%{opacity:.25}}
+@keyframes vToast{0%,8%{opacity:0;transform:translateY(14px)}14%,40%{opacity:1;transform:none}48%,100%{opacity:0;transform:translateY(-8px)}}
+@keyframes vScroll{to{transform:translateX(-50%)}}
+@keyframes vPing{0%{transform:scale(.2);opacity:.9}100%{transform:scale(1.15);opacity:0}}
+@keyframes vFeed{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+@media(max-width:900px){.v-cards,.v-steps{grid-template-columns:1fr}}
+@media(max-width:760px){.v-body{grid-template-columns:92px 1fr}.v-toast{display:none}.v-win{transform:none}.v-stage{padding:12px}}
+@media(prefers-reduced-motion:reduce){.v-win,.v-track,.v-toast,.v-feed,.v-radar i,.v-live:before,.v-pane.on *{animation:none!important}.js .rv{opacity:1;transform:none;transition:none}.v-toast{opacity:1}}
+</style>
+<style>
+.action-primary{background:#5865f2;color:#fff}.action-primary:hover{background:#4752c4;filter:none}
+.action-secondary{background:#4e5058;border-color:#4e5058;color:#fff}.action-secondary:hover{background:#6d6f78;filter:none}
+.v-st b,.v-mem em,.v-live{color:#57f287}.v-st:nth-child(2) b{color:#a5acff}
+.v-bar i:first-child,.v-live:before{background:#23a55a}.v-bar i:nth-child(2){background:#f0b232}.v-bar i:nth-child(3){background:#f23f42}
+.v-b{background:linear-gradient(#5865f2,#23a55a)}.v-mem s{background:#5865f2;color:#fff}.v-nav button.on{background:#5865f2;color:#fff}
+.v-log time,.v-feed time{color:#a5acff}.v-radar i{border-color:#5865f2}.v-radar b{background:#5865f2;box-shadow:0 0 22px #5865f2}
+.v-step b{-webkit-text-stroke:1px #5865f2}.v-card:hover{border-color:#5865f2}
+.v-tag{font-style:normal;font-size:9px;font-weight:800;background:#f23f42;color:#fff;border-radius:6px;padding:2px 6px;margin-left:8px;vertical-align:middle}
+.v-news{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:0 auto 18px;max-width:900px;padding:12px 16px;border:1px solid #5865f2;background:#5865f21a;border-radius:12px;font-size:13px;color:#dbdee1}
+.v-news[hidden]{display:none}.v-news b{background:#5865f2;color:#fff;border-radius:6px;padding:3px 9px;font-size:11px}
+.role-preview-banner select{max-width:220px}
+.v-pal{position:fixed;inset:0;z-index:90;background:#000a;display:grid;justify-items:center;align-items:start;padding-top:14vh}.v-pal[hidden]{display:none}
+.v-palbox{width:min(560px,92vw);background:#313338;border:1px solid #3f4147;border-radius:14px;box-shadow:0 30px 80px #000c;overflow:hidden;animation:vUp .25s both}
+.v-palbox input{all:unset;box-sizing:border-box;width:100%;padding:17px 20px;font-size:15px;color:#f2f3f5;border-bottom:1px solid #3f4147}
+#vPalList{max-height:320px;overflow:auto;padding:8px}#vPalList button{all:unset;box-sizing:border-box;width:100%;display:flex;justify-content:space-between;padding:11px 12px;border-radius:8px;color:#dbdee1;cursor:pointer;font-size:14px}
+#vPalList button.on,#vPalList button:hover{background:#5865f2;color:#fff}#vPalList small{opacity:.75}#vPalList p{margin:0;padding:12px;color:#b5bac1;font-size:13px}
+.v-hint{font-size:11px;color:#b5bac1;margin-right:14px}
+</style>
 </head>
 <body>
-<div class="app">
+<div class="app"><div class="v-prog" id="vProg"></div>
 <header class="topbar">
 <div class="brand">
 <div class="brand-mark">
@@ -252,122 +329,34 @@ html, body, body > .app, .app, .landing, .main, .layout, .intro, .hero-copy,
 <span>OAuth 2.0</span>
 </div>
 </header>
-<section class="landing">
-<div class="hero-inner">
-<div class="hero-copy">
-<div class="eyebrow">
-<span class="dot">
-</span> 🔰 • EURP | Manager Bot</div>
-<h1>Alles für deinen Server.<br>
-<span class="gradient">An einem Ort.</span>
-</h1>
-<p>Verwalte deine freigeschalteten Bot-Funktionen und Discord-Server über eine zentrale Oberfläche. Sieh dir zuerst die Vorschau an und melde dich anschließend sicher mit Discord an.</p>
-<div class="hero-actions">
-<a class="action-primary" href="#showcase">Website entdecken ↓</a>
-<a class="action-secondary" href="#login">Mit Discord verbinden ↗</a>
+<section class="landing"><div class="hero-inner"><div class="hero-copy">
+<div class="eyebrow"><span class="dot"></span>Discord-Verwaltung</div>
+<h1>Dein Server.<br><span class="gradient">Ein Panel.</span></h1>
+<p>Funktionen ein- und ausschalten, Rechte verteilen, Protokolle durchsehen: Was du sonst per Befehl erledigst, geht hier in ein paar Klicks. Angemeldet wirst du über dein Discord-Konto.</p>
+<div class="hero-actions"><a class="action-primary" href="#showcase">Vorschau ansehen ↓</a><a class="action-secondary" href="#login">Jetzt anmelden ↗</a></div>
 </div>
-
-</div>
-<div class="mock-window" aria-label="Grafische Vorschau des 🔰 • EURP | Manager Bot Dashboards">
-<div class="mock-top">
-<span class="mock-dot">
-</span>
-<span class="mock-dot" style="background:#c084fc">
-</span>
-<span class="mock-dot" style="background:#fff">
-</span>
-<span style="margin-left:8px">botconfig / dashboard</span>
-</div>
-<div class="mock-content">
-<aside class="mock-sidebar">
-<div class="mock-brand">🔰 • EURP<br>　 MANAGER BOT</div>
-<div class="mock-nav active">⌂ Übersicht</div>
-<div class="mock-nav">▦ Funktionen</div>
-<div class="mock-nav">♧ Community</div>
-<div class="mock-nav">⚙ Einstellungen</div>
-</aside>
-<div class="mock-main">
-<div class="mock-welcome">
-<small>WILLKOMMEN ZURÜCK</small>
-<strong>Alles im Blick.</strong>
-<span>Deine Tools. An einem Ort.</span>
-</div>
-<div class="mock-stats">
-<div class="mock-stat">
-<small>STATUS</small>
-<strong>Online</strong>
-</div>
-<div class="mock-stat">
-<small>TOOLS</small>
-<strong>12+</strong>
-</div>
-<div class="mock-stat">
-<small>DESIGN</small>
-<strong>Pro</strong>
-</div>
-</div>
-<div class="mock-activity">
-<strong>Deine Plattform</strong>
-<div class="mock-line">
-</div>
-<div class="mock-line">
-</div>
-<div class="mock-line">
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="showcase" id="showcase">
-<div class="showcase-inner">
-<div class="section-heading reveal-on-scroll">
-<div class="eyebrow">
-<span class="dot">
-</span> Ein erster Einblick</div>
-<h2>Sieh dir die Plattform an,<br>
-<span class="gradient">bevor du dich anmeldest.</span>
-</h2>
-<p>Ein klarer Überblick über die Bereiche deiner Plattform – mit einem modernen Design in Schwarz, Weiß, Grün und Lila.</p>
-</div>
-<div class="preview-grid">
-<article class="preview-panel green reveal-on-scroll">
-<span class="preview-tag">01 · DASHBOARD</span>
-<h3>Deine Bot-Verwaltung</h3>
-<p>Behalte wichtige Bereiche im Blick und finde freigeschaltete Funktionen schnell wieder.</p>
-<div class="preview-cards">
-<div class="preview-mini">
-<span>System</span>
-<b>Bereit</b>
-</div>
-<div class="preview-mini">
-<span>Design</span>
-<b>Modern</b>
-</div>
-<div class="preview-mini">
-<span>Zugriff</span>
-<b>Sicher</b>
-</div>
-</div>
-</article>
-<article class="preview-panel purple reveal-on-scroll">
-<span class="preview-tag" style="color:#d8b4fe;background:#a855f719;border-color:#a855f744">02 · COMMUNITY</span>
-<h3>Alles an einem Ort</h3>
-<p>Serverinformationen und Bot-Werkzeuge übersichtlich an einem Ort. Verfügbare Aktionen richten sich nach deinen Berechtigungen.</p>
-<div style="display:flex;gap:8px;margin-top:24px;flex-wrap:wrap">
-<span class="preview-tag">BOT-TOOLS</span>
-<span class="preview-tag" style="color:#d8b4fe;background:#a855f719;border-color:#a855f744">DISCORD</span>
-</div>
-</article>
-</div>
-</div>
-</section>
-<section class="bottom-cta reveal-on-scroll">
-<h2>Bereit, loszulegen?</h2>
-<p>Verbinde dein Discord-Konto, um das Verwaltungs-Panel zu öffnen. Welche Bereiche du nutzen kannst, hängt von deinen Rechten ab.</p>
-<a class="action-primary" href="#login">Weiter zur Anmeldung ↓</a>
-</section>
+<div class="v-tilt" id="vTilt"><div class="v-win" id="vWin">
+<div class="v-bar"><i></i><i></i><i></i><span>botconfig · Beispielserver</span><em class="v-live">live</em></div>
+<div class="v-body"><nav class="v-nav"><button class="on" type="button">Übersicht</button><button type="button">Funktionen</button><button type="button">Mitglieder</button><button type="button">Protokoll</button></nav>
+<div class="v-stage">
+<section class="v-pane on"><div class="v-stats"><div class="v-st" style="--i:0"><small>Mitglieder</small><b data-n="1248">0</b></div><div class="v-st" style="--i:1"><small>Online</small><b data-n="312">0</b></div><div class="v-st" style="--i:2"><small>Aktionen heute</small><b data-n="87">0</b></div></div><div class="v-cap">Aktivität der letzten 12 Stunden</div><div class="v-bars"><i class="v-b" style="--h:40;--i:0"></i><i class="v-b" style="--h:62;--i:1"></i><i class="v-b" style="--h:48;--i:2"></i><i class="v-b" style="--h:75;--i:3"></i><i class="v-b" style="--h:58;--i:4"></i><i class="v-b" style="--h:86;--i:5"></i><i class="v-b" style="--h:66;--i:6"></i><i class="v-b" style="--h:92;--i:7"></i><i class="v-b" style="--h:70;--i:8"></i><i class="v-b" style="--h:80;--i:9"></i><i class="v-b" style="--h:60;--i:10"></i><i class="v-b" style="--h:95;--i:11"></i></div></section>
+<section class="v-pane"><div class="v-row" style="--i:0"><span>Anti-Raid-Schutz</span><u class="v-sw"></u></div><div class="v-row" style="--i:1"><span>Willkommensnachricht</span><u class="v-sw"></u></div><div class="v-row" style="--i:2"><span>Verifizierung</span><u class="v-sw"></u></div><div class="v-row" style="--i:3"><span>KI-Chat im Support</span><u class="v-sw off"></u></div></section>
+<section class="v-pane"><div class="v-mem" style="--i:0"><s>MM</s><div><b>Max Mustermann</b><small>Moderator</small></div><em>online</em></div><div class="v-mem" style="--i:1"><s>EM</s><div><b>Erika Musterfrau</b><small>Support</small></div><em>online</em></div><div class="v-mem" style="--i:2"><s>LB</s><div><b>Lukas Beispiel</b><small>Mitglied</small></div><em class="away">abwesend</em></div></section>
+<section class="v-pane"><div class="v-log" style="--i:0"><time>14:02</time>Max Mustermann hat den Anti-Raid-Schutz eingeschaltet</div><div class="v-log" style="--i:1"><time>14:05</time>Erika Musterfrau hat die Rolle „Support“ freigegeben</div><div class="v-log" style="--i:2"><time>14:09</time>3 neue Konten wurden automatisch abgewiesen</div><div class="v-log" style="--i:3"><time>14:12</time>Lukas Beispiel hat die Willkommensnachricht geändert</div></section>
+</div></div>
+<div class="v-toast"><span></span>Änderung gespeichert</div>
+</div></div></div></section>
+<section class="showcase" id="showcase"><div class="showcase-inner">
+<div class="v-head rv"><div class="eyebrow"><span class="dot"></span>Funktionen</div><h2>Das steckt <span class="gradient">im Panel.</span></h2><p>Alles ist in Bereiche gegliedert. Was du davon siehst und ändern darfst, hängt von deiner Rolle auf dem Server ab.</p></div>
+<div class="v-news rv" id="vNews" hidden></div><div class="v-marq rv"><div class="v-track"><span>Anti-Raid</span><span>Fraktionsliste</span><span>Teamliste</span><span>RP-Zeitplan</span><span>KI-Chat</span><span>Rollenrechte</span><span>Verifizierung</span><span>Protokoll</span><span>Lockdown</span></div></div>
+<div class="v-cards">
+<article class="v-card rv" style="--d:0ms"><div class="v-vis"><div class="v-radar"><i></i><i></i><i></i><b></b></div></div><h3>Schutz vor Raids</h3><p>Neue Konten werden geprüft, auffällige Beitritte abgewiesen. Im Notfall sperrst du den Server mit einem Klick.</p></article>
+<article class="v-card rv" style="--d:120ms"><div class="v-vis"><div class="v-chips"><span>Admin<u></u></span><span>Moderator<u></u></span><span>Support<u></u></span><span>Mitglied<u class="off"></u></span></div></div><h3>Rechte pro Rolle</h3><p>Lege fest, wer was sehen und ändern darf. Du kannst eine Rolle vorab ausprobieren, bevor du sie freigibst.</p></article>
+<article class="v-card rv" style="--d:240ms"><div class="v-vis"><div class="v-feed"><div><time>14:02</time>Anti-Raid an</div><div><time>14:05</time>Rolle vergeben</div><div><time>14:09</time>3 Konten abgewiesen</div><div><time>14:12</time>Text geändert</div><div><time>14:15</time>Lockdown aus</div><div><time>14:18</time>Rolle entzogen</div></div></div><h3>Lückenloses Protokoll</h3><p>Jede Änderung wird festgehalten: wer, was und wann. Alte Einträge werden nach 60 Tagen gelöscht.</p></article>
+</div></div></section>
+<section class="bottom-cta"><div class="v-head rv"><h2>In drei Schritten <span class="gradient">startklar.</span></h2></div>
+<div class="v-steps"><div class="v-step rv" style="--d:0ms"><b>1</b><h4>Anmelden</h4><p>Mit deinem Discord-Konto. Ein neues Passwort brauchst du nicht.</p></div><div class="v-step rv" style="--d:140ms"><b>2</b><h4>Server wählen</h4><p>Du siehst nur Server, auf denen du Zugriff hast.</p></div><div class="v-step rv" style="--d:280ms"><b>3</b><h4>Loslegen</h4><p>Änderungen gelten sofort, ohne dass du den Bot neu starten musst.</p></div></div>
+<a class="action-primary rv" href="#login" style="--d:380ms">Weiter zur Anmeldung ↓</a></section>
 <main class="main">
 <div class="layout">
 <section class="intro">
@@ -475,7 +464,7 @@ html, body, body > .app, .app, .landing, .main, .layout, .intro, .hero-copy,
 <button class="manager-action" id="logoutPanel" type="button">Abmelden</button>
 </div>
  </header>
- <div class="role-preview-banner" id="rolePreviewBanner"><span id="rolePreviewBannerText">Rollen-Vorschau aktiv.</span><button class="manager-button" id="exitRolePreview" type="button">Vorschau beenden</button></div>
+ <div class="role-preview-banner" id="rolePreviewBanner"><span id="rolePreviewBannerText">Rollen-Vorschau aktiv.</span><select class="manager-select" id="tabRoleSwitch" hidden aria-label="Rolle wechseln"></select><button class="manager-button" id="exitRolePreview" type="button">Vorschau beenden</button></div>
  <div class="manager-toolbar">
 <div class="manager-field" style="flex:1;min-width:min(100%,260px)">
 <label for="guildSelect">AKTIVER DISCORD-SERVER</label>
@@ -595,7 +584,7 @@ html, body, body > .app, .app, .landing, .main, .layout, .intro, .hero-copy,
 <div class="manager-card">
 <div class="manager-form-grid">
 <div class="manager-field"><label>Discord-Rollen</label><div class="manager-role-tools"><input id="roleSearch" class="manager-role-search" type="search" placeholder="Rolle suchen …" aria-label="Discord-Rollen filtern"><button class="manager-button" id="selectAllRoles" type="button">Alle wählen</button><button class="manager-button" id="clearRoleSelection" type="button">Leeren</button></div><select id="permissionRole" multiple size="8" title="Interne Rollenliste" style="display:none"><option value="">Rollen werden geladen</option></select><div class="role-picker-columns"><div class="role-picker-panel"><strong>Verfügbare Rollen</strong><div id="availableRoleList" class="role-picker-list"><div class="manager-help">Rollen werden geladen …</div></div></div><div class="role-picker-panel"><strong>Ausgewählt</strong><div id="selectedRoleList" class="role-picker-list"><div class="manager-help">Noch keine Rollen ausgewählt.</div></div></div></div><small class="manager-help">Klicke eine Rolle an, um sie auszuwählen. Mit × kommt sie zurück in die Liste. Mehrere Rollen sind möglich.</small><input id="roleIdsInput" type="text" inputmode="numeric" placeholder="Optional: Rollen-IDs durch Komma trennen" aria-label="Discord-Rollen-IDs"><button class="manager-button" id="addRoleIds" type="button">IDs zur Auswahl hinzufügen</button></div>
-<div class="manager-field"><label for="rolePreview">Vorschau als Rolle</label><button class="manager-button" id="rolePreview" type="button">Berechtigungen testen</button></div>
+<div class="manager-field"><label for="rolePreview">Vorschau als Rolle</label><button class="manager-button" id="rolePreview" type="button">Berechtigungen testen</button><button class="manager-button" id="previewTab" type="button">In neuem Tab testen ↗</button></div>
 </div>
 <div class="manager-divider"></div>
 <h3>Website-Bereiche</h3><div class="manager-list" id="websitePermissionList"></div>
@@ -771,9 +760,10 @@ html, body, body > .app, .app, .landing, .main, .layout, .intro, .hero-copy,
   <div id="infoModalBody"></div>
  </div>
 </div>
+<div class="v-pal" id="vPal" hidden><div class="v-palbox"><input id="vPalIn" type="text" placeholder="Bereich oder Aktion suchen …" autocomplete="off"><div id="vPalList"></div></div></div>
 <footer class="footer">
 <span>© 2026 🔰 • EURP | Manager Bot</span>
-<div class="footer-links">
+<div class="footer-links"><span class="v-hint">Strg + K: Schnellsuche</span>
 <a href="#" id="privacy">Datenschutz</a>
 <a href="#" id="help">Hilfe</a>
 </div>
@@ -808,7 +798,7 @@ function switchView(view){if(view==='admins'&&!state.isMaster){toast('Nur der Bo
 function showPanel(){document.querySelector('.landing').style.display='none';document.querySelector('.showcase').style.display='none';document.querySelector('.bottom-cta').style.display='none';document.querySelector('.main').style.display='none';$('managerPanel').classList.add('open');$('managerWelcome').textContent='Angemeldet als '+(state.user?.username||'Discord-Nutzer')+' · sichere Bot-Verbindung';if(state.user?.avatar_url){$('managerAvatar').src=state.user.avatar_url;$('managerAvatar').hidden=false}renderGuilds();$('managerPanel').scrollIntoView({behavior:'smooth',block:'start'})}
 function showLanding(){ $('managerPanel').classList.remove('open');document.querySelector('.landing').style.display='';document.querySelector('.showcase').style.display='';document.querySelector('.bottom-cta').style.display='';document.querySelector('.main').style.display=''; }
 function showLoginFailure(message){showPanel();$('managerWelcome').textContent='Discord-Anmeldung konnte nicht abgeschlossen werden';$('serverCards').innerHTML=emptyHtml(esc(message)+'<br><br>Wenn der Fehler API, CORS oder HTTP nennt, muss die passende Route im Wispbyte-Backend ebenfalls funktionieren.',true);$('overviewStats').innerHTML='';$('guildSelect').innerHTML='<option value="">Anmeldung fehlgeschlagen</option>';toast(message,true);$('managerPanel').scrollIntoView({behavior:'auto',block:'start'});}
-async function bootstrap(){showPanel();$('managerWelcome').textContent='Verbindung wird hergestellt …';$('serverCards').innerHTML=loadingHtml();$('overviewStats').innerHTML='';const data=await api('/api/bootstrap');state.user=data.user||{};state.guilds=Array.isArray(data.guilds)?data.guilds:[];state.modules=data.modules||{labels:{},commands:[]};state.isMaster=!!state.user.is_master;loadBotPresence();document.querySelectorAll('.manager-tab[data-view="admins"]').forEach(b=>b.hidden=!state.isMaster);document.querySelectorAll('.manager-tab[data-view="verify"]').forEach(b=>b.hidden=!state.isMaster);document.querySelectorAll('.manager-tab[data-view="current-info"]').forEach(b=>b.hidden=!(state.isMaster||state.guilds.some(g=>g.permissions?.current_info)));showPanel();if(!state.guilds.length){state.guildId='';$('guildSelect').innerHTML='<option value="">Keine freigegebenen Server</option>';$('serverCards').innerHTML=emptyHtml('Dein Discord-Konto ist angemeldet, aber für deine Discord-Rollen ist noch kein Website-Zugriff freigegeben.',true);$('overviewStats').innerHTML=[['STATUS','Angemeldet','Discord-Verbindung aktiv'],['SERVER','0','Keine Server freigegeben']].map(a=>`<article class="manager-stat reveal-on-scroll"><small>${a[0]}</small><strong>${esc(a[1])}</strong><span>${esc(a[2])}</span></article>`).join('');$('moduleList').innerHTML=emptyHtml('Es ist kein Server verfügbar.');$('commandList').innerHTML=emptyHtml('Es ist kein Server verfügbar.');toast('Angemeldet, aber noch kein Serverzugriff vorhanden.',true);return;}const previous=state.guildId;state.guildId=state.guilds.some(g=>String(g.guild_id)===String(previous))?String(previous):String(state.guilds[0].guild_id);renderGuilds();$('guildSelect').value=state.guildId;await loadGuild();}
+async function bootstrap(){showPanel();$('managerWelcome').textContent='Verbindung wird hergestellt …';$('serverCards').innerHTML=loadingHtml();$('overviewStats').innerHTML='';const data=await api('/api/bootstrap');state.user=data.user||{};state.guilds=Array.isArray(data.guilds)?data.guilds:[];state.modules=data.modules||{labels:{},commands:[]};checkNewFeatures(state.modules.labels);state.isMaster=!!state.user.is_master;loadBotPresence();document.querySelectorAll('.manager-tab[data-view="admins"]').forEach(b=>b.hidden=!state.isMaster);document.querySelectorAll('.manager-tab[data-view="verify"]').forEach(b=>b.hidden=!state.isMaster);document.querySelectorAll('.manager-tab[data-view="current-info"]').forEach(b=>b.hidden=!(state.isMaster||state.guilds.some(g=>g.permissions?.current_info)));showPanel();if(!state.guilds.length){state.guildId='';$('guildSelect').innerHTML='<option value="">Keine freigegebenen Server</option>';$('serverCards').innerHTML=emptyHtml('Dein Discord-Konto ist angemeldet, aber für deine Discord-Rollen ist noch kein Website-Zugriff freigegeben.',true);$('overviewStats').innerHTML=[['STATUS','Angemeldet','Discord-Verbindung aktiv'],['SERVER','0','Keine Server freigegeben']].map(a=>`<article class="manager-stat reveal-on-scroll"><small>${a[0]}</small><strong>${esc(a[1])}</strong><span>${esc(a[2])}</span></article>`).join('');$('moduleList').innerHTML=emptyHtml('Es ist kein Server verfügbar.');$('commandList').innerHTML=emptyHtml('Es ist kein Server verfügbar.');toast('Angemeldet, aber noch kein Serverzugriff vorhanden.',true);return;}const previous=state.guildId;state.guildId=state.guilds.some(g=>String(g.guild_id)===String(previous))?String(previous):String(state.guilds[0].guild_id);renderGuilds();$('guildSelect').value=state.guildId;await loadGuild();}
 function renderGuilds(){const select=$('guildSelect');select.innerHTML=state.guilds.map(g=>`<option value="${esc(g.guild_id)}">${esc(g.name)} · ${g.rank>=100?'Bot-Entwickler':g.rank>0?'Rollen-Zugriff':'Servermitglied · Nur lesen'}</option>`).join('');$('serverCards').innerHTML=state.guilds.map((g,i)=>`<button type="button" class="manager-server reveal-on-scroll" data-guild="${esc(g.guild_id)}" style="--reveal-delay:${i*55}ms">${g.icon_url?`<img src="${esc(g.icon_url)}" alt="">`:'<div class="manager-avatar" style="display:grid;place-items:center">🔰</div>'}<span style="min-width:0;flex:1"><strong>${esc(g.name)}</strong><small>${Number(g.member_count||0).toLocaleString('de-DE')} Mitglieder · ${g.rank>=100?'Bot-Entwickler':g.rank>0?'Rollen-Zugriff':'Servermitglied · Nur lesen'}</small></span><span>↗</span></button>`).join('');$('overviewStats').innerHTML=[['SERVER',state.guilds.length,'Server, auf denen du Mitglied bist'],['RECHTE',state.isMaster?'Entwickler':'Rollenbasiert','Berechtigung auf diesem Server'],['MODULE',Object.keys(state.modules.labels||{}).length,'Bekannte Funktionsbereiche'],['STATUS','Verbunden','Discord OAuth & Bot-API']].map(a=>`<article class="manager-stat reveal-on-scroll"><small>${a[0]}</small><strong>${esc(a[1])}</strong><span>${esc(a[2])}</span></article>`).join('');revealInit($('managerPanel'))}
 function applyActualPermissions(){const p=state.config?.permissions||{};document.querySelectorAll('.manager-tab').forEach(tab=>{const view=tab.dataset.view;if(view==='admins'){tab.hidden=!state.isMaster;return}if(view==='modules'||view==='commands'||view==='settings')tab.hidden=!(state.isMaster||p.config);else if(view==='ai-chat')tab.hidden=!(state.isMaster||state.rank>=100);else if(view==='messaging')tab.hidden=!(state.isMaster||p.say||p.dm);else if(view==='security')tab.hidden=!(state.isMaster||p.security);else if(view==='audit')tab.hidden=!(state.isMaster||p.audit);else if(view==='current-info')tab.hidden=!(state.isMaster||p.current_info);else tab.hidden=false});if($('sendSay'))$('sendSay').disabled=!(state.isMaster||p.say);if($('sendDm'))$('sendDm').disabled=!(state.isMaster||p.dm);if($('disableLockdown'))$('disableLockdown').disabled=!state.isMaster;if(!state.isMaster){const active=document.querySelector('.manager-tab.active');if(active?.hidden)switchView('overview')}}
 async function loadGuild(silent=false){if(!id())return;const guild=state.guilds.find(g=>String(g.guild_id)===String(id()));state.rank=Number(guild?.rank||0);$('rankBadge').textContent=state.isMaster?'Bot-Entwickler':'Rollen-Zugriff';$('permissionBadge').textContent=canEdit()?'Bearbeiten erlaubt':'Eingeschränkter Zugriff';$('permissionBadge').className='manager-pill '+(canEdit()?'good':'warn');state.configLoaded=false;$('moduleList').innerHTML=loadingHtml();$('commandList').innerHTML=loadingHtml();try{const result=await api('/api/guild/'+encodeURIComponent(id())+'/config');state.config=result.config||{};state.config.permissions=result.permissions||{};document.querySelectorAll('.manager-tab[data-view="current-info"]').forEach(b=>b.hidden=!(state.isMaster||state.config.permissions.current_info));state.availableChannels=result.available_channels||[];state.availableRoles=result.available_roles||[];state.configLoaded=true;state.dirty={features:{},commands:{},anti_raid:{}};renderConfig();applyActualPermissions();if(state.isMaster)loadAdmins().catch(()=>{});$('lockdownState').textContent=state.config.lockdown?.active?'Lockdown ist aktiv seit '+(state.config.lockdown.since||'unbekannt')+'. Grund: '+(state.config.lockdown.reason||'Nicht angegeben'):'Aktuell ist kein Lockdown als aktiv gespeichert.';if(!silent)toast('Server-Konfiguration geladen.')}catch(e){$('moduleList').innerHTML=emptyHtml(e.message,true);$('commandList').innerHTML=emptyHtml(e.message,true);toast(e.message,true)}}
@@ -827,7 +817,7 @@ function renderRolePermissions(perms={commands:{},modules:{},website:{}}){const 
 async function saveRolePermissions(silent=false){if(!state.isMaster){if(!silent)toast('Nur der Bot-Entwickler darf Rollenrechte ändern.',true);return}const roleIds=Array.from($('permissionRole').selectedOptions).map(o=>o.value).filter(Boolean);if(!roleIds.length){if(!silent)toast('Bitte mindestens eine Discord-Rolle auswählen.',true);return}const permissions={website:{},modules:{},commands:{}};document.querySelectorAll('[data-webperm]').forEach(el=>permissions.website[el.dataset.webperm]=el.checked);document.querySelectorAll('[data-moduleperm]').forEach(el=>permissions.modules[el.dataset.moduleperm]=el.checked);document.querySelectorAll('[data-commandperm]').forEach(el=>permissions.commands[el.dataset.commandperm]=el.checked);try{for(const roleId of roleIds){await api('/api/guild/'+encodeURIComponent(id())+'/role-permissions',{method:'POST',body:JSON.stringify({role_id:roleId,permissions})})}if(!state.rolePermissions)state.rolePermissions={};roleIds.forEach(v=>{state.rolePermissions[v]=permissions});renderRolePicker();if(!silent)toast('Berechtigungen für '+roleIds.length+' Rolle(n) gespeichert. Das Panel wurde nicht neu geladen.')}catch(e){toast(e.message,true)}}
 function previewAllowsView(view){const p=state.previewPermissions?.website||{};if(view==='overview')return true;if(view==='modules'||view==='commands'||view==='settings')return !!p.config;if(view==='current-info')return !!p.current_info;if(view==='messaging')return !!(p.say||p.dm);if(view==='security')return !!p.security;if(view==='audit')return !!p.audit;return false}
 function applyRolePreview(){const p=state.previewPermissions?.website||{};document.querySelectorAll('.manager-tab').forEach(tab=>{if(tab.dataset.view==='admins'){tab.hidden=true;return}tab.hidden=!previewAllowsView(tab.dataset.view)});const canConfig=!!p.config;document.querySelectorAll('[data-feature],[data-command],[data-raid]').forEach(el=>el.disabled=!canConfig);document.querySelectorAll('.save-config').forEach(el=>el.disabled=!canConfig);if($('saveSettings'))$('saveSettings').disabled=!canConfig;if($('sendSay'))$('sendSay').disabled=!p.say;if($('sendDm'))$('sendDm').disabled=!p.dm;if($('reloadAudit'))$('reloadAudit').disabled=!p.audit;}
-function exitRolePreview(){state.previewingRole=false;state.previewPermissions=null;$('rolePreview').textContent='Berechtigungen testen';$('rolePreviewBanner').classList.remove('active');document.querySelectorAll('.manager-tab').forEach(tab=>{if(tab.dataset.view==='admins')tab.hidden=!state.isMaster;else if(tab.dataset.view==='current-info')tab.hidden=!(state.isMaster||state.config?.permissions?.current_info);else tab.hidden=false});renderConfig();applyActualPermissions();switchView('admins');toast('Rollen-Vorschau beendet.');}
+function exitRolePreview(){if(state.tabPreview){sessionStorage.removeItem('eurp_tab_preview');window.close();location.reload();return}state.previewingRole=false;state.previewPermissions=null;$('rolePreview').textContent='Berechtigungen testen';$('rolePreviewBanner').classList.remove('active');document.querySelectorAll('.manager-tab').forEach(tab=>{if(tab.dataset.view==='admins')tab.hidden=!state.isMaster;else if(tab.dataset.view==='current-info')tab.hidden=!(state.isMaster||state.config?.permissions?.current_info);else tab.hidden=false});renderConfig();applyActualPermissions();switchView('admins');toast('Rollen-Vorschau beendet.');}
 async function previewRolePermissions(){if(state.previewingRole){exitRolePreview();return}const roleId=$('permissionRole').selectedOptions[0]?.value;if(!roleId)return toast('Bitte zuerst eine Rolle auswählen.',true);try{const data=await api('/api/guild/'+encodeURIComponent(id())+'/role-preview?role_id='+encodeURIComponent(roleId));state.previewPermissions=data.permissions||{commands:{},website:{}};state.previewingRole=true;$('rolePreview').textContent='Vorschau beenden';$('rolePreviewBanner').classList.add('active');$('rolePreviewBannerText').textContent='Vorschau aktiv: '+($('permissionRole').selectedOptions[0]?.textContent||'ausgewählte Rolle');applyRolePreview();const p=state.previewPermissions;const w=Object.entries(p.website||{}).filter(([,v])=>v).map(([k])=>k);const c=Object.entries(p.commands||{}).filter(([,v])=>v).map(([k])=>k);$('rolePreviewResult').textContent='Vorschau aktiv: '+w.length+' Website-Rechte und '+c.length+' Bot-Befehle freigegeben. Website: '+(w.join(', ')||'keine')+'. Befehle: '+(c.join(', ')||'keine')+'. Klicke erneut auf „Vorschau beenden“, um zurückzukehren.';switchView('overview')}catch(e){toast(e.message,true)}}
 async function sendMessage(kind){const isDm=kind==='dm';const body=isDm?{target_user_id:$('dmUserId').value.trim(),message:$('dmMessage').value,link:$('dmLink').value.trim()}:{channel_id:$('sayChannel').value,message:$('sayMessage').value,link:$('sayLink').value.trim()};if(isDm&&!/^\d{15,22}$/.test(body.target_user_id)){toast('Bitte eine gültige Discord User-ID eingeben.',true);return}if(!body.message.trim()){toast('Bitte eine Nachricht eingeben.',true);return}const btn=$(isDm?'sendDm':'sendSay');setLoading(btn,true);try{await api('/api/guild/'+encodeURIComponent(id())+'/'+kind,{method:'POST',body:JSON.stringify(body)});toast(isDm?'Direktnachricht wurde gesendet.':'Nachricht wurde gesendet.');$(isDm?'dmMessage':'sayMessage').value=''}catch(e){toast(e.message,true)}finally{setLoading(btn,false)}}
 async function loadVerifyUsers(){if(!state.isMaster){$("verifyUserList").innerHTML=emptyHtml("Nur der Bot-Entwickler darf die Verifizierung verwalten.");return}$("verifyUserList").innerHTML=loadingHtml();try{const data=await api('/api/verify/users');state.verifyUsers=Array.isArray(data.users)?data.users:[];renderVerifyUsers()}catch(e){$("verifyUserList").innerHTML=emptyHtml(e.message,true)}}
@@ -907,7 +897,7 @@ async function finishDiscordLogin(){
   state.token=token;
   localStorage.setItem(SESSION_KEY,state.token);
   try{
-   await bootstrap();
+   await bootstrap();await maybeTabPreview();
    toast('Erfolgreich mit Discord verbunden.');
   }catch(panelError){
    showPanel();
@@ -928,8 +918,66 @@ async function loadBotPresence(){const card=$('botPresenceCard');if(!card)return
 async function setBotPresence(status,activityText){try{await api('/api/bot/presence',{method:'POST',body:JSON.stringify({status,activity_text:activityText||''})});toast('Echter Bot-Status geändert.');await loadBotPresence()}catch(e){toast(e.message,true)}}
 document.querySelectorAll('[data-bot-presence]').forEach(b=>b.addEventListener('click',()=>setBotPresence(b.dataset.botPresence,$('botPresenceActivity')?.value||'')));
 $('saveBotPresenceActivity')?.addEventListener('click',async()=>{const active=document.querySelector('[data-bot-presence].active');await setBotPresence(active?.dataset.botPresence||'online',$('botPresenceActivity').value)});
-$('authBtn').addEventListener('click',startDiscordLogin);$('refreshPanel').addEventListener('click',async()=>{try{await bootstrap();toast('Panel aktualisiert.')}catch(e){toast(e.message,true)}});$('logoutPanel').addEventListener('click',logout);$('guildSelect').addEventListener('change',async e=>{state.guildId=e.target.value;try{await loadGuild()}catch(err){toast(err.message,true)}});$('serverCards').addEventListener('click',async e=>{const b=e.target.closest('[data-guild]');if(!b)return;state.guildId=b.dataset.guild;$('guildSelect').value=state.guildId;switchView('overview');await loadGuild();$('managerPanel').scrollIntoView({behavior:'smooth',block:'start'})});document.querySelectorAll('.manager-tab').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.view)));document.querySelectorAll('.save-config').forEach(b=>b.addEventListener('click',saveConfig));$('saveSettings').addEventListener('click',()=>saveSettings(false));['punishUser','punishBot','newAccountDays','raidLogChannel'].forEach(fieldId=>$(fieldId)?.addEventListener('change',()=>{state.dirty.anti_raid[fieldId==='punishUser'?'punishment_user':fieldId==='punishBot'?'punishment_bot':fieldId==='newAccountDays'?'new_account_days':'log_channel_id']=fieldId==='newAccountDays'?Number($(fieldId).value||0):fieldId==='raidLogChannel'?($(fieldId).value||null):$(fieldId).value;scheduleConfigAutoSave()}));$('reloadSettings')?.addEventListener('click',loadGuild);$('reloadAiChannels')?.addEventListener('click',loadAiChannels);$('aiChannelSelect')?.addEventListener('change',()=>{const cid=$('aiChannelSelect').value;const cfg=state.aiChannels||{};const active=(cfg.channels||[]).includes(String(cid));$('aiChannelEnabled').checked=active;$('aiModeSelect').value=(cfg.modes||{})[String(cid)]||((cid==='1555246079589613658')?'community':'full');updateAiChannelHelp()});$('aiModeSelect')?.addEventListener('change',updateAiChannelHelp);$('saveAiChannel')?.addEventListener('click',saveAiChannel);$('reloadAdmins').addEventListener('click',loadAdmins);$('reloadVerifyUsers')?.addEventListener('click',loadVerifyUsers);$('verifySearch')?.addEventListener('input',renderVerifyUsers);$('saveRolePermissions').addEventListener('click',()=>saveRolePermissions(false));['websitePermissionList','roleModulePermissionList','roleCommandPermissionList'].forEach(containerId=>$(containerId).addEventListener('change',e=>{if(e.target.matches('[data-webperm],[data-moduleperm],[data-commandperm]'))scheduleRoleAutoSave()}));$('permissionRole').addEventListener('change',()=>{renderRolePicker();renderRolePermissions(state.rolePermissions[Array.from($('permissionRole').selectedOptions).map(o=>o.value)[0]]||{commands:{},modules:{},website:{}})});$('roleSearch')?.addEventListener('input',renderRolePicker);$('selectAllRoles')?.addEventListener('click',()=>{Array.from($('permissionRole').options).forEach(o=>{if(o.value)o.selected=true});$('permissionRole').dispatchEvent(new Event('change'))});$('clearRoleSelection')?.addEventListener('click',()=>{Array.from($('permissionRole').options).forEach(o=>o.selected=false);$('permissionRole').dispatchEvent(new Event('change'))});$('addRoleIds').addEventListener('click',()=>{const raw=$('roleIdsInput').value.trim();const ids=raw.split(/[\s,;]+/).filter(Boolean);if(!ids.length)return toast('Bitte mindestens eine Rollen-ID eingeben.',true);const missing=[];ids.forEach(roleId=>{const option=Array.from($('permissionRole').options).find(o=>o.value===roleId);if(option)option.selected=true;else missing.push(roleId)});if(missing.length)return toast('Diese Rollen-ID(s) wurden auf diesem Server nicht gefunden: '+missing.join(', '),true);$('roleIdsInput').value='';$('permissionRole').dispatchEvent(new Event('change'));toast(ids.length+' Rolle(n) ausgewählt.')});$('sendSay').addEventListener('click',()=>sendMessage('say'));$('sendDm').addEventListener('click',()=>sendMessage('dm'));$('reloadAudit').addEventListener('click',loadAudit);$('reloadCurrentInfo').addEventListener('click',loadCurrentInfos);$('publishCurrentInfo').addEventListener('click',publishCurrentInfo);$('loadWarnings').addEventListener('click',loadSecurityExtras);$('loadWhitelist').addEventListener('click',loadWhitelist);$('disableLockdown').addEventListener('click',disableLockdown);$('healthCheck').addEventListener('click',healthCheck);$('auditSearch')?.addEventListener('input',renderAudit);function openInfoModal(kind){const privacy=kind==='privacy';$('infoModalTitle').textContent=privacy?'Datenschutz':'Hilfe & Bedienung';$('infoModalIntro').textContent=privacy?'Welche Daten der EURP Manager verarbeitet und warum.':'Kurze Hilfe zur Anmeldung und zum Manager-Panel.';$('infoModalBody').innerHTML=privacy?`<h3>Verarbeitete Daten</h3><p>Die Anmeldung erfolgt über Discord OAuth. Die Website erhält dein Discord-Konto zur Anmeldung und verwendet eine Sitzung, um die Bot-API aufzurufen. Der Bot prüft, auf welchen Servern du Mitglied bist und welche Rollenrechte du hast.</p><h3>Server- und Protokolldaten</h3><p>Je nach Funktion können Discord-Server-ID, Rollen- und Kanal-IDs, Benutzername bzw. Benutzer-ID sowie Aktionen im Audit-Protokoll verarbeitet werden. Die Daten werden auf dem Hosting des Bot-Betreibers gespeichert und für die Bot-Funktionen, Sicherheit und Fehleranalyse verwendet.</p><h3>Speicherdauer</h3><p>Audit- und Moderationsprotokolle werden vom Bot nach 60 Tagen bereinigt; zusätzlich gilt eine Begrenzung der gespeicherten Audit-Einträge. Sitzungsdaten werden für die Anmeldung verwendet und können beim Abmelden widerrufen werden.</p><h3>Kontrolle und Kontakt</h3><p>Mit „Abmelden“ kannst du die Website-Sitzung beenden. Diese Infoseite ersetzt keine rechtliche Prüfung. Betreiberkontakt und ergänzende Angaben müssen vom Server-/Website-Betreiber ergänzt werden, bevor die Seite öffentlich eingesetzt wird.</p>`:`<h3>1. Anmelden</h3><p>Klicke auf „Mit Discord anmelden“ und bestätige die Discord-Anmeldung. Die Website zeigt nur Server an, auf denen der Bot aktiv ist und du Mitglied bist.</p><h3>2. Server auswählen</h3><p>Wähle oben einen Server. Normale Mitglieder sehen öffentliche Informationen und freigegebene Bereiche. Einstellungen und Moderationsdaten bleiben rollenabhängig.</p><h3>3. Änderungen speichern</h3><p>Wenn du Schreibrechte hast, werden unterstützte Einstellungen beim Ändern automatisch gespeichert. Bei einer Fehlermeldung aktualisiere das Panel und prüfe, ob der Bot online ist.</p><h3>4. Rollen und Audit</h3><p>Die Rollenverwaltung ist nur für den Bot-Entwickler verfügbar. Das Audit-Protokoll erscheint nur, wenn deine Serverrolle dafür freigeschaltet wurde.</p><h3>Fehlerbehebung</h3><p>Wenn die API nicht erreichbar ist, prüfe zuerst <a href="https://botconfig.wisp.uno/api/health" target="_blank" rel="noopener noreferrer">API-Status öffnen</a>. Wenn dort „status: ok“ steht, melde dich erneut an und aktualisiere das Panel.</p>`;$('infoModal').hidden=false;$('infoModal').classList.add('open');$('closeInfoModal').focus()}function closeInfoModal(){$('infoModal').classList.remove('open');$('infoModal').hidden=true} $('privacy').addEventListener('click',e=>{e.preventDefault();openInfoModal('privacy')});$('help').addEventListener('click',e=>{e.preventDefault();openInfoModal('help')});$('closeInfoModal').addEventListener('click',closeInfoModal);$('infoModal').addEventListener('click',e=>{if(e.target===$('infoModal'))closeInfoModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('infoModal').classList.contains('open'))closeInfoModal()});
-(async()=>{revealInit();const handled=await finishDiscordLogin();if(handled)return;if(state.token){try{await bootstrap()}catch(e){showPanel();$('managerWelcome').textContent='Sitzung vorhanden – Bot-Verbindung prüfen';$('serverCards').innerHTML=emptyHtml('Das Panel konnte nicht geladen werden: '+e.message,true);$('overviewStats').innerHTML='';toast(e.message,true)}}})();
+$('authBtn')?.addEventListener('click',startDiscordLogin);$('refreshPanel')?.addEventListener('click',async()=>{try{await bootstrap();toast('Panel aktualisiert.')}catch(e){toast(e.message,true)}});$('logoutPanel')?.addEventListener('click',logout);$('guildSelect')?.addEventListener('change',async e=>{state.guildId=e.target.value;try{await loadGuild()}catch(err){toast(err.message,true)}});$('serverCards')?.addEventListener('click',async e=>{const b=e.target.closest('[data-guild]');if(!b)return;state.guildId=b.dataset.guild;$('guildSelect').value=state.guildId;switchView('overview');await loadGuild();$('managerPanel').scrollIntoView({behavior:'smooth',block:'start'})});document.querySelectorAll('.manager-tab').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.view)));document.querySelectorAll('.save-config').forEach(b=>b.addEventListener('click',saveConfig));$('saveSettings')?.addEventListener('click',()=>saveSettings(false));['punishUser','punishBot','newAccountDays','raidLogChannel'].forEach(fieldId=>$(fieldId)?.addEventListener('change',()=>{state.dirty.anti_raid[fieldId==='punishUser'?'punishment_user':fieldId==='punishBot'?'punishment_bot':fieldId==='newAccountDays'?'new_account_days':'log_channel_id']=fieldId==='newAccountDays'?Number($(fieldId).value||0):fieldId==='raidLogChannel'?($(fieldId).value||null):$(fieldId).value;scheduleConfigAutoSave()}));$('reloadSettings')?.addEventListener('click',loadGuild);$('reloadAiChannels')?.addEventListener('click',loadAiChannels);$('aiChannelSelect')?.addEventListener('change',()=>{const cid=$('aiChannelSelect').value;const cfg=state.aiChannels||{};const active=(cfg.channels||[]).includes(String(cid));$('aiChannelEnabled').checked=active;$('aiModeSelect').value=(cfg.modes||{})[String(cid)]||((cid==='1555246079589613658')?'community':'full');updateAiChannelHelp()});$('aiModeSelect')?.addEventListener('change',updateAiChannelHelp);$('saveAiChannel')?.addEventListener('click',saveAiChannel);$('reloadAdmins')?.addEventListener('click',loadAdmins);$('reloadVerifyUsers')?.addEventListener('click',loadVerifyUsers);$('verifySearch')?.addEventListener('input',renderVerifyUsers);$('saveRolePermissions')?.addEventListener('click',()=>saveRolePermissions(false));['websitePermissionList','roleModulePermissionList','roleCommandPermissionList'].forEach(containerId=>$(containerId).addEventListener('change',e=>{if(e.target.matches('[data-webperm],[data-moduleperm],[data-commandperm]'))scheduleRoleAutoSave()}));$('permissionRole')?.addEventListener('change',()=>{renderRolePicker();renderRolePermissions(state.rolePermissions[Array.from($('permissionRole').selectedOptions).map(o=>o.value)[0]]||{commands:{},modules:{},website:{}})});$('roleSearch')?.addEventListener('input',renderRolePicker);$('selectAllRoles')?.addEventListener('click',()=>{Array.from($('permissionRole').options).forEach(o=>{if(o.value)o.selected=true});$('permissionRole').dispatchEvent(new Event('change'))});$('clearRoleSelection')?.addEventListener('click',()=>{Array.from($('permissionRole').options).forEach(o=>o.selected=false);$('permissionRole').dispatchEvent(new Event('change'))});$('addRoleIds')?.addEventListener('click',()=>{const raw=$('roleIdsInput').value.trim();const ids=raw.split(/[\s,;]+/).filter(Boolean);if(!ids.length)return toast('Bitte mindestens eine Rollen-ID eingeben.',true);const missing=[];ids.forEach(roleId=>{const option=Array.from($('permissionRole').options).find(o=>o.value===roleId);if(option)option.selected=true;else missing.push(roleId)});if(missing.length)return toast('Diese Rollen-ID(s) wurden auf diesem Server nicht gefunden: '+missing.join(', '),true);$('roleIdsInput').value='';$('permissionRole').dispatchEvent(new Event('change'));toast(ids.length+' Rolle(n) ausgewählt.')});$('sendSay')?.addEventListener('click',()=>sendMessage('say'));$('sendDm')?.addEventListener('click',()=>sendMessage('dm'));$('reloadAudit')?.addEventListener('click',loadAudit);$('reloadCurrentInfo')?.addEventListener('click',loadCurrentInfos);$('publishCurrentInfo')?.addEventListener('click',publishCurrentInfo);$('loadWarnings')?.addEventListener('click',loadSecurityExtras);$('loadWhitelist')?.addEventListener('click',loadWhitelist);$('disableLockdown')?.addEventListener('click',disableLockdown);$('healthCheck')?.addEventListener('click',healthCheck);$('auditSearch')?.addEventListener('input',renderAudit);function openInfoModal(kind){const privacy=kind==='privacy';$('infoModalTitle').textContent=privacy?'Datenschutz':'Hilfe & Bedienung';$('infoModalIntro').textContent=privacy?'Welche Daten der EURP Manager verarbeitet und warum.':'Kurze Hilfe zur Anmeldung und zum Manager-Panel.';$('infoModalBody').innerHTML=privacy?`<h3>Verarbeitete Daten</h3><p>Die Anmeldung erfolgt über Discord OAuth. Die Website erhält dein Discord-Konto zur Anmeldung und verwendet eine Sitzung, um die Bot-API aufzurufen. Der Bot prüft, auf welchen Servern du Mitglied bist und welche Rollenrechte du hast.</p><h3>Server- und Protokolldaten</h3><p>Je nach Funktion können Discord-Server-ID, Rollen- und Kanal-IDs, Benutzername bzw. Benutzer-ID sowie Aktionen im Audit-Protokoll verarbeitet werden. Die Daten werden auf dem Hosting des Bot-Betreibers gespeichert und für die Bot-Funktionen, Sicherheit und Fehleranalyse verwendet.</p><h3>Speicherdauer</h3><p>Audit- und Moderationsprotokolle werden vom Bot nach 60 Tagen bereinigt; zusätzlich gilt eine Begrenzung der gespeicherten Audit-Einträge. Sitzungsdaten werden für die Anmeldung verwendet und können beim Abmelden widerrufen werden.</p><h3>Kontrolle und Kontakt</h3><p>Mit „Abmelden“ kannst du die Website-Sitzung beenden. Diese Infoseite ersetzt keine rechtliche Prüfung. Betreiberkontakt und ergänzende Angaben müssen vom Server-/Website-Betreiber ergänzt werden, bevor die Seite öffentlich eingesetzt wird.</p>`:`<h3>1. Anmelden</h3><p>Klicke auf „Mit Discord anmelden“ und bestätige die Discord-Anmeldung. Die Website zeigt nur Server an, auf denen der Bot aktiv ist und du Mitglied bist.</p><h3>2. Server auswählen</h3><p>Wähle oben einen Server. Normale Mitglieder sehen öffentliche Informationen und freigegebene Bereiche. Einstellungen und Moderationsdaten bleiben rollenabhängig.</p><h3>3. Änderungen speichern</h3><p>Wenn du Schreibrechte hast, werden unterstützte Einstellungen beim Ändern automatisch gespeichert. Bei einer Fehlermeldung aktualisiere das Panel und prüfe, ob der Bot online ist.</p><h3>4. Rollen und Audit</h3><p>Die Rollenverwaltung ist nur für den Bot-Entwickler verfügbar. Das Audit-Protokoll erscheint nur, wenn deine Serverrolle dafür freigeschaltet wurde.</p><h3>Fehlerbehebung</h3><p>Wenn die API nicht erreichbar ist, prüfe zuerst <a href="https://botconfig.wisp.uno/api/health" target="_blank" rel="noopener noreferrer">API-Status öffnen</a>. Wenn dort „status: ok“ steht, melde dich erneut an und aktualisiere das Panel.</p>`;$('infoModal').hidden=false;$('infoModal').classList.add('open');$('closeInfoModal').focus()}function closeInfoModal(){$('infoModal').classList.remove('open');$('infoModal').hidden=true} $('privacy')?.addEventListener('click',e=>{e.preventDefault();openInfoModal('privacy')});$('help')?.addEventListener('click',e=>{e.preventDefault();openInfoModal('help')});$('closeInfoModal')?.addEventListener('click',closeInfoModal);$('infoModal')?.addEventListener('click',e=>{if(e.target===$('infoModal'))closeInfoModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('infoModal').classList.contains('open'))closeInfoModal()});
+(()=>{try{const q=new URLSearchParams(location.search);const r=q.get('preview_role');if(r){sessionStorage.setItem('eurp_tab_preview',JSON.stringify({role:r,guild:q.get('guild')||''}));history.replaceState({},document.title,location.pathname)}}catch(_){}})();
+async function applyTabPreview(roleId,guildId){
+if(guildId&&state.guilds.some(g=>String(g.guild_id)===String(guildId)))state.guildId=guildId;
+if(!state.guildId)return;
+$('guildSelect').value=state.guildId;
+await loadGuild(true);
+if(state.isMaster)await loadAdmins().catch(()=>{});
+const data=await api('/api/guild/'+encodeURIComponent(state.guildId)+'/role-preview?role_id='+encodeURIComponent(roleId));
+state.previewPermissions=data.permissions||{commands:{},website:{}};state.previewingRole=true;state.tabPreview=true;
+const sw=$('tabRoleSwitch'),src=$('permissionRole');
+if(sw&&src){sw.innerHTML=Array.from(src.options).filter(o=>o.value).map(o=>`<option value="${esc(o.value)}"${o.value===String(roleId)?' selected':''}>${esc(o.textContent)}</option>`).join('');sw.hidden=false}
+$('rolePreviewBanner').classList.add('active');
+$('rolePreviewBannerText').textContent='Vorschau-Tab: Du siehst die Seite so, wie diese Rolle sie sieht';
+$('exitRolePreview').textContent='Tab schließen';
+applyRolePreview();switchView('overview')}
+async function maybeTabPreview(){let raw=null;try{raw=JSON.parse(sessionStorage.getItem('eurp_tab_preview')||'null')}catch(_){}if(!raw||!raw.role)return;try{await applyTabPreview(raw.role,raw.guild)}catch(e){toast(e.message,true)}}
+$('previewTab')?.addEventListener('click',()=>{const roleId=$('permissionRole').selectedOptions[0]?.value;if(!roleId)return toast('Bitte zuerst eine Rolle auswählen.',true);window.open(location.pathname+'?preview_role='+encodeURIComponent(roleId)+'&guild='+encodeURIComponent(state.guildId),'_blank')});
+$('tabRoleSwitch')?.addEventListener('change',async e=>{sessionStorage.setItem('eurp_tab_preview',JSON.stringify({role:e.target.value,guild:state.guildId}));try{await applyTabPreview(e.target.value,state.guildId)}catch(err){toast(err.message,true)}});
+function featureList(d){const a=Array.isArray(d)?d:Array.isArray(d?.features)?d.features:d?.labels?Object.entries(d.labels).map(([key,label])=>({key,label})):[];return a.map(f=>typeof f==='string'?{key:f,label:f,text:''}:{key:String(f.key||f.id||f.name||f.label||''),label:String(f.label||f.name||f.key||''),text:String(f.description||f.text||'')}).filter(f=>f.key&&f.label)}
+function checkNewFeatures(labels){try{const list=featureList({labels:labels||{}});if(!list.length)return;const seen=JSON.parse(localStorage.getItem('eurp_seen_features')||'null');const fresh=seen?list.filter(f=>!seen.includes(f.key)):[];localStorage.setItem('eurp_seen_features',JSON.stringify(list.map(f=>f.key)));if(fresh.length)toast('Neu im Panel: '+fresh.map(f=>f.label).join(', '))}catch(_){}}
+const freshKeys=new Set();
+async function loadLiveFeatures(){try{const r=await fetch(API_BASE+'/api/features',{cache:'no-store'});if(!r.ok)return;const list=featureList(await r.json());if(!list.length)return;const seen=JSON.parse(localStorage.getItem('eurp_seen_landing')||'null');if(seen)list.forEach(f=>{if(!seen.includes(f.key))freshKeys.add(f.key)});const tr=document.querySelector('.v-track');if(tr){const items=list.map(f=>`<span>${esc(f.label)}${freshKeys.has(f.key)?'<em class="v-tag">Neu</em>':''}</span>`).join('');tr.innerHTML=items+items}const news=list.filter(f=>freshKeys.has(f.key)),box=$('vNews');if(box&&news.length){box.hidden=false;box.innerHTML='<b>Neu im Panel</b>'+news.map(f=>`<span>${esc(f.label)}${f.text?' – '+esc(f.text):''}</span>`).join('')}localStorage.setItem('eurp_seen_landing',JSON.stringify(list.map(f=>f.key)))}catch(_){}}
+loadLiveFeatures();setInterval(loadLiveFeatures,300000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadLiveFeatures()});
+(()=>{const pal=$('vPal'),inp=$('vPalIn'),list=$('vPalList');if(!pal)return;let items=[],idx=0;
+const build=()=>[...document.querySelectorAll('.manager-tab')].filter(b=>!b.hidden).map(b=>({t:b.textContent.trim(),h:'Bereich',f:()=>b.click()})).concat([{t:'Panel aktualisieren',h:'Aktion',f:()=>$('refreshPanel').click()},{t:'Abmelden',h:'Aktion',f:()=>$('logoutPanel').click()}]);
+const render=()=>{const q=inp.value.toLowerCase().trim();items=build().filter(i=>i.t.toLowerCase().includes(q));idx=Math.min(idx,Math.max(items.length-1,0));list.innerHTML=items.map((i,k)=>`<button type="button" class="${k===idx?'on':''}" data-i="${k}"><span>${esc(i.t)}</span><small>${i.h}</small></button>`).join('')||'<p>Nichts gefunden.</p>'};
+const open=()=>{if(!$('managerPanel').classList.contains('open'))return;pal.hidden=false;inp.value='';idx=0;render();inp.focus()};
+const close=()=>{pal.hidden=true};
+const run=k=>{const i=items[k];if(i){close();i.f()}};
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();pal.hidden?open():close()}else if(!pal.hidden){if(e.key==='Escape')close();else if(e.key==='ArrowDown'){idx=Math.min(idx+1,items.length-1);render();e.preventDefault()}else if(e.key==='ArrowUp'){idx=Math.max(idx-1,0);render();e.preventDefault()}else if(e.key==='Enter')run(idx)}});
+inp.addEventListener('input',()=>{idx=0;render()});list.addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(b)run(+b.dataset.i)});pal.addEventListener('click',e=>{if(e.target===pal)close()});
+})();
+(async()=>{revealInit();const handled=await finishDiscordLogin();if(handled)return;if(state.token){try{await bootstrap();await maybeTabPreview()}catch(e){showPanel();$('managerWelcome').textContent='Sitzung vorhanden – Bot-Verbindung prüfen';$('serverCards').innerHTML=emptyHtml('Das Panel konnte nicht geladen werden: '+e.message,true);$('overviewStats').innerHTML='';toast(e.message,true)}}})();
+</script>
+<script>
+(()=>{document.documentElement.classList.add('js');
+const rm=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches);
+const win=document.getElementById('vWin'),tilt=document.getElementById('vTilt');
+if(win){
+const btns=[...win.querySelectorAll('.v-nav button')],panes=[...win.querySelectorAll('.v-pane')];
+let cur=0,timer=null;
+const count=p=>p.querySelectorAll('[data-n]').forEach(el=>{const to=+el.dataset.n,t0=performance.now();const f=t=>{const k=Math.min(1,(t-t0)/1100),e=1-Math.pow(1-k,3);el.textContent=Math.round(to*e).toLocaleString('de-DE');if(k<1)requestAnimationFrame(f)};requestAnimationFrame(f)});
+const show=i=>{cur=i;btns.forEach((b,k)=>b.classList.toggle('on',k===i));panes.forEach((p,k)=>{p.classList.remove('on');if(k===i){void p.offsetWidth;p.classList.add('on');count(p)}})};
+const stop=()=>clearInterval(timer);
+const play=()=>{if(rm)return;stop();timer=setInterval(()=>show((cur+1)%panes.length),4800)};
+btns.forEach((b,k)=>b.addEventListener('click',()=>{show(k);play()}));
+win.addEventListener('mouseenter',stop);win.addEventListener('mouseleave',play);
+tilt.addEventListener('pointermove',e=>{if(rm)return;const r=tilt.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;win.style.setProperty('--ry',(x*10-2)+'deg');win.style.setProperty('--rx',(-y*8+2)+'deg')});
+tilt.addEventListener('pointerleave',()=>{win.style.removeProperty('--ry');win.style.removeProperty('--rx')});
+show(0);play();
+}
+const io='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15}):null;
+document.querySelectorAll('.rv').forEach(el=>io?io.observe(el):el.classList.add('in'));
+document.querySelectorAll('.v-card').forEach(c=>c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect();c.style.setProperty('--mx',e.clientX-r.left+'px');c.style.setProperty('--my',e.clientY-r.top+'px')}));
+const tr=document.querySelector('.v-track');if(tr)tr.innerHTML+=tr.innerHTML;
+const fd=document.querySelector('.v-feed');if(fd)fd.innerHTML+=fd.innerHTML;
+const pg=document.getElementById('vProg');
+addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-innerHeight;pg.style.transform='scaleX('+(h>0?Math.min(1,scrollY/h):0)+')'},{passive:true});
+})();
 </script>
 </body>
 </html>
