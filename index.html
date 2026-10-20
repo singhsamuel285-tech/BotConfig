@@ -865,10 +865,27 @@ function canEdit(){if(state.previewingRole)return !!state.previewPermissions?.we
 function headers(json=true){const h={Authorization:'Bearer '+state.token};if(json)h['Content-Type']='application/json';return h}
 async function api(path,options={}){if(!state.token)throw new Error('Du bist nicht angemeldet.');let response;try{response=await fetch(API_BASE+path,{...options,headers:{...headers(options.body!==undefined),...(options.headers||{})}})}catch(e){throw new Error('Bot-API nicht erreichbar oder CORS blockiert. API: '+API_BASE+'. Prüfe, ob das Backend läuft und WEBSITE_ORIGIN exakt https://singhsamuel285-tech.github.io (ohne /BotConfig/) lautet. ('+(e&&e.message?e.message:'Netzwerkfehler')+')')}const raw=await response.text();let data={};try{data=raw?JSON.parse(raw):{}}catch(_){data={message:raw.slice(0,300)}}if(response.status===401){localStorage.removeItem(SESSION_KEY);sessionStorage.removeItem(STATE_KEY);state.token='';throw new Error('Deine Sitzung ist abgelaufen oder wurde vom Backend abgelehnt. Bitte melde dich erneut mit Discord an.')}if(!response.ok)throw new Error(data.error||data.message||('API-Fehler '+response.status));return data}
 let configAutoSaveTimer=null,settingsAutoSaveTimer=null,roleAutoSaveTimer=null;
-let saveChain=Promise.resolve(),cfgQueued=false,setQueued=false,roleQueued=false;
-function scheduleConfigAutoSave(){if(cfgQueued)return;cfgQueued=true;queueMicrotask(()=>{cfgQueued=false;saveChain=saveChain.then(()=>saveConfig(true)).then(()=>toast('Gespeichert.'))})}
-function scheduleSettingsAutoSave(){if(setQueued)return;setQueued=true;queueMicrotask(()=>{setQueued=false;saveChain=saveChain.then(()=>saveSettings(true))})}
-function scheduleRoleAutoSave(){if(roleQueued)return;roleQueued=true;queueMicrotask(()=>{roleQueued=false;saveChain=saveChain.then(()=>saveRolePermissions(true)).then(()=>toast('Gespeichert.'))})}
+let saveChain=Promise.resolve();
+// Debounce saves: rapid toggles are combined into one API request instead of
+// writing the same configuration repeatedly. A failed save must not block later saves.
+function enqueueSave(saveFn, showSuccess=false){
+  saveChain=saveChain.catch(()=>{}).then(()=>saveFn()).then(()=>{
+    if(showSuccess)toast('Gespeichert.');
+  }).catch(error=>{toast(error?.message||'Speichern fehlgeschlagen.',true)});
+  return saveChain;
+}
+function scheduleConfigAutoSave(){
+  clearTimeout(configAutoSaveTimer);
+  configAutoSaveTimer=setTimeout(()=>enqueueSave(()=>saveConfig(true),true),450);
+}
+function scheduleSettingsAutoSave(){
+  clearTimeout(settingsAutoSaveTimer);
+  settingsAutoSaveTimer=setTimeout(()=>enqueueSave(()=>saveSettings(true)),450);
+}
+function scheduleRoleAutoSave(){
+  clearTimeout(roleAutoSaveTimer);
+  roleAutoSaveTimer=setTimeout(()=>enqueueSave(()=>saveRolePermissions(true),true),450);
+}
 function setLoading(button,loading,label){if(!button)return;button.disabled=loading;if(label&&!button.dataset.label)button.dataset.label=button.textContent;if(label)button.textContent=loading?'Bitte warten …':button.dataset.label}
 function revealInit(root=document){const items=root.querySelectorAll('.reveal-on-scroll:not([data-reveal-ready])');items.forEach((el,i)=>{el.dataset.revealReady='1';el.style.setProperty('--reveal-delay',Math.min(i,8)*55+'ms');if(!window.IntersectionObserver){el.classList.add('is-visible');return}observer.observe(el)})}
 const observer=window.IntersectionObserver?new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');observer.unobserve(e.target)}}),{threshold:.1,rootMargin:'0px 0px -30px 0px'}):null;
