@@ -181,6 +181,55 @@ h1{font-size:clamp(37px,5vw,57px);line-height:1.08;letter-spacing:-2.5px;margin:
 .manager-modal-card a{color:#86efac;text-decoration:underline}
 @media(max-width:700px){.manager-audit-tools{grid-template-columns:1fr}.manager-role-tools{grid-template-columns:1fr 1fr}.manager-role-tools .manager-role-search{grid-column:1/-1}.manager-modal-card{padding:18px}}
 
+
+/* Premium Bewerbungsverwaltung */
+#view-bewerbungen{--app-glow:rgba(99,102,241,.16);padding-bottom:32px}
+#view-bewerbungen .app-hero{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:28px 30px;margin:0 0 22px;border:1px solid rgba(129,140,248,.28);border-radius:22px;background:radial-gradient(ellipse at 90% 0%,rgba(45,212,191,.16),transparent 38%),radial-gradient(ellipse at 0% 100%,rgba(99,102,241,.22),transparent 45%),linear-gradient(135deg,#171b2d,#10141f 70%);box-shadow:0 18px 55px rgba(0,0,0,.18)}
+#view-bewerbungen .app-hero:after{content:"";position:absolute;width:220px;height:220px;right:13%;top:-145px;border:1px solid rgba(165,180,252,.2);border-radius:50%;box-shadow:0 0 0 28px rgba(165,180,252,.035),0 0 0 58px rgba(165,180,252,.025);pointer-events:none}
+#view-bewerbungen .app-eyebrow{display:inline-flex;align-items:center;gap:8px;color:#a5b4fc;font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin-bottom:9px}
+#view-bewerbungen .app-live-dot{width:7px;height:7px;border-radius:50%;background:#34d399;box-shadow:0 0 12px #34d399}
+#view-bewerbungen .app-hero h3{font-size:clamp(24px,3vw,34px);line-height:1.12;margin:0 0 9px;color:#f8fafc;letter-spacing:-.035em}
+#view-bewerbungen .app-hero p{margin:0;max-width:650px;color:#aab4cc;line-height:1.65;font-size:14px}
+#view-bewerbungen .app-hero-badge{position:relative;z-index:1;flex-shrink:0;padding:13px 16px;border:1px solid rgba(148,163,184,.22);border-radius:15px;background:rgba(15,23,42,.58);color:#dbeafe;font-size:12px;font-weight:700}
+#view-bewerbungen .app-layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(290px,.85fr);gap:18px;align-items:start}
+#view-bewerbungen .app-card{min-width:0;padding:23px;border:1px solid var(--line,rgba(148,163,184,.18));border-radius:20px;background:linear-gradient(145deg,rgba(26,31,46,.97),rgba(17,21,32,.98));box-shadow:0 12px 35px rgba(0,0,0,.12)}
+#view-bewerbungen .app-card-head{display:flex;align-items:flex-start;gap:13px;margin-bottom:22px}
+#view-bewerbungen .app-icon{display:grid;place-items:center;flex:0 0 42px;height:42px;border-radius:13px;color:#c7d2fe;background:linear-gradient(145deg,rgba(99,102,241,.28),rgba(45,212,191,.12));border:1px solid rgba(129,140,248,.25);font-size:19px;font-weight:800}
+#view-bewerbungen .app-card h3{margin:0 0 6px;color:var(--text,#f8fafc);font-size:17px;letter-spacing:-.02em}
+#view-bewerbungen .app-card-head p{margin:0;color:var(--muted,#9ba3bc);font-size:12px;line-height:1.55}
+#view-bewerbungen .app-field{margin:0 0 17px;min-width:0}
+#view-bewerbungen .app-field label{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;color:#dce3f5;font-size:12px;font-weight:750;letter-spacing:.025em}
+#view-bewerbungen .app-field label small{color:#8490aa;font-weight:500;font-size:11px}
+#view-bewerbungen .app-field input,#view-bewerbungen .app-field textarea,#view-bewerbungen .app-field select{display:block;box-sizing:border-box;width:100%;margin:0!important;padding:12px 13px;border:1px solid #343d54;border-radius:11px;background:#0e1320;color:#f1f5f9;font:inherit;font-size:13px;line-height:1.5;outline:none;transition:border-color .18s,box-shadow .18s,background .18s}
+#view-bewerbungen .app-field textarea{resize:vertical;min-height:82px}
+#view-bewerbungen .app-field input:focus,#view-bewerbungen .app-field textarea:focus,#view-bewerbungen .app-field select:focus{border-color:#818cf8;box-shadow:0 0 0 3px rgba(99,102,241,.17);background:#11182a}
+#view-bewerbungen .app-field input::placeholder,#view-bewerbungen .app-field textarea::placeholder{color:#69758e}
+#view-bewerbungen .app-field select{appearance:none;padding-right:44px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23a5b4fc' stroke-width='1.8' viewBox='0 0 24 24'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;cursor:pointer}
+#view-bewerbungen .app-channel-wrap{padding:14px;border:1px solid rgba(99,102,241,.22);border-radius:15px;background:linear-gradient(120deg,rgba(99,102,241,.08),rgba(45,212,191,.035));margin-bottom:18px}
+#view-bewerbungen .app-channel-top{display:flex;gap:10px;align-items:center;margin-bottom:11px}
+#view-bewerbungen .app-channel-symbol{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:#252b47;color:#a5b4fc;font-weight:900;font-size:18px}
+#view-bewerbungen .app-channel-top strong{display:block;color:#e8edff;font-size:12px}
+#view-bewerbungen .app-channel-top span{display:block;color:#8c98b3;font-size:11px;margin-top:3px}
+#view-bewerbungen .app-form-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:5px}
+#view-bewerbungen #appPanelSave{border:0!important;border-radius:12px!important;padding:12px 18px!important;background:linear-gradient(110deg,#6366f1,#8b5cf6)!important;color:white!important;font-weight:800;box-shadow:0 7px 20px rgba(99,102,241,.22);transition:transform .18s,filter .18s}
+#view-bewerbungen #appPanelSave:hover{transform:translateY(-1px);filter:brightness(1.1)}
+#view-bewerbungen #appPanelClear{border:1px solid #384157!important;border-radius:12px!important;padding:12px 16px!important;background:#171c2a!important;color:#dce3f5!important;font-weight:700}
+#view-bewerbungen .app-note{display:flex;gap:9px;align-items:flex-start;margin:14px 0 0;padding:11px 12px;border-radius:11px;background:rgba(45,212,191,.055);border:1px solid rgba(45,212,191,.14);color:#9caec7;font-size:11px;line-height:1.6}
+#view-bewerbungen .app-note b{color:#5eead4}
+#view-bewerbungen .app-side-stack{display:grid;gap:18px}
+#view-bewerbungen .app-list{display:grid;gap:10px}
+#view-bewerbungen .app-list .manager-row{padding:14px;border-radius:13px;border:1px solid #2b3449;background:#121827;gap:12px}
+#view-bewerbungen .app-list .manager-row-main strong{color:#edf2ff}
+#view-bewerbungen .app-list .manager-row-main small{line-height:1.6}
+#view-bewerbungen .app-list button{border-radius:9px!important;padding:8px 11px!important;font-size:12px}
+#view-bewerbungen #appSubmissionList details{overflow:hidden}
+#view-bewerbungen #appSubmissionList summary{color:#e6ebf8;line-height:1.7}
+#view-bewerbungen #appSubmissionList details p{color:#bac4d9;font-size:12px;line-height:1.65;overflow-wrap:anywhere}
+#view-bewerbungen #appSubmissionList textarea{box-sizing:border-box;background:#0e1320;color:#f1f5f9;border:1px solid #343d54;border-radius:10px;padding:10px}
+#view-bewerbungen .app-count{display:inline-flex;align-items:center;justify-content:center;min-width:25px;height:25px;padding:0 7px;border-radius:9px;background:rgba(129,140,248,.15);color:#c7d2fe;font-size:11px;font-weight:800}
+@media(max-width:1000px){#view-bewerbungen .app-layout{grid-template-columns:1fr}#view-bewerbungen .app-side-stack{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){#view-bewerbungen .app-hero{padding:22px;align-items:flex-start;flex-direction:column}#view-bewerbungen .app-hero-badge{display:none}#view-bewerbungen .app-card{padding:17px}#view-bewerbungen .app-side-stack{grid-template-columns:1fr}#view-bewerbungen .app-form-actions button{flex:1}}
+
 </style>
 <style>
 @media(max-width:760px){.hero-inner{grid-template-columns:1fr;gap:35px}.hero-copy{text-align:center}.hero-copy p{margin-left:auto;margin-right:auto}.hero-actions{justify-content:center}.mock-window{transform:none;max-width:540px;width:100%;margin:0 auto}.mock-content{grid-template-columns:82px 1fr;min-height:240px}.mock-sidebar{padding:9px 5px}.mock-nav{font-size:8px;padding:8px 4px}.mock-welcome{padding:13px}.mock-welcome strong{font-size:16px}.mock-stats{gap:5px}.mock-stat{padding:9px 5px}.mock-stat strong{font-size:12px}.preview-grid{grid-template-columns:1fr}.showcase{padding-bottom:65px}.landing{padding-top:48px}.hero-copy h1{letter-spacing:-2.5px}.preview-panel{padding:20px}}
@@ -542,20 +591,27 @@ h1{font-size:clamp(37px,5vw,57px);line-height:1.08;letter-spacing:-2.5px;margin:
 </div>
 </section>
   <section class="manager-view" id="view-bewerbungen">
-    <div class="manager-section-title"><div><h3>Bewerbungsverwaltung</h3><p>Panels bearbeiten, Bewerbungen einsehen und manuell entscheiden. Die KI gibt nur Hinweise.</p></div></div>
-    <article class="manager-card" style="margin-bottom:16px">
-      <h3>Panel erstellen / bearbeiten</h3>
-      <input id="appPanelId" type="hidden">
-      <label for="appPanelName">Name der Bewerbung</label><input id="appPanelName" maxlength="80" placeholder="z. B. Team-Bewerbung" style="width:100%;margin:6px 0 12px">
-      <label for="appPanelDescription">Beschreibung im Discord-Panel</label><textarea id="appPanelDescription" rows="2" placeholder="Kurze Beschreibung …" style="width:100%;margin:6px 0 12px"></textarea>
-      <label for="appPanelChannel">Kanal, in dem das Panel gesendet wird</label><select id="appPanelChannel" style="width:100%;margin:6px 0 12px"></select>
-      <label for="appPanelQuestions">Fragen (eine pro Zeile, maximal 5)</label><textarea id="appPanelQuestions" rows="5" placeholder="Warum möchtest du ins Team?&#10;Wie gehst du mit Konflikten um?" style="width:100%;margin:6px 0 12px"></textarea>
-      <label for="appPanelSamples">Optionale Musterlösungen (gleiche Reihenfolge, eine pro Zeile)</label><textarea id="appPanelSamples" rows="4" placeholder="Optionale Musterlösung zu Frage 1 …" style="width:100%;margin:6px 0 12px"></textarea>
-      <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="action-primary" id="appPanelSave">Panel speichern</button><button type="button" class="action-secondary" id="appPanelClear">Leeren</button></div>
-      <p class="manager-note">Die Musterlösungen dienen nur als Kontext für den Prüfbericht. Sie werden nicht als richtig/falsch bewertet.</p>
-    </article>
-    <article class="manager-card" style="margin-bottom:16px"><h3>Gespeicherte Panels</h3><div id="appPanelList">Noch nicht geladen.</div></article>
-    <article class="manager-card"><h3>Eingegangene Bewerbungen</h3><div id="appSubmissionList">Noch nicht geladen.</div></article>
+    <div class="app-hero">
+      <div><div class="app-eyebrow"><span class="app-live-dot"></span> EURP · TEAM OPERATIONS</div><h3>Bewerbungszentrum</h3><p>Erstelle professionelle Bewerbungs-Panels, wähle den Discord-Kanal gezielt aus und verwalte eingehende Bewerbungen an einem Ort.</p></div>
+      <div class="app-hero-badge">PANEL-STUDIO&nbsp; / &nbsp;01</div>
+    </div>
+    <div class="app-layout">
+      <article class="app-card">
+        <div class="app-card-head"><div class="app-icon">✳</div><div><h3>Panel konfigurieren</h3><p>Gestalte das Bewerbungsformular für deinen Discord-Server.</p></div></div>
+        <input id="appPanelId" type="hidden">
+        <div class="app-field"><label for="appPanelName">Name der Bewerbung <small>01 / BASIS</small></label><input id="appPanelName" maxlength="80" placeholder="z. B. Team-Bewerbung"></div>
+        <div class="app-field"><label for="appPanelDescription">Beschreibung im Discord-Panel</label><textarea id="appPanelDescription" rows="3" placeholder="Erkläre kurz, wer sich bewerben kann und was erwartet wird."></textarea></div>
+        <div class="app-channel-wrap"><div class="app-channel-top"><div class="app-channel-symbol">#</div><div><strong>Veröffentlichungskanal</strong><span>Wähle den Textkanal, in dem Mitglieder das Panel sehen.</span></div></div><div class="app-field" style="margin:0"><label for="appPanelChannel">Discord-Kanal <small>02 / ZIEL</small></label><select id="appPanelChannel"><option value="">Kanäle werden geladen …</option></select></div></div>
+        <div class="app-field"><label for="appPanelQuestions">Bewerbungsfragen <small>MAX. 5 · EINE PRO ZEILE</small></label><textarea id="appPanelQuestions" rows="5" placeholder="Warum möchtest du ins Team?&#10;Wie gehst du mit Konflikten um?"></textarea></div>
+        <div class="app-field"><label for="appPanelSamples">Musterlösungen <small>OPTIONAL</small></label><textarea id="appPanelSamples" rows="3" placeholder="Optional: interne Orientierung für die Prüfung, gleiche Reihenfolge wie die Fragen."></textarea></div>
+        <div class="app-form-actions"><button type="button" class="action-primary" id="appPanelSave">Panel speichern&nbsp; →</button><button type="button" class="action-secondary" id="appPanelClear">Zurücksetzen</button></div>
+        <div class="app-note"><b>i</b><span><b>Hinweis zur KI:</b> Musterlösungen dienen nur als Kontext für den Prüfbericht. Sie werden nicht automatisch als richtig oder falsch bewertet.</span></div>
+      </article>
+      <div class="app-side-stack">
+        <article class="app-card"><div class="app-card-head"><div class="app-icon">▤</div><div><h3>Deine Panels</h3><p>Bearbeite bestehende Panels oder veröffentliche sie erneut.</p></div><span class="app-count" id="appPanelCount">0</span></div><div class="app-list" id="appPanelList">Noch nicht geladen.</div></article>
+        <article class="app-card"><div class="app-card-head"><div class="app-icon">↗</div><div><h3>Eingegangene Bewerbungen</h3><p>Prüfe Antworten und triff die endgültige Entscheidung manuell.</p></div><span class="app-count" id="appSubmissionCount">0</span></div><div class="app-list" id="appSubmissionList">Noch nicht geladen.</div></article>
+      </div>
+    </div>
   </section>
   <section class="manager-view" id="view-ai-chat">
 <div class="manager-section-title">
@@ -883,11 +939,13 @@ async function loadBewerbungen(){
  }catch(e){$('appPanelList').innerHTML=emptyHtml(e.message,true);$('appSubmissionList').innerHTML=emptyHtml(e.message,true)}
 }
 function renderAppPanels(){
+ if($('appPanelCount'))$('appPanelCount').textContent=appPanels.length;
  $('appPanelList').innerHTML=appPanels.length?appPanels.map(p=>`<div class="manager-row"><div class="manager-row-main"><strong>${appEscape(p.name)}</strong><small>${(p.questions||[]).length} Fragen · Kanal-ID ${appEscape(p.channel_id||'nicht gesetzt')}</small></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="action-secondary" data-app-edit="${appEscape(p.id)}">Bearbeiten</button><button class="action-primary" data-app-publish="${appEscape(p.id)}">Panel senden</button></div></div>`).join(''):emptyHtml('Noch keine Bewerbungspanels erstellt.');
  $('appPanelList').querySelectorAll('[data-app-edit]').forEach(btn=>btn.onclick=()=>{const p=appPanels.find(x=>x.id===btn.dataset.appEdit);if(!p)return;$('appPanelId').value=p.id;$('appPanelName').value=p.name||'';$('appPanelDescription').value=p.description||'';$('appPanelChannel').value=p.channel_id||'';$('appPanelQuestions').value=(p.questions||[]).join('\n');$('appPanelSamples').value=(p.sample_solutions||[]).join('\n');$('appPanelName').scrollIntoView({behavior:'smooth',block:'center'})});
  $('appPanelList').querySelectorAll('[data-app-publish]').forEach(btn=>btn.onclick=async()=>{try{await api('/api/guild/'+encodeURIComponent(id())+'/bewerbungen/publish',{method:'POST',body:JSON.stringify({panel_id:btn.dataset.appPublish})});toast('Bewerbungspanel wurde in Discord gesendet.')}catch(e){toast(e.message,true)}});
 }
 function renderAppSubmissions(){
+ if($('appSubmissionCount'))$('appSubmissionCount').textContent=appSubmissions.length;
  $('appSubmissionList').innerHTML=appSubmissions.length?appSubmissions.slice().reverse().map(a=>`<details class="manager-row" style="display:block;margin:8px 0"><summary style="cursor:pointer"><strong>${appEscape(a.type||'Bewerbung')}</strong> · <code>${appEscape(a.applicant_id)}</code> · <span class="manager-pill">${appEscape(a.status||'Offen')}</span></summary><div style="padding:12px 0"><p><b>KI-Prüfung:</b> ${appEscape(a.ai_review?.summary||'Ausstehend')}</p>${(a.answers||[]).map((x,i)=>`<div style="border-top:1px solid var(--dash-line);padding:10px 0"><b>${i+1}. ${appEscape(x.question)}</b><p>${appEscape(x.answer)}</p><small>Antwortzeit: ${appEscape(x.seconds)} Sekunden</small>${x.sample_solution?`<p><small>Musterlösung: ${appEscape(x.sample_solution)}</small></p>`:''}${a.ai_review?.answers?.[i]?`<p><small>KI-Hinweis: ${appEscape(a.ai_review.answers[i].possible_ai||'')} · ${appEscape(a.ai_review.answers[i].confidence||'')} · ${appEscape(a.ai_review.answers[i].notes||'')} · ${appEscape(a.ai_review.answers[i].timing_note||'')}</small></p>`:''}</div>`).join('')}<p><b>Begründung:</b> ${appEscape(a.reason||'Keine')}</p><label>Begründung für Entscheidung</label><textarea rows="2" data-app-reason="${appEscape(a.id)}" style="width:100%;margin:6px 0">${appEscape(a.reason||'')}</textarea><div style="display:flex;gap:8px;flex-wrap:wrap">${['Angenommen','Abgelehnt','Zurückgestellt'].map(s=>`<button class="action-secondary" data-app-decision="${appEscape(a.id)}" data-app-status="${s}">${s}</button>`).join('')}</div></div></details>`).join(''):emptyHtml('Noch keine Bewerbungen eingegangen.');
  $('appSubmissionList').querySelectorAll('[data-app-decision]').forEach(btn=>btn.onclick=async()=>{const reason=$('appSubmissionList').querySelector(`[data-app-reason="${CSS.escape(btn.dataset.appDecision)}"]`)?.value||'';try{await api('/api/guild/'+encodeURIComponent(id())+'/bewerbungen/'+encodeURIComponent(btn.dataset.appDecision)+'/decision',{method:'POST',body:JSON.stringify({status:btn.dataset.appStatus,reason})});toast('Entscheidung gespeichert.');await loadBewerbungen()}catch(e){toast(e.message,true)}});
 }
