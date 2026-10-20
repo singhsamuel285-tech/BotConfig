@@ -608,10 +608,6 @@ h1{font-size:clamp(37px,5vw,57px);line-height:1.08;letter-spacing:-2.5px;margin:
 </div>
 </section>
   <section class="manager-view" id="view-bewerbungen">
-    <div class="app-hero">
-      <div><div class="app-eyebrow"><span class="app-live-dot"></span> EURP · TEAM OPERATIONS</div><h3>Bewerbungszentrum</h3><p>Erstelle professionelle Bewerbungs-Panels, wähle den Discord-Kanal gezielt aus und verwalte eingehende Bewerbungen an einem Ort.</p></div>
-      <div class="app-hero-badge">PANEL-STUDIO&nbsp; / &nbsp;01</div>
-    </div>
     <div class="app-layout">
       <article class="app-card">
         <div class="app-card-head"><div class="app-icon">✳</div><div><h3>Panel konfigurieren</h3><p>Gestalte das Bewerbungsformular für deinen Discord-Server.</p></div></div>
@@ -950,17 +946,25 @@ function clearAppPanel(){if($('appPanelId'))$('appPanelId').value='';$('appPanel
 async function loadBewerbungen(){
  if(!id())return;
  const channelSelect=$('appPanelChannel');
- const textChannels=(state.availableChannels||[]).map(c=>({channel_id:String(c.channel_id??c.id??c.channelId??''),name:String(c.name??c.channel_name??c.channelName??'Unbenannter Kanal'),type:String(c.type??c.channel_type??c.type_name??'').toLowerCase()})).filter(c=>c.channel_id&&(['text','news','guild_text','guild_news','0','5'].includes(c.type)||c.type.includes('text')||c.type.includes('news'))).sort((a,b)=>a.name.localeCompare(b.name,'de'));
- const previousChannel=channelSelect.value;
- channelSelect.innerHTML='<option value="">'+(textChannels.length?'Discord-Kanal auswählen …':'Keine Textkanäle von der API erhalten')+'</option>'+textChannels.map(c=>`<option value="${esc(c.channel_id)}"># ${esc(c.name)}</option>`).join('');
- if(previousChannel&&textChannels.some(c=>c.channel_id===previousChannel))channelSelect.value=previousChannel;
- if(!textChannels.length)channelSelect.title='Die API liefert keine Textkanäle. Bot-Berechtigungen und available_channels im /config-Endpunkt prüfen.';else channelSelect.title=textChannels.length+' Textkanal/-kanäle geladen.';
+ const previousChannel=channelSelect.value||$('appPanelId')?.dataset?.channelId||'';
  $('appPanelList').innerHTML=loadingHtml();$('appSubmissionList').innerHTML=loadingHtml();
  try{
+  // Frische Kanaldaten direkt aus demselben API-Endpunkt laden, der auch die übrigen Website-Kanäle versorgt.
+  const serverConfig=await api('/api/guild/'+encodeURIComponent(id())+'/config');
+  if(Array.isArray(serverConfig.available_channels))state.availableChannels=serverConfig.available_channels;
+  const normalizeType=value=>String(value??'').toLowerCase().replace(/^channeltype\./,'').trim();
+  const textChannels=(state.availableChannels||[]).map(c=>({
+   channel_id:String(c.channel_id??c.id??c.channelId??c.channel_id_str??''),
+   name:String(c.name??c.channel_name??c.channelName??'Unbenannter Kanal'),
+   type:normalizeType(c.type??c.channel_type??c.type_name??c.channelType)
+  })).filter(c=>c.channel_id&&(['text','news','guild_text','guild_news','announcement','0','5'].includes(c.type)||c.type.includes('text')||c.type.includes('news')||c.type.includes('announcement'))).sort((a,b)=>a.name.localeCompare(b.name,'de'));
+  channelSelect.innerHTML='<option value="">'+(textChannels.length?'Discord-Textkanal auswählen …':'Keine Textkanäle verfügbar – Serverzugriff prüfen')+'</option>'+textChannels.map(c=>`<option value="${esc(c.channel_id)}"># ${esc(c.name)}</option>`).join('');
+  if(previousChannel&&textChannels.some(c=>c.channel_id===previousChannel))channelSelect.value=previousChannel;
+  channelSelect.title=textChannels.length?textChannels.length+' Textkanal/-kanäle von der API geladen.':'Die API lieferte keine auswählbaren Textkanäle. Prüfe die Website-Berechtigung für diesen Server.';
   const [cfg,subs]=await Promise.all([api('/api/guild/'+encodeURIComponent(id())+'/bewerbungen/config'),api('/api/guild/'+encodeURIComponent(id())+'/bewerbungen/submissions')]);
-  appPanels=cfg.panels||[];appSubmissions=Array.isArray(subs)?subs:[];
+  appPanels=Array.isArray(cfg.panels)?cfg.panels:[];appSubmissions=Array.isArray(subs)?subs:[];
   renderAppPanels();renderAppSubmissions();
- }catch(e){$('appPanelList').innerHTML=emptyHtml(e.message,true);$('appSubmissionList').innerHTML=emptyHtml(e.message,true)}
+ }catch(e){$('appPanelList').innerHTML=emptyHtml(e.message,true);$('appSubmissionList').innerHTML=emptyHtml(e.message,true);channelSelect.innerHTML='<option value="">Kanäle konnten nicht geladen werden</option>';channelSelect.title=e.message||'API-Fehler'}
 }
 function renderAppPanels(){
  if($('appPanelCount'))$('appPanelCount').textContent=appPanels.length;
