@@ -608,7 +608,7 @@ h1{font-size:clamp(37px,5vw,57px);line-height:1.08;letter-spacing:-2.5px;margin:
 <div class="app-field"><label for="appPanelName">Name</label><input id="appPanelName" maxlength="80" placeholder="z. B. Teambewerbung"></div>
 <div class="app-field"><label for="appPanelDescription">Beschreibung</label><textarea id="appPanelDescription" rows="3" placeholder="Wer darf sich bewerben und was musst du wissen?"></textarea></div>
 <div class="app-channel-wrap"><div class="app-channel-top"><div class="app-channel-symbol">#</div><div><strong>Kanal</strong><span>Rechtsklick auf den Kanal, ID kopieren, hier einfügen.</span></div></div><div class="app-field" style="margin:0"><label for="appPanelChannel">Kanal-ID</label><input id="appPanelChannel" type="text" inputmode="numeric" maxlength="22" placeholder="Kanal-ID einfügen"></div></div>
-<div class="app-field"><div class="app-question-heading"><label>Fragen <small id="appQuestionCounter">1</small></label><button type="button" class="app-question-add" id="appQuestionAdd">+ Frage</button></div><div id="appQuestionRows" class="app-question-rows"></div><p class="app-question-help">Beliebig viele Fragen möglich.</p></div>
+<div class="app-field"><div class="app-question-heading"><label>Fragen <small id="appQuestionCounter">1</small></label><button type="button" class="app-question-add" id="appQuestionAdd">+ Frage</button></div><div id="appQuestionRows" class="app-question-rows"></div><p class="app-question-help">Bis zu 100 Fragen möglich. Alle gespeicherten Fragen werden vollständig per DM gestellt.</p></div>
 <div class="app-form-actions"><button type="button" class="action-primary" id="appPanelSave">Speichern</button><button type="button" class="action-secondary" id="appPanelClear">Leeren</button></div>
 </article>
 <div class="app-side-stack">
@@ -953,7 +953,7 @@ $('appPanelSave')?.addEventListener('click',async()=>{
  if(!$('appPanelName').value.trim()||!questions.length){toast('Bitte Name und mindestens eine Frage eintragen.',true);return}const channelId=$('appPanelChannel').value.trim();if(!/^\d{15,22}$/.test(channelId)){toast('Bitte eine gültige Kanal-ID eingeben.',true);return}
  const panel={id:$('appPanelId').value||('panel-'+Date.now()),name:$('appPanelName').value.trim(),description:$('appPanelDescription').value.trim(),channel_id:channelId,questions};
  const next=appPanels.filter(p=>p.id!==panel.id);next.push(panel);
- try{const data=await api('/api/guild/'+encodeURIComponent(id())+'/bewerbungen/config',{method:'POST',body:JSON.stringify({panels:next})});appPanels=data.panels||next;renderAppPanels();clearAppPanel();toast('Panel gespeichert.')}catch(e){toast(e.message,true)}
+ try{const data=await api('/api/guild/'+encodeURIComponent(id())+'/bewerbungen/config',{method:'POST',body:JSON.stringify({panels:next})});appPanels=data.panels||next;renderAppPanels();clearAppPanel();toast(`Panel gespeichert: ${questions.length} Fragen. Alle werden per DM gestellt.`)}catch(e){toast(e.message,true)}
 });
 $('appPanelClear')?.addEventListener('click',clearAppPanel);$('appQuestionAdd')?.addEventListener('click',addAppQuestionRow);renderAppQuestionRows(['']);
 
