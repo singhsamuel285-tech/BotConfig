@@ -4,80 +4,154 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#07090d">
 <title>🔰 • EURP | Manager Bot</title>
 <style>
-:root{color-scheme:dark;--bg:#07090d;--panel:#101318;--panel2:#171b22;--line:#2b313b;--text:#f4f6ff;--muted:#a4aab5;--green:#4ade80;--purple:#c084fc;--danger:#fca5a5;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+:root{color-scheme:dark;--bg:#07090d;--panel:#0f1318;--panel2:#151a22;--panel3:#1b212b;--line:#262d38;--line2:#343d4b;--text:#f3f5fb;--muted:#9aa3b2;--green:#4ade80;--green2:#16a34a;--purple:#c084fc;--purple2:#7e22ce;--danger:#f87171;--warn:#fbbf24;--blue:#60a5fa;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text)}
-body{min-height:100vh;overflow-x:hidden}
-.app{min-height:100vh;display:flex;flex-direction:column;background:radial-gradient(ellipse at 12% 8%,#a855f730,transparent 30%),radial-gradient(ellipse at 88% 24%,#22c55e20,transparent 28%),var(--bg)}
-.topbar{position:sticky;top:0;z-index:10;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(18px,5vw,80px);border-bottom:1px solid var(--line);background:#080a0ee8;backdrop-filter:blur(16px)}
-.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:-.4px}
-.brand-mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(145deg,#a855f7,#22c55e);display:grid;place-items:center;color:#fff;box-shadow:0 7px 24px #22c55e22}
+body{min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+.app{min-height:100vh;display:flex;flex-direction:column;background:radial-gradient(ellipse at 10% 0%,#a855f72e,transparent 32%),radial-gradient(ellipse at 90% 18%,#22c55e1f,transparent 30%),var(--bg)}
+.topbar{position:sticky;top:0;z-index:20;height:68px;display:flex;align-items:center;justify-content:space-between;padding:env(safe-area-inset-top,0px) clamp(16px,4vw,64px) 0;border-bottom:1px solid var(--line);background:#07090de6;backdrop-filter:blur(18px)}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:-.3px}
+.brand-mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(145deg,var(--purple2),var(--green2));display:grid;place-items:center;color:#fff;box-shadow:0 8px 26px #22c55e26}
 .brand-mark svg{width:21px}
 .brand small{display:block;font-size:10px;letter-spacing:2.2px;color:var(--muted);font-weight:700;margin-top:2px}
-.secure{display:flex;align-items:center;gap:9px;color:#c0c5cf;font-size:12px}
-.secure i{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 4px #22c55e1c}
-main{flex:1;width:min(100%,1180px);margin:0 auto;padding:48px 20px 70px}
-.auth-card{width:min(100%,470px);margin:6vh auto 0;background:var(--panel);border:1px solid #303640;border-radius:24px;padding:34px;position:relative;overflow:hidden;box-shadow:0 25px 80px #0008}
-.auth-card:before{content:"";position:absolute;height:3px;top:0;left:25px;right:25px;background:linear-gradient(90deg,#22c55e,#a855f7,#fff)}
-.card-logo{width:66px;height:66px;border-radius:20px;background:linear-gradient(145deg,#a855f7,#22c55e);display:grid;place-items:center;margin:0 auto 20px;color:#fff}
+.conn{display:flex;align-items:center;gap:9px;color:#c0c6d1;font-size:12px;font-weight:600}
+.dot{width:9px;height:9px;border-radius:50%;background:#6b7280;flex:none}
+.dot.ok{background:#22c55e;box-shadow:0 0 0 4px #22c55e22}
+.dot.bad{background:var(--danger);box-shadow:0 0 0 4px #f8717122}
+main{flex:1;width:min(100%,1180px);margin:0 auto;padding:36px 20px 70px}
+
+.auth-card{width:min(100%,460px);margin:7vh auto 0;background:var(--panel);border:1px solid var(--line2);border-radius:24px;padding:36px 32px;position:relative;overflow:hidden;box-shadow:0 30px 90px #000a}
+.auth-card:before{content:"";position:absolute;height:3px;top:0;left:28px;right:28px;background:linear-gradient(90deg,#22c55e,#a855f7,#fff)}
+.card-logo{width:68px;height:68px;border-radius:21px;background:linear-gradient(145deg,var(--purple2),var(--green2));display:grid;place-items:center;margin:0 auto 20px;color:#fff}
 .card-logo svg{width:34px;height:34px}
 .card-title{text-align:center;font-size:25px;font-weight:850;letter-spacing:-.8px}
-.card-sub{text-align:center;font-size:13px;line-height:1.75;color:var(--muted);margin:10px auto 24px;max-width:320px}
-.discord-btn{width:100%;border:0;border-radius:12px;background:linear-gradient(100deg,#15803d,#7e22ce);color:#fff;font:inherit;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;gap:11px;padding:15px 16px;cursor:pointer;transition:transform .16s,filter .16s}
-.discord-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.card-sub{text-align:center;font-size:13px;line-height:1.75;color:var(--muted);margin:10px auto 24px;max-width:330px}
+.discord-btn{width:100%;border:0;border-radius:12px;background:linear-gradient(100deg,var(--green2),var(--purple2));color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;gap:11px;padding:15px 16px;cursor:pointer;transition:transform .16s,filter .16s}
+.discord-btn:hover{filter:brightness(1.12);transform:translateY(-1px)}
 .discord-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .discord-btn svg{width:20px;height:20px}
 .fineprint{text-align:center;color:var(--muted);font-size:11px;line-height:1.7;margin:16px 2px 0}
-.panel{display:none}
-.panel.open{display:block}
-.head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:24px 28px;background:linear-gradient(115deg,#13251d,#171527 75%);border:1px solid #303c39;border-radius:20px;margin-bottom:18px}
+
+.panel{display:none}.panel.open{display:block}
+.head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:22px 26px;background:linear-gradient(115deg,#12241c,#171527 78%);border:1px solid #2f3d3a;border-radius:20px;margin-bottom:16px}
 .who{display:flex;align-items:center;gap:14px;min-width:0}
-.who img{width:50px;height:50px;border-radius:15px;object-fit:cover;background:#222936;border:1px solid #424957}
-.who h1{font-size:clamp(22px,3vw,30px);margin:0 0 5px;letter-spacing:-.8px}
+.who img{width:52px;height:52px;border-radius:16px;object-fit:cover;background:#222936;border:1px solid #424957}
+.who h1{font-size:clamp(21px,3vw,28px);margin:0 0 4px;letter-spacing:-.8px}
 .who p{margin:0;color:var(--muted);font-size:12px;line-height:1.6}
-.row{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
-.btn{border:1px solid #364151;background:#1a222e;color:var(--text);border-radius:10px;padding:11px 14px;font:inherit;font-weight:750;font-size:12px;cursor:pointer;transition:transform .16s,border-color .16s,filter .16s}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:1px solid var(--line2);background:var(--panel3);border-radius:10px;padding:10px 14px;font-weight:750;font-size:12px;cursor:pointer;transition:transform .15s,border-color .15s,filter .15s,background .15s;white-space:nowrap}
 .btn:hover{transform:translateY(-1px);border-color:#6b7789}
-.btn.primary{border:0;background:linear-gradient(100deg,#15803d,#7e22ce)}
-.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
-.tabs{display:flex;gap:7px;overflow-x:auto;padding:2px 2px 14px}
-.tab{white-space:nowrap;border:1px solid transparent;background:transparent;color:#9aa6b5;border-radius:10px;padding:11px 15px;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+.btn.primary{border:0;background:linear-gradient(100deg,var(--green2),var(--purple2));color:#fff}
+.btn.primary:hover{filter:brightness(1.12)}
+.btn.danger{border-color:#7f1d1d;background:#2a1517;color:#fecaca}
+.btn.danger:hover{border-color:#ef4444;background:#3a1a1d}
+.btn.sm{padding:8px 11px;font-size:11px}
+.btn:disabled{opacity:.38;cursor:not-allowed;transform:none}
+
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 14px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{white-space:nowrap;border:1px solid transparent;background:transparent;color:#9aa6b5;border-radius:10px;padding:11px 16px;font-size:12px;font-weight:800;cursor:pointer;transition:.15s}
 .tab:hover{color:#fff;background:#171e29}
 .tab.active{color:#dcfce7;background:#153323;border-color:#286344}
-.view{display:none}
-.view.active{display:block}
-.card{background:linear-gradient(135deg,#111b18,#171323);border:1px solid #2e5140;border-radius:18px;padding:22px}
-.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
-.card h2{font-size:17px;margin:0 0 5px}
+.view{display:none}.view.active{display:block;animation:in .25s ease}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.card{background:linear-gradient(135deg,#101a17,#161224);border:1px solid #2c4a3b;border-radius:18px;padding:22px}
+.card+.card{margin-top:14px}
+.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.card h2{font-size:17px;margin:0 0 5px;letter-spacing:-.3px}
 .card p{margin:0;color:var(--muted);font-size:12px;line-height:1.65}
-.pill{display:inline-flex;align-items:center;border:1px solid #276446;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:800;color:#86efac;background:#14532d26}
+.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid #276446;border-radius:999px;padding:6px 11px;font-size:11px;font-weight:800;color:#86efac;background:#14532d26;white-space:nowrap}
 .pill.warn{border-color:#7a5c28;color:#fcd34d;background:#713f1224}
-.status-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding:12px;border:1px solid var(--line);border-radius:14px;background:#0d1015}
-.status-btn{border:1px solid #383d47;border-radius:11px;padding:13px 10px;background:#1a1e26;color:#f5f6f8;font:inherit;font-weight:700;font-size:13px;cursor:pointer;transition:border-color .16s,background .16s}
-.status-btn:hover{border-color:#6b7789}
-.status-btn.active{border-color:#4ade80;background:#163126}
-.status-btn:disabled{opacity:.5;cursor:not-allowed}
-.activity{display:flex;gap:10px;margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:14px;background:#0d1015}
-input[type=text],input[type=search]{width:100%;min-width:0;background:#0c1118;border:1px solid #343943;border-radius:10px;color:var(--text);padding:12px 13px;font:inherit;font-size:13px;outline:none}
-input:focus{border-color:#4ade80;box-shadow:0 0 0 3px #4ade8019}
-.note{margin-top:12px!important;font-size:11px!important}
-label{display:block;font-size:11px;font-weight:800;color:#b4bfce;margin:16px 0 7px}
-.list{display:grid;gap:10px;margin-top:14px}
-.item{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;background:#121720;border:1px solid #1f2733;border-radius:14px;padding:16px 18px}
-.item strong{display:block;font-size:13px;overflow-wrap:anywhere}
-.item small{display:block;color:var(--muted);font-size:11px;margin-top:6px}
-.empty{padding:28px;text-align:center;border:1px dashed #3b4655;border-radius:14px;color:var(--muted);font-size:12px;line-height:1.8}
+.pill.bad{border-color:#7f1d1d;color:#fca5a5;background:#7f1d1d26}
+.pill.blue{border-color:#1e4a7a;color:#93c5fd;background:#1e3a8a22}
+.pill.mute{border-color:var(--line2);color:var(--muted);background:#ffffff08}
+
+.stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 16px;cursor:pointer;transition:.15s;text-align:left}
+.stat:hover{border-color:var(--line2);transform:translateY(-1px)}
+.stat.active{border-color:#4ade80;background:#12251c}
+.stat b{display:block;font-size:24px;letter-spacing:-1px;margin-bottom:3px}
+.stat span{font-size:11px;color:var(--muted);font-weight:700}
+
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.search{flex:1;min-width:200px;position:relative}
+.search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:16px;color:var(--muted);pointer-events:none}
+input[type=text],input[type=search],select{width:100%;min-width:0;background:#0b1017;border:1px solid var(--line2);border-radius:10px;color:var(--text);padding:12px 13px;font-size:13px;outline:none;transition:.15s}
+.search input{padding-left:38px}
+select{width:auto;cursor:pointer;padding-right:30px}
+input:focus,select:focus{border-color:var(--green);box-shadow:0 0 0 3px #4ade8019}
+kbd{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:10px;border:1px solid var(--line2);border-radius:5px;padding:2px 6px;color:var(--muted);background:#0b1017}
+
+.bulk{display:none;align-items:center;gap:10px;flex-wrap:wrap;padding:11px 14px;margin-bottom:12px;border:1px solid #286344;background:#12251c;border-radius:12px;font-size:12px;font-weight:700}
+.bulk.show{display:flex}
+.bulk .grow{flex:1}
+
+.list{display:grid;gap:8px}
+.item{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;align-items:center;gap:13px;background:#10151d;border:1px solid #1e2631;border-radius:14px;padding:13px 15px;transition:.15s}
+.item:hover{border-color:var(--line2);background:#131a24}
+.item.sel{border-color:#286344;background:#12251c}
+.chk{width:19px;height:19px;accent-color:#22c55e;cursor:pointer}
+.av{width:42px;height:42px;border-radius:13px;background:#222936;object-fit:cover;display:grid;place-items:center;font-weight:800;color:#c0c6d1;overflow:hidden}
+.av img{width:100%;height:100%;object-fit:cover;display:block}
+.nm{min-width:0}
+.nm strong{display:block;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nm small{display:flex;gap:6px;flex-wrap:wrap;align-items:center;color:var(--muted);font-size:11px;margin-top:6px}
+.nm small .pill{padding:3px 8px;font-size:10px}
+.id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:#7c8696;cursor:pointer}
+.id:hover{color:var(--text)}
+.acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.more{width:100%;margin-top:10px}
+
+.empty{padding:32px;text-align:center;border:1px dashed #3b4655;border-radius:14px;color:var(--muted);font-size:12px;line-height:1.8}
 .empty.error{color:var(--danger)}
 .loading{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;padding:22px}
-.spinner{width:17px;height:17px;border:2px solid #4b5563;border-top-color:var(--green);border-radius:50%;animation:spin .7s linear infinite}
+.spinner{width:17px;height:17px;border:2px solid #4b5563;border-top-color:var(--green);border-radius:50%;animation:spin .7s linear infinite;flex:none}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+.presence{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.pbtn{border:1px solid var(--line2);border-radius:14px;padding:16px 14px;background:var(--panel2);cursor:pointer;text-align:left;transition:.15s;display:flex;flex-direction:column;gap:6px}
+.pbtn:hover{border-color:#6b7789;transform:translateY(-1px)}
+.pbtn.active{border-color:#4ade80;background:#12251c;box-shadow:0 0 0 3px #4ade8014}
+.pbtn .ico{font-size:22px}
+.pbtn b{font-size:13px}
+.pbtn span{font-size:11px;color:var(--muted);line-height:1.5}
+.pbtn:disabled{opacity:.5;cursor:not-allowed}
+.activity{display:flex;gap:10px;margin-top:14px}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.chip{border:1px solid var(--line2);background:var(--panel2);border-radius:999px;padding:6px 12px;font-size:11px;font-weight:700;color:#c0c6d1;cursor:pointer}
+.chip:hover{border-color:var(--green);color:#fff}
+.preview{margin-top:16px;display:flex;align-items:center;gap:13px;padding:14px 16px;background:#0b1017;border:1px solid var(--line);border-radius:14px}
+.pv-av{width:44px;height:44px;border-radius:50%;background:linear-gradient(145deg,var(--purple2),var(--green2));display:grid;place-items:center;position:relative;flex:none}
+.pv-av svg{width:22px;color:#fff}
+.pv-st{position:absolute;right:-2px;bottom:-2px;width:15px;height:15px;border-radius:50%;border:3px solid #0b1017;background:#22c55e}
+.pv-st.idle{background:#f59e0b}.pv-st.dnd{background:#ef4444}.pv-st.invisible{background:#6b7280}
+.pv b{display:block;font-size:13px}.pv span{font-size:12px;color:var(--muted)}
+
+.grid2{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+.tile small{display:block;color:var(--muted);font-size:11px;font-weight:700;margin-bottom:8px}
+.tile b{font-size:16px;letter-spacing:-.4px}
+.note{margin-top:14px!important;font-size:11px!important}
+
+.modal{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:20px;background:#000a;backdrop-filter:blur(5px)}
+.modal.show{display:flex}
+.mbox{width:min(100%,420px);background:var(--panel);border:1px solid var(--line2);border-radius:18px;padding:24px;box-shadow:0 30px 90px #000;animation:in .2s ease}
+.mbox h3{margin:0 0 8px;font-size:17px}
+.mbox p{margin:0 0 20px;font-size:13px;line-height:1.7;color:var(--muted)}
+.mbox .row{justify-content:flex-end}
+
 .toast{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:100;max-width:min(420px,calc(100vw - 30px));padding:14px 17px;background:#e5e7eb;color:#111827;border-radius:12px;font-size:12px;font-weight:800;box-shadow:0 15px 45px #0007;opacity:0;transform:translateY(14px);pointer-events:none;transition:.25s}
 .toast.show{opacity:1;transform:none}
 .toast.error{background:#fee2e2;color:#7f1d1d}
-.footer{padding:18px 26px calc(24px + env(safe-area-inset-bottom,0px));text-align:center;color:#9ca3af;font-size:11px;border-top:1px solid var(--line)}
-@media(max-width:760px){.status-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.activity{flex-direction:column}.head{padding:20px}.secure span{display:none}.item .row{width:100%}.item .btn{flex:1}}
+.footer{padding:18px 26px calc(24px + env(safe-area-inset-bottom,0px));text-align:center;color:#8b93a1;font-size:11px;border-top:1px solid var(--line)}
+
+@media(max-width:860px){.stats{grid-template-columns:repeat(3,minmax(0,1fr))}.presence{grid-template-columns:repeat(2,minmax(0,1fr))}.grid2{grid-template-columns:1fr}}
+@media(max-width:640px){.item{grid-template-columns:auto auto minmax(0,1fr)}.item .acts{grid-column:1/-1;justify-content:stretch}.item .acts .btn{flex:1}.activity{flex-direction:column}.head{padding:18px}.conn span{display:none}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}kbd{display:none}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -85,19 +159,15 @@ label{display:block;font-size:11px;font-weight:800;color:#b4bfce;margin:16px 0 7
 <div class="app">
 <header class="topbar">
 <div class="brand">
-<div class="brand-mark">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 20 7.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg>
-</div>
+<div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 20 7.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg></div>
 <div>🔰 • EURP | Manager Bot<small>BOTCONFIG</small></div>
 </div>
-<div class="secure"><i></i><span>Sichere Verbindung · OAuth 2.0</span></div>
+<div class="conn"><i class="dot" id="apiDot"></i><span id="apiText">Verbinde …</span></div>
 </header>
 
 <main>
 <section class="auth-card" id="loginCard" aria-label="Discord-Anmeldung">
-<div class="card-logo">
-<svg viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0 105.89 105.89 0 0 0 19.39 8.09C2.79 32.65-1.71 56.6.54 80.21h0A105.73 105.73 0 0 0 32.71 96.36 77.7 77.7 0 0 0 39.6 85.25a68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1A105.25 105.25 0 0 0 126.6 80.22h0C129.24 52.84 122.09 29.11 107.7 8.07ZM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53 48.84 65.69 42.45 65.69Zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53 91.08 65.69 84.69 65.69Z"/></svg>
-</div>
+<div class="card-logo"><svg viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0 105.89 105.89 0 0 0 19.39 8.09C2.79 32.65-1.71 56.6.54 80.21h0A105.73 105.73 0 0 0 32.71 96.36 77.7 77.7 0 0 0 39.6 85.25a68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1A105.25 105.25 0 0 0 126.6 80.22h0C129.24 52.84 122.09 29.11 107.7 8.07ZM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53 48.84 65.69 42.45 65.69Zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53 91.08 65.69 84.69 65.69Z"/></svg></div>
 <div class="card-title" id="loginTitle">Autorisieren</div>
 <p class="card-sub" id="loginSub">Melde dich mit Discord an, um das Manager-Panel zu öffnen. Der Zugriff ist ausschließlich dem Bot-Entwickler vorbehalten.</p>
 <button class="discord-btn" id="authBtn" type="button">
@@ -111,10 +181,7 @@ label{display:block;font-size:11px;font-weight:800;color:#b4bfce;margin:16px 0 7
 <header class="head">
 <div class="who">
 <img id="avatar" alt="Discord-Avatar" hidden>
-<div>
-<h1>Manager Panel</h1>
-<p id="welcome">Verbindung wird hergestellt …</p>
-</div>
+<div><h1>Manager Panel</h1><p id="welcome">Verbindung wird hergestellt …</p></div>
 </div>
 <div class="row">
 <button class="btn" id="refreshBtn" type="button">↻ Aktualisieren</button>
@@ -123,51 +190,95 @@ label{display:block;font-size:11px;font-weight:800;color:#b4bfce;margin:16px 0 7
 </header>
 
 <nav class="tabs" aria-label="Navigation">
-<button class="tab active" type="button" data-view="status">Bot-Status</button>
-<button class="tab" type="button" data-view="verify">Verify</button>
+<button class="tab active" type="button" data-view="overview">📊 Übersicht</button>
+<button class="tab" type="button" data-view="verify">✅ Verify</button>
+<button class="tab" type="button" data-view="status">🟢 Bot-Status</button>
 </nav>
 
-<section class="view active" id="view-status">
+<section class="view active" id="view-overview">
 <article class="card">
 <div class="card-head">
-<div>
-<h2>Discord-Bot-Status</h2>
-<p>Ändert den echten Online-Status des Bots, nicht nur die Website-Anzeige.</p>
+<div><h2>Systemübersicht</h2><p>Live-Zustand von Bot-API, Discord-Verbindung und Verifizierung auf einen Blick.</p></div>
+<span class="pill mute" id="ovPill">Lade …</span>
 </div>
-<span class="pill warn" id="presenceCurrent">Lade Status …</span>
+<div class="grid2">
+<div class="tile"><small>Bot-API</small><b id="ovApi">–</b></div>
+<div class="tile"><small>Bot-Status</small><b id="ovPresence">–</b></div>
+<div class="tile"><small>Antwortzeit</small><b id="ovPing">–</b></div>
+<div class="tile"><small>Nutzer im Verify-Server</small><b id="ovUsers">–</b></div>
+<div class="tile"><small>Verifiziert</small><b id="ovVerified">–</b></div>
+<div class="tile"><small>Nicht verifiziert</small><b id="ovOpen">–</b></div>
 </div>
-<div class="status-grid" id="presenceButtons">
-<button class="status-btn" type="button" data-presence="online">🟢 Online</button>
-<button class="status-btn" type="button" data-presence="idle">🌙 Abwesend</button>
-<button class="status-btn" type="button" data-presence="dnd">⛔ Bitte nicht stören</button>
-<button class="status-btn" type="button" data-presence="invisible">⚫ Unsichtbar</button>
-</div>
-<div class="activity">
-<input id="activityInput" type="text" maxlength="128" placeholder="Aktivität / Status-Text (optional)" aria-label="Aktivität">
-<button class="btn primary" id="saveActivity" type="button">Aktivität speichern</button>
-</div>
-<p class="note">Nur der Bot-Entwickler kann diese Steuerung verwenden. Discord kann Unsichtbar als offline anzeigen.</p>
+<p class="note">Tipp: Mit der Taste <b>/</b> springst du im Verify-Tab direkt in die Suche.</p>
 </article>
 </section>
 
 <section class="view" id="view-verify">
 <article class="card">
 <div class="card-head">
-<div>
-<h2>Verifizierungsverwaltung</h2>
-<p>Die Verifizierung bleibt freiwillig. Eine manuelle Autorisierung vergibt die konfigurierte Verifizierungsrolle. „Panel per DM senden“ verschickt das Authorize-Panel privat an den ausgewählten Nutzer.</p>
+<div><h2>Verifizierungsverwaltung</h2><p>Autorisieren, Verify entfernen, Kein-Verify zurücksetzen oder das Panel per DM senden – einzeln oder für mehrere Nutzer gleichzeitig.</p></div>
+<button class="btn" id="reloadVerify" type="button">↻ Neu laden</button>
 </div>
-<button class="btn" id="reloadVerify" type="button">Aktualisieren</button>
+<div class="stats" id="stats"></div>
+<div class="toolbar">
+<div class="search">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+<input id="verifySearch" type="search" placeholder="Name, Benutzername oder Discord-ID" autocomplete="off" aria-label="Nutzer suchen"><kbd>/</kbd>
 </div>
-<label for="verifySearch">Nutzer suchen</label>
-<input id="verifySearch" type="search" placeholder="Name oder Discord-ID" autocomplete="off">
+<select id="sortSel" aria-label="Sortierung">
+<option value="name">Name A–Z</option>
+<option value="verified">Verifiziert zuerst</option>
+<option value="open">Nicht verifiziert zuerst</option>
+</select>
+</div>
+<div class="bulk" id="bulk">
+<span id="bulkCount">0 ausgewählt</span><span class="grow"></span>
+<button class="btn sm primary" type="button" data-bulk="authorize">Autorisieren</button>
+<button class="btn sm danger" type="button" data-bulk="revoke">Verify entfernen</button>
+<button class="btn sm" type="button" data-bulk="message">Panel per DM</button>
+<button class="btn sm" type="button" id="bulkClear">Auswahl aufheben</button>
+</div>
 <div class="list" id="verifyList"></div>
+</article>
+</section>
+
+<section class="view" id="view-status">
+<article class="card">
+<div class="card-head">
+<div><h2>Discord-Bot-Status</h2><p>Ändert den echten Online-Status des Bots – nicht nur die Anzeige hier.</p></div>
+<span class="pill warn" id="presenceCurrent">Lade Status …</span>
+</div>
+<div class="presence" id="presenceButtons">
+<button class="pbtn" type="button" data-presence="online"><span class="ico">🟢</span><b>Online</b><span>Bot ist sichtbar und erreichbar.</span></button>
+<button class="pbtn" type="button" data-presence="idle"><span class="ico">🌙</span><b>Abwesend</b><span>Zeigt den Mond-Status an.</span></button>
+<button class="pbtn" type="button" data-presence="dnd"><span class="ico">⛔</span><b>Bitte nicht stören</b><span>Roter Status, Bot arbeitet normal.</span></button>
+<button class="pbtn" type="button" data-presence="invisible"><span class="ico">⚫</span><b>Unsichtbar</b><span>Erscheint offline, läuft aber weiter.</span></button>
+</div>
+<div class="activity">
+<input id="activityInput" type="text" maxlength="128" placeholder="Aktivität / Status-Text (optional)" aria-label="Aktivität">
+<button class="btn primary" id="saveActivity" type="button">Speichern</button>
+</div>
+<div class="chips">
+<button class="chip" type="button" data-act="Join Emden Urban RP">Join Emden Urban RP</button>
+<button class="chip" type="button" data-act="Wartungsarbeiten">Wartungsarbeiten</button>
+<button class="chip" type="button" data-act="Support im Ticket">Support im Ticket</button>
+<button class="chip" type="button" data-act="">Text entfernen</button>
+</div>
+<div class="preview">
+<div class="pv-av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 20 7.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg><i class="pv-st" id="pvDot"></i></div>
+<div class="pv"><b>🔰 • EURP | Manager Bot</b><span id="pvText">–</span></div>
+</div>
+<p class="note">Nur der Bot-Entwickler kann diese Steuerung nutzen. Discord kann Unsichtbar als offline anzeigen.</p>
 </article>
 </section>
 </section>
 </main>
-
 <footer class="footer">© 2026 🔰 • EURP | Manager Bot</footer>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+<div class="mbox"><h3 id="mTitle"></h3><p id="mText"></p>
+<div class="row"><button class="btn" id="mCancel" type="button">Abbrechen</button><button class="btn primary" id="mOk" type="button">Bestätigen</button></div></div>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -179,154 +290,243 @@ const SESSION_KEY='eurp_manager_bot_session_token';
 const STATE_KEY='eurp_manager_discord_oauth_state';
 const REDIRECT_URI=window.location.origin+window.location.pathname;
 const PRESENCE_LABELS={online:'Online',idle:'Abwesend',dnd:'Bitte nicht stören',invisible:'Unsichtbar'};
+const PAGE=50;
 const $=id=>document.getElementById(id);
-const state={token:localStorage.getItem(SESSION_KEY)||'',user:null,presence:'online',verifyUsers:[]};
+const safe={get(k){try{return localStorage.getItem(k)||''}catch(_){return''}},set(k,v){try{localStorage.setItem(k,v)}catch(_){}},del(k){try{localStorage.removeItem(k)}catch(_){}}};
+const state={token:safe.get(SESSION_KEY),user:null,presence:'online',activity:'',users:[],filter:'all',selected:new Set(),shown:PAGE};
 let toastTimer=null;
 
-function esc(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function toast(message,error=false){const el=$('toast');el.textContent=message;el.classList.toggle('error',error);el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),4500)}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function toast(msg,error=false){const el=$('toast');el.textContent=msg;el.classList.toggle('error',error);el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),4500)}
 function loadingHtml(){return '<div class="loading"><span class="spinner"></span> Daten werden geladen …</div>'}
-function emptyHtml(message,error=false){return `<div class="empty${error?' error':''}">${esc(message)}</div>`}
+function emptyHtml(m,err=false){return `<div class="empty${err?' error':''}">${esc(m)}</div>`}
+
+function ask(title,text,okLabel='Bestätigen',danger=false){
+ return new Promise(resolve=>{
+  $('mTitle').textContent=title;$('mText').textContent=text;
+  const ok=$('mOk');ok.textContent=okLabel;ok.className='btn '+(danger?'danger':'primary');
+  $('modal').classList.add('show');ok.focus();
+  const done=v=>{$('modal').classList.remove('show');ok.onclick=null;$('mCancel').onclick=null;document.onkeydown=prevKey;resolve(v)};
+  const prevKey=document.onkeydown;
+  ok.onclick=()=>done(true);$('mCancel').onclick=()=>done(false);
+  document.onkeydown=e=>{if(e.key==='Escape')done(false)};
+ });
+}
 
 async function api(path,options={}){
  if(!state.token)throw new Error('Du bist nicht angemeldet.');
  const headers={Authorization:'Bearer '+state.token};
  if(options.body!==undefined)headers['Content-Type']='application/json';
- let response;
- try{response=await fetch(API_BASE+path,{...options,headers})}
- catch(e){throw new Error('Verbindung zur Bot-API fehlgeschlagen. Prüfe '+API_BASE+'/api/health und ob der Bot läuft.')}
- const data=await response.json().catch(()=>({}));
- if(response.status===401){localStorage.removeItem(SESSION_KEY);state.token='';throw new Error('Sitzung abgelaufen. Bitte melde dich erneut an.')}
- if(!response.ok)throw new Error(data.error||data.message||('API-Fehler '+response.status));
+ let res;
+ try{res=await fetch(API_BASE+path,{...options,headers})}
+ catch(e){setApi(false);throw new Error('Verbindung zur Bot-API fehlgeschlagen. Prüfe '+API_BASE+'/api/health und ob der Bot läuft.')}
+ setApi(true);
+ const data=await res.json().catch(()=>({}));
+ if(res.status===401){safe.del(SESSION_KEY);state.token='';throw new Error('Sitzung abgelaufen. Bitte melde dich erneut an.')}
+ if(!res.ok)throw new Error(data.error||data.message||('API-Fehler '+res.status));
  return data;
 }
+function setApi(ok){$('apiDot').className='dot '+(ok?'ok':'bad');$('apiText').textContent=ok?'Bot-API verbunden':'Bot-API nicht erreichbar'}
 
-function showLogin(){
- $('panel').classList.remove('open');
- $('loginCard').style.display='';
-}
-function showPanel(){
- $('loginCard').style.display='none';
- $('panel').classList.add('open');
-}
-function switchView(view){
- document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.view===view));
- document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+view));
- if(view==='status')loadPresence();
- if(view==='verify')loadVerify();
+async function health(){
+ const t=performance.now();
+ try{const r=await fetch(API_BASE+'/api/health',{cache:'no-store'});const ms=Math.round(performance.now()-t);setApi(r.ok);return{ok:r.ok,ms}}
+ catch(_){setApi(false);return{ok:false,ms:0}}
 }
 
+function showLogin(){$('panel').classList.remove('open');$('loginCard').style.display=''}
+function showPanel(){$('loginCard').style.display='none';$('panel').classList.add('open')}
+function switchView(v){
+ document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.view===v));
+ document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id==='view-'+v));
+ if(v==='overview')loadOverview();
+ if(v==='status')loadPresence();
+ if(v==='verify')loadVerify();
+}
+
+async function loadOverview(){
+ const h=await health();
+ $('ovApi').textContent=h.ok?'Online':'Offline';
+ $('ovPing').textContent=h.ok?h.ms+' ms':'–';
+ $('ovPill').textContent=h.ok?'Alles erreichbar':'Störung';
+ $('ovPill').className='pill '+(h.ok?'':'bad');
+ try{const p=await api('/api/bot/presence');applyPresence(p);$('ovPresence').textContent=PRESENCE_LABELS[p.status]||p.status}catch(_){$('ovPresence').textContent='–'}
+ try{await fetchUsers();updateOverviewCounts()}catch(_){}
+}
+function updateOverviewCounts(){
+ const u=state.users;
+ $('ovUsers').textContent=u.length;
+ $('ovVerified').textContent=u.filter(x=>x.verified).length;
+ $('ovOpen').textContent=u.filter(x=>!x.verified).length;
+}
+
+function applyPresence(data){
+ state.presence=data.status;state.activity=data.activity_text||'';
+ const pill=$('presenceCurrent');
+ pill.textContent='Aktuell: '+(PRESENCE_LABELS[data.status]||data.status);pill.className='pill';
+ $('activityInput').value=state.activity;
+ document.querySelectorAll('[data-presence]').forEach(b=>b.classList.toggle('active',b.dataset.presence===data.status));
+ $('pvDot').className='pv-st '+(data.status==='online'?'':data.status);
+ $('pvText').textContent=state.activity?('Spielt '+state.activity):'Kein Aktivitätstext';
+}
 async function loadPresence(){
- try{
-  const data=await api('/api/bot/presence');
-  state.presence=data.status;
-  $('presenceCurrent').textContent='Aktuell: '+(PRESENCE_LABELS[data.status]||data.status);
-  $('presenceCurrent').classList.remove('warn');
-  $('activityInput').value=data.activity_text||'';
-  document.querySelectorAll('[data-presence]').forEach(b=>b.classList.toggle('active',b.dataset.presence===data.status));
- }catch(e){
-  $('presenceCurrent').textContent='Nicht verfügbar';
-  $('presenceCurrent').classList.add('warn');
-  toast(e.message,true);
- }
+ try{applyPresence(await api('/api/bot/presence'))}
+ catch(e){$('presenceCurrent').textContent='Nicht verfügbar';$('presenceCurrent').className='pill warn';toast(e.message,true)}
 }
-async function setPresence(status,activityText){
- const buttons=document.querySelectorAll('[data-presence],#saveActivity');
- buttons.forEach(b=>b.disabled=true);
+async function setPresence(status,text){
+ const btns=document.querySelectorAll('[data-presence],#saveActivity,.chip');
+ btns.forEach(b=>b.disabled=true);
  try{
-  await api('/api/bot/presence',{method:'POST',body:JSON.stringify({status,activity_text:activityText||''})});
+  await api('/api/bot/presence',{method:'POST',body:JSON.stringify({status,activity_text:text||''})});
   toast('Echter Bot-Status geändert.');
   await loadPresence();
  }catch(e){toast(e.message,true)}
- finally{buttons.forEach(b=>b.disabled=false)}
+ finally{btns.forEach(b=>b.disabled=false)}
 }
 
+async function fetchUsers(){
+ const data=await api('/api/verify/users');
+ state.users=Array.isArray(data.users)?data.users:[];
+ const ids=new Set(state.users.map(u=>u.user_id));
+ state.selected.forEach(id=>{if(!ids.has(id))state.selected.delete(id)});
+}
 async function loadVerify(){
  $('verifyList').innerHTML=loadingHtml();
- try{
-  const data=await api('/api/verify/users');
-  state.verifyUsers=Array.isArray(data.users)?data.users:[];
-  renderVerify();
- }catch(e){$('verifyList').innerHTML=emptyHtml(e.message,true)}
+ try{await fetchUsers();state.shown=PAGE;renderVerify()}
+ catch(e){$('verifyList').innerHTML=emptyHtml(e.message,true)}
+}
+
+const FILTERS=[
+ ['all','Alle',()=>true],
+ ['verified','Verifiziert',u=>u.verified],
+ ['open','Nicht verifiziert',u=>!u.verified],
+ ['manual','Manuell autorisiert',u=>u.manual],
+ ['optout','Kein Verify',u=>u.opted_out]
+];
+function filtered(){
+ const q=$('verifySearch').value.toLowerCase().trim();
+ const f=FILTERS.find(x=>x[0]===state.filter)[2];
+ let list=state.users.filter(u=>f(u)&&(!q||((u.display_name||'')+' '+(u.username||'')+' '+u.user_id).toLowerCase().includes(q)));
+ const s=$('sortSel').value;
+ list=[...list].sort((a,b)=>{
+  if(s==='verified'&&a.verified!==b.verified)return a.verified?-1:1;
+  if(s==='open'&&a.verified!==b.verified)return a.verified?1:-1;
+  return String(a.display_name||a.username).localeCompare(String(b.display_name||b.username),'de',{sensitivity:'base'});
+ });
+ return list;
+}
+function renderStats(){
+ $('stats').innerHTML=FILTERS.map(([k,label,fn])=>`<button class="stat${state.filter===k?' active':''}" type="button" data-filter="${k}"><b>${state.users.filter(fn).length}</b><span>${label}</span></button>`).join('');
+}
+function badges(u){
+ let h=u.verified?'<span class="pill">✓ Verifiziert</span>':'<span class="pill bad">Nicht verifiziert</span>';
+ if(u.manual)h+='<span class="pill blue">Manuell</span>';
+ if(u.opted_out)h+='<span class="pill warn">Kein Verify</span>';
+ return h;
 }
 function renderVerify(){
- const query=$('verifySearch').value.toLowerCase().trim();
- const users=state.verifyUsers.filter(u=>(u.display_name+' '+u.username+' '+u.user_id).toLowerCase().includes(query));
- $('verifyList').innerHTML=users.length?users.map(u=>`<div class="item"><div><strong>${esc(u.display_name||u.username)}</strong><small>ID ${esc(u.user_id)} · ${u.verified?'Verifiziert':'Nicht verifiziert'}${u.manual?' · manuell autorisiert':''}</small></div><div class="row"><button class="btn primary" type="button" data-verify="authorize" data-user="${esc(u.user_id)}"${u.verified?' disabled':''}>Manuell autorisieren</button><button class="btn" type="button" data-verify="message" data-user="${esc(u.user_id)}">Panel per DM senden</button></div></div>`).join(''):emptyHtml('Keine passenden Nutzer gefunden.');
+ renderStats();
+ const list=filtered();const part=list.slice(0,state.shown);
+ const html=part.map(u=>{
+  const name=u.display_name||u.username||u.user_id;
+  const av=u.avatar_url?`<img src="${esc(u.avatar_url)}" alt="" loading="lazy" referrerpolicy="no-referrer">`:esc(name.slice(0,1).toUpperCase());
+  const sel=state.selected.has(u.user_id);
+  return `<div class="item${sel?' sel':''}"><input class="chk" type="checkbox" data-sel="${esc(u.user_id)}"${sel?' checked':''} aria-label="${esc(name)} auswählen"><div class="av">${av}</div><div class="nm"><strong>${esc(name)}</strong><small>${badges(u)}<span class="id" data-copy="${esc(u.user_id)}" title="ID kopieren">${esc(u.user_id)}</span></small></div><div class="acts">${u.verified?'':`<button class="btn sm primary" type="button" data-verify="authorize" data-user="${esc(u.user_id)}">Autorisieren</button>`}${(u.verified||u.manual||u.has_grant)?`<button class="btn sm danger" type="button" data-verify="revoke" data-user="${esc(u.user_id)}">Verify entfernen</button>`:''}${u.opted_out?`<button class="btn sm" type="button" data-verify="reset" data-user="${esc(u.user_id)}">Kein Verify aufheben</button>`:''}<button class="btn sm" type="button" data-verify="message" data-user="${esc(u.user_id)}">Panel per DM</button></div></div>`;
+ }).join('');
+ let out=html||emptyHtml('Keine passenden Nutzer gefunden.');
+ if(list.length>part.length)out+=`<button class="btn more" type="button" id="moreBtn">Mehr anzeigen (${list.length-part.length} weitere)</button>`;
+ $('verifyList').innerHTML=out;
+ updateBulk();
 }
-async function verifyAction(button){
- const action=button.dataset.verify;
- const question=action==='authorize'?'Diesen Nutzer wirklich manuell autorisieren und die Verify-Rolle vergeben?':'Das Authorize-Panel per DM senden?';
- if(!confirm(question))return;
- button.disabled=true;
- try{
-  await api('/api/verify/users/'+encodeURIComponent(button.dataset.user),{method:'POST',body:JSON.stringify({action})});
-  toast(action==='authorize'?'Nutzer wurde autorisiert.':'Authorize-Panel wurde per DM gesendet.');
-  await loadVerify();
- }catch(e){toast(e.message,true);button.disabled=false}
+function updateBulk(){
+ const n=state.selected.size;
+ $('bulk').classList.toggle('show',n>0);
+ $('bulkCount').textContent=n+(n===1?' Nutzer ausgewählt':' Nutzer ausgewählt');
+}
+
+const ACTIONS={
+ authorize:{title:'Nutzer autorisieren?',text:'Die Verify-Rollen werden vergeben und eine frühere „Kein Verify“-Entscheidung wird aufgehoben.',ok:'Autorisieren',danger:false,done:'autorisiert'},
+ revoke:{title:'Verify entfernen?',text:'Die Autorisierung wird widerrufen und die Verify-Rollen werden entfernt. Andere Rollen bleiben unangetastet.',ok:'Verify entfernen',danger:true,done:'Verify entfernt'},
+ reset:{title:'Kein Verify aufheben?',text:'Die „Kein Verify“-Entscheidung wird zurückgesetzt. Rollen werden dabei nicht verändert.',ok:'Aufheben',danger:false,done:'zurückgesetzt'},
+ message:{title:'Panel per DM senden?',text:'Das Authorize-Panel wird privat an den Nutzer geschickt.',ok:'Senden',danger:false,done:'Panel gesendet'}
+};
+async function runAction(action,ids,silent=false){
+ let okCount=0;const errors=[];
+ for(const id of ids){
+  try{await api('/api/verify/users/'+encodeURIComponent(id),{method:'POST',body:JSON.stringify({action})});okCount++}
+  catch(e){errors.push(e.message)}
+ }
+ return{okCount,errors};
+}
+async function singleAction(btn){
+ const a=ACTIONS[btn.dataset.verify];if(!a)return;
+ if(!await ask(a.title,a.text,a.ok,a.danger))return;
+ btn.disabled=true;
+ const r=await runAction(btn.dataset.verify,[btn.dataset.user]);
+ if(r.errors.length){toast(r.errors[0],true);btn.disabled=false;return}
+ toast('Erledigt: '+a.done+'.');
+ await loadVerify();
+}
+async function bulkAction(action){
+ const ids=[...state.selected];if(!ids.length)return;
+ const a=ACTIONS[action];
+ if(!await ask(a.title.replace('Nutzer','').replace('?','')+' für '+ids.length+' Nutzer?',a.text,a.ok,a.danger))return;
+ document.querySelectorAll('[data-bulk]').forEach(b=>b.disabled=true);
+ toast('Wird ausgeführt … bitte warten.');
+ const r=await runAction(action,ids);
+ document.querySelectorAll('[data-bulk]').forEach(b=>b.disabled=false);
+ state.selected.clear();
+ toast(r.errors.length?`${r.okCount} erledigt, ${r.errors.length} fehlgeschlagen: ${r.errors[0]}`:`${r.okCount} Nutzer: ${a.done}.`,r.errors.length>0);
+ await loadVerify();
 }
 
 async function start(){
  showPanel();
  $('welcome').textContent='Verbindung wird hergestellt …';
  const me=await api('/api/auth/me');
- if(!me.is_master){
-  await logout(true);
-  throw new Error('Kein Zugriff. Das Dashboard ist nur für den Bot-Entwickler freigegeben.');
- }
+ if(!me.is_master){await logout(true);throw new Error('Kein Zugriff. Das Dashboard ist nur für den Bot-Entwickler freigegeben.')}
  state.user=me;
  $('welcome').textContent='Angemeldet als '+(me.username||'Discord-Nutzer')+' · sichere Bot-Verbindung';
  if(me.avatar_url){$('avatar').src=me.avatar_url;$('avatar').hidden=false}
- const active=document.querySelector('.tab.active')?.dataset.view||'status';
- switchView(active);
+ switchView(document.querySelector('.tab.active')?.dataset.view||'overview');
 }
-
 async function logout(silent=false){
  try{if(state.token)await fetch(API_BASE+'/api/auth/logout',{method:'POST',headers:{Authorization:'Bearer '+state.token}})}catch(_){}
- localStorage.removeItem(SESSION_KEY);
- sessionStorage.removeItem(STATE_KEY);
- state.token='';
- state.user=null;
+ safe.del(SESSION_KEY);try{sessionStorage.removeItem(STATE_KEY)}catch(_){}
+ state.token='';state.user=null;state.users=[];state.selected.clear();
  showLogin();
  if(!silent)toast('Du wurdest abgemeldet.');
 }
-
 function startDiscordLogin(){
  const bytes=crypto.getRandomValues(new Uint8Array(24));
- const oauthState=Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');
- sessionStorage.setItem(STATE_KEY,oauthState);
- const params=new URLSearchParams({client_id:DISCORD_CLIENT_ID,response_type:'code',redirect_uri:REDIRECT_URI,scope:'identify',state:oauthState});
- window.location.assign('https://discord.com/oauth2/authorize?'+params.toString());
+ const s=Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');
+ try{sessionStorage.setItem(STATE_KEY,s)}catch(_){}
+ const p=new URLSearchParams({client_id:DISCORD_CLIENT_ID,response_type:'code',redirect_uri:REDIRECT_URI,scope:'identify',state:s});
+ window.location.assign('https://discord.com/oauth2/authorize?'+p.toString());
 }
-
 async function finishDiscordLogin(){
  const params=new URLSearchParams(location.search);
  const code=params.get('code');
  if(!code)return false;
  const returned=params.get('state');
- const saved=sessionStorage.getItem(STATE_KEY);
- sessionStorage.removeItem(STATE_KEY);
+ let saved=null;try{saved=sessionStorage.getItem(STATE_KEY);sessionStorage.removeItem(STATE_KEY)}catch(_){}
  history.replaceState({},document.title,REDIRECT_URI);
- const isAuthorization=returned==='join';
- if(!isAuthorization&&(!returned||!saved||returned!==saved)){toast('Sicherheitsprüfung fehlgeschlagen. Bitte erneut anmelden.',true);return true}
+ const isAuth=returned==='join';
+ if(!isAuth&&(!returned||!saved||returned!==saved)){toast('Sicherheitsprüfung fehlgeschlagen. Bitte erneut anmelden.',true);return true}
  $('authBtn').disabled=true;
  try{
-  const endpoint=isAuthorization?'/api/auth/discord/join':'/api/auth/discord';
-  const response=await fetch(API_BASE+endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code,redirect_uri:REDIRECT_URI})});
-  const data=await response.json().catch(()=>({}));
-  if(!response.ok)throw new Error(data.error||(isAuthorization?'Autorisierung fehlgeschlagen.':'Discord-Anmeldung fehlgeschlagen.'));
-  if(isAuthorization){
+  const endpoint=isAuth?'/api/auth/discord/join':'/api/auth/discord';
+  const res=await fetch(API_BASE+endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code,redirect_uri:REDIRECT_URI})});
+  const data=await res.json().catch(()=>({}));
+  if(!res.ok)throw new Error(data.error||(isAuth?'Autorisierung fehlgeschlagen.':'Discord-Anmeldung fehlgeschlagen.'));
+  if(isAuth){
    $('loginTitle').textContent='Autorisierung abgeschlossen';
    $('loginSub').textContent='Dein Discord-Konto wurde autorisiert. Du kannst dieses Fenster schließen und zu Discord zurückkehren.';
-   $('authBtn').style.display='none';
-   toast('Autorisierung erfolgreich.');
-   return true;
+   $('authBtn').style.display='none';toast('Autorisierung erfolgreich.');return true;
   }
   if(!data.session_token)throw new Error('Discord-Anmeldung fehlgeschlagen.');
-  state.token=data.session_token;
-  localStorage.setItem(SESSION_KEY,state.token);
-  await start();
-  toast('Erfolgreich mit Discord verbunden.');
+  state.token=data.session_token;safe.set(SESSION_KEY,state.token);
+  await start();toast('Erfolgreich mit Discord verbunden.');
  }catch(e){toast(e.message,true)}
  finally{$('authBtn').disabled=false}
  return true;
@@ -337,18 +537,35 @@ $('logoutBtn').addEventListener('click',()=>logout());
 $('refreshBtn').addEventListener('click',async()=>{try{await start();toast('Panel aktualisiert.')}catch(e){toast(e.message,true)}});
 document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.view)));
 document.querySelectorAll('[data-presence]').forEach(b=>b.addEventListener('click',()=>setPresence(b.dataset.presence,$('activityInput').value)));
+document.querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{$('activityInput').value=b.dataset.act;setPresence(state.presence||'online',b.dataset.act)}));
 $('saveActivity').addEventListener('click',()=>setPresence(state.presence||'online',$('activityInput').value));
+$('activityInput').addEventListener('keydown',e=>{if(e.key==='Enter')setPresence(state.presence||'online',$('activityInput').value)});
 $('reloadVerify').addEventListener('click',loadVerify);
-$('verifySearch').addEventListener('input',renderVerify);
-$('verifyList').addEventListener('click',e=>{const b=e.target.closest('[data-verify]');if(b&&!b.disabled)verifyAction(b)});
+$('verifySearch').addEventListener('input',()=>{state.shown=PAGE;renderVerify()});
+$('sortSel').addEventListener('change',renderVerify);
+$('bulkClear').addEventListener('click',()=>{state.selected.clear();renderVerify()});
+$('stats').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){state.filter=b.dataset.filter;state.shown=PAGE;renderVerify()}});
+$('bulk').addEventListener('click',e=>{const b=e.target.closest('[data-bulk]');if(b&&!b.disabled)bulkAction(b.dataset.bulk)});
+$('verifyList').addEventListener('click',e=>{
+ const more=e.target.closest('#moreBtn');if(more){state.shown+=PAGE;renderVerify();return}
+ const c=e.target.closest('[data-copy]');
+ if(c){navigator.clipboard?.writeText(c.dataset.copy).then(()=>toast('ID kopiert.'),()=>{});return}
+ const b=e.target.closest('[data-verify]');if(b&&!b.disabled)singleAction(b);
+});
+$('verifyList').addEventListener('change',e=>{
+ const c=e.target.closest('[data-sel]');if(!c)return;
+ c.checked?state.selected.add(c.dataset.sel):state.selected.delete(c.dataset.sel);
+ c.closest('.item').classList.toggle('sel',c.checked);updateBulk();
+});
+document.addEventListener('keydown',e=>{
+ if(e.key==='/'&&!/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)&&$('view-verify').classList.contains('active')){e.preventDefault();$('verifySearch').focus()}
+});
 
 (async()=>{
+ health();
  const handled=await finishDiscordLogin();
  if(handled)return;
- if(state.token){
-  try{await start()}
-  catch(e){showLogin();toast(e.message,true)}
- }
+ if(state.token){try{await start()}catch(e){showLogin();toast(e.message,true)}}
 })();
 </script>
 </body>
