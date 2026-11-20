@@ -330,11 +330,16 @@ kbd{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:10
   <div class="tile"><small>Support-Team-Rollen</small><input id="ticketRoles" type="text" placeholder="Rollen-IDs, durch Komma getrennt"><button class="btn" id="ticketSaveRoles" style="margin-top:10px">Rollen speichern</button></div>
  </div>
  <div class="grid2" style="grid-template-columns:repeat(4,minmax(0,1fr));margin-top:14px">
-  <div class="tile"><small>Inaktivität (Stunden, 0 = aus)</small><input id="ticketInactiveHours" type="text" value="0"></div>
-  <div class="tile"><small>Öffnungszeiten</small><input id="ticketOpeningHours" type="text" placeholder="z. B. Mo–Fr 16–20 Uhr"></div>
+  <div class="tile"><small>Inaktivität (Stunden, 0 = aus)</small><input id="ticketInactiveHours" type="number" min="0" max="720" value="0"></div>
+  <div class="tile"><small>Zusätzlicher Öffnungszeiten-Hinweis</small><input id="ticketOpeningHours" type="text" placeholder="Optionaler Hinweis, z. B. Feiertage"></div>
   <div class="tile"><small>Automatische Antwort</small><input id="ticketAutoReply" type="text" placeholder="Optionaler Hinweis"></div>
   <div class="tile"><small>Protokoll-Kanal-ID</small><input id="ticketLogChannel" type="text" placeholder="Discord-Kanal-ID"></div>
- </div><button class="btn" id="ticketSaveSettings" style="margin-top:10px">Ticket-Einstellungen speichern</button>
+ </div>
+ <div class="card" style="margin-top:14px;padding:16px">
+  <div class="card-head"><div><h2>Öffnungszeiten nach Wochentag</h2><p>Jeden Tag einzeln aktivieren und eigene Supportzeiten festlegen.</p></div><div class="acts"><button class="btn sm" id="ticketWeekdays">Mo–Fr aktivieren</button><button class="btn sm" id="ticketCloseAllDays">Alle schließen</button></div></div>
+  <div id="ticketOpeningSchedule" class="grid2" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:10px"></div>
+ </div>
+ <button class="btn" id="ticketSaveSettings" style="margin-top:10px">Ticket-Einstellungen speichern</button>
  <div class="card-head" style="margin-top:20px"><div><h2>Kategorien</h2><p>Das Standardpanel kann vollständig angepasst werden.</p></div><button class="btn primary" id="ticketAddCategory">＋ Kategorie</button></div>
  <div class="list" id="ticketCategories"></div>
  <div class="card-head" style="margin-top:24px"><div><h2>Ticketübersicht</h2><p>Öffnen, claimen, unclaimen, schließen, beantworten und Transkripte ansehen.</p></div></div>
@@ -637,7 +642,17 @@ async function finishDiscordLogin(){
 
 // EURP Ticket-Dashboard – private API-Zugriffe nur mit der angemeldeten Owner-Sitzung.
 let ticketData={tickets:[],categories:[]},selectedTicket=null;
+const TICKET_DAYS=[['mon','Montag'],['tue','Dienstag'],['wed','Mittwoch'],['thu','Donnerstag'],['fri','Freitag'],['sat','Samstag'],['sun','Sonntag']];
 function ticketApi(path,options={}){return api(path,options)}
+function renderOpeningSchedule(schedule={}){
+ const root=$('ticketOpeningSchedule');if(!root)return;
+ root.innerHTML=TICKET_DAYS.map(([key,label])=>{const day=schedule?.[key]||{};const enabled=!!day.enabled;const start=day.start||'16:00';const end=day.end||'20:00';return `<div class="tile" style="display:grid;grid-template-columns:minmax(100px,1fr) 1fr 1fr;align-items:end;gap:9px"><label style="display:flex;align-items:center;gap:8px;padding-bottom:9px"><input type="checkbox" data-ticket-day-enabled="${key}" ${enabled?'checked':''}> <strong>${label}</strong></label><label><small>Von</small><input type="time" data-ticket-day-start="${key}" value="${esc(start)}" ${enabled?'':'disabled'}></label><label><small>Bis</small><input type="time" data-ticket-day-end="${key}" value="${esc(end)}" ${enabled?'':'disabled'}></label></div>`}).join('');
+}
+function readOpeningSchedule(){
+ const result={};
+ for(const [key] of TICKET_DAYS){const enabled=document.querySelector(`[data-ticket-day-enabled="${key}"]`)?.checked||false;const start=document.querySelector(`[data-ticket-day-start="${key}"]`)?.value||'16:00';const end=document.querySelector(`[data-ticket-day-end="${key}"]`)?.value||'20:00';result[key]={enabled,start,end};}
+ return result;
+}
 async function loadTickets(){
  $('ticketList').innerHTML=loadingHtml();$('ticketCategories').innerHTML=loadingHtml();$('ticketDetail').innerHTML='';
  try{
@@ -645,6 +660,7 @@ async function loadTickets(){
   $('ticketPanelChannel').value=ticketData.panel_channel_id||'';
   $('ticketRoles').value=(ticketData.support_role_ids||[]).join(',');
   $('ticketInactiveHours').value=ticketData.settings?.inactive_close_hours??0;$('ticketOpeningHours').value=ticketData.settings?.opening_hours||'';$('ticketAutoReply').value=ticketData.settings?.auto_reply||'';$('ticketLogChannel').value=ticketData.log_channel_id||'';
+  renderOpeningSchedule(ticketData.settings?.opening_schedule||{});
   renderTicketStats();renderTicketCategories();renderTicketList();
  }catch(e){$('ticketList').innerHTML=emptyHtml(e.message,true);$('ticketCategories').innerHTML='';}
 }
@@ -707,7 +723,10 @@ $('ticketAddCategory').addEventListener('click',addCategory);
 $('ticketCategories').addEventListener('click',e=>{const a=e.target.closest('[data-cat-edit]');if(a)editCategory(a.dataset.catEdit);const d=e.target.closest('[data-cat-delete]');if(d)deleteCategory(d.dataset.catDelete)});
 $('ticketPublish').addEventListener('click',async()=>{const channel_id=$('ticketPanelChannel').value.trim();if(!/^\d{15,25}$/.test(channel_id))return toast('Bitte eine gültige Discord-Kanal-ID eingeben.',true);try{await ticketApi('/api/tickets/panel',{method:'POST',body:JSON.stringify({channel_id})});toast('Ticketpanel in Discord veröffentlicht.')}catch(e){toast(e.message,true)}});
 $('ticketSaveRoles').addEventListener('click',async()=>{const role_ids=$('ticketRoles').value.split(',').map(x=>x.trim()).filter(Boolean);try{await ticketApi('/api/tickets/roles',{method:'POST',body:JSON.stringify({role_ids})});toast('Support-Rollen gespeichert.')}catch(e){toast(e.message,true)}});
-$('ticketSaveSettings').addEventListener('click',async()=>{try{await ticketApi('/api/tickets/settings',{method:'POST',body:JSON.stringify({inactive_close_hours:$('ticketInactiveHours').value,opening_hours:$('ticketOpeningHours').value,auto_reply:$('ticketAutoReply').value,log_channel_id:$('ticketLogChannel').value})});toast('Ticket-Einstellungen gespeichert.')}catch(e){toast(e.message,true)}});
+$('ticketSaveSettings').addEventListener('click',async()=>{try{await ticketApi('/api/tickets/settings',{method:'POST',body:JSON.stringify({inactive_close_hours:$('ticketInactiveHours').value,opening_hours:$('ticketOpeningHours').value,opening_schedule:readOpeningSchedule(),auto_reply:$('ticketAutoReply').value,log_channel_id:$('ticketLogChannel').value})});toast('Ticket-Einstellungen gespeichert.');await loadTickets()}catch(e){toast(e.message,true)}});
+$('ticketOpeningSchedule').addEventListener('change',e=>{const key=e.target.dataset.ticketDayEnabled;if(!key)return;const start=document.querySelector(`[data-ticket-day-start="${key}"]`),end=document.querySelector(`[data-ticket-day-end="${key}"]`);if(start)start.disabled=!e.target.checked;if(end)end.disabled=!e.target.checked});
+$('ticketWeekdays').addEventListener('click',()=>{for(const [key] of TICKET_DAYS){const check=document.querySelector(`[data-ticket-day-enabled="${key}"]`);if(check){check.checked=['mon','tue','wed','thu','fri'].includes(key);check.dispatchEvent(new Event('change',{bubbles:true}))}}});
+$('ticketCloseAllDays').addEventListener('click',()=>{for(const [key] of TICKET_DAYS){const check=document.querySelector(`[data-ticket-day-enabled="${key}"]`);if(check){check.checked=false;check.dispatchEvent(new Event('change',{bubbles:true}))}}});
 $('ticketList').addEventListener('click',e=>{const b=e.target.closest('[data-ticket-open]');if(b)openTicket(b.dataset.ticketOpen);const a=e.target.closest('[data-ticket-action]');if(a)ticketAction(a.dataset.ticket,a.dataset.ticketAction);const t=e.target.closest('[data-ticket-transcript]');if(t)openPrivateTranscript(t.dataset.ticketTranscript)});
 $('ticketDetail').addEventListener('click',e=>{const a=e.target.closest('[data-ticket-action]');if(a)ticketAction(a.dataset.ticket,a.dataset.ticketAction);const ma=e.target.closest('[data-ticket-member-add]');if(ma)ticketAction(ma.dataset.ticketMemberAdd,'add_user',{user_id:$('ticketMemberId').value});const mr=e.target.closest('[data-ticket-member-remove]');if(mr)ticketAction(mr.dataset.ticketMemberRemove,'remove_user',{user_id:$('ticketMemberId').value});const r=e.target.closest('[data-ticket-reply]');if(r){const message=$('ticketReply').value;ticketAction(r.dataset.ticketReply,'reply',{message})}const n=e.target.closest('[data-ticket-rename]');if(n)ticketAction(n.dataset.ticketRename,'rename',{name:$('ticketRename').value});const p=e.target.closest('[data-ticket-priority]');if(p)ticketAction(p.dataset.ticketPriority,'priority',{priority:$('ticketPriority').value});const t=e.target.closest('[data-ticket-transcript]');if(t)openPrivateTranscript(t.dataset.ticketTranscript)});
 
