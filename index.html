@@ -270,6 +270,7 @@ kbd{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:10
 <button class="tab active" type="button" data-view="overview">📊 Übersicht</button>
 <button class="tab" type="button" data-view="verify">✅ Verify</button>
 <button class="tab" type="button" data-view="status">🟢 Bot-Status</button>
+<button class="tab" type="button" data-view="tickets">🎫 Tickets</button>
 </nav>
 
 <section class="view active" id="view-overview">
@@ -316,6 +317,30 @@ kbd{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:10
 <button class="btn sm" type="button" id="bulkClear">Auswahl aufheben</button>
 </div>
 <div class="list" id="verifyList"></div>
+</article>
+</section>
+
+
+<section class="view" id="view-tickets">
+<article class="card">
+ <div class="card-head"><div><h2>🎫 EURP Ticketverwaltung</h2><p>Tickets, Panel, Kategorien, Supportrollen und private Transkripte zentral verwalten.</p></div><button class="btn" id="ticketReload">↻ Aktualisieren</button></div>
+ <div class="stats" id="ticketStats"></div>
+ <div class="grid2" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+  <div class="tile"><small>Panel in Discord veröffentlichen</small><input id="ticketPanelChannel" type="text" placeholder="Discord-Kanal-ID"><button class="btn primary" id="ticketPublish" style="margin-top:10px">Panel veröffentlichen</button></div>
+  <div class="tile"><small>Support-Team-Rollen</small><input id="ticketRoles" type="text" placeholder="Rollen-IDs, durch Komma getrennt"><button class="btn" id="ticketSaveRoles" style="margin-top:10px">Rollen speichern</button></div>
+ </div>
+ <div class="grid2" style="grid-template-columns:repeat(4,minmax(0,1fr));margin-top:14px">
+  <div class="tile"><small>Inaktivität (Stunden, 0 = aus)</small><input id="ticketInactiveHours" type="text" value="0"></div>
+  <div class="tile"><small>Öffnungszeiten</small><input id="ticketOpeningHours" type="text" placeholder="z. B. Mo–Fr 16–20 Uhr"></div>
+  <div class="tile"><small>Automatische Antwort</small><input id="ticketAutoReply" type="text" placeholder="Optionaler Hinweis"></div>
+  <div class="tile"><small>Protokoll-Kanal-ID</small><input id="ticketLogChannel" type="text" placeholder="Discord-Kanal-ID"></div>
+ </div><button class="btn" id="ticketSaveSettings" style="margin-top:10px">Ticket-Einstellungen speichern</button>
+ <div class="card-head" style="margin-top:20px"><div><h2>Kategorien</h2><p>Das Standardpanel kann vollständig angepasst werden.</p></div><button class="btn primary" id="ticketAddCategory">＋ Kategorie</button></div>
+ <div class="list" id="ticketCategories"></div>
+ <div class="card-head" style="margin-top:24px"><div><h2>Ticketübersicht</h2><p>Öffnen, claimen, unclaimen, schließen, beantworten und Transkripte ansehen.</p></div></div>
+ <div class="toolbar"><input id="ticketSearch" type="search" placeholder="Ticketnummer, Name oder Kategorie suchen"><select id="ticketFilter"><option value="all">Alle Tickets</option><option value="open">Offen</option><option value="closure_requested">Schließungsantrag</option><option value="closed">Geschlossen</option></select></div>
+ <div class="list" id="ticketList"></div>
+ <div id="ticketDetail" style="margin-top:18px"></div>
 </article>
 </section>
 
@@ -609,6 +634,48 @@ async function finishDiscordLogin(){
  return true;
 }
 
+
+// EURP Ticket-Dashboard – private API-Zugriffe nur mit der angemeldeten Owner-Sitzung.
+let ticketData={tickets:[],categories:[]},selectedTicket=null;
+function ticketApi(path,options={}){return api(path,options)}
+async function loadTickets(){
+ $('ticketList').innerHTML=loadingHtml();$('ticketCategories').innerHTML=loadingHtml();$('ticketDetail').innerHTML='';
+ try{
+  ticketData=await ticketApi('/api/tickets');
+  $('ticketPanelChannel').value=ticketData.panel_channel_id||'';
+  $('ticketRoles').value=(ticketData.support_role_ids||[]).join(',');
+  $('ticketInactiveHours').value=ticketData.settings?.inactive_close_hours??0;$('ticketOpeningHours').value=ticketData.settings?.opening_hours||'';$('ticketAutoReply').value=ticketData.settings?.auto_reply||'';$('ticketLogChannel').value=ticketData.log_channel_id||'';
+  renderTicketStats();renderTicketCategories();renderTicketList();
+ }catch(e){$('ticketList').innerHTML=emptyHtml(e.message,true);$('ticketCategories').innerHTML='';}
+}
+function renderTicketStats(){const t=ticketData.tickets||[];const n=k=>t.filter(x=>x.status===k).length;$('ticketStats').innerHTML=[['Alle',t.length],['Offen',n('open')],['Schließungsanträge',n('closure_requested')],['Geschlossen',n('closed')]].map(([a,b])=>`<div class="stat"><b>${b}</b><span>${a}</span></div>`).join('')}
+function renderTicketCategories(){
+ $('ticketCategories').innerHTML=(ticketData.categories||[]).map(c=>`<div class="item"><div class="av">${esc(c.emoji||'🎫')}</div><div class="nm"><strong>${esc(c.name)}</strong><small>${esc(c.description||'')} · ${c.enabled?'Aktiv':'Deaktiviert'}</small></div><div class="acts"><button class="btn sm" data-cat-edit="${esc(c.id)}">Bearbeiten</button><button class="btn sm danger" data-cat-delete="${esc(c.id)}">Löschen</button></div></div>`).join('')||emptyHtml('Noch keine Kategorien vorhanden.')
+}
+function renderTicketList(){
+ const q=($('ticketSearch').value||'').toLowerCase(),f=$('ticketFilter').value;
+ const rows=(ticketData.tickets||[]).filter(t=>(f==='all'||t.status===f)&&(!q||[t.id,t.creator_name,t.category_name,t.claimer_name].join(' ').toLowerCase().includes(q)));
+ $('ticketList').innerHTML=rows.map(t=>`<div class="item"><div class="av">🎫</div><div class="nm"><strong>Ticket #${esc(t.id)} · ${esc(t.category_name||'Ticket')}</strong><small>${esc(t.creator_name)} · ${esc(t.status)} · ${t.claimer_name?'Claim: '+esc(t.claimer_name):'Nicht geclaimt'} · ${esc(t.priority||'normal')}</small></div><div class="acts"><button class="btn sm primary" data-ticket-open="${esc(t.channel_id)}">Ansehen</button>${t.status==='open'&&!t.claimer_id?`<button class="btn sm" data-ticket-action="claim" data-ticket="${esc(t.channel_id)}">Claim</button>`:''}<a class="btn sm" href="https://discord.com/channels/${esc(t.guild_id)}/${esc(t.channel_id)}" target="_blank" rel="noopener">Discord öffnen</a>${t.transcript_id?`<button class="btn sm" data-ticket-transcript="${esc(t.channel_id)}">Transkript</button>`:''}</div></div>`).join('')||emptyHtml('Keine Tickets gefunden.')
+}
+async function openTicket(id){try{const t=await ticketApi('/api/tickets/'+encodeURIComponent(id));selectedTicket=t;renderTicketDetail(t)}catch(e){toast(e.message,true)}}
+function renderTicketDetail(t){
+ const events=(t.events||[]).map(e=>`<div class="event"><span>${esc(e.type)}</span><small>${esc(e.actor_name)} · ${new Date(e.at*1000).toLocaleString('de-DE')}</small></div>`).join('');
+ const msgs=(t.messages||[]).map(m=>{const right=String(m.author_id)===String(t.creator_id);const files=(m.attachments||[]).map((a,i)=>{const all=(t.messages||[]).flatMap(x=>x.attachments||[]);const idx=all.indexOf(a);const url='/api/tickets/'+encodeURIComponent(t.channel_id)+'/media/'+idx;const media=(a.content_type||'').startsWith('image/')?`<img data-private-media="${url}" style="max-width:min(100%,520px);border-radius:10px;margin-top:8px">`:(a.content_type||'').startsWith('video/')?`<video controls preload="metadata" data-private-media="${url}" style="max-width:min(100%,520px);margin-top:8px"></video>`:`<a data-private-download="${url}" href="#">📎 ${esc(a.filename)}</a>`;return `<div>${media}</div>`}).join('');return `<div style="display:flex;justify-content:${right?'flex-end':'flex-start'};margin:14px 0"><div style="max-width:78%;background:#202127;border:1px solid #34363e;border-radius:12px;padding:12px"><b>${esc(m.author_name)}</b><small style="display:block;color:#8ea2b8">${new Date(m.created_at*1000).toLocaleString('de-DE')}</small><div style="white-space:pre-wrap;margin-top:7px">${esc(m.content)}</div>${files}</div></div>`}).join('');
+ $('ticketDetail').innerHTML=`<div class="card" style="background:#10151d"><div class="card-head"><div><h2>Ticket #${esc(t.id)} · ${esc(t.category_name)}</h2><p>Ersteller: ${esc(t.creator_name)} · Claimer: ${esc(t.claimer_name||'Niemand')} · Status: ${esc(t.status)}</p></div><div class="acts">${t.status==='closed'?`<button class="btn sm" data-ticket-action="reopen" data-ticket="${esc(t.channel_id)}">Wiedereröffnen</button>`:`<button class="btn sm" data-ticket-action="${t.claimer_id?'unclaim':'claim'}" data-ticket="${esc(t.channel_id)}">${t.claimer_id?'Unclaim':'Claim'}</button><button class="btn sm danger" data-ticket-action="close" data-ticket="${esc(t.channel_id)}">Schließen</button>`}</div></div><div>${msgs||emptyHtml('Noch keine Nachrichten gespeichert.')}${events}</div><div class="activity"><input id="ticketReply" type="text" placeholder="Antwort im Discord-Ticket senden …"><button class="btn primary" data-ticket-reply="${esc(t.channel_id)}">Senden</button></div><div class="row" style="margin-top:10px"><a class="btn" href="https://discord.com/channels/${esc(t.guild_id)}/${esc(t.channel_id)}" target="_blank" rel="noopener">Discord öffnen</a><input id="ticketRename" type="text" placeholder="Neuer Kanalname"><button class="btn" data-ticket-rename="${esc(t.channel_id)}">Umbenennen</button><select id="ticketPriority"><option value="low">Niedrig</option><option value="normal">Normal</option><option value="high">Hoch</option><option value="urgent">Dringend</option></select><button class="btn" data-ticket-priority="${esc(t.channel_id)}">Priorität speichern</button>${t.transcript_id?`<button class="btn" data-ticket-transcript="${esc(t.channel_id)}">Transkript herunterladen</button>`:''}</div><div class="row" style="margin-top:10px"><input id="ticketMemberId" type="text" placeholder="Discord-Nutzer-ID"><button class="btn" data-ticket-member-add="${esc(t.channel_id)}">Person hinzufügen</button><button class="btn danger" data-ticket-member-remove="${esc(t.channel_id)}">Person entfernen</button></div></div>`;
+ loadPrivateMedia();
+}
+
+async function loadPrivateMedia(){
+ for(const el of document.querySelectorAll('[data-private-media]')){try{const r=await fetch(API_BASE+el.dataset.privateMedia,{headers:{Authorization:'Bearer '+state.token}});if(!r.ok)throw new Error();const blob=await r.blob();const url=URL.createObjectURL(blob);if(el.tagName==='VIDEO')el.src=url;else el.src=url}catch(_){el.alt='Anhang konnte nicht geladen werden';}}
+ for(const el of document.querySelectorAll('[data-private-download]')){el.addEventListener('click',async e=>{e.preventDefault();try{const r=await fetch(API_BASE+el.dataset.privateDownload,{headers:{Authorization:'Bearer '+state.token}});if(!r.ok)throw new Error();const blob=await r.blob();const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='EURP-Ticket-Anhang';a.click();URL.revokeObjectURL(url)}catch(_){toast('Anhang konnte nicht geladen werden.',true)}})}
+}
+async function openPrivateTranscript(id){try{const r=await fetch(API_BASE+'/api/tickets/'+encodeURIComponent(id)+'/transcript',{headers:{Authorization:'Bearer '+state.token}});if(!r.ok){const d=await r.json().catch(()=>({}));throw new Error(d.error||'Transkript konnte nicht geladen werden.')}const blob=await r.blob();const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='EURP-Ticket-Transkript.html';a.click();URL.revokeObjectURL(url)}catch(e){toast(e.message,true)}}
+async function ticketAction(id,action,body={}){try{const result=await ticketApi('/api/tickets/'+encodeURIComponent(id)+'/action',{method:'POST',body:JSON.stringify({action,...body})});toast('Ticketaktion ausgeführt.');await loadTickets();if(action!=='close')await openTicket(action==='reopen'&&result.ticket?.channel_id?result.ticket.channel_id:id)}catch(e){toast(e.message,true)}}
+async function editCategory(id){const c=ticketData.categories.find(x=>x.id===id);const name=prompt('Kategoriename:',c?.name||'');if(name===null)return;const emoji=prompt('Emoji:',c?.emoji||'🎫');if(emoji===null)return;const description=prompt('Beschreibung:',c?.description||'');if(description===null)return;const enabled=confirm('Kategorie aktivieren? OK = aktiv, Abbrechen = deaktiviert');const cats=ticketData.categories.map(x=>x.id===id?{...x,name,emoji,description,enabled}:x);try{await ticketApi('/api/tickets/categories',{method:'POST',body:JSON.stringify({categories:cats})});toast('Kategorie gespeichert.');await loadTickets()}catch(e){toast(e.message,true)}}
+async function addCategory(){const name=prompt('Name der neuen Kategorie:');if(!name)return;const emoji=prompt('Emoji:','🎫')||'🎫';const description=prompt('Beschreibung:')||'';const id=name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'');const cats=[...ticketData.categories,{id,name,emoji,description,enabled:true,form:'none'}];try{await ticketApi('/api/tickets/categories',{method:'POST',body:JSON.stringify({categories:cats})});toast('Kategorie erstellt.');await loadTickets()}catch(e){toast(e.message,true)}}
+async function deleteCategory(id){if(!await ask('Kategorie löschen?','Die Kategorie wird aus dem Panel entfernt. Bestehende Tickets bleiben erhalten.','Löschen',true))return;const cats=ticketData.categories.filter(x=>x.id!==id);try{await ticketApi('/api/tickets/categories',{method:'POST',body:JSON.stringify({categories:cats})});await loadTickets();toast('Kategorie gelöscht.')}catch(e){toast(e.message,true)}}
+function switchView(v){document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.view===v));document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id==='view-'+v));if(v==='overview')loadOverview();if(v==='status')loadPresence();if(v==='verify')loadVerify();if(v==='tickets')loadTickets()}
+
 $('authBtn').addEventListener('click',startDiscordLogin);
 $('logoutBtn').addEventListener('click',()=>logout());
 $('refreshBtn').addEventListener('click',async()=>{try{await start();toast('Panel aktualisiert.')}catch(e){toast(e.message,true)}});
@@ -634,6 +701,16 @@ $('verifyList').addEventListener('change',e=>{
  c.checked?state.selected.add(c.dataset.sel):state.selected.delete(c.dataset.sel);
  c.closest('.item').classList.toggle('sel',c.checked);updateBulk();
 });
+$('ticketReload').addEventListener('click',loadTickets);
+$('ticketSearch').addEventListener('input',renderTicketList);$('ticketFilter').addEventListener('change',renderTicketList);
+$('ticketAddCategory').addEventListener('click',addCategory);
+$('ticketCategories').addEventListener('click',e=>{const a=e.target.closest('[data-cat-edit]');if(a)editCategory(a.dataset.catEdit);const d=e.target.closest('[data-cat-delete]');if(d)deleteCategory(d.dataset.catDelete)});
+$('ticketPublish').addEventListener('click',async()=>{const channel_id=$('ticketPanelChannel').value.trim();if(!/^\d{15,25}$/.test(channel_id))return toast('Bitte eine gültige Discord-Kanal-ID eingeben.',true);try{await ticketApi('/api/tickets/panel',{method:'POST',body:JSON.stringify({channel_id})});toast('Ticketpanel in Discord veröffentlicht.')}catch(e){toast(e.message,true)}});
+$('ticketSaveRoles').addEventListener('click',async()=>{const role_ids=$('ticketRoles').value.split(',').map(x=>x.trim()).filter(Boolean);try{await ticketApi('/api/tickets/roles',{method:'POST',body:JSON.stringify({role_ids})});toast('Support-Rollen gespeichert.')}catch(e){toast(e.message,true)}});
+$('ticketSaveSettings').addEventListener('click',async()=>{try{await ticketApi('/api/tickets/settings',{method:'POST',body:JSON.stringify({inactive_close_hours:$('ticketInactiveHours').value,opening_hours:$('ticketOpeningHours').value,auto_reply:$('ticketAutoReply').value,log_channel_id:$('ticketLogChannel').value})});toast('Ticket-Einstellungen gespeichert.')}catch(e){toast(e.message,true)}});
+$('ticketList').addEventListener('click',e=>{const b=e.target.closest('[data-ticket-open]');if(b)openTicket(b.dataset.ticketOpen);const a=e.target.closest('[data-ticket-action]');if(a)ticketAction(a.dataset.ticket,a.dataset.ticketAction);const t=e.target.closest('[data-ticket-transcript]');if(t)openPrivateTranscript(t.dataset.ticketTranscript)});
+$('ticketDetail').addEventListener('click',e=>{const a=e.target.closest('[data-ticket-action]');if(a)ticketAction(a.dataset.ticket,a.dataset.ticketAction);const ma=e.target.closest('[data-ticket-member-add]');if(ma)ticketAction(ma.dataset.ticketMemberAdd,'add_user',{user_id:$('ticketMemberId').value});const mr=e.target.closest('[data-ticket-member-remove]');if(mr)ticketAction(mr.dataset.ticketMemberRemove,'remove_user',{user_id:$('ticketMemberId').value});const r=e.target.closest('[data-ticket-reply]');if(r){const message=$('ticketReply').value;ticketAction(r.dataset.ticketReply,'reply',{message})}const n=e.target.closest('[data-ticket-rename]');if(n)ticketAction(n.dataset.ticketRename,'rename',{name:$('ticketRename').value});const p=e.target.closest('[data-ticket-priority]');if(p)ticketAction(p.dataset.ticketPriority,'priority',{priority:$('ticketPriority').value});const t=e.target.closest('[data-ticket-transcript]');if(t)openPrivateTranscript(t.dataset.ticketTranscript)});
+
 document.addEventListener('keydown',e=>{
  if(e.key==='/'&&!/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)&&$('view-verify').classList.contains('active')){e.preventDefault();$('verifySearch').focus()}
 });
