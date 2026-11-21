@@ -333,7 +333,6 @@ kbd{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:10
   <div class="tile"><small>Inaktivität (Stunden, 0 = aus)</small><input id="ticketInactiveHours" type="number" min="0" max="720" value="0"></div>
   <div class="tile"><small>Zusätzlicher Öffnungszeiten-Hinweis</small><input id="ticketOpeningHours" type="text" placeholder="Optionaler Hinweis, z. B. Feiertage"></div>
   <div class="tile"><small>Automatische Antwort</small><input id="ticketAutoReply" type="text" placeholder="Optionaler Hinweis"></div>
-  <div class="tile"><small>Protokoll-Kanal</small><select id="ticketLogChannel"><option value="">Kein Protokoll-Kanal</option></select></div>
  </div>
  <div class="card" style="margin-top:14px;padding:16px">
   <div class="card-head"><div><h2>Öffnungszeiten nach Wochentag</h2><p>Jeden Tag einzeln aktivieren und eigene Supportzeiten festlegen.</p></div><div class="acts"><button class="btn sm" id="ticketWeekdays">Mo–Fr aktivieren</button><button class="btn sm" id="ticketCloseAllDays">Alle schließen</button></div></div>
@@ -658,8 +657,8 @@ async function loadTickets(){
  try{
   ticketData=await ticketApi('/api/tickets');
   const channels=ticketData.lookup?.channels||[];
-  const fillSelect=(id,selected,allowNone=false)=>{const el=$(id);if(!el)return;const first=allowNone?'<option value="">Kein Protokoll-Kanal</option>':'<option value="">Kanal auswählen …</option>';el.innerHTML=first+channels.map(c=>`<option value="${esc(c.id)}">#${esc(c.name)}${c.category?' · '+esc(c.category):''}</option>`).join('');el.value=selected||''};
-  fillSelect('ticketPanelChannel',ticketData.panel_channel_id,false);fillSelect('ticketLogChannel',ticketData.log_channel_id,true);
+  const fillSelect=(id,selected)=>{const el=$(id);if(!el)return;el.innerHTML='<option value="">Kanal auswählen …</option>'+channels.map(c=>`<option value="${esc(c.id)}">#${esc(c.name)}${c.category?' · '+esc(c.category):''}</option>`).join('');el.value=selected||''};
+  fillSelect('ticketPanelChannel',ticketData.panel_channel_id);
   $('ticketInactiveHours').value=ticketData.settings?.inactive_close_hours??0;$('ticketOpeningHours').value=ticketData.settings?.opening_hours||'';$('ticketAutoReply').value=ticketData.settings?.auto_reply||'';
   renderOpeningSchedule(ticketData.settings?.opening_schedule||{});
   $('ticketSupportRoles').innerHTML=(ticketData.lookup?.support_roles||[]).map(r=>`<span class="chip">${esc(r.name)}</span>`).join('')||'<span class="note">Keine Teamrollen erkannt – Administratoren haben weiterhin Zugriff.</span>';
@@ -725,7 +724,7 @@ $('ticketAddCategory').addEventListener('click',addCategory);
 $('ticketCategories').addEventListener('click',e=>{const a=e.target.closest('[data-cat-edit]');if(a)editCategory(a.dataset.catEdit);const d=e.target.closest('[data-cat-delete]');if(d)deleteCategory(d.dataset.catDelete)});
 $('ticketPublish').addEventListener('click',async()=>{const channel_id=$('ticketPanelChannel').value;if(!channel_id)return toast('Bitte einen Panel-Kanal auswählen.',true);try{const r=await ticketApi('/api/tickets/panel',{method:'POST',body:JSON.stringify({channel_id})});toast(r.updated?'Vorhandenes Ticketpanel wurde aktualisiert.':'Ticketpanel wurde veröffentlicht.');await loadTickets()}catch(e){toast(e.message,true)}});
 
-$('ticketSaveSettings').addEventListener('click',async()=>{try{await ticketApi('/api/tickets/config',{method:'POST',body:JSON.stringify({inactive_close_hours:Number($('ticketInactiveHours').value||0),opening_hours:$('ticketOpeningHours').value,opening_schedule:readOpeningSchedule(),auto_reply:$('ticketAutoReply').value,log_channel_id:$('ticketLogChannel').value||null})});toast('Ticket-Einstellungen gespeichert.');await loadTickets()}catch(e){toast(e.message,true)}});
+$('ticketSaveSettings').addEventListener('click',async()=>{try{await ticketApi('/api/tickets/config',{method:'POST',body:JSON.stringify({inactive_close_hours:Number($('ticketInactiveHours').value||0),opening_hours:$('ticketOpeningHours').value,opening_schedule:readOpeningSchedule(),auto_reply:$('ticketAutoReply').value})});toast('Ticket-Einstellungen gespeichert.');await loadTickets()}catch(e){toast(e.message,true)}});
 $('ticketOpeningSchedule').addEventListener('change',e=>{const key=e.target.dataset.ticketDayEnabled;if(!key)return;const start=document.querySelector(`[data-ticket-day-start="${key}"]`),end=document.querySelector(`[data-ticket-day-end="${key}"]`);if(start)start.disabled=!e.target.checked;if(end)end.disabled=!e.target.checked});
 $('ticketWeekdays').addEventListener('click',()=>{for(const [key] of TICKET_DAYS){const check=document.querySelector(`[data-ticket-day-enabled="${key}"]`);if(check){check.checked=['mon','tue','wed','thu','fri'].includes(key);check.dispatchEvent(new Event('change',{bubbles:true}))}}});
 $('ticketCloseAllDays').addEventListener('click',()=>{for(const [key] of TICKET_DAYS){const check=document.querySelector(`[data-ticket-day-enabled="${key}"]`);if(check){check.checked=false;check.dispatchEvent(new Event('change',{bubbles:true}))}}});
