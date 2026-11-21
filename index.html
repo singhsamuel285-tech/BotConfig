@@ -329,6 +329,11 @@ kbd{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:10
   <div class="tile"><small>Panel-Kanal</small><select id="ticketPanelChannel"><option value="">Kanäle werden geladen …</option></select><button class="btn primary" id="ticketPublish" style="margin-top:10px">Panel veröffentlichen / aktualisieren</button><small class="note">Ein vorhandenes Panel wird bearbeitet. Beim Kanalwechsel wird das alte Panel entfernt.</small></div>
   <div class="tile"><small>Support-Berechtigung</small><p class="note">Automatisch: Administratoren und alle Rollen, die in der EURP-Teamliste erscheinen. Keine manuelle Rollenpflege nötig.</p><div id="ticketSupportRoles" class="chips"></div></div>
  </div>
+ <div class="tile" style="margin-top:14px">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><label style="display:flex;align-items:center;gap:9px"><input id="ticketPingEnabled" type="checkbox" checked><strong>Rollen beim Erstellen eines Tickets pingen</strong></label><span class="note">Standardmäßig ist die Online-Rolle ausgewählt.</span></div>
+  <label style="display:block;margin-top:12px"><small>Ping-Rollen (Mehrfachauswahl möglich – STRG gedrückt halten)</small><select id="ticketPingRoles" multiple size="5" style="width:100%;min-height:125px"></select></label>
+  <small class="note">Es werden ausschließlich die hier ausgewählten Rollen erwähnt. Die Supportberechtigungen werden davon nicht verändert.</small>
+ </div>
  <div class="grid2" style="grid-template-columns:repeat(4,minmax(0,1fr));margin-top:14px">
   <div class="tile"><small>Inaktivität (Stunden, 0 = aus)</small><input id="ticketInactiveHours" type="number" min="0" max="720" value="0"></div>
   <div class="tile"><small>Zusätzlicher Öffnungszeiten-Hinweis</small><input id="ticketOpeningHours" type="text" placeholder="Optionaler Hinweis, z. B. Feiertage"></div>
@@ -659,6 +664,10 @@ async function loadTickets(){
   const channels=ticketData.lookup?.channels||[];
   const fillSelect=(id,selected)=>{const el=$(id);if(!el)return;el.innerHTML='<option value="">Kanal auswählen …</option>'+channels.map(c=>`<option value="${esc(c.id)}">#${esc(c.name)}${c.category?' · '+esc(c.category):''}</option>`).join('');el.value=selected||''};
   fillSelect('ticketPanelChannel',ticketData.panel_channel_id);
+  const pingSelect=$('ticketPingRoles');const allRoles=ticketData.lookup?.roles||[];const savedPingRoles=(ticketData.settings?.ticket_ping_role_ids||['1553747546256707676']).map(String);
+  pingSelect.innerHTML=allRoles.map(r=>`<option value="${esc(r.id)}">@${esc(r.name)}</option>`).join('')||'<option disabled>Keine Rollen gefunden</option>';
+  [...pingSelect.options].forEach(o=>o.selected=savedPingRoles.includes(o.value));
+  $('ticketPingEnabled').checked=ticketData.settings?.ping_team!==false;
   $('ticketInactiveHours').value=ticketData.settings?.inactive_close_hours??0;$('ticketOpeningHours').value=ticketData.settings?.opening_hours||'';$('ticketAutoReply').value=ticketData.settings?.auto_reply||'';
   renderOpeningSchedule(ticketData.settings?.opening_schedule||{});
   $('ticketSupportRoles').innerHTML=(ticketData.lookup?.support_roles||[]).map(r=>`<span class="chip">${esc(r.name)}</span>`).join('')||'<span class="note">Keine Teamrollen erkannt – Administratoren haben weiterhin Zugriff.</span>';
@@ -724,7 +733,7 @@ $('ticketAddCategory').addEventListener('click',addCategory);
 $('ticketCategories').addEventListener('click',e=>{const a=e.target.closest('[data-cat-edit]');if(a)editCategory(a.dataset.catEdit);const d=e.target.closest('[data-cat-delete]');if(d)deleteCategory(d.dataset.catDelete)});
 $('ticketPublish').addEventListener('click',async()=>{const channel_id=$('ticketPanelChannel').value;if(!channel_id)return toast('Bitte einen Panel-Kanal auswählen.',true);try{const r=await ticketApi('/api/tickets/panel',{method:'POST',body:JSON.stringify({channel_id})});toast(r.updated?'Vorhandenes Ticketpanel wurde aktualisiert.':'Ticketpanel wurde veröffentlicht.');await loadTickets()}catch(e){toast(e.message,true)}});
 
-$('ticketSaveSettings').addEventListener('click',async()=>{try{await ticketApi('/api/tickets/config',{method:'POST',body:JSON.stringify({inactive_close_hours:Number($('ticketInactiveHours').value||0),opening_hours:$('ticketOpeningHours').value,opening_schedule:readOpeningSchedule(),auto_reply:$('ticketAutoReply').value})});toast('Ticket-Einstellungen gespeichert.');await loadTickets()}catch(e){toast(e.message,true)}});
+$('ticketSaveSettings').addEventListener('click',async()=>{try{const ticket_ping_role_ids=[...$('ticketPingRoles').selectedOptions].map(o=>o.value);await ticketApi('/api/tickets/config',{method:'POST',body:JSON.stringify({inactive_close_hours:Number($('ticketInactiveHours').value||0),opening_hours:$('ticketOpeningHours').value,opening_schedule:readOpeningSchedule(),auto_reply:$('ticketAutoReply').value,ping_team:$('ticketPingEnabled').checked,ticket_ping_role_ids})});toast('Ticket-Einstellungen gespeichert.');await loadTickets()}catch(e){toast(e.message,true)}});
 $('ticketOpeningSchedule').addEventListener('change',e=>{const key=e.target.dataset.ticketDayEnabled;if(!key)return;const start=document.querySelector(`[data-ticket-day-start="${key}"]`),end=document.querySelector(`[data-ticket-day-end="${key}"]`);if(start)start.disabled=!e.target.checked;if(end)end.disabled=!e.target.checked});
 $('ticketWeekdays').addEventListener('click',()=>{for(const [key] of TICKET_DAYS){const check=document.querySelector(`[data-ticket-day-enabled="${key}"]`);if(check){check.checked=['mon','tue','wed','thu','fri'].includes(key);check.dispatchEvent(new Event('change',{bubbles:true}))}}});
 $('ticketCloseAllDays').addEventListener('click',()=>{for(const [key] of TICKET_DAYS){const check=document.querySelector(`[data-ticket-day-enabled="${key}"]`);if(check){check.checked=false;check.dispatchEvent(new Event('change',{bubbles:true}))}}});
