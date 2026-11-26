@@ -272,6 +272,7 @@ kbd{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:10
 <button class="tab" type="button" data-view="status">🟢 Bot-Status</button>
 <button class="tab" type="button" data-view="tickets">🎫 Tickets</button>
 <button class="tab" type="button" data-view="transcripts">📄 Ticket-Transkripte</button>
+<button class="tab" type="button" data-view="ai-knowledge">🧠 KI-Wissen</button>
 </nav>
 
 <section class="view active" id="view-overview">
@@ -327,6 +328,18 @@ kbd{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:10
  <div class="card-head"><div><h2>📄 Ticket-Transkripte</h2><p>Alle gespeicherten Ticket-Transkripte. Diese Übersicht ist nur für deinen Bot-Entwickler-Account sichtbar.</p></div><button class="btn" id="transcriptReload">↻ Aktualisieren</button></div>
  <input id="transcriptSearch" type="search" placeholder="Ticket-ID, Nutzer oder Kategorie suchen …" style="width:100%;margin:10px 0">
  <div id="transcriptList"></div>
+</article>
+</section>
+
+<section class="view" id="view-ai-knowledge">
+<article class="card">
+ <div class="card-head">
+  <div><h2>🧠 KI-Wissen pro Kanal</h2><p>Zeigt, wie viele der letzten 200 Nachrichten je KI-Kanal in der Wissensdatenbank verarbeitet wurden. Der Prozentwert ist die Nachrichten-Abdeckung, keine Bewertung der inhaltlichen Richtigkeit.</p></div>
+  <button class="btn" id="aiKnowledgeReload">↻ Aktualisieren</button>
+ </div>
+ <input id="aiKnowledgeSearch" type="search" placeholder="Kanalname oder Kanal-ID suchen …" style="width:100%;margin:10px 0">
+ <div class="stats" id="aiKnowledgeStats"></div>
+ <div id="aiKnowledgeList"></div>
 </article>
 </section>
 
@@ -696,6 +709,42 @@ function renderTranscriptList(){
  $('transcriptList').innerHTML=rows.map(t=>`<div class="item"><div class="av">📄</div><div class="nm"><strong>Ticket #${esc(t.id)} · ${esc(t.category_name||'Ticket')}</strong><small>${esc(t.creator_name||'Unbekannt')} · ${new Date((t.closed_at||t.created_at||0)*1000).toLocaleString('de-DE')}</small></div><div class="acts"><button class="btn sm primary" data-open-transcript="${esc(t.channel_id)}">Im Browser ansehen</button><button class="btn sm" data-download-transcript="${esc(t.channel_id)}">HTML herunterladen</button></div></div>`).join('')||emptyHtml('Keine Transkripte gefunden.');
 }
 async function viewManagerTranscript(id){try{const r=await fetch(API_BASE+'/api/tickets/'+encodeURIComponent(id)+'/transcript/view',{headers:{Authorization:'Bearer '+state.token}});if(!r.ok){const d=await r.json().catch(()=>({}));throw new Error(d.error||'Transkript konnte nicht geöffnet werden.')}const html=await r.text();const w=window.open('about:blank','_blank');if(!w)throw new Error('Bitte Pop-ups für diese Webseite erlauben.');w.document.open();w.document.write(html);w.document.close()}catch(e){toast(e.message,true)}}
+
+let aiKnowledgeRows=[];
+async function loadAiKnowledge(){
+ const root=$('aiKnowledgeList');if(!root)return;
+ root.innerHTML=loadingHtml();
+ try{
+  const d=await api('/api/ai/knowledge/channels');
+  aiKnowledgeRows=d.channels||[];
+  renderAiKnowledge(d.limit||200);
+ }catch(e){root.innerHTML=emptyHtml(e.message,true);$('aiKnowledgeStats').innerHTML=''}
+}
+function renderAiKnowledge(limit=200){
+ const q=($('aiKnowledgeSearch').value||'').toLowerCase();
+ const rows=aiKnowledgeRows.filter(x=>[x.kanal_name,x.kanal_id,x.modus].join(' ').toLowerCase().includes(q));
+ const total=aiKnowledgeRows.reduce((n,x)=>n+Number(x.nachrichten_anzahl||0),0);
+ const avg=aiKnowledgeRows.length?Math.round(aiKnowledgeRows.reduce((n,x)=>n+Number(x.wissen_prozent||0),0)/aiKnowledgeRows.length):0;
+ $('aiKnowledgeStats').innerHTML=[
+  ['KI-Kanäle',aiKnowledgeRows.length],
+  ['Gespeicherte Nachrichten',total],
+  ['Ø Verarbeitungsstand',avg+'%']
+ ].map(([a,b])=>`<div class="stat"><b>${esc(b)}</b><span>${esc(a)}</span></div>`).join('');
+ $('aiKnowledgeList').innerHTML=rows.map(x=>{
+  const pct=Math.max(0,Math.min(100,Number(x.wissen_prozent||0)));
+  const date=x.letzte_message_zeit?new Date(Number(x.letzte_message_zeit)*1000).toLocaleString('de-DE'):'Noch keine Nachricht';
+  return `<div class="item" style="align-items:flex-start">
+   <div class="av">🧠</div>
+   <div class="nm" style="min-width:0;flex:1">
+    <strong>#${esc(x.kanal_name||'Unbekannter Kanal')}</strong>
+    <small>Kanal-ID: ${esc(x.kanal_id)} · Modus: ${esc(x.modus||'KI')} · ${esc(x.nachrichten_anzahl||0)} von ${limit} Nachrichten gespeichert</small>
+    <div style="height:9px;background:#202a36;border-radius:99px;overflow:hidden;margin:9px 0 5px"><div style="height:100%;width:${pct}%;background:linear-gradient(90deg,#22c55e,#8b5cf6);border-radius:99px"></div></div>
+    <small><b>${pct}%</b> Nachrichten-Abdeckung · zuletzt gelesen: ${esc(date)} · ${esc(x.letzter_autor||'Unbekannt')}</small>
+    <div style="margin-top:7px;color:var(--muted);font-size:12px;line-height:1.5;overflow-wrap:anywhere">${esc(x.letzte_nachricht||'Noch keine Nachricht verarbeitet.')}</div>
+   </div>
+  </div>`;
+ }).join('')||emptyHtml('Noch keine KI-Kanäle verarbeitet. Sobald die KI eine Frage in einem aktivierten Kanal bearbeitet, erscheint der Kanal hier.');
+}
 function renderOpeningSchedule(schedule={}){
  const root=$('ticketOpeningSchedule');if(!root)return;
  root.innerHTML=TICKET_DAYS.map(([key,label])=>{const day=schedule?.[key]||{};const enabled=!!day.enabled;const start=day.start||'16:00';const end=day.end||'20:00';return `<div class="tile" style="display:grid;grid-template-columns:minmax(100px,1fr) 1fr 1fr;align-items:end;gap:9px"><label style="display:flex;align-items:center;gap:8px;padding-bottom:9px"><input type="checkbox" data-ticket-day-enabled="${key}" ${enabled?'checked':''}> <strong>${label}</strong></label><label><small>Von</small><input type="time" data-ticket-day-start="${key}" value="${esc(start)}" ${enabled?'':'disabled'}></label><label><small>Bis</small><input type="time" data-ticket-day-end="${key}" value="${esc(end)}" ${enabled?'':'disabled'}></label></div>`}).join('');
@@ -748,7 +797,7 @@ async function ticketAction(id,action,body={}){if(action==='delete_ticket'&&!awa
 async function editCategory(id){const c=ticketData.categories.find(x=>x.id===id);const name=prompt('Kategoriename:',c?.name||'');if(name===null)return;const emoji=prompt('Emoji:',c?.emoji||'🎫');if(emoji===null)return;const description=prompt('Beschreibung:',c?.description||'');if(description===null)return;const enabled=confirm('Kategorie aktivieren? OK = aktiv, Abbrechen = deaktiviert');const cats=ticketData.categories.map(x=>x.id===id?{...x,name,emoji,description,enabled}:x);try{await ticketApi('/api/tickets/config',{method:'POST',body:JSON.stringify({categories:cats})});toast('Kategorie gespeichert.');await loadTickets()}catch(e){toast(e.message,true)}}
 async function addCategory(){const name=prompt('Name der neuen Kategorie:');if(!name)return;const emoji=prompt('Emoji:','🎫')||'🎫';const description=prompt('Beschreibung:')||'';const id=name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'');const cats=[...ticketData.categories,{id,name,emoji,description,enabled:true,form:'none'}];try{await ticketApi('/api/tickets/config',{method:'POST',body:JSON.stringify({categories:cats})});toast('Kategorie erstellt.');await loadTickets()}catch(e){toast(e.message,true)}}
 async function deleteCategory(id){if(!await ask('Kategorie löschen?','Die Kategorie wird aus dem Panel entfernt. Bestehende Tickets bleiben erhalten.','Löschen',true))return;const cats=ticketData.categories.filter(x=>x.id!==id);try{await ticketApi('/api/tickets/config',{method:'POST',body:JSON.stringify({categories:cats})});await loadTickets();toast('Kategorie gelöscht.')}catch(e){toast(e.message,true)}}
-function switchView(v){document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.view===v));document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id==='view-'+v));if(v==='overview')loadOverview();if(v==='status')loadPresence();if(v==='verify')loadVerify();if(v==='tickets')loadTickets();if(v==='transcripts')loadTranscripts()}
+function switchView(v){document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.view===v));document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id==='view-'+v));if(v==='overview')loadOverview();if(v==='status')loadPresence();if(v==='verify')loadVerify();if(v==='tickets')loadTickets();if(v==='transcripts')loadTranscripts();if(v==='ai-knowledge')loadAiKnowledge()}
 
 $('authBtn').addEventListener('click',startDiscordLogin);
 $('logoutBtn').addEventListener('click',()=>logout());
@@ -777,6 +826,7 @@ $('verifyList').addEventListener('change',e=>{
 });
 $('ticketReload').addEventListener('click',loadTickets);
 $('transcriptReload').addEventListener('click',loadTranscripts);$('transcriptSearch').addEventListener('input',renderTranscriptList);
+$('aiKnowledgeReload').addEventListener('click',loadAiKnowledge);$('aiKnowledgeSearch').addEventListener('input',()=>renderAiKnowledge());
 $('transcriptList').addEventListener('click',e=>{const b=e.target.closest('[data-open-transcript]');if(b)viewManagerTranscript(b.dataset.openTranscript);const d=e.target.closest('[data-download-transcript]');if(d)openPrivateTranscript(d.dataset.downloadTranscript)});
 $('ticketSearch').addEventListener('input',renderTicketList);$('ticketFilter').addEventListener('change',renderTicketList);
 $('ticketAddCategory').addEventListener('click',addCategory);
