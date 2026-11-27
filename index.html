@@ -271,6 +271,7 @@ kbd{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:10
 <button class="tab" type="button" data-view="verify">✅ Verify</button>
 <button class="tab" type="button" data-view="status">🟢 Bot-Status</button>
 <button class="tab" type="button" data-view="tickets">🎫 Tickets</button>
+<button class="tab" type="button" data-view="kuendigungen">📝 Kündigungen</button>
 <button class="tab" type="button" data-view="ai-knowledge">🧠 KI-Wissen</button>
 </nav>
 
@@ -322,6 +323,41 @@ kbd{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:10
 </section>
 
 
+
+<section class="view" id="view-kuendigungen">
+<article class="card">
+ <div class="card-head">
+  <div><h2>📝 Offizielle Team-Kündigung</h2><p>Erstelle ein Kündigungsschreiben. Die ausgewählten Personen erhalten die Unterschriftsanfrage per Discord-DM.</p></div>
+  <button class="btn" id="kuendigungReload" type="button">↻ Aktualisieren</button>
+ </div>
+ <div class="tile" style="margin-bottom:14px;border-color:#315b45;background:#102019">
+  <strong>So läuft es ab</strong>
+  <p class="note" style="margin:7px 0 0">Die Kündigung wird erst zugestellt, wenn alle ausgewählten Personen unterschrieben haben. Danach erhält das betroffene Mitglied automatisch das offizielle Kündigungsschreiben als PDF per Discord-DM.</p>
+ </div>
+ <form id="kuendigungForm">
+  <div class="grid2" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:14px">
+   <label class="tile" style="display:block"><small style="display:block;margin-bottom:8px">Zu kündigendes Teammitglied</small>
+    <select id="kuendigungTarget" required style="width:100%"><option value="">Teammitglied auswählen …</option></select>
+   </label>
+   <label class="tile" style="display:block"><small style="display:block;margin-bottom:8px">Unterschreibende Personen (1–4)</small>
+    <select id="kuendigungSigners" required multiple size="6" style="width:100%;min-height:145px"></select>
+    <small class="note">Mehrere Personen mit STRG auswählen. Jede ausgewählte Person erhält eine Unterschriftsanfrage per DM.</small>
+   </label>
+  </div>
+  <label class="tile" style="display:block;margin-top:14px"><small style="display:block;margin-bottom:8px">Kündigungsgrund</small>
+   <textarea id="kuendigungReason" required maxlength="3500" rows="6" placeholder="Begründung der Kündigung …" style="display:block;width:100%;resize:vertical;background:#0b1017;border:1px solid var(--line2);border-radius:10px;color:var(--text);padding:12px 13px;font:inherit;line-height:1.55"></textarea>
+   <small class="note">Der Grund erscheint im offiziellen Kündigungsschreiben.</small>
+  </label>
+  <div class="row" style="justify-content:flex-end;margin-top:14px">
+   <button class="btn primary" id="kuendigungSubmit" type="submit">Kündigung erstellen & Unterschriften anfordern</button>
+  </div>
+ </form>
+</article>
+<article class="card" style="margin-top:16px">
+ <div class="card-head"><div><h2>📋 Kündigungsvorgänge</h2><p>Aktueller Stand und bereits abgeschlossene Kündigungen.</p></div></div>
+ <div id="kuendigungList"><div class="empty">Kündigungen werden geladen …</div></div>
+</article>
+</section>
 
 <section class="view" id="view-ai-knowledge">
 <article class="card">
@@ -413,6 +449,7 @@ kbd{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:10
 <script>
 'use strict';
 const API_BASE='https://botconfig.wisp.uno';
+const KUENDIGUNG_GUILD_ID='1534440530723733534';
 const DISCORD_CLIENT_ID='1446188210794401883';
 const SESSION_KEY='eurp_manager_bot_session_token';
 const STATE_KEY='eurp_manager_discord_oauth_state';
@@ -711,6 +748,90 @@ async function restoreTicket(id){try{await ticketApi('/api/tickets/trash/'+encod
 async function resetTicketRun(){if(!await ask('Ticket-Durchlauf neu starten?','Alle bisherigen Tickets, Verläufe und Transkripte werden in einem Archivordner gesichert. Danach startet die Ticketnummerierung bei 001. Discord-Kanäle bleiben bestehen.','Archivieren & neu starten',true))return;try{const d=await ticketApi('/api/tickets/reset-run',{method:'POST',body:'{}'});toast('Alter Durchlauf archiviert. Neue Nummerierung startet bei 001.');await loadTickets()}catch(e){toast(e.message,true)}}
 async function viewManagerTranscript(id){try{const r=await fetch(API_BASE+'/api/tickets/'+encodeURIComponent(id)+'/transcript/view',{headers:{Authorization:'Bearer '+state.token}});if(!r.ok){const d=await r.json().catch(()=>({}));throw new Error(d.error||'Transkript konnte nicht geöffnet werden.')}const html=await r.text();const w=window.open('about:blank','_blank');if(!w)throw new Error('Bitte Pop-ups für diese Webseite erlauben.');w.document.open();w.document.write(html);w.document.close()}catch(e){toast(e.message,true)}}
 
+
+let kuendigungData={cases:[],team_members:[],signers:[]};
+function kuendigungDate(ts){
+ if(!ts)return '–';
+ const d=new Date(Number(ts)*1000);
+ return Number.isNaN(d.getTime())?'–':d.toLocaleString('de-DE');
+}
+function kuendigungStatus(status){
+ return ({
+  offen:'Unterschriften ausstehend',
+  finalisiere:'Wird zugestellt',
+  abgeschlossen:'Abgeschlossen',
+  widerrufen:'Widerrufen',
+  einspruch_eingelegt:'Einspruch eingelegt'
+ })[status]||status||'Unbekannt';
+}
+async function loadKuendigungen(){
+ const root=$('kuendigungList');if(!root)return;
+ root.innerHTML=loadingHtml();
+ try{
+  const d=await api('/api/guilds/'+KUENDIGUNG_GUILD_ID+'/kuendigungen');
+  kuendigungData={cases:Array.isArray(d.cases)?d.cases:[],team_members:Array.isArray(d.team_members)?d.team_members:[],signers:Array.isArray(d.signers)?d.signers:[]};
+  const target=$('kuendigungTarget');
+  const previous=target.value;
+  target.innerHTML='<option value="">Teammitglied auswählen …</option>'+kuendigungData.team_members.map(m=>`<option value="${esc(m.id)}">${esc(m.name)}</option>`).join('');
+  if(kuendigungData.team_members.some(m=>String(m.id)===String(previous)))target.value=previous;
+  const signerSelect=$('kuendigungSigners');
+  const selected=new Set([...signerSelect.selectedOptions].map(o=>String(o.value)));
+  signerSelect.innerHTML=kuendigungData.signers.map(m=>`<option value="${esc(m.id)}">${esc(m.name)}</option>`).join('');
+  [...signerSelect.options].forEach(o=>{o.selected=selected.has(String(o.value))});
+  renderKuendigungCases();
+ }catch(e){
+  root.innerHTML=emptyHtml(e.message,true);
+  $('kuendigungTarget').innerHTML='<option value="">Mitglieder konnten nicht geladen werden</option>';
+  $('kuendigungSigners').innerHTML='';
+ }
+}
+function renderKuendigungCases(){
+ const root=$('kuendigungList');
+ if(!kuendigungData.cases.length){root.innerHTML=emptyHtml('Es wurden noch keine Kündigungen erstellt.');return}
+ root.innerHTML=kuendigungData.cases.map(c=>{
+  const signatures=c.signatures||{};
+  const signerIds=Array.isArray(c.signer_ids)?c.signer_ids:[];
+  const signed=signerIds.filter(id=>signatures[String(id)]).length;
+  const names=signerIds.map(id=>{
+   const sig=signatures[String(id)];
+   const person=kuendigungData.signers.find(x=>String(x.id)===String(id));
+   return `<span class="pill ${sig?'':'warn'}">${sig?'✓':'◷'} ${esc(sig?.name||person?.name||id)}</span>`;
+  }).join(' ');
+  const status=c.status||'unbekannt';
+  const color=status==='abgeschlossen'?'':status==='widerrufen'?'warn':'blue';
+  return `<div class="item" style="display:block;padding:15px;margin-bottom:9px">
+   <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
+    <strong>${esc(c.target_name||'Unbekanntes Mitglied')}</strong>
+    <span class="pill ${color}">${esc(kuendigungStatus(status))}</span>
+   </div>
+   <small style="display:block;color:var(--muted);margin:7px 0">Vorgang: ${esc(c.id)} · Erstellt: ${esc(kuendigungDate(c.created_at))} · Unterschriften: ${signed}/${signerIds.length}</small>
+   <p style="white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0;color:var(--text);font-size:13px">${esc(c.reason||'Kein Grund hinterlegt.')}</p>
+   <div style="display:flex;gap:6px;flex-wrap:wrap">${names}</div>
+   ${c.completed_at?`<small style="display:block;color:var(--muted);margin-top:8px">Abgeschlossen: ${esc(kuendigungDate(c.completed_at))}</small>`:''}
+  </div>`;
+ }).join('');
+}
+async function submitKuendigung(event){
+ event.preventDefault();
+ const target_id=$('kuendigungTarget').value;
+ const signer_ids=[...$('kuendigungSigners').selectedOptions].map(o=>o.value);
+ const reason=$('kuendigungReason').value.trim();
+ if(!target_id)return toast('Bitte ein Teammitglied auswählen.',true);
+ if(signer_ids.length<1||signer_ids.length>4)return toast('Bitte 1 bis 4 unterschreibende Personen auswählen.',true);
+ if(!reason)return toast('Bitte einen Kündigungsgrund eintragen.',true);
+ const button=$('kuendigungSubmit');button.disabled=true;button.textContent='Wird erstellt …';
+ try{
+  const r=await api('/api/guilds/'+KUENDIGUNG_GUILD_ID+'/kuendigungen',{
+   method:'POST',body:JSON.stringify({target_id,signer_ids,reason})
+  });
+  $('kuendigungReason').value='';
+  [...$('kuendigungSigners').options].forEach(o=>o.selected=false);
+  toast('Kündigung '+r.case_id+' wurde erstellt. Unterschriftsanfragen werden per Discord-DM verschickt.');
+  await loadKuendigungen();
+ }catch(e){toast(e.message,true)}
+ finally{button.disabled=false;button.textContent='Kündigung erstellen & Unterschriften anfordern'}
+}
+
 let aiKnowledgeRows=[];
 async function loadAiKnowledge(){
  const root=$('aiKnowledgeList');if(!root)return;
@@ -798,8 +919,19 @@ async function ticketAction(id,action,body={}){if(action==='delete_ticket'&&!awa
 async function editCategory(id){const c=ticketData.categories.find(x=>x.id===id);const name=prompt('Kategoriename:',c?.name||'');if(name===null)return;const emoji=prompt('Emoji:',c?.emoji||'🎫');if(emoji===null)return;const description=prompt('Beschreibung:',c?.description||'');if(description===null)return;const enabled=confirm('Kategorie aktivieren? OK = aktiv, Abbrechen = deaktiviert');const cats=ticketData.categories.map(x=>x.id===id?{...x,name,emoji,description,enabled}:x);try{await ticketApi('/api/tickets/config',{method:'POST',body:JSON.stringify({categories:cats})});toast('Kategorie gespeichert.');await loadTickets()}catch(e){toast(e.message,true)}}
 async function addCategory(){const name=prompt('Name der neuen Kategorie:');if(!name)return;const emoji=prompt('Emoji:','🎫')||'🎫';const description=prompt('Beschreibung:')||'';const id=name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'');const cats=[...ticketData.categories,{id,name,emoji,description,enabled:true,form:'none'}];try{await ticketApi('/api/tickets/config',{method:'POST',body:JSON.stringify({categories:cats})});toast('Kategorie erstellt.');await loadTickets()}catch(e){toast(e.message,true)}}
 async function deleteCategory(id){if(!await ask('Kategorie löschen?','Die Kategorie wird aus dem Panel entfernt. Bestehende Tickets bleiben erhalten.','Löschen',true))return;const cats=ticketData.categories.filter(x=>x.id!==id);try{await ticketApi('/api/tickets/config',{method:'POST',body:JSON.stringify({categories:cats})});await loadTickets();toast('Kategorie gelöscht.')}catch(e){toast(e.message,true)}}
-function switchView(v){document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.view===v));document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id==='view-'+v));if(v==='overview')loadOverview();if(v==='status')loadPresence();if(v==='verify')loadVerify();if(v==='tickets')loadTickets();if(v==='ai-knowledge')loadAiKnowledge()}
+function switchView(v){
+ document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.view===v));
+ document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id==='view-'+v));
+ if(v==='overview')loadOverview();
+ if(v==='status')loadPresence();
+ if(v==='verify')loadVerify();
+ if(v==='tickets')loadTickets();
+ if(v==='kuendigungen')loadKuendigungen();
+ if(v==='ai-knowledge')loadAiKnowledge();
+}
 
+$('kuendigungReload').addEventListener('click',loadKuendigungen);
+$('kuendigungForm').addEventListener('submit',submitKuendigung);
 $('authBtn').addEventListener('click',startDiscordLogin);
 $('logoutBtn').addEventListener('click',()=>logout());
 $('refreshBtn').addEventListener('click',async()=>{try{await start();toast('Panel aktualisiert.')}catch(e){toast(e.message,true)}});
